@@ -1,0 +1,10 @@
+moc/cache/
+moc/last_directory
+moc/pid
+.inited
+vim/.backups/*
+!vim/.backups/.gitignore
+vim/.swaps/*
+!vim/.swaps/.gitignore
+vim/.undo/*
+!vim/.undo/.gitignore

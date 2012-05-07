@@ -1,0 +1,37 @@
+[user]
+    name = Reorx
+    email = reorx@nodemix.com
+[core]
+    editor = vim
+	excludesfile = /home/reorx/.gitignore_global
+[alias]
+    st = status
+    aa = add -A
+    ci = commit
+    cim = commit -m
+    lg = log --graph --pretty=oneline --abbrev-commit --decorate
+    last3 = log -3
+    undopush = push -f origin HEAD^:master
+    undocommit = reset --soft HEAD^
+[color]
+    ui = true
+[merge]
+	# Include summaries of merged commits in newly created merge commit messages
+    log = true
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+# URL shorthands
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"

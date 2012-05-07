@@ -1,0 +1,26 @@
+# temp files #
+*.sw[po]
+
+# Compiled source #
+*.py[co]
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+#*.7z
+*.dmg
+#*.gz
+*.iso
+*.jar
+#*.rar
+#*.tar
+#*.zip
+
+# Logs and databases #
+*.log
+*.sql
+*.sqlite
