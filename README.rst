@@ -31,9 +31,17 @@ To update later on, just run that command again.
 TODO
 ====
 
+- Python working environment deployment
+    * Python source code download and install, basic Python working environment implementation (easy_install, virtualenv . etc).
+
+- complete user customizable prompts in `init` command
+    * store user choices in file, read from it later in other commands
+
+
+DONE
+====
 - check and install software before dotfiles are linked.
 - deal with oh-my-zsh in zsh implementation.
-- Python source code download and install, basic Python working environment implementation (easy_install, virtualenv . etc).
 
 
 Relationship between .profile, .bash_profile, .bashrc
