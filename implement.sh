@@ -70,9 +70,10 @@ function impl_vim() {
     active_install ctags
     ln2home vim
     ln2home vimrc
-    (
-    vim +BundleInstall +qall
-    )
+    #(
+    #vim +BundleInstall +qall
+    #)
+    vim -c "execute \"BundleInstall\" | q | q"
 }
 
 
