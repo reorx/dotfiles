@@ -167,7 +167,7 @@ set guifontset=Monospace\ 9
 
 " Color
 "
-set t_Co=256
+" set t_Co=256
 
 " try to fild solarized on global path
 if !empty(globpath(&rtp, 'colors/solarized.vim'))
@@ -175,7 +175,7 @@ if !empty(globpath(&rtp, 'colors/solarized.vim'))
     set background=dark
     colorscheme solarized
 else
-    colorscheme default
+    colorscheme caciano
 endif
 
 highlight Pmenu ctermbg=238 gui=bold
