@@ -1,4 +1,15 @@
 #!/bin/bash
+#
+# Author: reorx
+#
+# Usage
+#   commands:
+#     initialize
+#       do everything on a just installed computer, use with -f to
+#       reset all and cover existings.
+#     set ,arg
+#     configure ,arg
+
 
 # Global variables
 # Change this varible to choose the targets you want
@@ -60,7 +71,7 @@ function impl_zsh() {
     active_install zsh
     ln2home oh-my-zsh
     ln2home zshrc
-    # Will cause error since in bash environment
+    # Will cause error if call under bash environment
     # source "$HOME/.zshrc"
 }
 
@@ -103,7 +114,7 @@ function impl_wget() {
 }
 
 
-function update() {
+function update_git() {
     git pull
     git submodule init
     git submodule update
@@ -120,6 +131,15 @@ function conf_zsh() {
     sudo usermod -s /bin/zsh $user
 }
 
+function show_help() {
+    cat <<EOF
+  Avaliable commands:
+    initialize [-f, --force]    : initialize everything, used for just installed computer
+    set name [-f, --force]      : set one dotfiles, override existing
+    configure name              : configure a software or dotfile class
+EOF
+}
+
 
 # Preparations
 if [ ! $(installed git) ]; then
@@ -131,11 +151,8 @@ cd "$(dirname "$0")"
 
 # Main
 if [ "$1" == "help" ]; then
-    echo
-    echo "Avaliable commands:"
-    echo "${LINESHIFT}init [-f, --force]    : initialize dotfiles"
-    echo "${LINESHIFT}reset name   : reset one dotfiles, override existing"
-    echo "${LINESHIFT}update   : update things that can be updated"
+    show_help
+
 elif [ "$1" == "test" ]; then
     echo "test"
     if [ $(cmd_installed chrome) ]; then
@@ -144,20 +161,21 @@ elif [ "$1" == "test" ]; then
     if [ $(cmd_installed make) ]; then
         echo 'ok1'
     fi
+
 else
     # Following options needs repos to be inited & updated,
     # let's do the check
     if [ ! -e $INITED_FILE ]; then
         echo "init repos first"
-        update
+        update_git
         touch $INITED_FILE
-        # If this is done before command `update`,
+        # If this is done before command `update_git`,
         # there will be no need to redo update,
         # set a flag for later use.
         FIRST_TIME="true"
     fi
 
-    if [ "$1" == "init" ]; then
+    if [ "$1" == "initialize" ]; then
 
         # Get force option
         if [ "$2" == "--force" -o "$2" == "-f" ]; then
@@ -165,38 +183,38 @@ else
             FORCE_SET="true"
         fi
 
-        echo "start implementing"
-
-        # Implementation starts
+        echo "step 1. set dotfiles"
         for i in ${DOTFILES[@]}; do
             echo "Setting $i's dotfiles"
             eval "impl_$i"
         done
+
+        echo 'step 2. configure dotfiles classes'
+        conf_zsh
+
         echo
         echo "All done!"
-    elif [ "$1" == "reset" ]; then
+
+    elif [ "$1" == "set" ]; then
         if [ -z $2 ]; then
             echo "Please input the second argumenet"
             exit
         fi
-        echo "reset"
-        FORCE_SET="true"
+
+        # Get force option
+        if [ "$2" == "--force" -o "$2" == "-f" ]; then
+            echo "set force to true"
+            FORCE_SET="true"
+        fi
+
         eval "impl_$2"
-    elif [ "$1" == "update" ]; then
-        if [ $FIRST_TIME ]; then
-            echo "already updated just now"
-        else
-            echo "update"
-            update
-            echo "done"
-        fi
+
     elif [ "$1" == "configure" ]; then
-        echo "configure"
         if [ -z $2 ]; then
             echo "Please input the second argumenet"
             exit
         fi
-        echo "reset"
+
         eval "conf_$2"
     else
         echo "Please input a valid command"
