@@ -34,16 +34,23 @@ plugins=(git pip)
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
+# for virtualenv, use my own prompt
 VIRTUAL_ENV_DISABLE_PROMPT="true"
+# oh-my-zsh theme fix
 PROMPT=$'
 %{$purple%}%n%{$reset_color%} at %{$orange%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%} $vcs_info_msg_0_
 $ '
 
-# export PATH=/home/reorx/Envs/Python/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+function GET_RPROMPT() {
+    if [ "$VIRTUAL_ENV" ]; then
+        echo "%{${fg_bold[white]}%}(env: %{${fg[blue]}%}`basename \"$VIRTUAL_ENV\"`%{${fg_bold[white]}%})%{${reset_color}%}"
+    fi
+}
+#RPROMPT="${GET_RPROMPT} $RPROMPT"
+RPROMPT='$(GET_RPROMPT)'
+
 export PYTHONENVS=$HOME/Envs/Python
-export PATH=$PYTHONENVS/bin:$PATH
-export WORKON_HOME=$PYTHONENVS
+# export PATH=$PYTHONENVS/bin:$PATH
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
@@ -52,7 +59,11 @@ export LANG="en_US"
 
 unsetopt correct_all
 
-
+# for virtualenvwrapper
+export VIRTUALENVWRAPPER_PYTHON=$PYTHONENVS/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONENVS/bin/virtualenv
+export WORKON_HOME=$PYTHONENVS
+export PROJECT_HOME=$HOME/workspace/current
 source $PYTHONENVS/bin/virtualenvwrapper.sh
 
 alias fb="nautilus"
@@ -98,6 +109,7 @@ hash -d lab="/home/reorx/workspace/lab"
 dataurl() {
 	echo "data:image/${1##*.};base64,$(openssl base64 -in "$1")" | tr -d '\n'
 }
+
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
 	local port="${1:-8000}"
@@ -117,6 +129,7 @@ function json() {
 		python -mjson.tool <<< "$*" | pygmentize -l javascript
 	fi
 }
+
 # Get a character's Unicode code point
 function codepoint() {
 	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
