@@ -94,6 +94,21 @@ sudo-command-line() {
 zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
 
+has_virtualenv() {
+    if [ -e .virtualenv ]; then
+        name=$(cat .virtualenv)
+        if [ $VIRTUAL_ENV ]; then
+            if [ "$name" == "$(basename $VIRTUAL_ENV)" ]; then
+                return
+            fi
+        fi
+        workon $name
+    fi
+}
+cd () {
+    builtin cd "$@" && has_virtualenv
+}
+
 hash -d desktop="/home/reorx/Desktop"
 hash -d music="/home/reorx/Music"
 hash -d picture="/home/reorx/Pictures"
