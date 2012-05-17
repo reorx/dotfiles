@@ -1,10 +1,1 @@
 .inited
-vim/.backups/*
-!vim/.backups/.gitignore
-vim/.swaps/*
-!vim/.swaps/.gitignore
-vim/.undo/*
-!vim/.undo/.gitignore
-
-vim/bundle/*/
-!vim/bundle/vundle/
