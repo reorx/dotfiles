@@ -214,6 +214,10 @@ autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 
 " Keymaps
 inoremap <C-U> <C-G>u<C-U>
+" Fix syntax highlighting,
+" further reading: http://vim.wikia.com/wiki/Fix_syntax_highlighting?diff=33340&oldid=prev
+noremap <F5> <Esc>:syntax sync fromstart<CR>
+inoremap <F5> <C-o>:syntax sync fromstart<CR>
 
 
 " Centralize backups, swapfiles and undo history
