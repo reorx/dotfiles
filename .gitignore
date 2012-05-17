@@ -1,6 +1,3 @@
-moc/cache/
-moc/last_directory
-moc/pid
 .inited
 vim/.backups/*
 !vim/.backups/.gitignore

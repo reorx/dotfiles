@@ -1,16 +1,11 @@
-# This is a configuration file for the MOC player. It should be named 'config'
-# and placed in the directory ~/.moc/
-# Comments begin with '#'.
-# You can use quotes and escape ('\') in parameters.
-
 
 # Show file titles (title, author, album) instead of file names.
-ReadTags		= no
+ReadTags		= yes
 
 # Directory in which you store music files. If you specify it you will be able
 # to quickly go to this directory with the '-m' parameter or the 'm' command.
 # This can also point to a playlist.
-MusicDir		= "/home/reorx/media/Music"
+MusicDir		= "/home/reorx/Music"
 
 # How to sort? FileName is the only option for now.
 Sort			= FileName
@@ -40,77 +35,7 @@ AutoNext		= yes
 # %(X:TRUE:FALSE) - ternary expression - if X exists, do TRUE, otherwise
 #                   FALSE. '\' - escape character (must be double, because of 
 #                   config interpreter). man zshmisc for more info.
-FormatString		= "%(n:%n :)%(a:%a - :)%(t:%t:)%(A: \(%A\):)"
-
-# Output buffer size in kilobytes. Minimum value is 128KB. */
-OutputBuffer		= 2048
-
-# Input buffer size in kilobytes. Minimum value is 32KB. */
-InputBuffer		= 512
-
-# How much to fill the input buffer before playing (in kilobytes)?
-# This can't be more than InputBuffer value.
-# Remember that for network streams beside the positive effect this also causes
-# delay between what you can hear and what is broadcasted.
-Prebuffering		= 64
-
-# Use this HTTP proxy server for internet streams. If not set, the
-# environment variables http_proxy and ALL_PROXY will be used if present.
-#HTTPProxy		= my_proxy:port
-
-# Sound driver - OSS, ALSA, JACK, or null (only for debugging).
-# You can enter more than one driver separated by a comma. The first working
-# driver will be used.
-SoundDriver		= JACK, ALSA, OSS
-
-# Jack output settings.
-JackOutLeft		= "alsa_pcm:playback_1"
-JackOutRight		= "alsa_pcm:playback_2"
-
-# OSS output device.
-OSSDevice		= /dev/dsp
-
-# OSS Mixer device.
-OSSMixerDevice		= /dev/mixer
-
-# OSS Mixer channel: pcm or master.
-OSSMixerChannel		= pcm
-
-# Second OSS Mixer channel: pcm or master.
-OSSMixerChannel2	= master
-
-# ALSA mixer device.
-AlsaMixer 		= PCM
-
-# Second ALSA mixer device.
-AlsaMixer2		= Master
-
-# ALSA output device.
-AlsaDevice		= default
-
-# Save software mixer state?
-# If enabled, a file 'softmixer' will
-# be created in '~/.moc/' storing the 
-# mixersetting set when the server is shut-down.
-# Note that there is a 'hidden' 'Amplification'
-# setting in that file.
-# Amplification (0-200) is used to scale
-# the mixer setting (0-100). This results
-# in a higher signal amplitude but may also
-# produce clipping.
-#Softmixer_SaveState = yes
-
-# Save equalizer state?
-# If enabled, a file 'equalizer' will
-# be created in '~/.moc/' storing the
-# equalizer settings when the server is shut-down.
-# There is a 'hidden' 'Mixin' setting in that file.
-# Mixin (0.0-1.0) is used to determine how much of
-# the original signal is used after equalizing.
-# 0 means to only use the equalized sound, 1
-# effectively disabled the mixer.
-# Default is 0.25
-#Equalizer_SaveState = yes
+# FormatString		= "%(n:%n :)%(a:%a - :)%(t:%t:)%(A: \(%A\):)"
 
 # Show files with dot at the beginning?
 ShowHiddenFiles		= no
@@ -139,9 +64,6 @@ Theme			= transparent-background
 # MOC directory - where pid file, socket, and state files are stored.
 # You can use ~ at the beginning.
 # MOCDir		= ~/.moc
-
-# Use mmap() to read files. mmap() is much slower on NFS.
-UseMmap			= no
 
 # Assume this encoding for ID3 version 1/1.1 tags (mp3 files). Unlike ID3v2
 # UTF-8 is not used here and MOC can't guess how tags are encoded. Another
@@ -189,48 +111,6 @@ ASCIILines		= no
 # How fast to seek (when using silent seeking)? Number of seconds per key
 # stroke.
 #SilentSeekTime		= 5
-
-# Resample method to use. There are a few methods of resampling sound supported
-# by libresamplerate. The default is the fastest (linear). Better description
-# is here: http://www.mega-nerd.com/libsamplerate/api_misc.html#Converters
-#
-# High quality (based on bandlimited interpolation), but slow methods:
-#
-# SincBestQuality - really slow (I know you probably have an xx GHz processor,
-#			but it's not enough to not see this in the top output :)
-#			The worst case Signal-to-Noise Ratio is 97dB.
-# SincMediumQuality - much faster.
-# SincFastest - the fastest bandlimited interpolation.
-#
-# Poor quality, but much faster methods:
-#
-# ZeroOrderHold - really poor quality, but it's really fast.
-# Linear - a bit better and a bit slower.
-#
-#ResampleMethod		= Linear
-
-# Always use this sample rate when opening the audio device (and resample the
-# sound if necessary). When set to 0 the device is opened with the file's rate.
-#ForceSampleRate	= 48000
-
-# By default even if the sound card reports that it can output 24bit samples
-# MOC converts 24bit PCM to 16bit. This option set to yes allows MOC to use
-# 24bit output (for example MP3 decoder uses this format). This is disabled
-# in the default configuration because there were reports that it prevents
-# MP3 files from playing on some soundcards.
-#Allow24bitOutput	= no
-
-# Use realtime priority for output buffer thread. This will prevent gaps while
-# playing even with heavy load. The user which runs MOC must have permissions
-# to set such a priority. This could be dangerous, because it is possible that
-# a bug in MOC will freeze your computer.
-#UseRealtimePriority	= no
-
-# Size of the in-memory cache for file tags in KB.
-TagsCacheSize		= 256
-
-# Number items in the playlist.
-#PlaylistNumbering	= yes
 
 # Main window layouts can be configured. You can change the position and the
 # size of the menus (directory and playlist). You have 3 layouts and switch
