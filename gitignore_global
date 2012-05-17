@@ -24,3 +24,6 @@
 *.log
 *.sql
 *.sqlite
+
+# configs & options #
+.virtualenv
