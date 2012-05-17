@@ -49,6 +49,7 @@ function GET_RPROMPT() {
 #RPROMPT="${GET_RPROMPT} $RPROMPT"
 RPROMPT='$(GET_RPROMPT)'
 
+export NODE_PATH=/usr/lib/node_modules
 export PYTHONENVS=$HOME/Envs/Python
 # export PATH=$PYTHONENVS/bin:$PATH
 # Prefer US English and use UTF-8
@@ -94,11 +95,11 @@ sudo-command-line() {
 zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
 
-has_virtualenv() {
+suite_virtualenv() {
     if [ -e .virtualenv ]; then
         name=$(cat .virtualenv)
         if [ $VIRTUAL_ENV ]; then
-            if [ "$name" == "$(basename $VIRTUAL_ENV)" ]; then
+            if [ "$name" = "$(basename $VIRTUAL_ENV)" ]; then
                 return
             fi
         fi
@@ -106,8 +107,9 @@ has_virtualenv() {
     fi
 }
 cd () {
-    builtin cd "$@" && has_virtualenv
+    builtin cd "$@" && suite_virtualenv
 }
+suite_virtualenv
 
 hash -d desktop="/home/reorx/Desktop"
 hash -d music="/home/reorx/Music"
