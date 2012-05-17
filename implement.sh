@@ -202,7 +202,7 @@ else
         fi
 
         # Get force option
-        if [ "$2" == "--force" -o "$2" == "-f" ]; then
+        if [ "$3" == "--force" -o "$3" == "-f" ]; then
             echo "set force to true"
             FORCE_SET="true"
         fi
