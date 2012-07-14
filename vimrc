@@ -37,8 +37,11 @@ Bundle 'scrooloose/nerdcommenter'
 
 " Bundle 'Reorx/vim-colors-solarized'
 " Bundle 'jade.vim'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'wavded/vim-stylus'
 " Bundle 'wavded/vim-stylus'
 " Bundle 'skammer/vim-css-color'
+Bundle 'lepture/vim-javascript'
 
 
 """""""""""
@@ -179,11 +182,11 @@ else
 endif
 
 highlight Pmenu ctermbg=238 gui=bold
-highlight ExtraWhitespace ctermbg=white guibg=white
-highlight TheTabShift ctermbg=red guibg=red
+highlight ExtraWhitespace ctermbg=black guibg=black
+" highlight TheTabShift ctermbg=red guibg=red
 
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=grey guibg=grey
-autocmd ColorScheme * highlight TheTabShift ctermbg=red guibg=red
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=black guibg=black
+" autocmd ColorScheme * highlight TheTabShift ctermbg=red guibg=red
 
 match ExtraWhitespace /\s\+$/
 " match TheTabShift /\t/
@@ -211,6 +214,8 @@ map tc :tabclose<cr>
 " Files
 autocmd FileType text setlocal textwidth=80
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+autocmd FileType jade setlocal shiftwidth=2 tabstop=2
+autocmd FileType stylus setlocal shiftwidth=2 tabstop=2
 
 " Keymaps
 inoremap <C-U> <C-G>u<C-U>

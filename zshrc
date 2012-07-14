@@ -55,8 +55,6 @@ export PYTHONENVS=$HOME/Envs/Python
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
-# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
-[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
 
 unsetopt correct_all
 
@@ -71,21 +69,26 @@ alias fb="nautilus"
 alias enca_utf8="enca -L zh_CN -x utf-8"
 alias pdb="python -m pdb"
 alias vim="vim -p"
-alias tree="tree --dirsfirst --filelimit 20"
+alias tree="tree --dirsfirst"
 # List only directories
 alias lsd='ls -l | grep "^d"'
 alias lla='ls -la'
 # File size
 alias fs="stat -f \"%z bytes\""
 
+alias sublime="/home/reorx/Software/SublimeText2/sublime_text"
+
 # Solarized color terminal theme setup
 # eval `dircolors ~/.dircolors`
 
 ssh_hosts=(
-reorx@reorx.me,
-sa@yue.fm
+    reorx.com
+    yue.fm
 )
-zstyle ':completion:*:ssh-hosts' users-hosts $ssh_hosts
+#zstyle ':completion:*:ssh-hosts' users-hosts $ssh_hosts
+#hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
+zstyle ':completion:*:hosts' hosts $ssh_hosts
+
 
 sudo-command-line() {
     [[ -z $BUFFER ]] && zle up-history
@@ -155,4 +158,13 @@ function codepoint() {
 
 function clean_pyc() {
     find $1 -name '*.pyc' -exec rm {} \;
+}
+
+function vpseepipe() {
+    # Options explaination
+    #   q  Quiet mode.  Causes most warning and diagnostic messages to be suppressed.
+    #   T  Disable pseudo-tty allocation.
+    #   N  Do not execute a remote command.  This is useful for just forwarding ports (protocol version 2 only).
+    #   D  bind address to port
+    ssh -qTNv -D 7070 pipe@reorx.com
 }
