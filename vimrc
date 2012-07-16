@@ -1,3 +1,14 @@
+" File Encoding
+set encoding=utf-8
+set fileencodings=utf-8,chinese,latin-1
+
+set fileencoding=utf-8
+
+if has("win32")
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    language messages zh_CN.utf-8
+endif
 """""""""""""""""""
 " Vundle
 "
@@ -18,7 +29,7 @@ call vundle#rc()
 
 " Bundles (from top to bottom in importance sequence)
 " required!
-Bundle 'gmarik/vundle'
+"Bundle 'gmarik/vundle'
 
 " basics
 Bundle 'SuperTab-continued.'
@@ -35,7 +46,7 @@ Bundle 'scrooloose/nerdcommenter'
 " Bundle 'L9'
 " Bundle 'FuzzyFinder'
 
-" Bundle 'Reorx/vim-colors-solarized'
+Bundle 'Reorx/vim-colors-solarized'
 " Bundle 'jade.vim'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'wavded/vim-stylus'
@@ -60,7 +71,10 @@ let NERDTreeWinSize=25
 let NERDTreeAutoCenter=1
 let NERDChristmasTree=1
 let NERDTreeShowHidden=0
-map <silent> <F4> :NERDTreeFind<cr>
+let NERDTreeChDirMode=1
+let NERDTreeMouseMode=2
+"let NERDTreeQuitOnOpen=1
+map <silent> <F4> :NERDTreeToggle<cr>
 " taglist
 let Tlist_Inc_Winwidth=0
 " let Tlist_WinWidth=20
@@ -91,10 +105,7 @@ set autoread " When a file has been detected to have been changed outside of Vim
 syntax on
 filetype plugin indent on " required by Vundle
 
-" File Encoding
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8,cp936
+
 set ff=unix
 
 set backspace=indent,eol,start
@@ -173,12 +184,14 @@ set guifontset=Monospace\ 9
 " set t_Co=256
 
 " try to fild solarized on global path
-if !empty(globpath(&rtp, 'colors/solarized.vim'))
+if !empty(globpath(&rtp, 'colors/caciano.vim'))
+    colorscheme caciano
+elseif !empty(globpath(&rtp, 'colors/solarized.vim'))
     " let g:solarized_termcolors=256
     set background=dark
     colorscheme solarized
 else
-    colorscheme caciano
+    colorscheme torte
 endif
 
 highlight Pmenu ctermbg=238 gui=bold
