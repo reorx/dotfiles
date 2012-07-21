@@ -50,8 +50,8 @@ function GET_RPROMPT() {
 RPROMPT='$(GET_RPROMPT)'
 
 export NODE_PATH=/usr/lib/node_modules
-export PYTHONENVS=$HOME/Envs/Python
-# export PATH=$PYTHONENVS/bin:$PATH
+export PYTHONENV=$HOME/Envs/Python
+# export PATH=$PYTHONENV/bin:$PATH
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
@@ -59,11 +59,11 @@ export LANG="en_US"
 unsetopt correct_all
 
 # for virtualenvwrapper
-export VIRTUALENVWRAPPER_PYTHON=$PYTHONENVS/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONENVS/bin/virtualenv
-export WORKON_HOME=$PYTHONENVS
+export VIRTUALENVWRAPPER_PYTHON=$PYTHONENV/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONENV/bin/virtualenv
+export WORKON_HOME=$PYTHONENV/virtualenvs
 export PROJECT_HOME=$HOME/workspace/current
-source $PYTHONENVS/bin/virtualenvwrapper.sh
+source $PYTHONENV/bin/virtualenvwrapper.sh
 
 alias fb="nautilus"
 alias enca_utf8="enca -L zh_CN -x utf-8"
