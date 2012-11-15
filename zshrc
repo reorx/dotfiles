@@ -36,6 +36,7 @@ source $ZSH/oh-my-zsh.sh
 
 # for virtualenv, use my own prompt
 VIRTUAL_ENV_DISABLE_PROMPT="true"
+
 # oh-my-zsh theme fix
 PROMPT=$'
 %{$purple%}%n%{$reset_color%} at %{$orange%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%} $vcs_info_msg_0_
@@ -51,7 +52,9 @@ RPROMPT='$(GET_RPROMPT)'
 
 export NODE_PATH=/usr/lib/node_modules
 export PYTHONENV=$HOME/Envs/Python
+export PYTHONSTARTUP=$HOME/.pystartup
 # export PATH=$PYTHONENV/bin:$PATH
+
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
@@ -160,11 +163,15 @@ function clean_pyc() {
     find $1 -name '*.pyc' -exec rm {} \;
 }
 
-function vpseepipe() {
+function sshch() {
     # Options explaination
     #   q  Quiet mode.  Causes most warning and diagnostic messages to be suppressed.
     #   T  Disable pseudo-tty allocation.
     #   N  Do not execute a remote command.  This is useful for just forwarding ports (protocol version 2 only).
     #   D  bind address to port
-    ssh -qTNv -D 7070 pipe@reorx.com
+    ssh -qTNv -D 7070 $@
+}
+
+function set_http_proxy() {
+    export http_proxy="http://$@"
 }

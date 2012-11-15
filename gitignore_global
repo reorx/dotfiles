@@ -1,4 +1,4 @@
-# temp files #
+# Vim swap files #
 *.sw[po]
 
 # Compiled source #
@@ -12,10 +12,10 @@
 
 # Packages #
 #*.7z
-*.dmg
+#*.dmg
 #*.gz
-*.iso
-*.jar
+#*.iso
+#*.jar
 #*.rar
 #*.tar
 #*.zip
@@ -25,5 +25,5 @@
 *.sql
 *.sqlite
 
-# configs & options #
+# Others #
 .virtualenv

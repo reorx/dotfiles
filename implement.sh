@@ -71,8 +71,6 @@ function impl_zsh() {
     active_install zsh
     ln2home oh-my-zsh
     ln2home zshrc
-    # Will cause error if call under bash environment
-    # source "$HOME/.zshrc"
 }
 
 
@@ -95,15 +93,12 @@ function impl_git() {
 
 
 function impl_python() {
-    # echo "Install Python"
-    # echo "Install virtualenv"
-    echo ".pystartup"
     ln2home pystartup
 }
 
 
 function impl_moc() {
-    active_install mocp
+    active_install moc
     ln2home moc
 }
 
@@ -133,11 +128,36 @@ function conf_zsh() {
 
 function show_help() {
     cat <<EOF
-  Avaliable commands:
-    initialize [-f, --force]    : initialize everything, used for just installed computer
-    set name [-f, --force]      : set one dotfiles, override existing
-    configure name              : configure a software or dotfile class
+Usage: implement.sh [-i | -s name | -c name | -h]
+       require option arguments
+       non-option arguments is not needed
+Options:
+-i : Initialize everything, for virgin system.
+-u : Update all dotfiles implementations.
+-s : Set dotfiles specially.
+-c : Configure with <name>.
+-h : Show help information.
 EOF
+}
+
+function check_repos() {
+    if [ ! -e $INITED_FILE ]; then
+        echo "init repos first"
+        update_git
+        touch $INITED_FILE
+        # If this is done before command `update_git`,
+        # there will be no need to redo update,
+        # set a flag for later use.
+        FIRST_TIME="true"
+    fi
+}
+
+function set_dotfiles() {
+    for i in ${DOTFILES[@]}; do
+        echo "Setting $i's dotfiles"
+        eval "impl_$i"
+    done
+    rehash
 }
 
 
@@ -150,73 +170,67 @@ fi
 cd "$(dirname "$0")"
 
 # Main
-if [ "$1" == "help" ]; then
-    show_help
 
-elif [ "$1" == "test" ]; then
-    echo "test"
-    if [ $(cmd_installed chrome) ]; then
-        echo 'ok0'
-    fi
-    if [ $(cmd_installed make) ]; then
-        echo 'ok1'
-    fi
-
-else
-    # Following options needs repos to be inited & updated,
-    # let's do the check
-    if [ ! -e $INITED_FILE ]; then
-        echo "init repos first"
-        update_git
-        touch $INITED_FILE
-        # If this is done before command `update_git`,
-        # there will be no need to redo update,
-        # set a flag for later use.
-        FIRST_TIME="true"
-    fi
-
-    if [ "$1" == "initialize" ]; then
-
-        # Get force option
-        if [ "$2" == "--force" -o "$2" == "-f" ]; then
-            echo "set force to true"
-            FORCE_SET="true"
-        fi
-
-        echo "step 1. set dotfiles"
-        for i in ${DOTFILES[@]}; do
-            echo "Setting $i's dotfiles"
-            eval "impl_$i"
-        done
-
-        echo 'step 2. configure dotfiles classes'
-        conf_zsh
-
-        echo
-        echo "All done!"
-
-    elif [ "$1" == "set" ]; then
-        if [ -z $2 ]; then
-            echo "Please input the second argumenet"
+while getopts ":hTius:c:" opt; do
+    case $opt in
+        h)
+            show_help
             exit
-        fi
-
-        # Get force option
-        if [ "$3" == "--force" -o "$3" == "-f" ]; then
-            echo "set force to true"
-            FORCE_SET="true"
-        fi
-
-        eval "impl_$2"
-
-    elif [ "$1" == "configure" ]; then
-        if [ -z $2 ]; then
-            echo "Please input the second argumenet"
+            ;;
+        T)
+            echo "self test" >&2
             exit
-        fi
+            ;;
+        i)
+            check_repos
 
-        eval "conf_$2"
-    else
-        echo "Please input a valid command"
-    fi
-fi
+            echo "Initialize"
+
+            echo "Step 1. Set dotfiles"
+            set_dotfiles
+
+            echo 'Step 2. Configure zsh'
+            conf_zsh
+
+            echo "\nAll done!"
+            exit
+            ;;
+        u)
+            check_repos
+
+            FORCE_SET="true"
+
+            echo "Update dotfiles"
+            set_dotfiles
+
+            exit
+            ;;
+        s)
+            echo "Set $OPTARG"
+
+            FORCE_SET="true"
+
+            eval "impl_$OPTARG"
+
+            exit
+            ;;
+        c)
+            echo "Configure $OPTARG"
+
+            eval "conf_$OPTARG"
+
+            exit
+            ;;
+        \?)
+            echo "Invalid option: -$OPTARG"
+            exit 1
+            ;;
+        :)
+            echo "Option -$OPTARG requires an argument."
+            exit 1
+            ;;
+    esac
+done
+
+echo "Please input an option"
+show_help

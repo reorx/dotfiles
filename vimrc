@@ -4,6 +4,8 @@ set fileencodings=utf-8,chinese,latin-1
 
 set fileencoding=utf-8
 
+set fencs=utf-8,chinese
+
 if has("win32")
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
@@ -45,6 +47,7 @@ Bundle 'scrooloose/nerdcommenter'
 " required by FuzzyFinder
 " Bundle 'L9'
 " Bundle 'FuzzyFinder'
+Bundle 'godlygeek/tabular'
 
 Bundle 'Reorx/vim-colors-solarized'
 " Bundle 'jade.vim'
@@ -54,17 +57,21 @@ Bundle 'wavded/vim-stylus'
 " Bundle 'skammer/vim-css-color'
 Bundle 'lepture/vim-javascript'
 
+Bundle 'Lokaltog/vim-powerline'
+
 
 """""""""""
 " Plugins "
 """""""""""
 " flake8
+let g:flake8_ignore="E501,W806"
 autocmd FileType python map <buffer> <F9> :call Flake8()<CR>
 autocmd BufWritePost *.py call Flake8()
-let g:flake8_ignore="E501,W293"
+
 " supertab
 " Havn't got how it works, and cause problems when after dot char
 " let g:SuperTabDefaultCompletionType = "context"
+
 " nerdtree
 let NERDTreeWinPos='left'
 let NERDTreeWinSize=25
@@ -75,6 +82,7 @@ let NERDTreeChDirMode=1
 let NERDTreeMouseMode=2
 "let NERDTreeQuitOnOpen=1
 map <silent> <F4> :NERDTreeToggle<cr>
+
 " taglist
 let Tlist_Inc_Winwidth=0
 " let Tlist_WinWidth=20
@@ -87,6 +95,9 @@ let Tlist_Enable_Fold_Column=1
 let Tlist_Auto_Update=1
 " let Tlist_Use_SingleClick = 1
 map <silent> <F8> :TlistToggle<cr>
+
+" powerline
+" let g:Powerline_symbols = 'fancy'
 
 
 " Extra
@@ -195,10 +206,10 @@ else
 endif
 
 highlight Pmenu ctermbg=238 gui=bold
-highlight ExtraWhitespace ctermbg=black guibg=black
+highlight ExtraWhitespace ctermbg=red guibg=red
 " highlight TheTabShift ctermbg=red guibg=red
 
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=black guibg=black
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 " autocmd ColorScheme * highlight TheTabShift ctermbg=red guibg=red
 
 match ExtraWhitespace /\s\+$/
