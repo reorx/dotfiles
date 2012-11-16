@@ -31,7 +31,7 @@ call vundle#rc()
 
 " Bundles (from top to bottom in importance sequence)
 " required!
-"Bundle 'gmarik/vundle'
+Bundle 'gmarik/vundle'
 
 " basics
 Bundle 'SuperTab-continued.'
