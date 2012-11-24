@@ -49,7 +49,7 @@ Bundle 'scrooloose/nerdcommenter'
 " Bundle 'FuzzyFinder'
 Bundle 'godlygeek/tabular'
 
-Bundle 'Reorx/vim-colors-solarized'
+Bundle 'reorx/vim-colors-solarized'
 " Bundle 'jade.vim'
 Bundle 'digitaltoad/vim-jade'
 Bundle 'wavded/vim-stylus'
