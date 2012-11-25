@@ -152,3 +152,14 @@ Files
 
 ``~/.inputrc``
     Individual readline initialization file
+
+Proper way to implement on windows
+----------------------------------
+
+1. clone to $HOME
+
+2. cmd::
+
+    mklink /H _vimrc dotfiles\vimrc
+
+    mklink /J .vim dotfiles\vim
