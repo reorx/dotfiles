@@ -13,6 +13,9 @@ if has("win32")
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
     language messages zh_CN.utf-8
+    if has("gui_running")
+        set lines=999 columns=100
+    endif
 endif
 """""""""""""""""""
 " Vundle
@@ -120,7 +123,6 @@ set autoread " When a file has been detected to have been changed outside of Vim
 syntax on
 filetype plugin indent on " required by Vundle
 
-
 set ff=unix
 
 set backspace=indent,eol,start
@@ -190,9 +192,8 @@ set wildmenu " When 'wildmenu' is on, command-line completion operates in an enh
 "set wildchar=
 "set wildmode=
 set completeopt=menu,preview " A comma separated list of options for Insert mode completion
-set guioptions-=M
-set guioptions-=T
-set guifontset=Monospace\ 9
+
+set foldlevel=1
 
 " Color
 "
