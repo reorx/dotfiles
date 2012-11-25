@@ -33,31 +33,32 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 
-" basics
+" Enhancement
 Bundle 'SuperTab-continued.'
-Bundle 'taglist.vim'
 Bundle 'nvie/vim-flake8'
 Bundle 'mattn/zencoding-vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
-
-Bundle 'sessionman.vim'
 Bundle 'scratch.vim'
 Bundle 'scrooloose/nerdcommenter'
-" required by FuzzyFinder
-" Bundle 'L9'
-" Bundle 'FuzzyFinder'
 Bundle 'godlygeek/tabular'
+"Bundle 'sessionman.vim'
 
-Bundle 'reorx/vim-colors-solarized'
-" Bundle 'jade.vim'
+" Component
+Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
+Bundle 'taglist.vim'
+Bundle 'Lokaltog/vim-powerline'
+
+" Syntax
 Bundle 'digitaltoad/vim-jade'
 Bundle 'wavded/vim-stylus'
+Bundle 'lepture/vim-javascript'
 " Bundle 'wavded/vim-stylus'
 " Bundle 'skammer/vim-css-color'
-Bundle 'lepture/vim-javascript'
+" Bundle 'jade.vim'
 
-Bundle 'Lokaltog/vim-powerline'
+" Colorscheme
+Bundle 'endel/vim-github-colorscheme'
+Bundle 'reorx/vim-colors-solarized'
 
 
 """""""""""
@@ -80,7 +81,7 @@ let NERDChristmasTree=1
 let NERDTreeShowHidden=0
 let NERDTreeChDirMode=1
 let NERDTreeMouseMode=2
-"let NERDTreeQuitOnOpen=1
+let g:nerdtree_tabs_open_on_gui_startup=0
 map <silent> <F4> :NERDTreeToggle<cr>
 
 " taglist
@@ -197,12 +198,22 @@ set guifontset=Monospace\ 9
 " try to fild solarized on global path
 if !empty(globpath(&rtp, 'colors/caciano.vim'))
     colorscheme caciano
-elseif !empty(globpath(&rtp, 'colors/solarized.vim'))
-    " let g:solarized_termcolors=256
-    set background=dark
-    colorscheme solarized
 else
-    colorscheme torte
+    colorscheme default
+endif
+
+if has("gui_running")
+    set guioptions-=M
+    set guioptions-=T
+    if !empty(globpath(&rtp, 'colors/github.vim'))
+        colorscheme github
+    else
+        colorscheme murphy
+    endif
+    if has("gui_win32")
+        "set guifont=Consolas:h11:cANSI
+        set guifont=Consolas:h11:cDEFAULT
+    endif
 endif
 
 highlight Pmenu ctermbg=238 gui=bold
