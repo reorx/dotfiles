@@ -108,6 +108,25 @@ autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=red
 highlight TrailWhitespace ctermbg=red guibg=red
 match TrailWhitespace /\s\+$/
 
+
+"""""""""""""""""""
+" System Specials "
+"""""""""""""""""""
+if has("win32")
+    set rtp+=~/.vim/
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    language messages zh_CN.utf-8
+    if has("gui_running")
+        set lines=999 columns=100
+    endif
+endif
+
+if has("gui_running")
+    set mouse=a
+endif
+
+
 """"""""""
 " Colors "
 """"""""""
@@ -135,23 +154,6 @@ else
     highlight Pmenu ctermbg=0
     highlight PmenuSel ctermbg=4
     highlight PmenuSbar ctermbg=7
-endif
-
-
-"""""""""""""""""""
-" System Specials "
-"""""""""""""""""""
-if has("win32")
-    source $VIMRUNTIME/delmenu.vim
-    source $VIMRUNTIME/menu.vim
-    language messages zh_CN.utf-8
-    if has("gui_running")
-        set lines=999 columns=100
-    endif
-endif
-
-if has("gui_running")
-    set mouse=a
 endif
 
 
