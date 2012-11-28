@@ -172,6 +172,6 @@ function sshch() {
     ssh -qTNv -D 7070 $@
 }
 
-function set_http_proxy() {
-    export http_proxy="http://$@"
+function use_proxy() {
+    export http_proxy="$(cat ~/.shell_proxy)"
 }

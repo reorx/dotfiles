@@ -1,138 +1,43 @@
 " Author: reorx
-"
 
-" File Encoding
+" Should at the top since it will affect bundles.vim
+"set t_Co=256
+
+""""""""""""""""
+" Load Bundles "
+""""""""""""""""
+source ~/.vim/bundles.vim
+
+
+"""""""""""
+" General "
+"""""""""""
+" Encoding
 set encoding=utf-8
 set fileencodings=utf-8,chinese,latin-1
-
 set fileencoding=utf-8
-
 set fencs=utf-8,chinese
 
-if has("win32")
-    source $VIMRUNTIME/delmenu.vim
-    source $VIMRUNTIME/menu.vim
-    language messages zh_CN.utf-8
-    if has("gui_running")
-        set lines=999 columns=100
-    endif
-endif
-"""""""""""""""""""
-" Vundle
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
-"""""""""""""""""""
-set nocompatible               " be iMproved
-filetype off                   " required!
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-" Bundles (from top to bottom in importance sequence)
-" required!
-Bundle 'gmarik/vundle'
-
-" Enhancement
-Bundle 'SuperTab-continued.'
-Bundle 'nvie/vim-flake8'
-Bundle 'mattn/zencoding-vim'
-Bundle 'scratch.vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'godlygeek/tabular'
-"Bundle 'sessionman.vim'
-
-" Component
-Bundle 'scrooloose/nerdtree'
-Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'taglist.vim'
-Bundle 'Lokaltog/vim-powerline'
-
-" Syntax
-Bundle 'digitaltoad/vim-jade'
-Bundle 'wavded/vim-stylus'
-Bundle 'lepture/vim-javascript'
-" Bundle 'wavded/vim-stylus'
-" Bundle 'skammer/vim-css-color'
-" Bundle 'jade.vim'
-
-" Colorscheme
-Bundle 'endel/vim-github-colorscheme'
-Bundle 'reorx/vim-colors-solarized'
-
-
-"""""""""""
-" Plugins "
-"""""""""""
-" flake8
-let g:flake8_ignore="E501,W806"
-autocmd FileType python map <buffer> <F9> :call Flake8()<CR>
-autocmd BufWritePost *.py call Flake8()
-
-" supertab
-" Havn't got how it works, and cause problems when after dot char
-" let g:SuperTabDefaultCompletionType = "context"
-
-" nerdtree
-let NERDTreeWinPos='left'
-let NERDTreeWinSize=25
-let NERDTreeAutoCenter=1
-let NERDChristmasTree=1
-let NERDTreeShowHidden=0
-let NERDTreeChDirMode=1
-let NERDTreeMouseMode=2
-let g:nerdtree_tabs_open_on_gui_startup=0
-map <silent> <F4> :NERDTreeToggle<cr>
-
-" taglist
-let Tlist_Inc_Winwidth=0
-" let Tlist_WinWidth=20
-let Tlist_Auto_Highlight_Tag=1
-let Tlist_Show_One_File=1
-let Tlist_Use_Right_Window=1
-let Tlist_Exit_OnlyWindow=1
-let Tlist_Auto_Open=0
-let Tlist_Enable_Fold_Column=1
-let Tlist_Auto_Update=1
-" let Tlist_Use_SingleClick = 1
-map <silent> <F8> :TlistToggle<cr>
-
-" powerline
-" let g:Powerline_symbols = 'fancy'
-
-
-" Extra
-"set list!
-"set listchars=tab:··,trail:·
-
-" System
-set nocompatible
-
-" General
-set nobackup
-set history=5
-set autoread " When a file has been detected to have been changed outside of Vim and
-"              it has not been changed inside of Vim, automatically read it again.
-"              When the file has been deleted this is not done.
 syntax on
 filetype plugin indent on " required by Vundle
 
-set ff=unix
+set history=100
+set nobackup
+set autoread " When a file has been detected to have been changed outside of Vim and
+"              it has not been changed inside of Vim, automatically read it again.
+"              When the file has been deleted this is not done.
 
+set ff=unix
 set backspace=indent,eol,start
+
 " Indent
 set smarttab " a <Tab> in front of a line inserts blanks according to
 "              'shiftwidth'.  'tabstop' or 'softtabstop' is used in other places
 set shiftwidth=4 " Number of spaces to use for each step of (auto)indent.
-set tabstop=4 " Number of spaces that a <Tab> in the file counts for. 
+set tabstop=4 " Number of spaces that a <Tab> in the file counts for.
 set softtabstop=4  " Number of spaces that a <Tab> counts for while performing editing
 "                    operations, like inserting a <Tab> or using <BS>.
+set autoindent " Copy indent from current line when starting a new line
 set expandtab " In Insert mode: Use the appropriate number of spaces to insert a
 "               <Tab>.  Spaces are used in indents with the '>' and '<' commands and
 "               when 'autoindent' is on.  To insert a real tab when 'expandtab' is
@@ -140,37 +45,40 @@ set expandtab " In Insert mode: Use the appropriate number of spaces to insert a
 "               Set 'tabstop' and 'shiftwidth' to whatever you prefer and use
 "               'expandtab'.  This way you will always insert spaces.  The
 "               formatting will never be messed up when 'tabstop' is changed.
-" set smartindent " Do smart autoindenting when starting a new line.  Works for C-like
+set smartindent " Do smart autoindenting when starting a new line.  Works for C-like
 "                 programs, but can also be used for other languages.  'cindent' does
 "                 something like this, works better in most cases, but is more strict
-set autoindent " Copy indent from current line when starting a new line
-retab " Replace all sequences of white-space containing a
-"       <Tab> with new strings of white-space using the new
-"       tabstop value given.  If you do not specify a new
-"       tabstop size or it is zero, Vim uses the current value
-"       of 'tabstop'.
-"       The current value of 'tabstop' is always used to
-"       compute the width of existing tabs.
-"       With !, Vim also replaces strings of only normal
-"       spaces with tabs where appropriate.
-"       With 'expandtab' on, Vim replaces all tabs with the
-"       appropriate number of spaces.
-"       This command sets 'tabstop' to the new value given,
-"       and if performed on the whole file, which is default,
-"       should not make any visible change.
-"       Careful: This command modifies any <Tab> characters
-"       inside of strings in a C program.  Use "\t" to avoid
-"       this (that's a good habit anyway).
-"       ":retab!" may also change a sequence of spaces by
-"       <Tab> characters, which can mess up a printf().
-"       {not in Vi}
-"       Not available when |+ex_extra| feature was disabled at
-"       compile time.
 
 " Search
 set hlsearch
 set incsearch
 set smartcase
+set ignorecase
+set scrolloff=5
+
+" Tabs
+set tabpagemax=7
+set showtabline=2
+map tn :tabnew .<cr>
+map tc :tabclose<cr>
+
+" Fold
+set foldmethod=indent
+set foldlevel=2
+
+" Storage
+" centralize backups, swapfiles and undo history
+set backupdir=~/.vim/.backups
+set directory=~/.vim/.swaps
+if exists("&undodir")
+    set undodir=~/.vim/.undo
+endif
+
+" File Specials
+autocmd FileType text setlocal textwidth=80
+autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+autocmd FileType jade setlocal shiftwidth=2 tabstop=2
+autocmd FileType stylus setlocal shiftwidth=2 tabstop=2
 
 " Display
 set ruler " Show the line and column number of the cursor position, separated by a comma.
@@ -192,19 +100,18 @@ set wildmenu " When 'wildmenu' is on, command-line completion operates in an enh
 "set wildchar=
 "set wildmode=
 set completeopt=menu,preview " A comma separated list of options for Insert mode completion
+" tab characters display dot
+set list!
+set listchars=tab:>-
+" highlight trailing whitespace
+autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=red
+highlight TrailWhitespace ctermbg=red guibg=red
+match TrailWhitespace /\s\+$/
 
-set foldlevel=1
-
-" Color
-"
-" set t_Co=256
-
-" try to fild solarized on global path
-if !empty(globpath(&rtp, 'colors/caciano.vim'))
-    colorscheme caciano
-else
-    colorscheme default
-endif
+""""""""""
+" Colors "
+""""""""""
+colorscheme caciano
 
 if has("gui_running")
     set guioptions-=M
@@ -214,73 +121,160 @@ if has("gui_running")
     else
         colorscheme murphy
     endif
-    if has("gui_win32")
+    if has("win32")
         "set guifont=Consolas:h11:cANSI
         set guifont=Consolas:h11:cDEFAULT
     endif
 endif
 
-highlight Pmenu ctermbg=238 gui=bold
-highlight ExtraWhitespace ctermbg=red guibg=red
-" highlight TheTabShift ctermbg=red guibg=red
-
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-" autocmd ColorScheme * highlight TheTabShift ctermbg=red guibg=red
-
-match ExtraWhitespace /\s\+$/
-" match TheTabShift /\t/
-
-" Fold
-"set fold
-set foldmethod=indent
-
-
-" Options
-"set noswapfile
-
-" setlocal omnifunc=pysmell
-
-
-" Tabs
-set tabpagemax=7
-set showtabline=2
-map <C-n> :tabnext<cr>
-map <C-p> :tabprevious<cr>
-map tn :tabnew .<cr>
-map tc :tabclose<cr>
-
-
-" Files
-autocmd FileType text setlocal textwidth=80
-autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-autocmd FileType jade setlocal shiftwidth=2 tabstop=2
-autocmd FileType stylus setlocal shiftwidth=2 tabstop=2
-
-" Keymaps
-inoremap <C-U> <C-G>u<C-U>
-" Fix syntax highlighting,
-" further reading: http://vim.wikia.com/wiki/Fix_syntax_highlighting?diff=33340&oldid=prev
-noremap <F5> <Esc>:syntax sync fromstart<CR>
-inoremap <F5> <C-o>:syntax sync fromstart<CR>
-
-
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/.backups
-set directory=~/.vim/.swaps
-if exists("&undodir")
-	set undodir=~/.vim/.undo
+if has("gui_running") || &t_Co == 256
+    highlight Pmenu ctermbg=234 guibg=#606060
+    highlight PmenuSel ctermbg=17 guifg=#dddd00
+    highlight PmenuSbar ctermbg=17 guibg=#d6d6d6
+else
+    highlight Pmenu ctermbg=0
+    highlight PmenuSel ctermbg=4
+    highlight PmenuSbar ctermbg=7
 endif
-" Ignore case of searches
-set ignorecase
 
-" Strip trailing whitespace (,ss)
+
+"""""""""""""""""""
+" System Specials "
+"""""""""""""""""""
+if has("win32")
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+    language messages zh_CN.utf-8
+    if has("gui_running")
+        set lines=999 columns=100
+    endif
+endif
+
+if has("gui_running")
+    set mouse=a
+endif
+
+
+""""""""""""""""""""
+" Custom Functions "
+""""""""""""""""""""
+
+" Strip trailing whitespace (\ss)
 function! StripWhitespace()
-	let save_cursor = getpos(".")
-	let old_query = getreg('/')
-	:%s/\s\+$//e
-	call setpos('.', save_cursor)
-	call setreg('/', old_query)
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    :%s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
 endfunction
+
+" When editing a file, always jump to the last cursor position
+autocmd BufReadPost *
+      \ if ! exists("g:leave_my_cursor_position_alone") |
+      \     if line("'\"") > 0 && line ("'\"") <= line("$") |
+      \         exe "normal g'\"" |
+      \     endif |
+      \ endif
+
+"""""""""""
+" Plugins "
+"""""""""""
+" nerdtree
+let NERDTreeWinPos='left'
+let NERDTreeWinSize=25
+let NERDTreeAutoCenter=1
+let NERDChristmasTree=1
+let NERDTreeShowHidden=0
+let NERDTreeChDirMode=1
+let NERDTreeMouseMode=2
+let g:nerdtree_tabs_open_on_gui_startup=0
+
+" tagbar
+let g:tagbar_left=0
+let g:tagbar_width=25
+
+"indent guide
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
+let g:indent_guides_auto_colors=0
+hi IndentGuidesOdd  guibg=darkgrey ctermbg=darkgrey
+hi IndentGuidesEven guibg=darkgrey ctermbg=darkgrey
+
+" rainbow parentheses
+" 'lightgray' is 'red' originally
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['lightgray',         'firebrick3'],
+    \ ]
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" neocomplcache
+" Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.
+let g:acp_enableAtStartup=0
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_disable_auto_complete=1
+let g:neocomplcache_max_list=20
+let g:neocomplcache_enable_ignore_case=0
+let g:neocomplcache_min_syntax_length=3
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+
+" supertab compatibility with neocomplcache
+let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+let g:SuperTabRetainCompletionType=2
+
+" flake8
+" let g:flake8_ignore="E501,W806"
+
+" powerline
+" let g:Powerline_symbols = 'fancy'
+
+
+"""""""""""
+" Keymaps "
+"""""""""""
+nmap <F8> :TagbarToggle<cr>
+nmap <F4> :NERDTreeToggle<cr>
+nmap <F7> :GundoToggle<cr>
+nmap <F10> :IndentGuidesToggle<cr>
 noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
+
+" easier navigation between split windows
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+map <C-n> :tabnext<cr>
+map <C-p> :tabprevious<cr>
+
+" recover from accidental Ctrl-U
+inoremap <C-U> <C-G>u<C-U>
+inoremap <c-w> <c-g>u<c-w>
+
+" Fix syntax highlighting,
+noremap <F5> <Esc>:syntax sync fromstart<CR>
+inoremap <F5> <C-o>:syntax sync fromstart<CR>
+
+" :map <F2> :w\|!python %<CR>
