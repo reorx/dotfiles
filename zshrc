@@ -119,9 +119,10 @@ suite_virtualenv
 
 hash -d desktop="/home/reorx/Desktop"
 hash -d music="/home/reorx/Music"
-hash -d picture="/home/reorx/Pictures"
-hash -d download="/home/reorx/Downloads"
-hash -d document="/home/reorx/Documents"
+hash -d pictures="/home/reorx/Pictures"
+hash -d downloads="/home/reorx/Downloads"
+hash -d documents="/home/reorx/Documents"
+hash -d softwares="/home/reorx/Softwares"
 hash -d dropbox="/home/reorx/Dropbox"
 hash -d workspace="/home/reorx/workspace"
 
@@ -130,33 +131,33 @@ hash -d lab="/home/reorx/workspace/lab"
 
 # Create a data URL from an image (works for other file types too, if you tweak the Content-Type afterwards)
 dataurl() {
-	echo "data:image/${1##*.};base64,$(openssl base64 -in "$1")" | tr -d '\n'
+    echo "data:image/${1##*.};base64,$(openssl base64 -in "$1")" | tr -d '\n'
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
-	local port="${1:-8000}"
-	open "http://localhost:${port}/"
-	# Set the default Content-Type to `text/plain` instead of `application/octet-stream`
-	# And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
-	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+    local port="${1:-8000}"
+    open "http://localhost:${port}/"
+    # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+    # And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
+    python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
 # Syntax-highlight JSON strings or files
 function json() {
-	if [ -p /dev/stdin ]; then
-		# piping, e.g. `echo '{"foo":42}' | json`
-		python -mjson.tool | pygmentize -l javascript
-	else
-		# e.g. `json '{"foo":42}'`
-		python -mjson.tool <<< "$*" | pygmentize -l javascript
-	fi
+    if [ -p /dev/stdin ]; then
+        # piping, e.g. `echo '{"foo":42}' | json`
+        python -mjson.tool | pygmentize -l javascript
+    else
+        # e.g. `json '{"foo":42}'`
+        python -mjson.tool <<< "$*" | pygmentize -l javascript
+    fi
 }
 
 # Get a character's Unicode code point
 function codepoint() {
-	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
-	echo # newline
+    perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+    echo # newline
 }
 
 function clean_pyc() {

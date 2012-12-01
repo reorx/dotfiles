@@ -32,6 +32,7 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'nathanaelkane/vim-indent-guides'
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'mileszs/ack.vim'
+Bundle 'tpope/vim-markdown'
 
 " Component
 Bundle 'majutsushi/tagbar'
@@ -42,6 +43,8 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'sjl/gundo.vim'
 "Bundle 'kien/ctrlp.vim'
 "Bundle 'tpope/vim-fugitive'  "git wrapper
+"Bundle 'fs111/pydoc.vim'
+"Bundle 'benmills/vimux'
 
 " Syntax
 Bundle 'digitaltoad/vim-jade'
