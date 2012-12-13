@@ -6,7 +6,10 @@
 """"""""""""""""
 " Load Bundles "
 """"""""""""""""
-source ~/.vim/bundles.vim
+
+" so that it can be easily accessed
+let $MYBUNDLES='~/.vim/bundles.vim'
+source $MYBUNDLES
 
 
 """""""""""
@@ -108,6 +111,9 @@ set listchars=tab:>-
 autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=red
 highlight TrailWhitespace ctermbg=red guibg=red
 match TrailWhitespace /\s\+$/
+
+" get rid of the fucking preview window
+set completeopt-=preview
 
 
 """""""""""""""""""
@@ -230,22 +236,20 @@ au Syntax * RainbowParenthesesLoadBraces
 
 " neocomplcache
 " Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.
-let g:acp_enableAtStartup=0
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_disable_auto_complete=1
-let g:neocomplcache_max_list=20
-let g:neocomplcache_enable_ignore_case=0
-let g:neocomplcache_min_syntax_length=3
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-" get rid of the fucking preview window
-set completeopt-=preview
+"let g:acp_enableAtStartup=0
+"let g:neocomplcache_enable_at_startup=1
+"let g:neocomplcache_disable_auto_complete=1
+"let g:neocomplcache_max_list=20
+"let g:neocomplcache_enable_ignore_case=0
+"let g:neocomplcache_min_syntax_length=3
+"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 
 " supertab compatibility with neocomplcache
-let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-let g:SuperTabRetainCompletionType=2
+"let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+"let g:SuperTabRetainCompletionType=2
 
 " flake8
 " let g:flake8_ignore="E501,W806"
@@ -253,6 +257,9 @@ let g:SuperTabRetainCompletionType=2
 " powerline
 " let g:Powerline_symbols = 'fancy'
 
+" syntastic
+let g:syntastic_python_checker = 'flake8'
+let g:syntastic_python_checker_args='--ignore=E501,W404,W801'
 
 """""""""""
 " Keymaps "

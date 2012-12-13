@@ -4,6 +4,8 @@
 !.swaps/.gitignore
 .undo/*
 !.undo/.gitignore
+sessions/*
+!sessions/.gitignore
 
 bundle/*/
 !bundle/vundle/

@@ -71,7 +71,7 @@ source $PYTHONENV/bin/virtualenvwrapper.sh
 alias fb="nautilus"
 alias enca_utf8="enca -L zh_CN -x utf-8"
 alias pdb="python -m pdb"
-alias vim="vim -p"
+#alias vim="vim -p"
 alias tree="tree --dirsfirst"
 # List only directories
 alias lsd='ls -l | grep "^d"'
@@ -79,7 +79,7 @@ alias lla='ls -la'
 # File size
 alias fs="stat -f \"%z bytes\""
 
-alias sublime="/home/reorx/Software/SublimeText2/sublime_text"
+alias sublime="/home/reorx/Softwares/SublimeText2/sublime_text"
 
 # Solarized color terminal theme setup
 # eval `dircolors ~/.dircolors`
@@ -175,4 +175,8 @@ function sshch() {
 
 function use_proxy() {
     export http_proxy="$(cat ~/.shell_proxy)"
+}
+
+function dp() {
+    dolphin $@ &
 }

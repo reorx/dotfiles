@@ -22,11 +22,11 @@ Bundle 'gmarik/vundle'
 
 " Enhancement
 Bundle 'SuperTab-continued.'
-Bundle 'Shougo/neocomplcache'
+"Bundle 'Shougo/neocomplcache'
 Bundle 'mattn/zencoding-vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'godlygeek/tabular'
-Bundle 'sessionman.vim'
+"Bundle 'sessionman.vim'
 Bundle 'humiaozuzu/fcitx-status'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'nathanaelkane/vim-indent-guides'
