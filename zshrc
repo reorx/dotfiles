@@ -62,6 +62,7 @@ export LANG="en_US"
 unsetopt correct_all
 
 # for virtualenvwrapper
+export PATH=$PYTHONENV/bin:$PATH
 export VIRTUALENVWRAPPER_PYTHON=$PYTHONENV/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONENV/bin/virtualenv
 export WORKON_HOME=$PYTHONENV/virtualenvs

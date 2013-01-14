@@ -1,9 +1,9 @@
 [user]
     name = Reorx
-    email = reorx@nodemix.com
+    email = novoreorx@gmail.com
 [core]
     editor = vim
-	excludesfile = /home/reorx/.gitignore_global
+    excludesfile = /home/reorx/.gitignore_global
 [alias]
     st = status
     aa = add -A
@@ -16,24 +16,24 @@
 [color]
     ui = true
 [merge]
-	# Include summaries of merged commits in newly created merge commit messages
+    # Include summaries of merged commits in newly created merge commit messages
     log = true
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+    added = yellow
+    changed = green
+    untracked = cyan
 
 # URL shorthands
 [url "git@github.com:"]
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
 [url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
 
 [url "git://github.com/"]
-	insteadOf = "github:"
+    insteadOf = "github:"
 [url "git://gist.github.com/"]
-	insteadOf = "gist:"
+    insteadOf = "gist:"

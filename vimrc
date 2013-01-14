@@ -199,6 +199,7 @@ let NERDTreeMouseMode=2
 let g:nerdtree_tabs_open_on_gui_startup=0
 
 " tagbar
+let g:tagbar_sort=0
 let g:tagbar_left=0
 let g:tagbar_width=25
 
@@ -261,6 +262,9 @@ au Syntax * RainbowParenthesesLoadBraces
 let g:syntastic_python_checker = 'flake8'
 let g:syntastic_python_checker_args='--ignore=E501,W404,W801'
 
+let g:syntastic_mode_map = { 'mode': 'active',
+                           \ 'active_filetypes': ['python', 'javascript'],
+                           \ 'passive_filetypes': ['rst'] }
 """""""""""
 " Keymaps "
 """""""""""

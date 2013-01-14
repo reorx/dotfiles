@@ -27,3 +27,6 @@
 
 # Others #
 .virtualenv
+
+# Python #
+*.egg-info/
