@@ -52,7 +52,7 @@ RPROMPT='$(GET_RPROMPT)'
 
 export NODE_PATH=/usr/lib/node_modules
 export PYTHONENV=$HOME/Envs/Python
-export PYTHONSTARTUP=$HOME/.pystartup
+export PYTHONSTARTUP=$HOME/.pythonrc.py
 # export PATH=$PYTHONENV/bin:$PATH
 
 # Prefer US English and use UTF-8
