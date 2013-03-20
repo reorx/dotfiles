@@ -52,6 +52,7 @@ set expandtab " In Insert mode: Use the appropriate number of spaces to insert a
 set smartindent " Do smart autoindenting when starting a new line.  Works for C-like
 "                 programs, but can also be used for other languages.  'cindent' does
 "                 something like this, works better in most cases, but is more strict
+inoremap # X<BS>#
 
 " Search
 set hlsearch
@@ -233,7 +234,7 @@ let g:rbpt_colorpairs = [
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+"au Syntax * RainbowParenthesesLoadBraces
 
 " neocomplcache
 " Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.

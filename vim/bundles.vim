@@ -47,8 +47,9 @@ Bundle 'sjl/gundo.vim'
 "Bundle 'benmills/vimux'
 
 " Syntax
-Bundle 'digitaltoad/vim-jade'
-Bundle 'wavded/vim-stylus'
+"Bundle 'digitaltoad/vim-jade'
+"Bundle 'wavded/vim-stylus'
+Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
 Bundle 'lepture/vim-javascript'
 " Bundle 'skammer/vim-css-color'
 
