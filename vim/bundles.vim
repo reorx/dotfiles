@@ -45,6 +45,8 @@ Bundle 'sjl/gundo.vim'
 "Bundle 'tpope/vim-fugitive'  "git wrapper
 "Bundle 'fs111/pydoc.vim'
 "Bundle 'benmills/vimux'
+Bundle 'tpope/vim-surround'
+Bundle 'motemen/git-vim'
 
 " Syntax
 "Bundle 'digitaltoad/vim-jade'

@@ -53,7 +53,7 @@ RPROMPT='$(GET_RPROMPT)'
 export NODE_PATH=/usr/lib/node_modules
 export PYTHONENV=$HOME/Envs/Python
 export PYTHONSTARTUP=$HOME/.pythonrc.py
-# export PATH=$PYTHONENV/bin:$PATH
+export PATH=$PYTHONENV/bin:$PATH
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
@@ -62,7 +62,7 @@ export LANG="en_US"
 unsetopt correct_all
 
 # for virtualenvwrapper
-export PATH=$PYTHONENV/bin:$PATH
+#export PATH=$PYTHONENV/bin:$PATH
 export VIRTUALENVWRAPPER_PYTHON=$PYTHONENV/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONENV/bin/virtualenv
 export WORKON_HOME=$PYTHONENV/virtualenvs
@@ -81,6 +81,7 @@ alias lla='ls -la'
 alias fs="stat -f \"%z bytes\""
 
 alias sublime="/home/reorx/Softwares/SublimeText2/sublime_text"
+alias t='python ~/workspace/lab/t/t.py --task-dir /home/reorx/Documents/Tasks --list tasks.txt --delete-if-empty'
 
 # Solarized color terminal theme setup
 # eval `dircolors ~/.dircolors`
@@ -129,6 +130,7 @@ hash -d workspace="/home/reorx/workspace"
 
 hash -d current="/home/reorx/workspace/current"
 hash -d lab="/home/reorx/workspace/lab"
+hash -d sohu="/home/reorx/workspace/sohu"
 
 # Create a data URL from an image (works for other file types too, if you tweak the Content-Type afterwards)
 dataurl() {
@@ -180,4 +182,8 @@ function use_proxy() {
 
 function dp() {
     dolphin $@ &
+}
+
+function github-clone() {
+    git clone git@github.com:$1.git
 }

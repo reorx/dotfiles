@@ -93,7 +93,7 @@ function impl_git() {
 
 
 function impl_python() {
-    ln2home pystartup
+    ln2home pythonrc.py
 }
 
 

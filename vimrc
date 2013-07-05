@@ -261,7 +261,8 @@ au Syntax * RainbowParenthesesLoadSquare
 
 " syntastic
 let g:syntastic_python_checker = 'flake8'
-let g:syntastic_python_checker_args='--ignore=E501,W404,W801'
+"let g:syntastic_python_checker_args='--ignore=E501,W404,W801'
+let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
 
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['python', 'javascript'],
