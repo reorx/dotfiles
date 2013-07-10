@@ -260,7 +260,7 @@ au Syntax * RainbowParenthesesLoadSquare
 " let g:Powerline_symbols = 'fancy'
 
 " syntastic
-let g:syntastic_python_checker = 'flake8'
+let g:syntastic_python_checkers = ['flake8']
 "let g:syntastic_python_checker_args='--ignore=E501,W404,W801'
 let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
 
