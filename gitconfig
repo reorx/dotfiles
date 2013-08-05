@@ -9,7 +9,7 @@
     aa = add -A
     ci = commit
     cim = commit -m
-    lg = log --graph --pretty=oneline --abbrev-commit --decorate
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     last3 = log -3
     undopush = push -f origin HEAD^:master
     undocommit = reset --soft HEAD^
