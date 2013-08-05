@@ -71,7 +71,7 @@ source $PYTHONENV/bin/virtualenvwrapper.sh
 alias fb="nautilus"
 alias enca_utf8="enca -L zh_CN -x utf-8"
 alias pdb="python -m pdb"
-#alias vim="vim -p"
+alias vim="vim -p"
 alias tree="tree --dirsfirst"
 # List only directories
 alias lsd='ls -l | grep "^d"'
