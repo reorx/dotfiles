@@ -30,7 +30,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git pip)
+plugins=(pip fabric supervisor)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -81,6 +81,12 @@ alias fs="stat -f \"%z bytes\""
 
 alias sublime="/home/reorx/Softwares/SublimeText2/sublime_text"
 alias t='python ~/workspace/lab/t/t.py --task-dir /home/reorx/Documents/Tasks --list tasks.txt --delete-if-empty'
+
+
+# History search
+bindkey "^[[A" history-search-backward
+
+bindkey "^[[B" history-search-forward
 
 # Solarized color terminal theme setup
 # eval `dircolors ~/.dircolors`
@@ -184,5 +190,5 @@ function dp() {
 }
 
 function github-clone() {
-    git clone git@github.com:$1.git
+    git clone git@github.com:$1.git $2
 }
