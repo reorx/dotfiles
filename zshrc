@@ -55,6 +55,17 @@ export PYTHONENV=$HOME/Envs/Python
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export PATH=$PYTHONENV/bin:$PATH
 
+function switch_python() {
+    if [[ ${PATH#$PYTHONENV/bin} == $PATH ]]; then
+        echo 'Switch to make-installed Python'
+        export PATH=$PYTHONENV/bin:$PATH
+    else
+        echo 'Switch to system Python'
+        export PATH=${PATH#$PYTHONENV/bin}
+    fi
+
+}
+
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"

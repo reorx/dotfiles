@@ -1,7 +1,7 @@
 " Author: reorx
 
 " Should at the top since it will affect bundles.vim
-"set t_Co=256
+set t_Co=256
 
 """"""""""""""""
 " Load Bundles "
@@ -120,50 +120,38 @@ set completeopt-=preview
 """""""""""""""""""
 " System Specials "
 """""""""""""""""""
-if has("win32")
-    set rtp+=~/.vim/
-    source $VIMRUNTIME/delmenu.vim
-    source $VIMRUNTIME/menu.vim
-    language messages zh_CN.utf-8
-    if has("gui_running")
-        set lines=999 columns=100
-    endif
-endif
+"if has("win32")
+    "set rtp+=~/.vim/
+    "source $VIMRUNTIME/delmenu.vim
+    "source $VIMRUNTIME/menu.vim
+    "language messages zh_CN.utf-8
+    "if has("gui_running")
+        "set lines=999 columns=100
+    "endif
+"endif
 
-if has("gui_running")
-    set mouse=a
-endif
+set mouse=a
 
 
 """"""""""
 " Colors "
 """"""""""
-colorscheme caciano
-
-if has("gui_running")
-    set guioptions-=M
-    set guioptions-=T
-    if !empty(globpath(&rtp, 'colors/github.vim'))
-        colorscheme github
-    else
-        colorscheme murphy
-    endif
-    if has("win32")
-        "set guifont=Consolas:h11:cANSI
-        set guifont=Consolas:h11:cDEFAULT
-    endif
-endif
-
-if has("gui_running") || &t_Co == 256
+if &t_Co == 256
+    colorscheme Tomorrow-Night-Bright
     highlight Pmenu ctermbg=234 guibg=#606060
     highlight PmenuSel ctermbg=17 guifg=#dddd00
     highlight PmenuSbar ctermbg=17 guibg=#d6d6d6
 else
+    colorscheme caciano
     highlight Pmenu ctermbg=0
     highlight PmenuSel ctermbg=4
     highlight PmenuSbar ctermbg=7
 endif
 
+"if has("gui_running")
+    "set guioptions-=M
+    "set guioptions-=T
+"endif
 
 """"""""""""""""""""
 " Custom Functions "
@@ -197,6 +185,7 @@ let NERDChristmasTree=1
 let NERDTreeShowHidden=0
 let NERDTreeChDirMode=1
 let NERDTreeMouseMode=2
+let NERDTreeIgnore = ['\.pyc$']
 let g:nerdtree_tabs_open_on_gui_startup=0
 
 " tagbar
@@ -257,7 +246,8 @@ au Syntax * RainbowParenthesesLoadSquare
 " let g:flake8_ignore="E501,W806"
 
 " powerline
-" let g:Powerline_symbols = 'fancy'
+"set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+"let g:Powerline_symbols = 'fancy'
 
 " syntastic
 let g:syntastic_python_checkers = ['flake8']
