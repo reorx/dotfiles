@@ -55,7 +55,9 @@ Bundle 'mileszs/ack.vim'
 " file searching
 Bundle 'kien/ctrlp.vim'
 " bottom status line
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle 'Lokaltog/vim-powerline'
+"Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+"Bundle 'bling/vim-airline'
 " change tracking
 Bundle 'sjl/gundo.vim'
 " start page
@@ -168,6 +170,12 @@ au Syntax * RainbowParenthesesLoadSquare
 " supertab compatibility with neocomplcache
 "let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
 "let g:SuperTabRetainCompletionType=2
+
+" airline
+" let g:airline_powerline_fonts = 1
+
+" powerline
+let g:Powerline_symbols = 'compatible'
 
 " syntastic
 let g:syntastic_python_checkers = ['flake8']
