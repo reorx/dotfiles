@@ -179,6 +179,8 @@ let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['python', 'javascript'],
                            \ 'passive_filetypes': ['rst'] }
+" Not setting the loclist by default is the intended behaviour. Previously we did set it, but syntastic isnt the only plugin using loclists. See #324
+let g:syntastic_always_populate_loc_list=1
 
 " ack
 set shellpipe=&>
