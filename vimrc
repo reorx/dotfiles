@@ -1,7 +1,7 @@
 " Author: reorx
 
 " Should at the top since it will affect bundles.vim
-"set t_Co=256
+set t_Co=256
 
 """"""""""""""""
 " Load Bundles "
