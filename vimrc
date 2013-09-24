@@ -200,7 +200,7 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-map tn :tabnew .<cr>
+map tn :tabnew<cr>
 map tc :tabclose<cr>
 map <C-n> :tabnext<cr>
 map <C-p> :tabprevious<cr>
