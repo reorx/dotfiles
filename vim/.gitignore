@@ -9,3 +9,5 @@ sessions/*
 
 bundle/*/
 !bundle/vundle/
+
+.netrwhist
