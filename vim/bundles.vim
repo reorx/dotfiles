@@ -215,4 +215,5 @@ let g:startify_custom_header = [
     \ '                                                  `Y88K',
     \ '                                                    `Y8',
     \ '                                                      ''',
+    \ '',
     \ ]

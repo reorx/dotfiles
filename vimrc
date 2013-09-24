@@ -66,7 +66,8 @@ set showtabline=2
 
 " Fold
 set foldmethod=indent
-set foldlevel=2
+"set foldlevel=2
+set nofoldenable
 
 " Storage
 " centralize backups, swapfiles and undo history
@@ -230,7 +231,7 @@ endif
 
 "TODO sequence number on tabline
 
-hi TabLine           cterm=underline ctermfg=0    ctermbg=7   gui=underline guibg=#6c6c6c guifg=White
+hi TabLine           cterm=underline ctermfg=0     ctermbg=7   gui=underline guibg=#6c6c6c guifg=White
 hi TabLineSel        cterm=bold      gui=NONE      guifg=White
 hi TabLineFill       cterm=reverse   gui=reverse
 " Reload Vimrc
