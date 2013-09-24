@@ -179,3 +179,9 @@ let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['python', 'javascript'],
                            \ 'passive_filetypes': ['rst'] }
+
+" ack
+set shellpipe=&>
+
+" ctrlp
+let g:ctrlp_map = '<c-i>'
