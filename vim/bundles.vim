@@ -21,55 +21,76 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " Enhancement
+" complement
 Bundle 'SuperTab-continued.'
-"Bundle 'Shougo/neocomplcache'
+" easy commentting
 Bundle 'mattn/zencoding-vim'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'godlygeek/tabular'
-"Bundle 'sessionman.vim'
 Bundle 'humiaozuzu/fcitx-status'
+" bracket highlighting
 Bundle 'kien/rainbow_parentheses.vim'
+" indentation ruler
 Bundle 'nathanaelkane/vim-indent-guides'
+" key maps
+Bundle 'tpope/vim-unimpaired'
+" manipulate surrounding marks
+Bundle 'tpope/vim-surround'
 "Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'mileszs/ack.vim'
-Bundle 'tpope/vim-markdown'
+" align
+"Bundle 'godlygeek/tabular'
+" session management
+"Bundle 'sessionman.vim'
+" quick edit
+"Bundle 'Shougo/neocomplcache'
 
 " Component
+" code tags
 Bundle 'majutsushi/tagbar'
+" syntax checking
 Bundle 'scrooloose/syntastic'
+" directory tree
 Bundle 'scrooloose/nerdtree'
-"Bundle 'jistr/vim-nerdtree-tabs'
-"Bundle 'Lokaltog/vim-powerline'
+" text searching like grep
+Bundle 'mileszs/ack.vim'
+" file searching
+Bundle 'kien/ctrlp.vim'
+" bottom status line
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+" change tracking
 Bundle 'sjl/gundo.vim'
-"Bundle 'kien/ctrlp.vim'
-"Bundle 'tpope/vim-fugitive'  "git wrapper
+" start page
+Bundle 'mhinz/vim-startify'
+""git wrapper
+"Bundle 'tpope/vim-fugitive'
 "Bundle 'fs111/pydoc.vim'
 "Bundle 'benmills/vimux'
-Bundle 'tpope/vim-surround'
-Bundle 'motemen/git-vim'
+"Bundle 'jistr/vim-nerdtree-tabs'
+"Bundle 'Lokaltog/vim-powerline'
 
 " Syntax
-"Bundle 'digitaltoad/vim-jade'
-"Bundle 'wavded/vim-stylus'
 Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
 Bundle 'lepture/vim-javascript'
-" Bundle 'skammer/vim-css-color'
+"Bundle 'digitaltoad/vim-jade'
+"Bundle 'wavded/vim-stylus'
+"Bundle 'skammer/vim-css-color'
+"Bundle 'plasticboy/vim-markdown'
 
-" Colors
+" Colorschems
 Bundle 'guns/xterm-color-table.vim'
-Bundle 'rickharris/vim-monokai'
 Bundle 'chriskempson/vim-tomorrow-theme'
-if !has("gui_running") && &t_Co == 256
-    Bundle 'godlygeek/csapprox'
+
+" Make gvim-only colorschemes work transparently in terminal vim
+"if !has("gui_running") && &t_Co == 256
+    "Bundle 'godlygeek/csapprox'
     "let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
-endif
-if has("gui_running") || &t_Co == 256
-    Bundle 'endel/vim-github-colorscheme'
-    Bundle 'reorx/vim-colors-solarized'
-    Bundle 'chriskempson/vim-tomorrow-theme'
-    Bundle 'Lokaltog/vim-distinguished'
-    Bundle 'rickharris/vim-blackboard'
-    Bundle 'tpope/vim-vividchalk'
-    "Bundle 'chriskempson/base16-vim'
-endif
+"endif
+
+" 256 Only
+"Bundle 'rickharris/vim-monokai'
+"Bundle 'endel/vim-github-colorscheme'
+"Bundle 'reorx/vim-colors-solarized'
+"Bundle 'chriskempson/vim-tomorrow-theme'
+"Bundle 'Lokaltog/vim-distinguished'
+"Bundle 'rickharris/vim-blackboard'
+"Bundle 'tpope/vim-vividchalk'
+"Bundle 'chriskempson/base16-vim'

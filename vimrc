@@ -10,6 +10,7 @@ set t_Co=256
 " so that it can be easily accessed
 let $MYBUNDLES='~/.vim/bundles.vim'
 source $MYBUNDLES
+filetype plugin indent on  " re-enable
 
 
 """""""""""
@@ -23,7 +24,6 @@ set fencs=utf-8,chinese
 
 syntax on
 filetype on
-filetype plugin indent on " required by Vundle
 
 set history=100
 set nobackup
@@ -64,8 +64,6 @@ set scrolloff=5
 " Tabs
 set tabpagemax=7
 set showtabline=2
-map tn :tabnew .<cr>
-map tc :tabclose<cr>
 
 " Fold
 set foldmethod=indent
@@ -257,14 +255,23 @@ let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['python', 'javascript'],
                            \ 'passive_filetypes': ['rst'] }
+
+
 """""""""""
 " Keymaps "
 """""""""""
+
 nmap <F8> :TagbarToggle<cr>
 nmap <F4> :NERDTreeToggle<cr>
 nmap <F7> :GundoToggle<cr>
 nmap <F10> :IndentGuidesToggle<cr>
+
+" Fix syntax highlighting,
+noremap <F5> <Esc>:syntax sync fromstart<CR>
+inoremap <F5> <C-o>:syntax sync fromstart<CR>
+
 noremap <leader>ss :call StripWhitespace()<CR>
+
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
@@ -274,16 +281,14 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
+map tn :tabnew .<cr>
+map tc :tabclose<cr>
 map <C-n> :tabnext<cr>
 map <C-p> :tabprevious<cr>
 
 " recover from accidental Ctrl-U
 inoremap <C-U> <C-G>u<C-U>
 inoremap <c-w> <c-g>u<c-w>
-
-" Fix syntax highlighting,
-noremap <F5> <Esc>:syntax sync fromstart<CR>
-inoremap <F5> <C-o>:syntax sync fromstart<CR>
 
 " :map <F2> :w\|!python %<CR>
 
@@ -297,9 +302,9 @@ import os.path
 import sys
 import vim
 if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    env_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, env_base_dir)
+    activate_this = os.path.join(env_base_dir, 'bin/activate_this.py')
     execfile(activate_this, dict(__file__=activate_this))
 EOF
 endif
