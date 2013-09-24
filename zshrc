@@ -92,6 +92,7 @@ alias fs="stat -f \"%z bytes\""
 
 alias sublime="/home/reorx/Softwares/SublimeText2/sublime_text"
 alias t='python ~/workspace/lab/t/t.py --task-dir /home/reorx/Documents/Tasks --list tasks.txt --delete-if-empty'
+alias ack="ack-grep"
 
 
 # History search
