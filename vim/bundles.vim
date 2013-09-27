@@ -190,7 +190,8 @@ let g:syntastic_always_populate_loc_list=1
 set shellpipe=&>
 
 " ctrlp
-let g:ctrlp_map = '<c-i>'
+" Ctrl-/
+let g:ctrlp_map = '<c-_>'
 
 " startify
 let g:startify_session_dir = '~/.vim/sessions'

@@ -13,6 +13,7 @@
     last3 = log -3
     undopush = push -f origin HEAD^:master
     undocommit = reset --soft HEAD^
+    lscrap = ls-files --other --exclude-standard --directory
 [color]
     ui = true
 [merge]

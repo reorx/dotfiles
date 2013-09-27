@@ -203,8 +203,13 @@ nnoremap <c-l> <c-w>l
 
 map tn :tabnew<cr>
 map tc :tabclose<cr>
+
 map <C-n> :tabnext<cr>
 map <C-p> :tabprevious<cr>
+nmap <Leader>[ :tabp<CR>
+nmap <Leader>] :tabn<CR>
+"map <C-]> :tabnext<cr>
+"map <C-[> :tabprevious<cr>
 
 " recover from accidental Ctrl-U
 inoremap <C-U> <C-G>u<C-U>
