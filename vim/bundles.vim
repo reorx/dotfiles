@@ -71,6 +71,7 @@ Bundle 'mhinz/vim-startify'
 "Bundle 'Lokaltog/vim-powerline'
 
 " Syntax
+"Bundle 'jeroenbourgois/vim-actionscript'
 Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
 Bundle 'lepture/vim-javascript'
 

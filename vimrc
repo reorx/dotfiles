@@ -63,6 +63,7 @@ set scrolloff=5
 " Tabs
 set tabpagemax=7
 set showtabline=2
+set splitright " To make vsplit put the new buffer on the right of the current buffer:
 
 " Fold
 set foldmethod=indent
@@ -186,7 +187,7 @@ nmap <F4> :NERDTreeToggle<cr>
 nmap <F7> :GundoToggle<cr>
 nmap <F10> :IndentGuidesToggle<cr>
 
-" Fix syntax highlighting,
+" Fix syntax highlighting, TODO with RainbowBraces
 noremap <F5> <Esc>:syntax sync fromstart<CR>
 inoremap <F5> <C-o>:syntax sync fromstart<CR>
 
