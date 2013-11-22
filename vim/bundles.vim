@@ -34,6 +34,7 @@ Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'tpope/vim-unimpaired'
 " manipulate surrounding marks
 Bundle 'tpope/vim-surround'
+Bundle 'myusuf3/numbers.vim'
 
 "Bundle 'Lokaltog/vim-easymotion'
 " align
