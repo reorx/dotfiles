@@ -1,6 +1,7 @@
 [user]
     name = Reorx
     email = novoreorx@gmail.com
+    bio = soho
 [core]
     editor = vim
     excludesfile = /home/reorx/.gitignore_global

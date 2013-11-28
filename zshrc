@@ -7,8 +7,8 @@ ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="new_steeef"
-#ZSH_THEME="bira"
+#ZSH_THEME="new_steeef"
+ZSH_THEME="steeef"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -53,7 +53,7 @@ function GET_RPROMPT() {
 RPROMPT='$(GET_RPROMPT)'
 
 export NODE_PATH=/usr/lib/node_modules
-export PYTHONENV=$HOME/Envs/Python
+export PYTHONENV=$HOME/Envs/Python-2.7.5
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export PATH=$PYTHONENV/bin:$PATH
 
@@ -78,7 +78,6 @@ unsetopt correct_all
 export VIRTUALENVWRAPPER_PYTHON=$PYTHONENV/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONENV/bin/virtualenv
 export WORKON_HOME=$PYTHONENV/virtualenvs
-export PROJECT_HOME=$HOME/workspace/current
 source $PYTHONENV/bin/virtualenvwrapper.sh
 
 alias fb="nautilus"
@@ -92,9 +91,10 @@ alias lla='ls -la'
 # File size
 alias fs="stat -f \"%z bytes\""
 
-alias sublime="/home/reorx/Softwares/SublimeText2/sublime_text"
+alias sublime="/home/reorx/Applications/SublimeText2/sublime_text"
 alias t='python ~/workspace/lab/t/t.py --task-dir /home/reorx/Documents/Tasks --list tasks.txt --delete-if-empty'
 alias ack="ack-grep"
+alias git="hub"
 
 
 # History search
@@ -143,7 +143,7 @@ hash -d music="/home/reorx/Music"
 hash -d pictures="/home/reorx/Pictures"
 hash -d downloads="/home/reorx/Downloads"
 hash -d documents="/home/reorx/Documents"
-hash -d softwares="/home/reorx/Softwares"
+hash -d applications="/home/reorx/Applications"
 hash -d dropbox="/home/reorx/Dropbox"
 hash -d workspace="/home/reorx/workspace"
 
