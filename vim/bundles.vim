@@ -23,8 +23,9 @@ Bundle 'gmarik/vundle'
 " Enhancement
 " complement
 Bundle 'SuperTab-continued.'
+" quick editing
+Bundle 'mattn/emmet-vim'
 " easy commentting
-Bundle 'mattn/zencoding-vim'
 Bundle 'scrooloose/nerdcommenter'
 " bracket highlighting
 Bundle 'kien/rainbow_parentheses.vim'
