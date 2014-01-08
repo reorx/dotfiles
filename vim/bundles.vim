@@ -65,6 +65,10 @@ Bundle 'Lokaltog/vim-powerline'
 Bundle 'sjl/gundo.vim'
 " start page
 Bundle 'mhinz/vim-startify'
+" Snippet
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
 
 ""git wrapper
 "Bundle 'tpope/vim-fugitive'
@@ -185,7 +189,7 @@ let g:Powerline_symbols = 'compatible'
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
 let g:syntastic_mode_map = { 'mode': 'active',
-                           \ 'active_filetypes': ['python', 'javascript'],
+                           \ 'active_filetypes': ['python', 'javascript', 'php'],
                            \ 'passive_filetypes': ['rst'] }
 " Not setting the loclist by default is the intended behaviour. Previously we did set it, but syntastic isnt the only plugin using loclists. See #324
 let g:syntastic_always_populate_loc_list=1
@@ -196,6 +200,10 @@ set shellpipe=&>
 " ctrlp
 " Ctrl-/
 let g:ctrlp_map = '<c-_>'
+
+" vim-snipmate
+imap <C-e> <Plug>snipMateNextOrTrigger
+smap <C-e> <Plug>snipMateNextOrTrigger
 
 " startify
 let g:startify_session_dir = '~/.vim/sessions'
