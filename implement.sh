@@ -70,6 +70,7 @@ function active_install() {
 function impl_zsh() {
     active_install zsh
     ln2home oh-my-zsh
+    ln2home oh-my-zsh-custom
     ln2home zshrc
 }
 
