@@ -227,3 +227,5 @@ function extract () {
     echo "'$1' is not a valid file"
   fi
 }
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
