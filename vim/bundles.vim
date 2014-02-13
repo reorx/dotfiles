@@ -23,6 +23,8 @@ Bundle 'gmarik/vundle'
 " Enhancement
 " complement
 Bundle 'SuperTab-continued.'
+" quick editing
+Bundle 'mattn/emmet-vim'
 " easy commentting
 Bundle 'mattn/emmet-vim'
 Bundle 'scrooloose/nerdcommenter'
