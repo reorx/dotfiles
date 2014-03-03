@@ -1,0 +1,15 @@
+export PATH=/usr/local/bin:$PATH
+export PYTHONBIN=/usr/local/bin
+
+if [ -e $HOME/.pythonrc.py ]; then
+    export PYTHONSTARTUP=$HOME/.pythonrc.py
+fi
+
+# for virtualenvwrapper
+export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
+export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
+export WORKON_HOME=$HOME/.venv
+
+if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
+    source $PYTHONBIN/virtualenvwrapper.sh
+fi

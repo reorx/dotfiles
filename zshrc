@@ -51,21 +51,7 @@ function GET_RPROMPT() {
 #RPROMPT="${GET_RPROMPT} $RPROMPT"
 RPROMPT='$(GET_RPROMPT)'
 
-export NODE_PATH=/usr/lib/node_modules
-export PYTHONENV=$HOME/Envs/Python-2.7.5
-export PYTHONSTARTUP=$HOME/.pythonrc.py
-export PATH=$PYTHONENV/bin:$PATH
-
-function switch_python() {
-    if [[ ${PATH#$PYTHONENV/bin} == $PATH ]]; then
-        echo 'Switch to make-installed Python'
-        export PATH=$PYTHONENV/bin:$PATH
-    else
-        echo 'Switch to system Python'
-        export PATH=${PATH#$PYTHONENV/bin}
-    fi
-
-}
+#export NODE_PATH=/usr/lib/node_modules
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
@@ -73,27 +59,13 @@ export LANG="en_US"
 
 unsetopt correct_all
 
-# for virtualenvwrapper
-export VIRTUALENVWRAPPER_PYTHON=$PYTHONENV/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONENV/bin/virtualenv
-export WORKON_HOME=$PYTHONENV/virtualenvs
-source $PYTHONENV/bin/virtualenvwrapper.sh
+# source .zshrc_osspec
+source $HOME/.zshrc_osspec
 
-alias fb="nautilus"
-alias enca_utf8="enca -L zh_CN -x utf-8"
-alias pdb="python -m pdb"
-alias vim="vim -p"
-alias tree="tree --dirsfirst"
-# List only directories
-alias lsd='ls -l | grep "^d"'
-alias lla='ls -la'
-# File size
-alias fs="stat -f \"%z bytes\""
-
-alias sublime="/home/reorx/Applications/SublimeText2/sublime_text"
-alias t='python ~/workspace/lab/t/t.py --task-dir /home/reorx/Documents/Tasks --list tasks.txt --delete-if-empty'
-alias ack="ack-grep"
-#alias git="hub"
+if [ -e $HOME/.zshrc_local ]; then
+    # source .zshrc_local
+    source $HOME/.zshrc_local
+fi
 
 
 # History search
@@ -101,22 +73,15 @@ bindkey "^[[A" history-search-backward
 
 bindkey "^[[B" history-search-forward
 
-# Solarized color terminal theme setup
-# eval `dircolors ~/.dircolors`
-
-ssh_hosts=(
-    reorx.com
-    yue.fm
-)
-#zstyle ':completion:*:ssh-hosts' users-hosts $ssh_hosts
-#hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
+zstyle ':completion:*:ssh-hosts' users-hosts $ssh_hosts
+hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
 zstyle ':completion:*:hosts' hosts $ssh_hosts
 
 
 sudo-command-line() {
     [[ -z $BUFFER ]] && zle up-history
     [[ $BUFFER != sudo\ * ]] && BUFFER="sudo $BUFFER"
-    zle end-of-line                 #光标移动到行末
+    zle end-of-line
 }
 zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
@@ -137,21 +102,8 @@ cd () {
 }
 suite_virtualenv
 
-hash -d desktop="/home/reorx/Desktop"
-hash -d music="/home/reorx/Music"
-hash -d pictures="/home/reorx/Pictures"
-hash -d downloads="/home/reorx/Downloads"
-hash -d documents="/home/reorx/Documents"
-hash -d applications="/home/reorx/Applications"
-hash -d dropbox="/home/reorx/Dropbox"
-hash -d workspace="/home/reorx/workspace"
-
-hash -d current="/home/reorx/workspace/current"
-hash -d lab="/home/reorx/workspace/lab"
-hash -d sohu="/home/reorx/workspace/sohu"
-
 # Create a data URL from an image (works for other file types too, if you tweak the Content-Type afterwards)
-dataurl() {
+function dataurl() {
     echo "data:image/${1##*.};base64,$(openssl base64 -in "$1")" | tr -d '\n'
 }
 
@@ -194,38 +146,11 @@ function sshch() {
     ssh -qTNv -D 7070 $@
 }
 
-function use_proxy() {
-    export http_proxy="$(cat ~/.shell_proxy)"
-}
-
-function dp() {
-    dolphin $@ &
-}
-
 function github-clone() {
     git clone git@github.com:$1.git $2
 }
 
-# extract archives -- usage: extract <file>
-function extract () {
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2) tar xjf $1 ;;
-      *.tar.gz) tar xzf $1 ;;
-      *.bz2) bunzip2 $1 ;;
-      *.rar) unrar e $1 ;;
-      *.gz) gunzip $1 ;;
-      *.tar) tar xf $1 ;;
-      *.tbz2) tar xjf $1 ;;
-      *.tgz) tar xzf $1 ;;
-      *.zip) unzip "$1" ;;
-      *.Z) uncompress $1 ;;
-      *.7z) 7z x $1 ;;
-      *) echo "'$1' cannot be extracted via extract()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+if [ -e $HOME/.rvm/bin ]; then
+    # Add RVM to PATH for scripting
+    PATH=$PATH:$HOME/.rvm/bin
+fi
