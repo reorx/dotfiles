@@ -38,19 +38,6 @@ source $ZSH/oh-my-zsh.sh
 # for virtualenv, use my own prompt
 VIRTUAL_ENV_DISABLE_PROMPT="true"
 
-# oh-my-zsh theme fix
-PROMPT=$'
-%{$purple%}%n%{$reset_color%} at %{$orange%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%} $vcs_info_msg_0_
-$ '
-
-function GET_RPROMPT() {
-    if [ "$VIRTUAL_ENV" ]; then
-        echo "%{${fg_bold[white]}%}(env: %{${fg[blue]}%}`basename \"$VIRTUAL_ENV\"`%{${fg_bold[white]}%})%{${reset_color}%}"
-    fi
-}
-#RPROMPT="${GET_RPROMPT} $RPROMPT"
-RPROMPT='$(GET_RPROMPT)'
-
 #export NODE_PATH=/usr/lib/node_modules
 
 # Prefer US English and use UTF-8

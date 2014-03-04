@@ -55,9 +55,13 @@ FMT_UNSTAGED="%{$orange%}*"
 FMT_STAGED="%{$limegreen%}*"
 
 zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
+#zstyle ':vcs_info:*:prompt:*' unstagedstr   ""
 zstyle ':vcs_info:*:prompt:*' stagedstr     "${FMT_STAGED}"
+#zstyle ':vcs_info:*:prompt:*' stagedstr     ""
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"
+#zstyle ':vcs_info:*:prompt:*' actionformats ""
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
+#zstyle ':vcs_info:*:prompt:*' formats       ""
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
 
@@ -81,7 +85,8 @@ add-zsh-hook chpwd steeef_chpwd
 function steeef_precmd {
     if [[ -n "$PR_GIT_UPDATE" ]] ; then
         # check for untracked files or updated submodules, since vcs_info doesn't
-        if git ls-files --other --exclude-standard --directory 2> /dev/null | grep -q "."; then
+        #if git ls-files --other --exclude-standard --directory 2> /dev/null | grep -q "."; then
+        if git ls-files --other --exclude-standard 2> /dev/null | grep -q "."; then
             PR_GIT_UPDATE=1
             FMT_BRANCH="(%{$turquoise%}%b%u%c%{$hotpink%}*${PR_RST})"
         else
@@ -95,6 +100,18 @@ function steeef_precmd {
 }
 add-zsh-hook precmd steeef_precmd
 
+# PROMPT=$'
+# %{$purple%}%n%{$reset_color%} at %{$orange%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%} $vcs_info_msg_0_
+# $(virtualenv_info)$ '
+
 PROMPT=$'
 %{$purple%}%n%{$reset_color%} at %{$orange%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%} $vcs_info_msg_0_
-$(virtualenv_info)$ '
+$ '
+
+function GET_RPROMPT() {
+    if [ "$VIRTUAL_ENV" ]; then
+        echo "%{${fg_bold[white]}%}(env: %{${fg[blue]}%}`basename \"$VIRTUAL_ENV\"`%{${fg_bold[white]}%})%{${reset_color}%}"
+    fi
+}
+#RPROMPT="${GET_RPROMPT} $RPROMPT"
+RPROMPT='$(GET_RPROMPT)'
