@@ -133,8 +133,17 @@ match TrailWhitespace /\s\+$/
     "endif
 "endif
 
-set mouse=a
+"set mouse=a
 
+if has("unix")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        " This will make vim and system sharing the same clipboard,
+        " if this option is disabled, `:set paste` can be used to
+        " to do ^ + C paste decently.
+        set clipboard=unnamed
+    endif
+endif
 
 """"""""""
 " Colors "
