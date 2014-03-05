@@ -7,7 +7,7 @@ set t_Co=256
 " Load Bundles "
 """"""""""""""""
 
-" so that it can be easily accessed
+" So that it can be easily accessed
 let $MYBUNDLES='~/.vim/bundles.vim'
 source $MYBUNDLES
 
@@ -118,6 +118,7 @@ autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=red
 highlight TrailWhitespace ctermbg=red guibg=red
 match TrailWhitespace /\s\+$/
 
+"set mouse=a
 
 
 """""""""""""""""""
@@ -133,8 +134,6 @@ match TrailWhitespace /\s\+$/
     "endif
 "endif
 
-"set mouse=a
-
 if has("unix")
     let s:uname = system("uname")
     if s:uname == "Darwin\n"
@@ -145,9 +144,11 @@ if has("unix")
     endif
 endif
 
-""""""""""
-" Colors "
-""""""""""
+
+""""""
+" UI "
+""""""
+
 if &t_Co == 256
     colorscheme Tomorrow-Night-Bright
     highlight Pmenu ctermbg=234 guibg=#606060
@@ -164,6 +165,12 @@ if has("gui_running")
     set guioptions-=M
     set guioptions-=T
 endif
+
+"TODO sequence number on tabline
+
+hi TabLine           cterm=underline ctermfg=0     ctermbg=7   gui=underline guibg=#6c6c6c guifg=White
+hi TabLineSel        cterm=bold      gui=NONE      guifg=White
+hi TabLineFill       cterm=reverse   gui=reverse
 
 """"""""""""""""""""
 " Custom Functions "
@@ -227,13 +234,16 @@ inoremap <c-w> <c-g>u<c-w>
 
 " :map <F2> :w\|!python %<CR>
 
+" Reload Vimrc
+map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
 """"""""""
 " Python "
 """"""""""
 " Add the virtualenv's site-packages to vim path
 if has('python')
 py << EOF
-import os.path
+import os
 import sys
 import vim
 if 'VIRTUAL_ENV' in os.environ:
@@ -243,11 +253,3 @@ if 'VIRTUAL_ENV' in os.environ:
     execfile(activate_this, dict(__file__=activate_this))
 EOF
 endif
-
-"TODO sequence number on tabline
-
-hi TabLine           cterm=underline ctermfg=0     ctermbg=7   gui=underline guibg=#6c6c6c guifg=White
-hi TabLineSel        cterm=bold      gui=NONE      guifg=White
-hi TabLineFill       cterm=reverse   gui=reverse
-" Reload Vimrc
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>

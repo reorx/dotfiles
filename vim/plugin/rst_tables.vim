@@ -11,6 +11,8 @@
 " Edited to improve cjk character alignment, and vim_bridge not needed.
 " The modification is also inspired by vimscript #4272.
 " The original script is vimscript #3041.
+"
+" Usage: Type \\c to create table, type \\f to re-format the table
 
 " Only do this when not done yet for this buffer
 if exists("g:loaded_rst_tables_ftplugin")
