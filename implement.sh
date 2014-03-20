@@ -13,9 +13,22 @@
 
 # Global variables
 # Change this varible to choose the targets you want
-DOTFILES=( zsh vim git python moc wget )
+ALL_DOTFILES=( zsh vim git python moc wget )
+IMPL_DOTFILES=( zsh vim git python )
 LINESHIFT="  "
 INITED_FILE=".inited"
+
+# Determine system
+# Supported systems: mac, ubuntu
+if [ "$(uname)" == "Darwin" ]; then
+    OS="mac"
+else
+    # release_info=$(cat /etc/*-release)
+    # if $release_info match 'ubuntu'
+    OS="ubuntu"
+
+    # OS="unknown"
+fi
 
 
 # Functions
@@ -56,11 +69,27 @@ function installed() {
 
 
 function install() {
-    sudo apt-get install $1
+    if [ "$OS" == "mac" ]; then
+        if ! type "brew" > /dev/null; then
+            echo "You must have brew installed on your mac to \
+                  be able to install $1 by command"
+            exit
+        fi
+    elif [ "$OS" == "ubuntu" ]; then
+        # release_info=$(cat /etc/*-release)
+        # if $release_info match 'ubuntu'
+        if ! type "apt-get" > /dev/null; then
+            echo "No apt-get? WTF!"
+            exit
+        fi
+        sudo apt-get install $1
+    else
+        echo "Sorry, does not support linux dist other than ubuntu yet"
+    fi
 }
 
 
-function active_install() {
+function install_if_not_exist() {
     if [ ! $(installed $1) ]; then
         install $1
     fi
@@ -68,22 +97,19 @@ function active_install() {
 
 
 function impl_zsh() {
-    active_install zsh
+    install_if_not_exist zsh
     ln2home oh-my-zsh
+    ln2home oh-my-zsh-custom
     ln2home oh-my-zsh-custom
     ln2home zshrc
 }
 
 
 function impl_vim() {
-    active_install vim
-    active_install ctags
+    install_if_not_exist vim
+    install_if_not_exist ctags
     ln2home vim
     ln2home vimrc
-    #(
-    #vim +BundleInstall +qall
-    #)
-    vim -c "execute \"BundleInstall\" | q | q"
 }
 
 
@@ -99,14 +125,35 @@ function impl_python() {
 
 
 function impl_moc() {
-    active_install moc
+    install_if_not_exist moc
     ln2home moc
 }
 
 
 function impl_wget() {
-    active_install wget
+    install_if_not_exist wget
     ln2home wgetrc
+}
+
+
+function conf_zsh() {
+    local user="$(whoami)"
+    read -p "Do you want to set to this user $user(yourself) [yY]?" -n 1
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo
+    elif [ $REPLY ]; then
+        echo
+        read -p "input username: " user
+    fi
+    sudo usermod -s /bin/zsh $user
+}
+
+
+function conf_vim() {
+    #(
+    #vim +BundleInstall +qall
+    #)
+    vim -c "execute \"BundleInstall\" | q | q"
 }
 
 
@@ -116,16 +163,6 @@ function update_git() {
     git submodule update
 }
 
-
-function conf_zsh() {
-    local user="$(whoami)"
-    read -p "Do you want to set to this user $user(yourself) [yY]?" -n 1
-    if [[ $REPLY =~ ^[Yy]$ || ! $REPLY ]]; then
-        echo
-        read -p "input username: " $user
-    fi
-    sudo usermod -s /bin/zsh $user
-}
 
 function show_help() {
     cat <<EOF
@@ -141,6 +178,7 @@ Options:
 EOF
 }
 
+
 function check_repos() {
     if [ ! -e $INITED_FILE ]; then
         echo "init repos first"
@@ -153,12 +191,12 @@ function check_repos() {
     fi
 }
 
+
 function set_dotfiles() {
-    for i in ${DOTFILES[@]}; do
+    for i in ${IMPL_DOTFILES[@]}; do
         echo "Setting $i's dotfiles"
         eval "impl_$i"
     done
-    rehash
 }
 
 
@@ -172,7 +210,7 @@ cd "$(dirname "$0")"
 
 # Main
 
-while getopts ":hTius:c:" opt; do
+while getopts ":hTiusx:c:" opt; do
     case $opt in
         h)
             show_help
@@ -190,15 +228,20 @@ while getopts ":hTius:c:" opt; do
             echo "Step 1. Set dotfiles"
             set_dotfiles
 
-            echo 'Step 2. Configure zsh'
-            conf_zsh
+            read -p "Do you want to configure zsh to your default shell [yY]?" -n 1
+            if [[ $REPLY =~ ^[Yy]$ || ! $REPLY ]]; then
+                conf_zsh
+            fi
+
+            read -p "Do you want to configure vim and its bundles [yY]?" -n 1
+            if [[ $REPLY =~ ^[Yy]$ || ! $REPLY ]]; then
+                conf_vim
+            fi
 
             echo "\nAll done!"
             exit
             ;;
         u)
-            check_repos
-
             FORCE_SET="true"
 
             echo "Update dotfiles"
@@ -219,6 +262,12 @@ while getopts ":hTius:c:" opt; do
             echo "Configure $OPTARG"
 
             eval "conf_$OPTARG"
+
+            exit
+            ;;
+        x)
+            echo "Delete all backup files"
+            rm -f $HOME/.*.dotfilebak
 
             exit
             ;;
