@@ -33,7 +33,16 @@ DISABLE_AUTO_UPDATE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(pip fabric supervisor)
 
+export _Z_DATA=$HOME/.z-data
+
+# source .sh s
 source $ZSH/oh-my-zsh.sh
+source $HOME/.zshrc_osspec
+if [ -e $HOME/.zshrc_local ]; then
+    # source .zshrc_local
+    source $HOME/.zshrc_local
+fi
+source $HOME/.z/z.sh
 
 # for virtualenv, use my own prompt
 VIRTUAL_ENV_DISABLE_PROMPT="true"
@@ -44,16 +53,11 @@ VIRTUAL_ENV_DISABLE_PROMPT="true"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
+# Disable autocorrect
 unsetopt correct_all
 
-# source .zshrc_osspec
-source $HOME/.zshrc_osspec
-
-if [ -e $HOME/.zshrc_local ]; then
-    # source .zshrc_local
-    source $HOME/.zshrc_local
-fi
-
+# Auto rehash
+#zstyle ":completion:*:commands" rehash 1
 
 # History search
 bindkey "^[[A" history-search-backward

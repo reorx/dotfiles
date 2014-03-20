@@ -30,6 +30,8 @@ else
     # OS="unknown"
 fi
 
+# TODO colorful print
+
 
 # Functions
 function ln2home() {
@@ -106,6 +108,7 @@ function impl_zsh() {
     ln2home oh-my-zsh-custom
     ln2home zshrc
     ln2home zshrc_$OS .zshrc_osspec
+    ln2home z
 }
 
 
