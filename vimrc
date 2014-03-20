@@ -253,3 +253,24 @@ if 'VIRTUAL_ENV' in os.environ:
     execfile(activate_this, dict(__file__=activate_this))
 EOF
 endif
+
+function! MyToHtml(line1, line2)
+  " make sure to generate in the correct format
+  let old_css = 1
+  if exists('g:html_use_css')
+    let old_css = g:html_use_css
+  endif
+  let g:html_use_css = 0
+
+  " generate and delete unneeded lines
+  exec a:line1.','.a:line2.'TOhtml'
+  %g/<body/normal k$dgg
+
+  " convert body to a table
+  %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*>/<table \1 cellPadding=0><tr><td><font color=\2>/
+  %s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
+
+  " restore old setting
+  let g:html_use_css = old_css
+endfunction
+command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
