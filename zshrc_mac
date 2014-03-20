@@ -13,3 +13,15 @@ export WORKON_HOME=$HOME/.venv
 if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
     source $PYTHONBIN/virtualenvwrapper.sh
 fi
+
+hash -d desktop="/Users/reorx/Desktop"
+hash -d music="/Users/reorx/Music"
+hash -d pictures="/Users/reorx/Pictures"
+hash -d downloads="/Users/reorx/Downloads"
+hash -d documents="/Users/reorx/Documents"
+hash -d dropbox="/Users/reorx/Dropbox"
+hash -d workspace="/Users/reorx/Workspace"
+
+hash -d archive="/Users/reorx/Workspace/archive"
+hash -d lab="/Users/reorx/Workspace/lab"
+hash -d wdj="/Users/reorx/Workspace/wdj"

@@ -45,7 +45,6 @@ hash -d workspace="/home/reorx/workspace"
 
 hash -d current="/home/reorx/workspace/current"
 hash -d lab="/home/reorx/workspace/lab"
-hash -d sohu="/home/reorx/workspace/sohu"
 
 function dp() {
     dolphin $@ &
