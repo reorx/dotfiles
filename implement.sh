@@ -34,7 +34,11 @@ fi
 # Functions
 function ln2home() {
     SOURCE="$PWD/$1"
-    TARGET="$HOME/.$1"
+    if [ "$2" ]; then
+        TARGET="$HOME/$2"
+    else
+        TARGET="$HOME/.$1"
+    fi
     if [ -e "$TARGET" ]; then
         if [ $FORCE_SET ]; then
             echo "$TARGET exists, force override it"
@@ -51,7 +55,7 @@ function ln2home() {
         fi
     elif [ -h "$TARGET" ]; then
         echo "$TARGET is a broken link, rm it"
-        rm $TARGET
+        rm -f $TARGET
     fi
 
     echo "Create link $TARGET -> $SOURCE"
@@ -100,8 +104,8 @@ function impl_zsh() {
     install_if_not_exist zsh
     ln2home oh-my-zsh
     ln2home oh-my-zsh-custom
-    ln2home oh-my-zsh-custom
     ln2home zshrc
+    ln2home zshrc_$OS .zshrc_osspec
 }
 
 
@@ -210,7 +214,7 @@ cd "$(dirname "$0")"
 
 # Main
 
-while getopts ":hTiusx:c:" opt; do
+while getopts ":hTiuxs:c:" opt; do
     case $opt in
         h)
             show_help
