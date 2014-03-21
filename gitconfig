@@ -4,7 +4,7 @@
     bio = soho
 [core]
     editor = vim
-    excludesfile = /home/reorx/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [alias]
     st = status
     aa = add -A
