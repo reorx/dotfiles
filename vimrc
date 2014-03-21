@@ -149,6 +149,16 @@ endif
 " UI "
 """"""
 
+" TODO NOTE
+" define your colors
+if !exists("autocmd_colorscheme_loaded")
+  let autocmd_colorscheme_loaded = 1
+  "autocmd ColorScheme * highlight Todo   ctermbg=LightGrey guibg=#BDBDBD ctermfg=DarkRed     guifg=#DD6676
+  "autocmd ColorScheme * highlight Debug  ctermbg=LightGrey guibg=#BDBDBD ctermfg=DarkBlue    guifg=#96BADC
+  autocmd ColorScheme * highlight Todo   ctermbg=DarkRed guibg=#BDBDBD ctermfg=LightGrey guifg=#DD6676
+  autocmd ColorScheme * highlight Debug  ctermbg=DarkBlue guibg=#BDBDBD ctermfg=LightGrey guifg=#96BADC
+endif
+
 if &t_Co == 256
     colorscheme Tomorrow-Night-Bright
     highlight Pmenu ctermbg=234 guibg=#606060
@@ -164,6 +174,14 @@ endif
 if has("gui_running")
     set guioptions-=M
     set guioptions-=T
+endif
+
+if has("autocmd")
+  " Highlight TODO, FIXME, NOTE, etc.
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+  endif
 endif
 
 "TODO sequence number on tabline
