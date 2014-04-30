@@ -22,11 +22,10 @@ Bundle 'gmarik/vundle'
 
 " Enhancement
 " complement
-Bundle 'SuperTab-continued.'
+Bundle 'ervandew/supertab'
 " quick editing
 Bundle 'mattn/emmet-vim'
 " easy commentting
-Bundle 'mattn/emmet-vim'
 Bundle 'scrooloose/nerdcommenter'
 " bracket highlighting
 Bundle 'kien/rainbow_parentheses.vim'
@@ -192,9 +191,11 @@ let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['python', 'javascript', 'php'],
-                           \ 'passive_filetypes': ['rst'] }
+                           \ 'passive_filetypes': ['rst', 'html'] }
 " Not setting the loclist by default is the intended behaviour. Previously we did set it, but syntastic isnt the only plugin using loclists. See #324
 let g:syntastic_always_populate_loc_list=1
+let g:syntastic_javascript_checkers = ['jshint']
+
 
 " ack
 set shellpipe=&>

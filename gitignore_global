@@ -1,3 +1,6 @@
+# Mac #
+.DS_Store
+
 # Vim swap files #
 *.sw[po]
 
@@ -22,8 +25,8 @@
 
 # Logs and databases #
 *.log
-*.sql
-*.sqlite
+#*.sql
+#*.sqlite
 
 # Others #
 .virtualenv

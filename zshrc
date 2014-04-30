@@ -145,3 +145,9 @@ if [ -e $HOME/.rvm/bin ]; then
     # Add RVM to PATH for scripting
     PATH=$PATH:$HOME/.rvm/bin
 fi
+
+# Aliases
+
+alias lsd='ls -l | grep "^d"'
+alias vim="vim -p"
+alias tree="tree --dirsfirst"
