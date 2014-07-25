@@ -188,7 +188,11 @@ let g:Powerline_symbols = 'compatible'
 
 " syntastic
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args='--ignore=E501,W404,W801'
+" E501: line too long (<n> characters)
+" W404: 'from <module> import ``*``' used; unable to detect undefined names
+" W801: redefinition of unused <name> from line <n>
+" Use `# NOQA` to ignore warnings for certain lines
+let g:syntastic_python_flake8_args='--ignore=W801'
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['python', 'javascript', 'php'],
                            \ 'passive_filetypes': ['rst', 'html'] }
