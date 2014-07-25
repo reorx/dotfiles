@@ -79,10 +79,13 @@ Bundle "garbas/vim-snipmate"
 "Bundle 'Lokaltog/vim-powerline'
 
 " Syntax
-"Bundle 'jeroenbourgois/vim-actionscript'
+Bundle 'hdima/python-syntax'
+Bundle 'othree/html5.vim'
 Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
 Bundle 'lepture/vim-javascript'
+Bundle 'kchmck/vim-coffee-script'
 
+"Bundle 'jeroenbourgois/vim-actionscript'
 "Bundle 'digitaltoad/vim-jade'
 "Bundle 'wavded/vim-stylus'
 "Bundle 'skammer/vim-css-color'
