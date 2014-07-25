@@ -1,7 +1,6 @@
 [user]
     name = Reorx
     email = novoreorx@gmail.com
-    bio = soho
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
@@ -15,6 +14,14 @@
     undopush = push -f origin HEAD^:master
     undocommit = reset --soft HEAD^
     lscrap = ls-files --other --exclude-standard --directory
+    switch = !legit switch \"$@\"
+    branches = !legit branches
+    sprout = !legit sprout \"$@\"
+    unpublish = !legit unpublish \"$@\"
+    harvest = !legit harvest \"$@\"
+    sync = !legit sync \"$@\"
+    publish = !legit publish \"$@\"
+    graft = !legit graft \"$@\"
 [color]
     ui = true
 [merge]
@@ -40,4 +47,7 @@
 [url "git://gist.github.com/"]
     insteadOf = "gist:"
 [push]
-	default = current
+    default = current
+[filter "media"]
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
