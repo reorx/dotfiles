@@ -48,10 +48,14 @@ source $HOME/.z/z.sh
 VIRTUAL_ENV_DISABLE_PROMPT="true"
 
 #export NODE_PATH=/usr/lib/node_modules
+eval "$(rbenv init -)"
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
+
+export LESS='-R'
+export LESSOPEN='|~/.lessfilter %s'
 
 # Disable autocorrect
 unsetopt correct_all

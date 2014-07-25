@@ -1,6 +1,3 @@
-export PATH=/usr/local/bin:$PATH
-export PYTHONBIN=/usr/local/bin
-
 if [ -e $HOME/.pythonrc.py ]; then
     export PYTHONSTARTUP=$HOME/.pythonrc.py
 fi
@@ -25,3 +22,6 @@ hash -d workspace="/Users/reorx/Workspace"
 hash -d archive="/Users/reorx/Workspace/archive"
 hash -d lab="/Users/reorx/Workspace/lab"
 hash -d wdj="/Users/reorx/Workspace/wdj"
+
+alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
+alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'
