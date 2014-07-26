@@ -3,6 +3,7 @@ if [ -e $HOME/.pythonrc.py ]; then
 fi
 
 # for virtualenvwrapper
+export PYTHONBIN=/usr/local/bin
 export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
 export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
 export WORKON_HOME=$HOME/.venv
