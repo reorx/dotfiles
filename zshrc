@@ -31,7 +31,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(pip fabric supervisor)
+plugins=(pip fabric supervisor autoenv2)
 
 export _Z_DATA=$HOME/.z-data
 
@@ -81,21 +81,21 @@ sudo-command-line() {
 zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
 
-suite_virtualenv() {
-    if [ -e .virtualenv ]; then
-        name=$(cat .virtualenv)
-        if [ $VIRTUAL_ENV ]; then
-            if [ "$name" = "$(basename $VIRTUAL_ENV)" ]; then
-                return
-            fi
-        fi
-        workon $name
-    fi
-}
-cd () {
-    builtin cd "$@" && suite_virtualenv
-}
-suite_virtualenv
+#suite_virtualenv() {
+    #if [ -e .virtualenv ]; then
+        #name=$(cat .virtualenv)
+        #if [ $VIRTUAL_ENV ]; then
+            #if [ "$name" = "$(basename $VIRTUAL_ENV)" ]; then
+                #return
+            #fi
+        #fi
+        #workon $name
+    #fi
+#}
+#cd () {
+    #builtin cd "$@" && suite_virtualenv
+#}
+#suite_virtualenv
 
 # Create a data URL from an image (works for other file types too, if you tweak the Content-Type afterwards)
 function dataurl() {
