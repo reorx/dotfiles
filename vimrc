@@ -113,6 +113,8 @@ set completeopt=menu
 set list!
 set listchars=tab:>-
 
+"set list listchars=tab:»·
+
 " highlight trailing whitespace
 autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=red
 highlight TrailWhitespace ctermbg=red guibg=red

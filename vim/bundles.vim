@@ -70,6 +70,8 @@ Bundle 'mhinz/vim-startify'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
+Bundle 'maksimr/vim-jsbeautify'
+Bundle 'einars/js-beautify'
 
 ""git wrapper
 "Bundle 'tpope/vim-fugitive'
