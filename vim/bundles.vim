@@ -41,7 +41,6 @@ Bundle 'myusuf3/numbers.vim'
 
 "Bundle 'Lokaltog/vim-easymotion'
 " align
-"Bundle 'godlygeek/tabular'
 " session management
 "Bundle 'sessionman.vim'
 " quick edit
@@ -70,8 +69,9 @@ Bundle 'mhinz/vim-startify'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
-Bundle 'maksimr/vim-jsbeautify'
-Bundle 'einars/js-beautify'
+"Bundle 'maksimr/vim-jsbeautify'
+"Bundle 'einars/js-beautify'
+Bundle 'rizzatti/dash.vim'
 
 ""git wrapper
 "Bundle 'tpope/vim-fugitive'
@@ -82,16 +82,18 @@ Bundle 'einars/js-beautify'
 
 " Syntax
 Bundle 'hdima/python-syntax'
+Bundle 'derekwyatt/vim-scala'
 Bundle 'othree/html5.vim'
 Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
 Bundle 'lepture/vim-javascript'
 Bundle 'kchmck/vim-coffee-script'
 
 "Bundle 'jeroenbourgois/vim-actionscript'
-"Bundle 'digitaltoad/vim-jade'
+Bundle 'digitaltoad/vim-jade'
 "Bundle 'wavded/vim-stylus'
 "Bundle 'skammer/vim-css-color'
-"Bundle 'plasticboy/vim-markdown'
+Plugin 'godlygeek/tabular'  " Required by vim-markdown
+Plugin 'plasticboy/vim-markdown'
 
 " Colorschems
 Bundle 'guns/xterm-color-table.vim'
@@ -186,18 +188,21 @@ au Syntax * RainbowParenthesesLoadSquare
 "let g:SuperTabRetainCompletionType=2
 
 " airline
-" let g:airline_powerline_fonts = 1
+"let g:airline_powerline_fonts = 0
+"let g:airline_left_sep = ''
+"let g:airline_right_sep = ''
 
 " powerline
 let g:Powerline_symbols = 'compatible'
 
 " syntastic
 let g:syntastic_python_checkers = ['flake8']
+" Error codes reference: http://flake8.readthedocs.org/en/latest/warnings.html
+" E265: block comment should start with ‘# ‘
 " E501: line too long (<n> characters)
 " W404: 'from <module> import ``*``' used; unable to detect undefined names
-" W801: redefinition of unused <name> from line <n>
 " Use `# NOQA` to ignore warnings for certain lines
-let g:syntastic_python_flake8_args='--ignore=W801'
+let g:syntastic_python_flake8_args='--ignore=E265,E501'
 let g:syntastic_mode_map = { 'mode': 'active',
                            \ 'active_filetypes': ['python', 'javascript', 'php'],
                            \ 'passive_filetypes': ['rst', 'html'] }
