@@ -23,6 +23,10 @@ hash -d workspace="/Users/reorx/Workspace"
 hash -d archive="/Users/reorx/Workspace/archive"
 hash -d lab="/Users/reorx/Workspace/lab"
 hash -d wdj="/Users/reorx/Workspace/wdj"
+hash -d repos="/Users/reorx/Workspace/repos"
 
 alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'
+alias komodo="/Applications/Komodo\ Edit\ 8.app/Contents/MacOS/komodo-bin"
+
+export EDITOR=vim

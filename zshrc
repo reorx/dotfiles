@@ -48,6 +48,11 @@ source $HOME/.z/z.sh
 VIRTUAL_ENV_DISABLE_PROMPT="true"
 
 #export NODE_PATH=/usr/lib/node_modules
+
+# Initialize nvm
+source ~/.nvm/nvm.sh
+
+# Initialize rbenv
 eval "$(rbenv init -)"
 
 # Prefer US English and use UTF-8
@@ -132,6 +137,8 @@ function clean_pyc() {
     find $1 -name '*.pyc' -exec rm {} \;
 }
 
+alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
+
 function sshch() {
     # Options explaination
     #   q  Quiet mode.  Causes most warning and diagnostic messages to be suppressed.
@@ -151,7 +158,6 @@ if [ -e $HOME/.rvm/bin ]; then
 fi
 
 # Aliases
-
 alias lsd='ls -l | grep "^d"'
 alias vim="vim -p"
 alias tree="tree --dirsfirst"
