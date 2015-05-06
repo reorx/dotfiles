@@ -83,6 +83,14 @@ autocmd FileType text setlocal textwidth=80
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 autocmd FileType jade setlocal shiftwidth=2 tabstop=2
 autocmd FileType stylus setlocal shiftwidth=2 tabstop=2
+autocmd FileType crontab setlocal nowritebackup
+
+au BufRead,BufNewFile */sites-available/* set ft=nginx
+au BufRead,BufNewFile */sites-enabled/* set ft=nginx
+au BufRead,BufNewFile nginx.conf set ft=nginx
+au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
+
+au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
 
 " Display
 set ruler " Show the line and column number of the cursor position, separated by a comma.
