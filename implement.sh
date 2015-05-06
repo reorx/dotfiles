@@ -107,7 +107,7 @@ function impl_zsh() {
     ln2home oh-my-zsh
     ln2home oh-my-zsh-custom
     ln2home zshrc
-    ln2home zshrc_$OS .zshrc_osspec
+    ln2home zshrc_$OS .zshrc_os
     ln2home z
 }
 

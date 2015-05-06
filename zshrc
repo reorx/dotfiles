@@ -37,7 +37,7 @@ export _Z_DATA=$HOME/.z-data
 
 # source .sh s
 source $ZSH/oh-my-zsh.sh
-source $HOME/.zshrc_osspec
+source $HOME/.zshrc_os
 if [ -e $HOME/.zshrc_local ]; then
     # source .zshrc_local
     source $HOME/.zshrc_local
