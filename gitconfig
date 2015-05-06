@@ -1,15 +1,17 @@
 [user]
-    name = Reorx
+	name = reorx
     email = novoreorx@gmail.com
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
 [alias]
-    st = status
+    s = !gg s
+    st = status -sb
     aa = add -A
     ci = commit
     cim = commit -m
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    co = checkout
     last3 = log -3
     undopush = push -f origin HEAD^:master
     undocommit = reset --soft HEAD^
@@ -49,5 +51,16 @@
 [push]
     default = current
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[diff]
+    tool = icdiff
+[difftool "icdiff"]
+    cmd = icdiff \"$LOCAL\" \"$REMOTE\"
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
