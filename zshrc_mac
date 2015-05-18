@@ -19,6 +19,7 @@ hash -d downloads="/Users/reorx/Downloads"
 hash -d documents="/Users/reorx/Documents"
 hash -d dropbox="/Users/reorx/Dropbox"
 hash -d workspace="/Users/reorx/Workspace"
+hash -d services="/Users/reorx/Services"
 
 hash -d archive="/Users/reorx/Workspace/archive"
 hash -d lab="/Users/reorx/Workspace/lab"

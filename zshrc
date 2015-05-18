@@ -59,8 +59,26 @@ eval "$(rbenv init -)"
 export LC_ALL="en_US.UTF-8"
 export LANG="en_US"
 
+
+# Less
 export LESS='-R'
 export LESSOPEN='|~/.lessfilter %s'
+# underline
+#export LESS_TERMCAP_us=$'\E[04;38;5;146m'
+export LESS_TERMCAP_us=$'\e[0;33;40m'
+# section title
+export LESS_TERMCAP_md=$'\E[02;38;5;74m'
+#export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
+#export LESS_TERMCAP_md=$(tput bold; tput setaf 2) # green
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[38;5;246m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_mb=$'\E[01;31m'
+# For more about termcap see:
+# https://www.gnu.org/software/termutils/manual/termcap-1.3/html_chapter/termcap_4.html
+
+#export PAGER="most"
 
 # Disable autocorrect
 unsetopt correct_all
@@ -152,6 +170,18 @@ function github-clone() {
     git clone git@github.com:$1.git $2
 }
 
+function colortable() {
+    for x in 0 1 4 5 7 8; do
+        for i in `seq 30 37`; do
+            for a in `seq 40 47`; do
+                echo -ne "\e[$x;$i;$a""m\\\e[$x;$i;$a""m\e[0;37;40m ";
+            done;
+            echo;
+        done;
+    done;
+    echo;
+}
+
 if [ -e $HOME/.rvm/bin ]; then
     # Add RVM to PATH for scripting
     PATH=$PATH:$HOME/.rvm/bin
@@ -161,3 +191,4 @@ fi
 alias lsd='ls -l | grep "^d"'
 alias vim="vim -p"
 alias tree="tree --dirsfirst"
+
