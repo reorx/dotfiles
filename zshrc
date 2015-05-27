@@ -68,11 +68,10 @@ export LESSOPEN='|~/.lessfilter %s'
 export LESS_TERMCAP_us=$'\e[0;33;40m'
 # section title
 export LESS_TERMCAP_md=$'\E[02;38;5;74m'
-#export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
-#export LESS_TERMCAP_md=$(tput bold; tput setaf 2) # green
+# search highlight
+export LESS_TERMCAP_so=$'\e[0;30;42m'
 export LESS_TERMCAP_me=$'\E[0m'
 export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[38;5;246m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_mb=$'\E[01;31m'
 # For more about termcap see:
