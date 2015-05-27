@@ -20,6 +20,12 @@ call vundle#rc()
 " required!
 Bundle 'gmarik/vundle'
 
+" Newly installed
+"Bundle 'SirVer/ultisnips'
+"Bundle 'honza/vim-snippets'
+"Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Shougo/neocomplete.vim'
+
 " Enhancement
 " complement
 Bundle 'ervandew/supertab'
@@ -43,8 +49,6 @@ Bundle 'myusuf3/numbers.vim'
 " align
 " session management
 "Bundle 'sessionman.vim'
-" quick edit
-"Bundle 'Shougo/neocomplcache'
 
 " Component
 " code tags
@@ -72,6 +76,7 @@ Bundle "garbas/vim-snipmate"
 "Bundle 'maksimr/vim-jsbeautify'
 "Bundle 'einars/js-beautify'
 Bundle 'rizzatti/dash.vim'
+Bundle 'embear/vim-localvimrc'
 
 ""git wrapper
 "Bundle 'tpope/vim-fugitive'
@@ -138,6 +143,9 @@ let g:tagbar_sort=0
 let g:tagbar_left=0
 let g:tagbar_width=25
 
+" localvimrc
+let g:localvimrc_ask=0
+
 "indent guide
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
@@ -170,23 +178,6 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
 
-" neocomplcache
-" Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.
-"let g:acp_enableAtStartup=0
-"let g:neocomplcache_enable_at_startup=1
-"let g:neocomplcache_disable_auto_complete=1
-"let g:neocomplcache_max_list=20
-"let g:neocomplcache_enable_ignore_case=0
-"let g:neocomplcache_min_syntax_length=3
-"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-
-" supertab compatibility with neocomplcache
-"let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-"let g:SuperTabRetainCompletionType=2
-
 " airline
 "let g:airline_powerline_fonts = 0
 "let g:airline_left_sep = ''
@@ -194,6 +185,9 @@ au Syntax * RainbowParenthesesLoadSquare
 
 " powerline
 let g:Powerline_symbols = 'compatible'
+
+" neocomplete
+" let g:neocomplete#enable_at_startup = 1
 
 " syntastic
 let g:syntastic_python_checkers = ['flake8']
@@ -210,6 +204,15 @@ let g:syntastic_mode_map = { 'mode': 'active',
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_javascript_checkers = ['jshint']
 
+"ultisnips
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+"let g:UltiSnipsEditSplit="vertical"
+
 
 " ack
 set shellpipe=&>
@@ -217,6 +220,7 @@ set shellpipe=&>
 " ctrlp
 " Ctrl-/
 let g:ctrlp_map = '<c-_>'
+
 
 " vim-snipmate
 imap <C-e> <Plug>snipMateNextOrTrigger
