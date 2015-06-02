@@ -130,6 +130,10 @@ match TrailWhitespace /\s\+$/
 
 "set mouse=a
 
+" Prevent flashing when execute external command from vim
+set shellpipe=&>
+
+
 
 """""""""""""""""""
 " System Specials "

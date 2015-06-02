@@ -58,7 +58,7 @@ Bundle 'scrooloose/syntastic'
 " directory tree
 Bundle 'scrooloose/nerdtree'
 " text searching like grep
-Bundle 'mileszs/ack.vim'
+Bundle 'rking/ag.vim'
 " file searching
 Bundle 'kien/ctrlp.vim'
 " bottom status line
@@ -213,9 +213,6 @@ let g:syntastic_javascript_checkers = ['jshint']
 " If you want :UltiSnipsEdit to split your window.
 "let g:UltiSnipsEditSplit="vertical"
 
-
-" ack
-set shellpipe=&>
 
 " ctrlp
 " Ctrl-/
