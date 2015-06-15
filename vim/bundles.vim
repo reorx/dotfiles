@@ -61,6 +61,7 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'rking/ag.vim'
 " file searching
 Bundle 'kien/ctrlp.vim'
+Bundle 'dyng/ctrlsf.vim'
 " bottom status line
 Bundle 'Lokaltog/vim-powerline'
 "Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
@@ -185,6 +186,18 @@ au Syntax * RainbowParenthesesLoadSquare
 
 " powerline
 let g:Powerline_symbols = 'compatible'
+
+" CtrlSF
+" https://github.com/dyng/ctrlsf.vim
+" http://vim.wikia.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
+nmap     <C-F>f <Plug>CtrlSFPrompt
+vmap     <C-F>f <Plug>CtrlSFVwordPath
+vmap     <C-F>F <Plug>CtrlSFVwordExec
+nmap     <C-F>n <Plug>CtrlSFCwordPath
+nmap     <C-F>p <Plug>CtrlSFPwordPath
+nnoremap <C-F>o :CtrlSFOpen<CR>
+nnoremap <C-F>t :CtrlSFToggle<CR>
+inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 
 " neocomplete
 " let g:neocomplete#enable_at_startup = 1
