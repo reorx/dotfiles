@@ -8,6 +8,11 @@ export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
 export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
 export WORKON_HOME=$HOME/.venv
 
+# for docker
+function dockerinit() {
+    eval "$(boot2docker shellinit)"
+}
+
 if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
     source $PYTHONBIN/virtualenvwrapper.sh
 fi
