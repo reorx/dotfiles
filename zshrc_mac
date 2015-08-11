@@ -1,21 +1,10 @@
-if [ -e $HOME/.pythonrc.py ]; then
-    export PYTHONSTARTUP=$HOME/.pythonrc.py
-fi
+########################
+# Specially in Mac OSX #
+########################
 
-# for virtualenvwrapper
-export PYTHONBIN=/usr/local/bin
-export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
-export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
-export WORKON_HOME=$HOME/.venv
-
-# for docker
 function dockerinit() {
     eval "$(boot2docker shellinit)"
 }
-
-if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
-    source $PYTHONBIN/virtualenvwrapper.sh
-fi
 
 hash -d desktop="/Users/reorx/Desktop"
 hash -d music="/Users/reorx/Music"
@@ -34,5 +23,4 @@ hash -d repos="/Users/reorx/Workspace/repos"
 alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'
 alias komodo="/Applications/Komodo\ Edit\ 8.app/Contents/MacOS/komodo-bin"
-
-export EDITOR=vim
+alias nwjs="/Applications/nwjs.app/Contents/MacOS/nwjs"

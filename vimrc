@@ -128,7 +128,7 @@ autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=red
 highlight TrailWhitespace ctermbg=red guibg=red
 match TrailWhitespace /\s\+$/
 
-"set mouse=a
+set mouse=a
 
 " Prevent flashing when execute external command from vim
 set shellpipe=&>
@@ -277,6 +277,10 @@ inoremap <c-w> <c-g>u<c-w>
 
 " Reload Vimrc
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" Spell check
+" http://vimdoc.sourceforge.net/htmldoc/spell.html
+" http://vim.wikia.com/wiki/Toggle_spellcheck_with_function_keys
 
 """"""""""
 " Python "
