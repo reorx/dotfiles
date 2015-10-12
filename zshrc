@@ -58,14 +58,21 @@ plugins=(pip fabric supervisor autoenv2)
 
 export _Z_DATA=$HOME/.z-data
 
-# source .sh s
+# Load oh-my-zsh & other part of zshrc
 source $ZSH/oh-my-zsh.sh
 source $HOME/.zshrc_os
 if [ -e $HOME/.zshrc_local ]; then
-    # source .zshrc_local
     source $HOME/.zshrc_local
 fi
+
+# Load z
 source $HOME/.z/z.sh
+
+# Load fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -e $HOME/.zshrc_fzf ]; then
+    source $HOME/.zshrc_fzf
+fi
 
 
 #########################
