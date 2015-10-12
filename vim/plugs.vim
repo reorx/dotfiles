@@ -29,6 +29,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'myusuf3/numbers.vim'
 Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
+"Plug 'junegunn/fzf.vim'
 "Plug 'dyng/ctrlsf.vim'
 "Plug 'kien/rainbow_parentheses.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
