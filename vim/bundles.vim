@@ -1,128 +1,130 @@
 """""""""""""""""""
 " Vundle
 "
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
 """""""""""""""""""
+
 set nocompatible               " be iMproved
 filetype off                   " required!
 
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
 " Bundles (from top to bottom in importance sequence)
-" required!
-Bundle 'gmarik/vundle'
 
 " Newly installed
-"Bundle 'SirVer/ultisnips'
-"Bundle 'honza/vim-snippets'
-"Bundle 'Valloric/YouCompleteMe'
-"Bundle 'Shougo/neocomplete.vim'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'honza/vim-snippets'
+"Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Shougo/neocomplete.vim'
 
 " Enhancement
 " complement
-Bundle 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 " quick editing
-Bundle 'mattn/emmet-vim'
+Plugin 'mattn/emmet-vim'
 " easy commentting
-Bundle 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'
 " bracket highlighting
-Bundle 'kien/rainbow_parentheses.vim'
+Plugin 'kien/rainbow_parentheses.vim'
 " indentation ruler
-Bundle 'nathanaelkane/vim-indent-guides'
+Plugin 'nathanaelkane/vim-indent-guides'
 " key maps
-Bundle 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-unimpaired'
 " manipulate surrounding marks
-Bundle 'tpope/vim-surround'
-Bundle 'myusuf3/numbers.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'myusuf3/numbers.vim'
 " rst improvements
-"Bundle 'Rykka/riv.vim'
+"Plugin 'Rykka/riv.vim'
 
-"Bundle 'Lokaltog/vim-easymotion'
+"Plugin 'Lokaltog/vim-easymotion'
 " align
 " session management
-"Bundle 'sessionman.vim'
+"Plugin 'sessionman.vim'
 
 " Component
 " code tags
-Bundle 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 " syntax checking
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 " directory tree
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 " text searching like grep
-Bundle 'rking/ag.vim'
+Plugin 'rking/ag.vim'
 " file searching
-Bundle 'kien/ctrlp.vim'
-Bundle 'dyng/ctrlsf.vim'
+Plugin 'kien/ctrlp.vim'
+Plugin 'dyng/ctrlsf.vim'
 " bottom status line
-Bundle 'Lokaltog/vim-powerline'
-"Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
-"Bundle 'bling/vim-airline'
+Plugin 'Lokaltog/vim-powerline'
+"Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+"Plugin 'bling/vim-airline'
 " change tracking
-Bundle 'sjl/gundo.vim'
+Plugin 'sjl/gundo.vim'
 " start page
-Bundle 'mhinz/vim-startify'
+Plugin 'mhinz/vim-startify'
 " Snippet
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-"Bundle 'maksimr/vim-jsbeautify'
-"Bundle 'einars/js-beautify'
-Bundle 'rizzatti/dash.vim'
-Bundle 'embear/vim-localvimrc'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+"Plugin 'maksimr/vim-jsbeautify'
+"Plugin 'einars/js-beautify'
+Plugin 'rizzatti/dash.vim'
+Plugin 'embear/vim-localvimrc'
 
 ""git wrapper
-"Bundle 'tpope/vim-fugitive'
-"Bundle 'fs111/pydoc.vim'
-"Bundle 'benmills/vimux'
-"Bundle 'jistr/vim-nerdtree-tabs'
-"Bundle 'Lokaltog/vim-powerline'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'fs111/pydoc.vim'
+"Plugin 'benmills/vimux'
+"Plugin 'jistr/vim-nerdtree-tabs'
+"Plugin 'Lokaltog/vim-powerline'
 
 " Syntax
-Bundle 'hdima/python-syntax'
-Bundle 'derekwyatt/vim-scala'
-Bundle 'othree/html5.vim'
-Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
-Bundle 'lepture/vim-javascript'
-Bundle 'kchmck/vim-coffee-script'
+Plugin 'hdima/python-syntax'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'othree/html5.vim'
+Plugin 'ChrisYip/Better-CSS-Syntax-for-Vim'
+Plugin 'lepture/vim-javascript'
+Plugin 'kchmck/vim-coffee-script'
 
-"Bundle 'jeroenbourgois/vim-actionscript'
-Bundle 'digitaltoad/vim-jade'
-"Bundle 'wavded/vim-stylus'
-"Bundle 'skammer/vim-css-color'
+"Plugin 'jeroenbourgois/vim-actionscript'
+Plugin 'digitaltoad/vim-jade'
+"Plugin 'wavded/vim-stylus'
+"Plugin 'skammer/vim-css-color'
 Plugin 'godlygeek/tabular'  " Required by vim-markdown
 Plugin 'plasticboy/vim-markdown'
 
 " Colorschems
-Bundle 'guns/xterm-color-table.vim'
-Bundle 'chriskempson/vim-tomorrow-theme'
+Plugin 'guns/xterm-color-table.vim'
+Plugin 'chriskempson/vim-tomorrow-theme'
 
 " Make gvim-only colorschemes work transparently in terminal vim
 "if !has("gui_running") && &t_Co == 256
-    "Bundle 'godlygeek/csapprox'
+    "Plugin 'godlygeek/csapprox'
     "let g:CSApprox_attr_map = { 'bold' : 'bold', 'italic' : '', 'sp' : '' }
 "endif
 
 " 256 Only
-"Bundle 'rickharris/vim-monokai'
-"Bundle 'endel/vim-github-colorscheme'
-"Bundle 'reorx/vim-colors-solarized'
-"Bundle 'chriskempson/vim-tomorrow-theme'
-"Bundle 'Lokaltog/vim-distinguished'
-"Bundle 'rickharris/vim-blackboard'
-"Bundle 'tpope/vim-vividchalk'
-"Bundle 'chriskempson/base16-vim'
+"Plugin 'rickharris/vim-monokai'
+"Plugin 'endel/vim-github-colorscheme'
+"Plugin 'reorx/vim-colors-solarized'
+"Plugin 'chriskempson/vim-tomorrow-theme'
+"Plugin 'Lokaltog/vim-distinguished'
+"Plugin 'rickharris/vim-blackboard'
+"Plugin 'tpope/vim-vividchalk'
+"Plugin 'chriskempson/base16-vim'
 
 
-filetype plugin indent on  " re-enable
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 
 """""""""""
