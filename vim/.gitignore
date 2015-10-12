@@ -8,6 +8,6 @@ sessions/*
 !sessions/.gitignore
 
 bundle/*/
-!bundle/vundle/
+!bundle/Vundle.vim/
 
 .netrwhist
