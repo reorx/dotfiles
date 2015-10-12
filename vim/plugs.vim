@@ -23,9 +23,9 @@ Plug 'tpope/vim-surround'
 Plug 'sjl/gundo.vim'
 
 " Browsing
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'Lokaltog/vim-powerline'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'myusuf3/numbers.vim'
 Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
@@ -33,8 +33,8 @@ Plug 'kien/ctrlp.vim'
 "Plug 'kien/rainbow_parentheses.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'rizzatti/dash.vim'
-"Plug 'Rykka/riv.vim' " rst improvements
+Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
+Plug 'Rykka/riv.vim', { 'for': 'rst' }
 "Plug 'Lokaltog/vim-easymotion'
 
 " Analysis
@@ -44,7 +44,7 @@ Plug 'scrooloose/syntastic'
 Plug 'hdima/python-syntax'
 Plug 'othree/html5.vim'
 Plug 'ChrisYip/Better-CSS-Syntax-for-Vim'
-Plug 'lepture/vim-jinja'
+Plug 'lepture/vim-jinja', { 'for': 'html' }
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
 "Plug 'kchmck/vim-coffee-script'
 "Plug 'derekwyatt/vim-scala'
