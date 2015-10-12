@@ -1,20 +1,24 @@
 " Author: reorx
 
-" Should at the top since it will affect bundles.vim
+" Should at the top since it will affect bundles.vim (maybe?)
 set t_Co=256
 
-""""""""""""""""
-" Load Bundles "
-""""""""""""""""
+
+" ============================================================================
+" Load Bundles
+" ============================================================================
 
 " So that it can be easily accessed
-let $MYBUNDLES='~/.vim/bundles.vim'
-source $MYBUNDLES
+"let $MYBUNDLES='~/.vim/bundles.vim'
+"source $MYBUNDLES
+let $MYPLUGS='~/.vim/plugs.vim'
+source $MYPLUGS
 
 
-"""""""""""
-" General "
-"""""""""""
+" ============================================================================
+" General
+" ============================================================================
+
 " Encoding
 set encoding=utf-8
 set fileencodings=utf-8,chinese,latin-1
@@ -134,10 +138,10 @@ set mouse=a
 set shellpipe=&>
 
 
-
-"""""""""""""""""""
+" ============================================================================
 " System Specials "
-"""""""""""""""""""
+" ============================================================================
+
 "if has("win32")
     "set rtp+=~/.vim/
     "source $VIMRUNTIME/delmenu.vim
@@ -159,9 +163,9 @@ if has("unix")
 endif
 
 
-""""""
-" UI "
-""""""
+" ============================================================================
+" UI
+" ============================================================================
 
 " TODO NOTE
 " define your colors
@@ -213,9 +217,10 @@ highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Re
 " Ruler
 set colorcolumn=79
 
-""""""""""""""""""""
-" Custom Functions "
-""""""""""""""""""""
+
+" ============================================================================
+" Custom Functions
+" ============================================================================
 
 " Strip trailing whitespace (\ss)
 function! StripWhitespace()
@@ -235,9 +240,9 @@ autocmd BufReadPost *
       \ endif
 
 
-"""""""""""
-" Keymaps "
-"""""""""""
+" ============================================================================
+" Keymaps
+" ============================================================================
 
 nmap <F8> :TagbarToggle<cr>
 nmap <F4> :NERDTreeToggle<cr>
@@ -282,9 +287,11 @@ map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimr
 " http://vimdoc.sourceforge.net/htmldoc/spell.html
 " http://vim.wikia.com/wiki/Toggle_spellcheck_with_function_keys
 
-""""""""""
-" Python "
-""""""""""
+
+" ============================================================================
+" Python
+" ============================================================================
+
 " Add the virtualenv's site-packages to vim path
 if has('python')
 py << EOF

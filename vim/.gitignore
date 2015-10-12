@@ -7,7 +7,6 @@
 sessions/*
 !sessions/.gitignore
 
-bundle/*/
-!bundle/Vundle.vim/
+plugged/
 
 .netrwhist
