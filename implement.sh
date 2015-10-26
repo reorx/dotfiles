@@ -13,8 +13,8 @@
 
 # Global variables
 # Change this varible to choose the targets you want
-ALL_DOTFILES=( zsh vim git python moc wget )
-IMPL_DOTFILES=( zsh vim git python )
+ALL_DOTFILES=( zsh vim git python moc wget tmux )
+IMPL_DOTFILES=( zsh vim git python tmux )
 LINESHIFT="  "
 INITED_FILE=".inited"
 
@@ -140,6 +140,10 @@ function impl_moc() {
 function impl_wget() {
     install_if_not_exist wget
     ln2home wgetrc
+}
+
+function impl_tmux {
+    ln2home tmux.conf
 }
 
 
