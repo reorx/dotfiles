@@ -14,7 +14,7 @@
 # Global variables
 # Change this varible to choose the targets you want
 ALL_DOTFILES=( zsh vim git python moc wget tmux )
-IMPL_DOTFILES=( zsh vim git python tmux )
+IMPL_DOTFILES=( zsh vim git python wget tmux )
 LINESHIFT="  "
 INITED_FILE=".inited"
 
@@ -107,6 +107,7 @@ function impl_zsh() {
     ln2home oh-my-zsh
     ln2home oh-my-zsh-custom
     ln2home zshrc
+    ln2home zshrc_fzf
     ln2home zshrc_$OS .zshrc_os
     ln2home z
 }
