@@ -44,15 +44,16 @@ Plug 'scrooloose/syntastic'
 " Syntax
 Plug 'hdima/python-syntax'
 Plug 'othree/html5.vim'
-Plug 'ChrisYip/Better-CSS-Syntax-for-Vim'
+Plug 'hail2u/vim-css3-syntax'
 Plug 'lepture/vim-jinja', { 'for': 'html' }
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
+Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 "Plug 'kchmck/vim-coffee-script'
 "Plug 'derekwyatt/vim-scala'
-"Plug 'digitaltoad/vim-jade'
 "Plug 'wavded/vim-stylus'
 
 " Colorscheme
+Plug 'chriskempson/base16-vim'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'guns/xterm-color-table.vim'
 
