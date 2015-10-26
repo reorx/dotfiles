@@ -82,6 +82,11 @@ if exists("&undodir")
     set undodir=~/.vim/.undo
 endif
 
+" Command
+"command Now execute "=strftime("%c")<CR>P
+nnoremap <F6> "=strftime("%Y-%m-%d %H:%M:%S")<CR>P
+inoremap <F6> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
+
 " File Specials
 autocmd FileType text setlocal textwidth=80
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
@@ -178,6 +183,7 @@ if !exists("autocmd_colorscheme_loaded")
 endif
 
 if &t_Co == 256
+    set background=dark
     colorscheme Tomorrow-Night-Bright
     highlight Pmenu ctermbg=234 guibg=#606060
     highlight PmenuSel ctermbg=17 guifg=#dddd00
