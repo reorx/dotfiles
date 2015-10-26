@@ -4,6 +4,3 @@
 [submodule "z"]
 	path = z
 	url = git@github.com:rupa/z.git
-[submodule "base16-shell"]
-	path = base16-shell
-	url = git@github.com:chriskempson/base16-shell.git
