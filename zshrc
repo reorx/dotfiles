@@ -56,7 +56,9 @@ DISABLE_AUTO_UPDATE="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(pip fabric supervisor autoenv2)
 
-export _Z_DATA=$HOME/.z-data
+# Load shell color
+BASE16_SHELL="$HOME/.base16-shell/base16-default.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # Load oh-my-zsh & other part of zshrc
 source $ZSH/oh-my-zsh.sh
@@ -66,6 +68,7 @@ if [ -e $HOME/.zshrc_local ]; then
 fi
 
 # Load z
+export _Z_DATA=$HOME/.z-data
 source $HOME/.z/z.sh
 
 # Load fzf
@@ -81,8 +84,22 @@ fi
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
-#export LANG="en_US"
 export LANG=en_US.UTF-8
+
+# ls colors, described as: foreground, background
+#               1. directory: bold blue
+#               | 2. symbolic link: magenta
+#               | | 3. socket: red, bold blue
+#               | | | 4. pipe: black, bold blue
+#               | | | | 5. executable: red
+#               | | | | | 6. block special: default, bold blue
+#               | | | | | | 7. character special: light grey, bold blue
+#               | | | | | | | 8. executable with setuid bit set: light grey, bold red
+#               | | | | | | | | 9. executable with setgid bit set: black, bold brown
+#               | | | | | | | | | 10. directory writable to others, with sticky bit: black, bold green
+#               | | | | | | | | | | 11. directory writable to others, without sticky bit: black, brown
+#               | | | | | | | | | | |
+export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 
 # Less
 export LESS='-R'
@@ -275,6 +292,8 @@ Speed: %{speed_download} Bytes/s
 # Aliases #
 ###########
 
+# Uncomment if you want to use GNU ls
+#alias ls='gls --color=auto'
 alias lsd='ls -l | grep "^d"'
 alias vim="vim -p"
 alias tree="tree --dirsfirst"
