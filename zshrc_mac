@@ -17,7 +17,6 @@ hash -d services="/Users/reorx/Services"
 hash -d projects="/Users/reorx/Projects"
 
 # Code sub dirs
-hash -d archive="/Users/reorx/Code/archive"
 hash -d lab="/Users/reorx/Code/lab"
 hash -d repos="/Users/reorx/Code/repos"
 hash -d wdj="/Users/reorx/Code/wdj"
