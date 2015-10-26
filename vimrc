@@ -1,9 +1,5 @@
 " Author: reorx
 
-" Should at the top since it will affect bundles.vim (maybe?)
-set t_Co=256
-
-
 " ============================================================================
 " Load Bundles
 " ============================================================================
@@ -89,17 +85,18 @@ inoremap <F6> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 
 " File Specials
 autocmd FileType text setlocal textwidth=80
-autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 autocmd FileType jade setlocal shiftwidth=2 tabstop=2
 autocmd FileType stylus setlocal shiftwidth=2 tabstop=2
 autocmd FileType crontab setlocal nowritebackup
 
+autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 au BufRead,BufNewFile */sites-available/* set ft=nginx
 au BufRead,BufNewFile */sites-enabled/* set ft=nginx
 au BufRead,BufNewFile nginx.conf set ft=nginx
 au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
 
-au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
+"au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
+au BufRead,BufNewFile *.conf set ft=dosini
 
 " Display
 set ruler " Show the line and column number of the cursor position, separated by a comma.
@@ -174,17 +171,27 @@ endif
 
 " TODO NOTE
 " define your colors
-if !exists("autocmd_colorscheme_loaded")
-  let autocmd_colorscheme_loaded = 1
-  "autocmd ColorScheme * highlight Todo   ctermbg=LightGrey guibg=#BDBDBD ctermfg=DarkRed     guifg=#DD6676
-  "autocmd ColorScheme * highlight Debug  ctermbg=LightGrey guibg=#BDBDBD ctermfg=DarkBlue    guifg=#96BADC
-  autocmd ColorScheme * highlight Todo   ctermbg=DarkRed guibg=#BDBDBD ctermfg=LightGrey guifg=#DD6676
-  autocmd ColorScheme * highlight Debug  ctermbg=DarkBlue guibg=#BDBDBD ctermfg=LightGrey guifg=#96BADC
+"if !exists("autocmd_colorscheme_loaded")
+"  let autocmd_colorscheme_loaded = 1
+"  "autocmd ColorScheme * highlight Todo   ctermbg=LightGrey guibg=#BDBDBD ctermfg=DarkRed     guifg=#DD6676
+"  "autocmd ColorScheme * highlight Debug  ctermbg=LightGrey guibg=#BDBDBD ctermfg=DarkBlue    guifg=#96BADC
+"  autocmd ColorScheme * highlight Todo   ctermbg=DarkRed guibg=#BDBDBD ctermfg=LightGrey guifg=#DD6676
+"  autocmd ColorScheme * highlight Debug  ctermbg=DarkBlue guibg=#BDBDBD ctermfg=LightGrey guifg=#96BADC
+"endif
+
+
+" Should at the top since it will affect bundles.vim (maybe?)
+if $TERM == "xterm-256color"
+    set t_Co=256
+elseif $TERM == "screen-256color"
+    set t_Co=256
 endif
 
 if &t_Co == 256
+    "colorscheme Tomorrow-Night-Bright
+    let base16colorspace=256  " Access colors present in 256 colorspace
+    colorscheme base16-default
     set background=dark
-    colorscheme Tomorrow-Night-Bright
     highlight Pmenu ctermbg=234 guibg=#606060
     highlight PmenuSel ctermbg=17 guifg=#dddd00
     highlight PmenuSbar ctermbg=17 guibg=#d6d6d6
