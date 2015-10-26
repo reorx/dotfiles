@@ -20,19 +20,11 @@ autoload -U add-zsh-hook
 autoload -Uz vcs_info
 
 #use extended color pallete if available
-if [[ $TERM = *256color* || $TERM = *rxvt* ]]; then
-    turquoise="%F{81}"
-    orange="%F{166}"
-    purple="%F{135}"
-    hotpink="%F{161}"
-    limegreen="%F{118}"
-else
-    turquoise="$fg[cyan]"
-    orange="$fg[yellow]"
-    purple="$fg[magenta]"
-    hotpink="$fg[red]"
-    limegreen="$fg[green]"
-fi
+turquoise="$fg[cyan]"
+orange="$fg[yellow]"
+purple="$fg[magenta]"
+hotpink="$fg[red]"
+limegreen="$fg[green]"
 
 # enable VCS systems you use
 zstyle ':vcs_info:*' enable git svn
@@ -105,7 +97,7 @@ add-zsh-hook precmd steeef_precmd
 # $(virtualenv_info)$ '
 
 PROMPT=$'
-%{$fg[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} in %{$fg[green]%}%~%{$reset_color%} $vcs_info_msg_0_
+%{$fg[magenta]%}%n%{$reset_color%} at %F{243}%m%{$reset_color%} in %{$fg[green]%}%~%{$reset_color%} $vcs_info_msg_0_
 $ '
 
 function GET_RPROMPT() {
