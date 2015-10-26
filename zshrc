@@ -151,12 +151,13 @@ fi
 source ~/.nvm/nvm.sh
 
 # rvm (not used)
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 #if [ -e $HOME/.rvm/bin ]; then
-#    PATH="$PATH:$HOME/.rvm/bin"
+    #PATH="$PATH:$HOME/.rvm/bin"
 #fi
 
-# rbenv (not used)
-#eval "$(rbenv init -)"
+# rbenv
+eval "$(rbenv init -)"
 
 
 #############
