@@ -53,8 +53,8 @@ Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 "Plug 'wavded/vim-stylus'
 
 " Colorscheme
+Plug 'reorx/vim-tomorrow-theme'
 Plug 'chriskempson/base16-vim'
-Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'guns/xterm-color-table.vim'
 
 " Misc

@@ -188,10 +188,10 @@ elseif $TERM == "screen-256color"
 endif
 
 if &t_Co == 256
-    "colorscheme Tomorrow-Night-Bright
-    let base16colorspace=256  " Access colors present in 256 colorspace
-    colorscheme base16-default
     set background=dark
+    colorscheme Tomorrow-Night-Bright
+    "let base16colorspace=256  " Access colors present in 256 colorspace
+    "colorscheme base16-ocean
     highlight Pmenu ctermbg=234 guibg=#606060
     highlight PmenuSel ctermbg=17 guifg=#dddd00
     highlight PmenuSbar ctermbg=17 guibg=#d6d6d6

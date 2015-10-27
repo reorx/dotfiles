@@ -57,8 +57,8 @@ DISABLE_AUTO_UPDATE="true"
 plugins=(pip fabric supervisor autoenv2)
 
 # Load shell color
-BASE16_SHELL="$HOME/.base16-shell/base16-default.dark.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+#SHELL_COLOR="$HOME/.shell-colors/base16-default.dark.sh"
+#[[ -s $SHELL_COLOR ]] && source $SHELL_COLOR
 
 # Load oh-my-zsh & other part of zshrc
 source $ZSH/oh-my-zsh.sh
