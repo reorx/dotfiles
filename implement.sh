@@ -104,7 +104,7 @@ function install_if_not_exist() {
 
 function impl_zsh() {
     install_if_not_exist zsh
-    ln2home base16-shell
+    ln2home shell-colors
     ln2home oh-my-zsh
     ln2home oh-my-zsh-custom
     ln2home zshrc
