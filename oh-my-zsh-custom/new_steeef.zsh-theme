@@ -97,7 +97,7 @@ add-zsh-hook precmd steeef_precmd
 # $(virtualenv_info)$ '
 
 PROMPT=$'
-%{$fg[magenta]%}%n%{$reset_color%} at %F{243}%m%{$reset_color%} in %{$fg[green]%}%~%{$reset_color%} $vcs_info_msg_0_
+%{$fg[magenta]%}%n%{$reset_color%} at %F{244}%m%{$reset_color%} in %{$fg[green]%}%~%{$reset_color%} $vcs_info_msg_0_
 $ '
 
 function GET_RPROMPT() {
