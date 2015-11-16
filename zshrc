@@ -67,6 +67,11 @@ if [ -e $HOME/.zshrc_local ]; then
     source $HOME/.zshrc_local
 fi
 
+
+#################
+# Program Inits #
+#################
+
 # Load z
 export _Z_DATA=$HOME/.z-data
 source $HOME/.z/z.sh
@@ -76,6 +81,41 @@ source $HOME/.z/z.sh
 if [ -e $HOME/.zshrc_fzf ]; then
     source $HOME/.zshrc_fzf
 fi
+
+# virtualenv
+VIRTUAL_ENV_DISABLE_PROMPT="true"
+
+# virtualenvwrapper
+if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
+    export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
+    export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
+    export WORKON_HOME=$HOME/.venv
+    source $PYTHONBIN/virtualenvwrapper.sh
+fi
+
+# Python
+if [ -e $HOME/.pythonrc.py ]; then
+    export PYTHONSTARTUP=$HOME/.pythonrc.py
+fi
+export PYTHONBIN=/usr/local/bin
+
+# nvm
+source ~/.nvm/nvm.sh
+
+# rvm (not used)
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+#if [ -e $HOME/.rvm/bin ]; then
+    #PATH="$PATH:$HOME/.rvm/bin"
+#fi
+
+# rbenv
+eval "$(rbenv init -)"
+
+# Load desk (put at the end of Program inits to prevent `command not exist`)
+if [ -e ~/.desk/bin/desk ]; then
+    export PATH=~/.desk/bin:$PATH
+fi
+[ -n "$DESK_ENV" ] && source "$DESK_ENV"
 
 
 #########################
@@ -141,40 +181,6 @@ bindkey "^[[B" history-search-forward
 zstyle ':completion:*:ssh-hosts' users-hosts $ssh_hosts
 hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
 zstyle ':completion:*:hosts' hosts $ssh_hosts
-
-
-#################
-# Program Inits #
-#################
-
-# Python
-if [ -e $HOME/.pythonrc.py ]; then
-    export PYTHONSTARTUP=$HOME/.pythonrc.py
-fi
-export PYTHONBIN=/usr/local/bin
-
-# virtualenv
-VIRTUAL_ENV_DISABLE_PROMPT="true"
-
-# virtualenvwrapper
-if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
-    export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
-    export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
-    export WORKON_HOME=$HOME/.venv
-    source $PYTHONBIN/virtualenvwrapper.sh
-fi
-
-# nvm
-source ~/.nvm/nvm.sh
-
-# rvm (not used)
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-#if [ -e $HOME/.rvm/bin ]; then
-    #PATH="$PATH:$HOME/.rvm/bin"
-#fi
-
-# rbenv
-eval "$(rbenv init -)"
 
 
 #############
