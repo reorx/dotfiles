@@ -3,7 +3,7 @@
 ########################
 
 function dockerinit() {
-    eval "$(boot2docker shellinit)"
+    . "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"
 }
 
 hash -d desktop="/Users/reorx/Desktop"
