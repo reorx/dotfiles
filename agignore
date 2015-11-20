@@ -1,0 +1,9 @@
+VirtualBox VMs/
+Applications/
+Library/
+
+AppData/
+iPhoto Library.photolibrary/
+Photos Library.photolibrary/
+
+node_modules/

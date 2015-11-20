@@ -81,6 +81,15 @@ source $HOME/.z/z.sh
 if [ -e $HOME/.zshrc_fzf ]; then
     source $HOME/.zshrc_fzf
 fi
+export FZF_DEFAULT_COMMAND='ag -l -g ""'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS="--extended-exact --no-mouse"
+
+# Python
+if [ -e $HOME/.pythonrc.py ]; then
+    export PYTHONSTARTUP=$HOME/.pythonrc.py
+fi
+export PYTHONBIN=/usr/local/bin
 
 # virtualenv
 VIRTUAL_ENV_DISABLE_PROMPT="true"
@@ -92,12 +101,6 @@ if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/.venv
     source $PYTHONBIN/virtualenvwrapper.sh
 fi
-
-# Python
-if [ -e $HOME/.pythonrc.py ]; then
-    export PYTHONSTARTUP=$HOME/.pythonrc.py
-fi
-export PYTHONBIN=/usr/local/bin
 
 # nvm
 source ~/.nvm/nvm.sh
@@ -291,6 +294,10 @@ function httpstat() {
 
 Speed: %{speed_download} Bytes/s
 ' -o /dev/null $1
+}
+
+function urlencode() {
+    python -c 'import urllib, sys; print urllib.quote(sys.argv[1])' $1
 }
 
 

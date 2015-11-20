@@ -48,6 +48,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'lepture/vim-jinja', { 'for': 'html' }
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
+Plug 'vim-scripts/applescript.vim'
 "Plug 'kchmck/vim-coffee-script'
 "Plug 'derekwyatt/vim-scala'
 "Plug 'wavded/vim-stylus'
