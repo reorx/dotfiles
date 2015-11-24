@@ -2,6 +2,8 @@
 # Specially in Mac OSX #
 ########################
 
+export MANPATH=/Users/reorx/AppData/LinuxMan:$MANPATH
+
 function dockerinit() {
     . "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"
 }
@@ -25,3 +27,4 @@ alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'
 alias komodo="/Applications/Komodo\ Edit\ 8.app/Contents/MacOS/komodo-bin"
 alias nwjs="/Applications/nwjs.app/Contents/MacOS/nwjs"
+alias cppcompile='c++ -std=c++11 -stdlib=libc++'
