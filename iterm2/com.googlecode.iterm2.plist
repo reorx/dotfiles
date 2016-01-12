@@ -3016,15 +3016,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>428 198 663 117 0 0 1280 777 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>746 314 924 485 0 0 1920 1177 </string>
+	<string>127 237 605 485 0 0 1280 777 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>796 786 384 129 0 0 1920 1177 </string>
+	<string>476 486 384 129 0 0 1280 777 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>48 0 1170 777 0 0 1280 777 </string>
+	<string>304 303 1170 770 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>51 0 1170 777 0 0 1280 777 </string>
+	<string>348 0 1170 865 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>207 0 920 762 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -3617,7 +3617,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>0</integer>
 			<key>Scrollback With Status Bar</key>
 			<true/>
 			<key>Scrollback in Alternate Screen</key>
@@ -3757,11 +3757,11 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<real>0.18406064808368683</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
-			<false/>
+			<true/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -5454,9 +5454,9 @@
 			<key>Blinking Cursor</key>
 			<false/>
 			<key>Blur</key>
-			<false/>
+			<true/>
 			<key>Blur Radius</key>
-			<real>2</real>
+			<real>12.450428009033203</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -5989,7 +5989,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.0</real>
+			<real>0.054897837340831757</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
@@ -6012,10 +6012,12 @@
 			<string>/Users/reorx</string>
 		</dict>
 	</array>
+	<key>NoSyncNeverRemindPrefsChangesCopy</key>
+	<true/>
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>465699563.75058401</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>467555990.63492697</real>
+	<real>471250512.65136999</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -6082,7 +6084,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-10-26T08:37:30Z</date>
+	<date>2015-12-08T18:09:00Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
