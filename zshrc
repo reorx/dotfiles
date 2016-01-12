@@ -85,6 +85,9 @@ export FZF_DEFAULT_COMMAND='ag -l -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--extended-exact --no-mouse"
 
+# Load s
+. `brew --prefix`/etc/profile.d/s.sh
+
 # Python
 if [ -e $HOME/.pythonrc.py ]; then
     export PYTHONSTARTUP=$HOME/.pythonrc.py
@@ -101,6 +104,10 @@ if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/.venv
     source $PYTHONBIN/virtualenvwrapper.sh
 fi
+
+# Go
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOROOT/bin
 
 # nvm
 source ~/.nvm/nvm.sh
@@ -298,6 +305,10 @@ Speed: %{speed_download} Bytes/s
 
 function urlencode() {
     python -c 'import urllib, sys; print urllib.quote(sys.argv[1])' $1
+}
+
+function aws-du() {
+    aws s3 ls --summarize --human-readable --recursive s3://$@
 }
 
 
