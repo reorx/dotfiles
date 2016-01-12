@@ -97,6 +97,7 @@ au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
 
 "au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
 au BufRead,BufNewFile *.conf set ft=dosini
+au BufRead,BufNewFile *.pac set ft=javascript
 
 " Display
 set ruler " Show the line and column number of the cursor position, separated by a comma.
@@ -154,15 +155,15 @@ set shellpipe=&>
     "endif
 "endif
 
-if has("unix")
-    let s:uname = system("uname")
-    if s:uname == "Darwin\n"
-        " This will make vim and system sharing the same clipboard,
-        " if this option is disabled, `:set paste` can be used to
-        " to do ^ + C paste decently.
-        set clipboard=unnamed
-    endif
-endif
+"if has("unix")
+"    let s:uname = system("uname")
+"    if s:uname == "Darwin\n"
+"        " This will make vim and system sharing the same clipboard,
+"        " if this option is disabled, `:set paste` can be used to
+"        " to do ^ + C paste decently.
+"        set clipboard=unnamed
+"    endif
+"endif
 
 
 " ============================================================================
@@ -331,11 +332,46 @@ inoremap <c-w> <c-g>u<c-w>
 " Reload Vimrc
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
+
+" ============================================================================
+" Commands
+" ============================================================================
+
+func! DisableAutoIndent()
+    setlocal noautoindent
+    setlocal nocindent
+    setlocal nosmartindent
+    setlocal indentexpr=
+    echo 'Auto indent is disabled by many ways'
+endfu
+
+com! DisableAutoIndent call DisableAutoIndent()
+
+func! SetTabstop(size)
+    let &l:tabstop=a:size
+    let &l:shiftwidth=a:size
+    let &l:softtabstop=a:size
+endfu
+
+com! -nargs=1 SetTabstop call SetTabstop(<f-args>)
+
 " Spell check
 " http://vimdoc.sourceforge.net/htmldoc/spell.html
 " http://vim.wikia.com/wiki/Toggle_spellcheck_with_function_keys
 
+func! ToggleSpell()
+    execute "setlocal spell! spelllang=en_us"
+endfu
 
+com! ToggleSpell call ToggleSpell()
+
+func! Hello(who)
+    if a:who=='world'
+        echo "Hello ".a:who
+    endif
+endfu
+
+com! -nargs=1 Hello call Hello(<f-args>)
 " ============================================================================
 " Python
 " ============================================================================
