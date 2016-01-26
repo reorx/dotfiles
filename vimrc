@@ -119,6 +119,9 @@ set wildmenu " When 'wildmenu' is on, command-line completion operates in an enh
 "set wildchar=
 "set wildmode=
 
+" netrw
+let g:netrw_liststyle = 3
+
 " A comma separated list of options for Insert mode completion
 set completeopt=menu
 " get rid of the fucking preview window
