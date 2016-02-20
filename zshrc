@@ -54,11 +54,41 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(pip fabric supervisor autoenv2)
+plugins=(pip autoenv2)
 
 # Load shell color
 #SHELL_COLOR="$HOME/.shell-colors/base16-default.dark.sh"
 #[[ -s $SHELL_COLOR ]] && source $SHELL_COLOR
+
+function _timestamp_ms() {
+    if [[ "$(uname)" == "Darwin" ]]; then
+        echo $(gdate +%s%3N)
+    else
+        echo $(date +%s%3N)
+    fi
+}
+
+#RC_DEBUG="true"
+RC_DEBUG="false"
+
+if [[ $RC_DEBUG == "true" ]]; then
+    # source with timer
+    function source() {
+        local ts=$(_timestamp_ms)
+        builtin source $1
+        local te=$(_timestamp_ms)
+        echo "$(($te - $ts))ms: source $1"
+    }
+
+    # eval with timer
+    #function eval() {
+    #    local ts=$(_timestamp_ms)
+    #    builtin eval $1
+    #    local te=$(_timestamp_ms)
+    #    echo "$(($te - $ts))ms: eval $1"
+    #}
+fi
+
 
 # Load oh-my-zsh & other part of zshrc
 source $ZSH/oh-my-zsh.sh
@@ -95,22 +125,28 @@ fi
 export PYTHONBIN=/usr/local/bin
 
 # virtualenv
-VIRTUAL_ENV_DISABLE_PROMPT="true"
+export VIRTUAL_ENV_DISABLE_PROMPT="true"
+export WORKON_HOME=$HOME/.venv
 
 # virtualenvwrapper
 if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
     export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
     export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
-    export WORKON_HOME=$HOME/.venv
     source $PYTHONBIN/virtualenvwrapper.sh
 fi
+
+# pew (virtualenvwrapper alternative)
+#type pew >/dev/null 2>&1 && source $(pew shell_config)
 
 # Go
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOROOT/bin
 
 # nvm
-source ~/.nvm/nvm.sh
+function initnvm() {
+    source ~/.nvm/nvm.sh
+}
+#initnvm
 
 # rvm (not used)
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -119,7 +155,9 @@ source ~/.nvm/nvm.sh
 #fi
 
 # rbenv
-eval "$(rbenv init -)"
+function initrbenv() {
+    eval "$(rbenv init -)"
+}
 
 # Load desk (put at the end of Program inits to prevent `command not exist`)
 if [ -e ~/.desk/bin/desk ]; then
@@ -322,3 +360,5 @@ alias lsd='ls -l | grep "^d"'
 alias vim="vim -p"
 alias tree="tree --dirsfirst"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
+
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
