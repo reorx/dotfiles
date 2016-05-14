@@ -115,8 +115,8 @@ export FZF_DEFAULT_COMMAND='ag -l -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--extended-exact --no-mouse"
 
-# Load s
-. `brew --prefix`/etc/profile.d/s.sh
+# Load s (https://github.com/haosdent/s)
+source `brew --prefix`/etc/profile.d/s.sh
 
 # Python
 if [ -e $HOME/.pythonrc.py ]; then
@@ -196,7 +196,7 @@ export LESSOPEN='|~/.lessfilter %s'
 #export LESS_TERMCAP_us=$'\E[04;38;5;146m'
 export LESS_TERMCAP_us=$'\e[0;33;40m'
 # section title
-export LESS_TERMCAP_md=$'\E[02;38;5;74m'
+#export LESS_TERMCAP_md=$'\E[02;38;5;74m'
 # search highlight
 export LESS_TERMCAP_so=$'\e[0;30;42m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -209,6 +209,9 @@ export LESS_TERMCAP_mb=$'\E[01;31m'
 #export PAGER="most"
 
 export EDITOR=vim
+
+# brew
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 
 #######
@@ -347,6 +350,19 @@ function urlencode() {
 
 function aws-du() {
     aws s3 ls --summarize --human-readable --recursive s3://$@
+}
+
+function download_benchmark() {
+    DOWNLOAD_SPEED=`wget -O /dev/null $1 2>&1 | awk '/\/dev\/null/ {speed=$3 $4} END {gsub(/\(|\)/,"",speed); print speed}'`
+    echo "$DOWNLOAD_SPEED ($1)"
+}
+
+function tarczf() {
+    tar czf $1.tar.gz $1
+}
+
+function ips() {
+    curl ip.cn/$1
 }
 
 
