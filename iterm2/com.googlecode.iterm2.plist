@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AboutToPasteTabsWithCancel</key>
+	<true/>
+	<key>AboutToPasteTabsWithCancel_selection</key>
+	<integer>2</integer>
 	<key>AdjustWindowForFontSizeChange</key>
 	<true/>
 	<key>AllowClipboardAccess</key>
@@ -3018,13 +3022,13 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>783 295 751 248 0 0 1920 1177 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>806 565 606 456 0 0 1920 1177 </string>
+	<string>288 304 606 456 0 0 1280 777 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>787 786 400 129 0 0 1920 1177 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>370 67 1170 865 0 0 1920 1177 </string>
+	<string>64 26 1210 751 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>292 206 1170 865 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -6024,6 +6028,10 @@
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesCopy</key>
 	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
+	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
+	<integer>0</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<false/>
 	<key>NoSyncSuppressAnnyoingBellOffer</key>
@@ -6048,6 +6056,8 @@
 	<false/>
 	<key>PasteFromClipboard</key>
 	<false/>
+	<key>PasteTabToStringTabStopSize</key>
+	<integer>4</integer>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
@@ -6083,6 +6093,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/reorx/Code/archive/dotfiles/iterm2</string>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnClose</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -6102,7 +6114,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-02-22T08:35:17Z</date>
+	<date>2016-03-04T11:07:51Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>

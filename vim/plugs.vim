@@ -45,7 +45,7 @@ Plug 'scrooloose/syntastic'
 Plug 'hdima/python-syntax'
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'lepture/vim-jinja', { 'for': 'html' }
+"Plug 'lepture/vim-jinja', { 'for': 'html' }
 Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'vim-scripts/applescript.vim'
