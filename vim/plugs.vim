@@ -21,6 +21,7 @@ Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'sjl/gundo.vim'
+"Plug 'ybian/smartim'
 
 " Browsing
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
