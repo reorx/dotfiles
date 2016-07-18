@@ -21,6 +21,7 @@ Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'sjl/gundo.vim'
+Plug 'tweekmonster/braceless.vim'
 "Plug 'ybian/smartim'
 
 " Browsing
@@ -47,13 +48,13 @@ Plug 'hdima/python-syntax'
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
 "Plug 'lepture/vim-jinja', { 'for': 'html' }
-Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
+"Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
+Plug 'gabrielelana/vim-markdown'
 Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
 Plug 'vim-scripts/applescript.vim'
 Plug 'stephpy/vim-yaml'
-"Plug 'kchmck/vim-coffee-script'
+Plug 'othree/yajs.vim'
 "Plug 'derekwyatt/vim-scala'
-"Plug 'wavded/vim-stylus'
 
 " Colorscheme
 Plug 'reorx/vim-tomorrow-theme'
@@ -72,6 +73,19 @@ call plug#end()
 " ============================================================================
 " Plug Configs
 " ============================================================================
+
+
+" ----------------------------------------------------------------------------
+" vim-markdown
+" ----------------------------------------------------------------------------
+let g:markdown_include_jekyll_support = 0
+let g:markdown_enable_spell_checking = 0
+let g:markdown_mapping_switch_status = '<Leader>s
+
+" ----------------------------------------------------------------------------
+" braceless
+" ----------------------------------------------------------------------------
+autocmd FileType python,yaml BracelessEnable +indent +highlight-cc
 
 " ----------------------------------------------------------------------------
 " NERDTree
