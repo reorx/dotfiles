@@ -3022,13 +3022,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>783 295 751 248 0 0 1920 1177 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>288 304 606 456 0 0 1280 777 </string>
+	<string>1324 1102 606 456 0 0 2560 1577 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>787 786 400 129 0 0 1920 1177 </string>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>930 740 700 622 0 0 2560 1577 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>64 26 1210 751 0 0 1280 777 </string>
+	<string>1077 199 1170 865 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>292 206 1170 865 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -6020,12 +6022,16 @@
 	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
+	<key>NoSyncConfirmBeta</key>
+	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste</key>
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
 	<key>NoSyncHaveShownPromoWithId_4</key>
 	<true/>
+	<key>NoSyncInstallationId</key>
+	<string>694918C1-D645-4971-AF40-3B850BBB5FC6</string>
 	<key>NoSyncNeverRemindPrefsChangesCopy</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -6041,12 +6047,14 @@
 	<key>NoSyncTimeOfLastPromo</key>
 	<real>477580992.13128901</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
-	<real>477580972.241624</real>
+	<real>482554282.22982901</real>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
 	<key>OpenBookmark</key>
+	<false/>
+	<key>OpenNoWindowsAtStartup</key>
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
@@ -6110,11 +6118,11 @@
 	<key>SUFeedAlternateAppNameKey</key>
 	<string>iTerm</string>
 	<key>SUFeedURL</key>
-	<string>https://iterm2.com/appcasts/testing3.xml</string>
+	<string>https://iterm2.com/appcasts/testing3.xml?shard=67</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-03-04T11:07:51Z</date>
+	<date>2016-06-07T22:55:54Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -6173,6 +6181,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>2.9.20160206</string>
+	<string>3.0.1</string>
 </dict>
 </plist>
