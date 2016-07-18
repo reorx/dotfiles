@@ -146,7 +146,7 @@ export PATH=$PATH:$GOROOT/bin
 function initnvm() {
     source ~/.nvm/nvm.sh
 }
-#initnvm
+initnvm
 
 # rvm (not used)
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -165,6 +165,11 @@ if [ -e ~/.desk/bin/desk ]; then
 fi
 [ -n "$DESK_ENV" ] && source "$DESK_ENV"
 
+# tag
+if (( $+commands[tag] )); then
+  tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
+  alias ag=tag
+fi
 
 #########################
 # Environment Variables #

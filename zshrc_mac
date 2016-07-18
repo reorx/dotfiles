@@ -6,10 +6,13 @@ export MANPATH=/Users/reorx/AppData/LinuxMan:$MANPATH
 
 # Go
 export GOPATH=/Users/reorx/Code/go
+export PATH=$GOPATH/bin:$PATH
 
 function dockerinit() {
     . "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"
 }
+
+export PATH=$PATH:/usr/local/m-cli
 
 hash -d desktop="/Users/reorx/Desktop"
 hash -d music="/Users/reorx/Music"
@@ -20,6 +23,7 @@ hash -d dropbox="/Users/reorx/Dropbox"
 hash -d code="/Users/reorx/Code"
 hash -d services="/Users/reorx/Services"
 hash -d projects="/Users/reorx/Projects"
+hash -d backup="/Users/reorx/Dropbox/Backup"
 
 # Code sub dirs
 hash -d lab="/Users/reorx/Code/lab"
