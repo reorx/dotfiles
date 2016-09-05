@@ -200,21 +200,16 @@ export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 # Less
 export LESS='-R'
 export LESSOPEN='|~/.lessfilter %s'
-# underline
-#export LESS_TERMCAP_us=$'\E[04;38;5;146m'
-export LESS_TERMCAP_us=$'\e[0;33;40m'
-# section title
-#export LESS_TERMCAP_md=$'\E[02;38;5;74m'
-# search highlight
-export LESS_TERMCAP_so=$'\e[0;30;42m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_mb=$(printf "\e[1;31m")
+export LESS_TERMCAP_md=$(printf "\e[1;31m")
+export LESS_TERMCAP_me=$(printf "\e[0m")
+export LESS_TERMCAP_se=$(printf "\e[0m")
+export LESS_TERMCAP_so=$(printf "\e[1;44;33m")
+export LESS_TERMCAP_ue=$(printf "\e[0m")
+export LESS_TERMCAP_us=$(printf "\e[1;32m")
 # For more about termcap see:
 # https://www.gnu.org/software/termutils/manual/termcap-1.3/html_chapter/termcap_4.html
-
-#export PAGER="most"
+# http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
 
 export EDITOR=vim
 
