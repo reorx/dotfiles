@@ -13,7 +13,12 @@ ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="new_steeef"
+if [ "$TERM_PROGRAM" = "HyperTerm" ]; then
+    ZSH_THEME="pure"
+else
+    ZSH_THEME="new_steeef"
+fi
+#ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
