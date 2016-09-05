@@ -250,19 +250,20 @@ sudo-command-line() {
 zle -N sudo-command-line
 bindkey "\e\e" sudo-command-line
 
+#
 #suite_virtualenv() {
-    #if [ -e .virtualenv ]; then
-        #name=$(cat .virtualenv)
-        #if [ $VIRTUAL_ENV ]; then
-            #if [ "$name" = "$(basename $VIRTUAL_ENV)" ]; then
-                #return
-            #fi
-        #fi
-        #workon $name
-    #fi
+#    if [ -e .virtualenv ]; then
+#        name=$(cat .virtualenv)
+#        if [ $VIRTUAL_ENV ]; then
+#            if [ "$name" = "$(basename $VIRTUAL_ENV)" ]; then
+#                return
+#            fi
+#        fi
+#        workon $name
+#    fi
 #}
 #cd () {
-    #builtin cd "$@" && suite_virtualenv
+#    builtin cd "$@" && suite_virtualenv
 #}
 #suite_virtualenv
 
