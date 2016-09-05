@@ -140,7 +140,8 @@ fi
 
 # Go
 export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOROOT/bin
+export GOPATH=$HOME/Code/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # nvm
 function initnvm() {
