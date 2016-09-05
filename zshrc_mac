@@ -4,10 +4,6 @@
 
 export MANPATH=/Users/reorx/AppData/LinuxMan:$MANPATH
 
-# Go
-export GOPATH=/Users/reorx/Code/go
-export PATH=$GOPATH/bin:$PATH
-
 function dockerinit() {
     . "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"
 }
