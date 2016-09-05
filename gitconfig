@@ -61,7 +61,7 @@
 [diff]
     tool = icdiff
 [difftool "icdiff"]
-    cmd = icdiff \"$LOCAL\" \"$REMOTE\"
+    cmd = icdiff --line-numbers \"$LOCAL\" \"$REMOTE\"
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
