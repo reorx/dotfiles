@@ -171,6 +171,9 @@ if (( $+commands[tag] )); then
   alias ag=tag
 fi
 
+# fuck
+eval "$(thefuck --alias)"
+
 #########################
 # Environment Variables #
 #########################
