@@ -353,7 +353,7 @@ function colortable256() {
     done
 }
 
-function httpstat() {
+function curlhttpstat() {
     curl -Ss -w'Timeline:
 |
 |--NAMELOOKUP %{time_namelookup}
