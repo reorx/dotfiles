@@ -1,13 +1,9 @@
-#############
-# oh my zsh #
-#############
+##############################################################################
+# oh-my-zsh
+##############################################################################
 
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -55,11 +51,27 @@ DISABLE_AUTO_UPDATE="true"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
 
+# Would you like to use another custom folder than $ZSH/custom?
+ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(pip autoenv2)
+
+source $ZSH/oh-my-zsh.sh
+
+
+##############################################################################
+# my zsh
+##############################################################################
+
+# Load other parts of zshrc
+source $HOME/.zshrc_os
+if [ -e $HOME/.zshrc_local ]; then
+    source $HOME/.zshrc_local
+fi
 
 # Load shell color
 #SHELL_COLOR="$HOME/.shell-colors/base16-default.dark.sh"
@@ -92,14 +104,6 @@ if [[ $RC_DEBUG == "true" ]]; then
     #    local te=$(_timestamp_ms)
     #    echo "$(($te - $ts))ms: eval $1"
     #}
-fi
-
-
-# Load oh-my-zsh & other part of zshrc
-source $ZSH/oh-my-zsh.sh
-source $HOME/.zshrc_os
-if [ -e $HOME/.zshrc_local ]; then
-    source $HOME/.zshrc_local
 fi
 
 
