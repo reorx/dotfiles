@@ -191,9 +191,14 @@ elseif $TERM == "screen-256color"
     set t_Co=256
 endif
 
+
 if &t_Co == 256
     set background=dark
-    colorscheme Tomorrow-Night-Bright
+    if $TERM_PROGRAM == "HyperTerm"
+        colorscheme Tomorrow-Night
+    else
+        colorscheme Tomorrow-Night-Bright
+    endif
     "let base16colorspace=256  " Access colors present in 256 colorspace
     "colorscheme base16-ocean
     highlight Pmenu ctermbg=234 guibg=#606060
