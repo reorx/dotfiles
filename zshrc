@@ -198,6 +198,7 @@ export LANG=en_US.UTF-8
 export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 
 # Less
+export LESSCHARSET=utf-8
 export LESS='-R'
 export LESSOPEN='|~/.lessfilter %s'
 export LESS_TERMCAP_mb=$(printf "\e[1;31m")
