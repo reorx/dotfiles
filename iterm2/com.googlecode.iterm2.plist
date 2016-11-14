@@ -3028,13 +3028,13 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>930 735 700 622 0 0 2560 1577 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>1189 467 918 495 0 0 2560 1577 </string>
+	<string>977 326 1016 502 0 0 2560 1577 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>692 217 775 1308 0 0 2560 1577 </string>
+	<string>1281 78 1279 1499 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1280 99 1279 1478 0 0 2560 1577 </string>
+	<string>0 80 1279 1497 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>207 0 920 762 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
@@ -5849,7 +5849,7 @@
 			<key>Normal Font</key>
 			<string>Hack 15</string>
 			<key>Option Key Sends</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
 			<integer>0</integer>
 			<key>Right Option Key Sends</key>
@@ -6870,7 +6870,9 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-09-03T02:48:02Z</date>
+	<date>2016-11-01T15:26:36Z</date>
+	<key>SUSkippedVersion</key>
+	<string>3.0.11</string>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -6929,6 +6931,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.8</string>
+	<string>3.0.10</string>
 </dict>
 </plist>
