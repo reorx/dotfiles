@@ -58,6 +58,7 @@ Plug 'othree/yajs.vim'
 "Plug 'derekwyatt/vim-scala'
 "Plug 'posva/vim-vue'
 Plug 'darthmall/vim-vue'
+Plug 'fatih/vim-go'
 
 " Colorscheme
 Plug 'reorx/vim-tomorrow-theme'
