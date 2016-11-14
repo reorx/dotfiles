@@ -4,6 +4,7 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [alias]
     s = !gg s
     st = status -sb
@@ -19,6 +20,7 @@
     search = "!f() { git log -p -G$1 --all; }; f"
     searchcommit = "!f() { git log -G$1 --all; }; f"
     lscrap = ls-files --other --exclude-standard --directory
+    branchgraph = log --all --graph --decorate --oneline --simplify-by-decoration
     switch = !legit switch \"$@\"
     branches = !legit branches
     sprout = !legit sprout \"$@\"
