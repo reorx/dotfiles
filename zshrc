@@ -115,15 +115,6 @@ fi
 export _Z_DATA=$HOME/.z-data
 source $HOME/.z/z.sh
 
-# Load fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-if [ -e $HOME/.zshrc_fzf ]; then
-    source $HOME/.zshrc_fzf
-fi
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--extended-exact --no-mouse"
-
 # Load s (https://github.com/haosdent/s)
 source `brew --prefix`/etc/profile.d/s.sh
 
@@ -158,6 +149,9 @@ function initnvm() {
 }
 initnvm
 
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # rvm (not used)
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 #if [ -e $HOME/.rvm/bin ]; then
@@ -169,20 +163,17 @@ function initrbenv() {
     eval "$(rbenv init -)"
 }
 
-# Load desk (put at the end of Program inits to prevent `command not exist`)
-if [ -e ~/.desk/bin/desk ]; then
-    export PATH=~/.desk/bin:$PATH
-fi
-[ -n "$DESK_ENV" ] && source "$DESK_ENV"
-
 # tag
 if (( $+commands[tag] )); then
   tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
   alias ag=tag
 fi
 
-# fuck
-eval "$(thefuck --alias)"
+## Load desk (put at the end of Program inits to prevent `command not exist`)
+#if [ -e ~/.desk/bin/desk ]; then
+#    export PATH=~/.desk/bin:$PATH
+#fi
+#[ -n "$DESK_ENV" ] && source "$DESK_ENV"
 
 #########################
 # Environment Variables #
