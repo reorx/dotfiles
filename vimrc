@@ -194,7 +194,7 @@ endif
 
 if &t_Co == 256
     set background=dark
-    if $TERM_PROGRAM == "HyperTerm"
+    if $TERM_PROGRAM == "Hyper"
         colorscheme Tomorrow-Night
     else
         colorscheme Tomorrow-Night-Bright
