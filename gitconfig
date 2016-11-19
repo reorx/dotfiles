@@ -29,6 +29,11 @@
     sync = !legit sync \"$@\"
     publish = !legit publish \"$@\"
     graft = !legit graft \"$@\"
+    ls-merged = ! git branch --merged | grep -v '*'
+    rm-merged = ! git branch --merged | grep -v '*' | xargs -n 1 git branch -d
+    ls-merged-remote = ! git branch --remote --merged | grep origin | grep -v '>' | grep -v master | grep -v develop | xargs -L1 | cut -d'/' -f2-
+    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -v '>' | grep -v master | grep -v develop | xargs -L1 | cut -d'/' -f2- | xargs git push origin --delete
+    prune-origin = remote prune origin
 [color]
     ui = true
 [merge]
