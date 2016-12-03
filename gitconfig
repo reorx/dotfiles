@@ -29,10 +29,10 @@
     sync = !legit sync \"$@\"
     publish = !legit publish \"$@\"
     graft = !legit graft \"$@\"
-    ls-merged = ! git branch --merged | grep -v '*'
-    rm-merged = ! git branch --merged | grep -v '*' | xargs -n 1 git branch -d
-    ls-merged-remote = ! git branch --remote --merged | grep origin | grep -v '>' | grep -v master | grep -v develop | xargs -L1 | cut -d'/' -f2-
-    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -v '>' | grep -v master | grep -v develop | xargs -L1 | cut -d'/' -f2- | xargs git push origin --delete
+    ls-merged = ! git branch --merged | grep -Ev 'master|[*]'
+    rm-merged = ! git branch --merged | grep -Ev 'master|[*]' | xargs -n 1 git branch -d
+    ls-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2-
+    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs git push origin --delete
     prune-origin = remote prune origin
 [color]
     ui = true
@@ -78,3 +78,9 @@
 [pager]
     diff = diff-so-fancy | less --tabs=1,5 -RFX
     show = diff-so-fancy | less --tabs=1,5 -RFX
+[http "https://git.app.16financial.net"]
+	sslCAInfo = /Users/reorx/.flynn/ca-certs/default.pem
+[credential "https://git.app.16financial.net"]
+	helper = /usr/local/bin/flynn git-credentials
+[url "git+ssh://git@git.corp.16financial.com/"]
+	insteadOf = https://git.corp.16financial.com/
