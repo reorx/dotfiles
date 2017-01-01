@@ -218,7 +218,7 @@ export LESS_TERMCAP_us=$(printf "\e[1;32m")
 export EDITOR=vim
 
 # brew
-export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 
 #######
