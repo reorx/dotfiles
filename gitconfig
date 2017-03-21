@@ -6,21 +6,29 @@
     excludesfile = ~/.gitignore_global
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [alias]
+    # https://github.com/qw3rtman/gg
     s = !gg s
     st = status -sb
-    aa = add -A
     ci = commit
     cim = commit -m
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
-    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     co = checkout
+    # NOTE Dangerous, use with caution
     undopush = push -f origin HEAD^:master
     undocommit = reset --soft HEAD^
     search = "!f() { git log -p -G$1 --all; }; f"
     searchcommit = "!f() { git log -G$1 --all; }; f"
-    lscrap = ls-files --other --exclude-standard --directory
     branchgraph = log --all --graph --decorate --oneline --simplify-by-decoration
+    ls-merged = ! git branch --merged | grep -Ev '[*\\s]* master$'
+    rm-merged = ! git branch --merged | grep -Ev '[*\\s]* master$' | xargs -n 1 git branch -d
+    ls-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2-
+    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs git push origin --delete
+    prune-origin = remote prune origin
+    lscrap = ls-files --other --exclude-standard --directory
+    # try different log styles
+    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    # legit shortcuts
     switch = !legit switch \"$@\"
     branches = !legit branches
     sprout = !legit sprout \"$@\"
@@ -29,11 +37,6 @@
     sync = !legit sync \"$@\"
     publish = !legit publish \"$@\"
     graft = !legit graft \"$@\"
-    ls-merged = ! git branch --merged | grep -Ev '[*\\s] master$'
-    rm-merged = ! git branch --merged | grep -Ev '[*\\s] master$' | xargs -n 1 git branch -d
-    ls-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2-
-    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs git push origin --delete
-    prune-origin = remote prune origin
 [color]
     ui = true
 [merge]
@@ -54,11 +57,11 @@
     insteadOf = "gst:"
     pushInsteadOf = "gist:"
     pushInsteadOf = "git://gist.github.com/"
-
 [url "git://github.com/"]
     insteadOf = "github:"
 [url "git://gist.github.com/"]
     insteadOf = "gist:"
+
 [push]
     default = current
 [filter "media"]
@@ -69,18 +72,6 @@
     tool = icdiff
 [difftool "icdiff"]
     cmd = icdiff --line-numbers \"$LOCAL\" \"$REMOTE\"
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
 [pager]
     diff = diff-so-fancy | less --tabs=1,5 -RFX
     show = diff-so-fancy | less --tabs=1,5 -RFX
-[http "https://git.app.16financial.net"]
-	sslCAInfo = /Users/reorx/.flynn/ca-certs/default.pem
-[credential "https://git.app.16financial.net"]
-	helper = /usr/local/bin/flynn git-credentials
-[url "git+ssh://git@git.corp.16financial.com/"]
-	insteadOf = https://git.corp.16financial.com/
