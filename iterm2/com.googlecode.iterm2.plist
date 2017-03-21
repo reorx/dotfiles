@@ -3028,11 +3028,11 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>930 735 700 622 0 0 2560 1577 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>977 326 1016 502 0 0 2560 1577 </string>
+	<string>205 112 937 512 0 0 1280 777 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1281 78 1279 1499 0 0 2560 1577 </string>
+	<string>64 15 1207 762 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 80 1279 1497 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -3607,7 +3607,7 @@
 			<key>Minimum Contrast</key>
 			<real>0.0</real>
 			<key>Mouse Reporting</key>
-			<true/>
+			<false/>
 			<key>Name</key>
 			<string>normal</string>
 			<key>Non Ascii Font</key>
@@ -6776,6 +6776,10 @@
 	<true/>
 	<key>NoSyncDoNotWarnBeforeMultilinePaste_selection</key>
 	<integer>0</integer>
+	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt</key>
+	<true/>
+	<key>NoSyncDoNotWarnBeforePastingOneLineEndingInNewlineAtShellPrompt_selection</key>
+	<integer>1</integer>
 	<key>NoSyncHaveShownPromoWithId_4</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
@@ -6796,6 +6800,8 @@
 	<real>477580992.13128901</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
 	<real>482554282.22982901</real>
+	<key>NoSyncTurnOffMouseReportingOnHostChange</key>
+	<true/>
 	<key>OnlyWhenMoreTabs</key>
 	<true/>
 	<key>OpenArrangementAtStartup</key>
@@ -6870,9 +6876,9 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-11-01T15:26:36Z</date>
+	<date>2017-01-19T18:55:59Z</date>
 	<key>SUSkippedVersion</key>
-	<string>3.0.11</string>
+	<string>3.0.13</string>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -6901,7 +6907,6 @@
 	<integer>10</integer>
 	<key>ToolbeltTools</key>
 	<array>
-		<string>Command History</string>
 		<string>Profiles</string>
 	</array>
 	<key>TripleClickSelectsFullWrappedLines</key>
@@ -6931,6 +6936,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.10</string>
+	<string>3.0.12</string>
 </dict>
 </plist>
