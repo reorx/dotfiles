@@ -69,9 +69,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Load other parts of zshrc
 source $HOME/.zshrc_os
-if [ -e $HOME/.zshrc_local ]; then
-    source $HOME/.zshrc_local
-fi
 
 # Load shell color
 #SHELL_COLOR="$HOME/.shell-colors/base16-default.dark.sh"
@@ -179,7 +176,7 @@ fi
 # Environment Variables #
 #########################
 
-export PATH="/Users/reorx/Code/scripts/bin:$PATH"
+export PATH="/Users/reorx/.local/bin:/Users/reorx/Code/scripts/bin:$PATH"
 
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
@@ -405,3 +402,8 @@ alias tree="tree --dirsfirst"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
 
 test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
+# Load local at last
+if [ -e "$HOME/.zshrc_local" ]; then
+    source $HOME/.zshrc_local
+fi
