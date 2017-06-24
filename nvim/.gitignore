@@ -1,0 +1,12 @@
+.backups/*
+!.backups/.gitignore
+.swaps/*
+!.swaps/.gitignore
+.undo/*
+!.undo/.gitignore
+sessions/*
+!sessions/.gitignore
+
+plugged/
+
+.netrwhist
