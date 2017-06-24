@@ -13,7 +13,8 @@ set background=dark
 if has("termguicolors")
     set termguicolors
 endif
-colorscheme base16-default-dark
+"colorscheme base16-default-dark
+colorscheme hybrid_reverse
 highlight LineNr term=bold gui=NONE guifg=gray25 guibg=gray13
 
 if has("autocmd")

@@ -8,6 +8,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'kristijanhusak/vim-hybrid-material'
 
 call plug#end()
 
