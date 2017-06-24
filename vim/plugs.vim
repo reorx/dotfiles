@@ -48,17 +48,17 @@ Plug 'scrooloose/syntastic'
 Plug 'hdima/python-syntax'
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
-"Plug 'lepture/vim-jinja', { 'for': 'html' }
-"Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
-Plug 'gabrielelana/vim-markdown'
-Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
+Plug 'digitaltoad/vim-jade', { 'for': 'pug' }
 Plug 'vim-scripts/applescript.vim'
 Plug 'stephpy/vim-yaml'
 Plug 'othree/yajs.vim'
-"Plug 'derekwyatt/vim-scala'
-"Plug 'posva/vim-vue'
-Plug 'darthmall/vim-vue'
 Plug 'fatih/vim-go'
+Plug 'chr4/nginx.vim'
+Plug 'lepture/vim-jinja'
+"Plug 'godlygeek/tabular' | Plug 'plasticboy/vim-markdown'
+"Plug 'gabrielelana/vim-markdown'
+"Plug 'posva/vim-vue'
+"Plug 'darthmall/vim-vue'
 
 " Colorscheme
 Plug 'reorx/vim-tomorrow-theme'
@@ -82,8 +82,8 @@ call plug#end()
 " ----------------------------------------------------------------------------
 " vim-markdown
 " ----------------------------------------------------------------------------
-let g:markdown_include_jekyll_support = 0
-let g:markdown_enable_spell_checking = 0
+"let g:markdown_include_jekyll_support = 0
+"let g:markdown_enable_spell_checking = 0
 "let g:markdown_mapping_switch_status = '<Leader>s
 
 " ----------------------------------------------------------------------------
