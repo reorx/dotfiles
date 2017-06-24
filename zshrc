@@ -394,19 +394,17 @@ function ips() {
 }
 
 
+test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
+
 ###########
 # Aliases #
 ###########
 
-# Uncomment if you want to use GNU ls
-#alias ls='gls --color=auto'
 alias lsd='ls -ld */'
 alias vim="nvim -p"
 alias ovim="/usr/local/bin/vim -p"
 alias tree="tree --dirsfirst"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
-
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
 # Load local at last
 if [ -e "$HOME/.zshrc_local" ]; then
