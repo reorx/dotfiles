@@ -1,13 +1,12 @@
 [user]
-    name = reorx
-    email = novoreorx@gmail.com
+    #name = Reorx
+    #email = novoreorx@gmail.com
+    useConfigOnly = true
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
 [alias]
-    # https://github.com/qw3rtman/gg
-    s = !gg s
     st = status -sb
     ci = commit
     cim = commit -m
@@ -25,9 +24,13 @@
     rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs git push origin --delete
     prune-origin = remote prune origin
     lscrap = ls-files --other --exclude-standard --directory
+    stash-all = stash save --include-untracked
+    tags = tag -n99
     # try different log styles
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     # legit shortcuts http://www.git-legit.org/
     switch = !legit switch \"$@\"
     branches = !legit branches
@@ -64,6 +67,7 @@
 
 [push]
     default = current
+	followTags = true
 [filter "media"]
     required = true
     clean = git media clean %f
