@@ -8,8 +8,6 @@ function dockerinit() {
     . "/Applications/Docker/Docker Quickstart Terminal.app/Contents/Resources/Scripts/start.sh"
 }
 
-export PATH=$PATH:/usr/local/m-cli
-
 hash -d desktop="/Users/reorx/Desktop"
 hash -d music="/Users/reorx/Music"
 hash -d pictures="/Users/reorx/Pictures"
