@@ -151,6 +151,9 @@ initnvm
 export FZF_DEFAULT_COMMAND='ag -l -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS="--exact --no-mouse"
+_fzf_compgen_path() {
+  ag -g "" "$1"
+}
 
 # rvm (not used)
 #[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
@@ -397,8 +400,9 @@ function ips() {
 
 # Uncomment if you want to use GNU ls
 #alias ls='gls --color=auto'
-alias lsd='ls -l | grep "^d"'
-alias vim="vim -p"
+alias lsd='ls -ld */'
+alias vim="nvim -p"
+alias ovim="/usr/local/bin/vim -p"
 alias tree="tree --dirsfirst"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
 
