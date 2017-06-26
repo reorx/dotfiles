@@ -12,7 +12,6 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
-"Plug 'avakhov/vim-yaml', { 'for': 'yaml' }
 
 call plug#end()
 
