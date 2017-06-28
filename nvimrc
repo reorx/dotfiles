@@ -127,8 +127,8 @@ set list!
 set listchars=tab:>-
 
 " highlight trailing whitespace
-autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=pink1
-highlight TrailWhitespace ctermbg=red guibg=pink1
+autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=gray40
+highlight TrailWhitespace ctermbg=red guibg=gray40
 match TrailWhitespace /\s\+$/
 
 " Storage
@@ -257,3 +257,5 @@ com! Noqa call setline('.', getline('.') . '  # NOQA')
 com! HeadUTF call append(line('.')-1, '# coding: utf-8')
 
 com! HeadPython call append(line('.')-1, '#!/usr/bin/env python')
+
+com! PythonMain call append(line('.'), "if __name__ == '__main__':")

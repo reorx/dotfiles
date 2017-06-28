@@ -9,9 +9,10 @@ Plug 'w0rp/ale'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'fatih/vim-go', { 'for': 'go' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 
 call plug#end()
 
@@ -52,3 +53,14 @@ let python_highlight_string_format = 1
 let python_highlight_indent_errors = 1
 let python_highlight_doctests = 1
 let python_print_as_function = 1
+
+" supertab
+let g:SuperTabDefaultCompletionType = '<c-n>'
+
+" deoplete
+"let g:deoplete#disable_auto_complete = 0
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_start_length = 3
+let g:deoplete#max_list = 15
+let g:deoplete#max_abbr_width = 50
+let g:deoplete#sources#jedi#show_docstring = 1
