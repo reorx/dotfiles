@@ -9,12 +9,6 @@ elseif $TERM == "screen-256color"
     set t_Co=256
 endif
 
-set background=dark
-if has("termguicolors")
-    set termguicolors
-endif
-"colorscheme base16-default-dark
-colorscheme hybrid_reverse
 highlight LineNr term=bold gui=NONE guifg=gray25 guibg=gray13
 
 if has("autocmd")
@@ -187,6 +181,7 @@ endfunction
 noremap <F5> <Esc>:syntax sync fromstart<CR>
 inoremap <F5> <C-o>:syntax sync fromstart<CR>
 
+let mapleader = " "
 noremap <leader>ss :call StripWhitespace()<CR>
 
 " Save a file as root (,W)
@@ -203,8 +198,8 @@ map tc :tabclose<cr>
 
 map <C-n> :tabnext<cr>
 map <C-p> :tabprevious<cr>
-nmap <Leader>[ :tabp<CR>
-nmap <Leader>] :tabn<CR>
+nmap <Leader>n :tabn<CR>
+nmap <Leader>p :tabp<CR>
 
 " recover from accidental Ctrl-U
 inoremap <C-U> <C-G>u<C-U>
@@ -250,12 +245,8 @@ endfu
 
 com! -nargs=1 Hello call Hello(<f-args>)
 
-" Snippets
-
+" Snippets (deprecated since using UltiSnips)
 com! Noqa call setline('.', getline('.') . '  # NOQA')
-
-com! HeadUTF call append(line('.')-1, '# coding: utf-8')
-
-com! HeadPython call append(line('.')-1, '#!/usr/bin/env python')
-
-com! PythonMain call append(line('.'), "if __name__ == '__main__':")
+"com! HeadUTF call append(line('.')-1, '# coding: utf-8')
+"com! HeadPython call append(line('.')-1, '#!/usr/bin/env python')
+"com! PythonMain call append(line('.'), "if __name__ == '__main__':")
