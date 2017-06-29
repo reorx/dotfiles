@@ -13,6 +13,7 @@ Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 
 call plug#end()
 
@@ -64,3 +65,6 @@ let g:deoplete#auto_complete_start_length = 3
 let g:deoplete#max_list = 15
 let g:deoplete#max_abbr_width = 50
 let g:deoplete#sources#jedi#show_docstring = 1
+
+" tagbar
+nmap <F8> :TagbarToggle<CR>
