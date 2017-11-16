@@ -58,7 +58,7 @@ ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(pip autoenv2)
+plugins=( autoenv2 )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -119,26 +119,21 @@ source `brew --prefix`/etc/profile.d/s.sh
 if [ -e $HOME/.pythonrc.py ]; then
     export PYTHONSTARTUP=$HOME/.pythonrc.py
 fi
-export PYTHONBIN=/usr/local/bin
 
 # virtualenv
 export VIRTUAL_ENV_DISABLE_PROMPT="true"
-export WORKON_HOME=$HOME/.venv
 
 # virtualenvwrapper
-if [ -e $PYTHONBIN/virtualenvwrapper.sh ]; then
-    export VIRTUALENVWRAPPER_PYTHON=$PYTHONBIN/python
-    export VIRTUALENVWRAPPER_VIRTUALENV=$PYTHONBIN/virtualenv
-    source $PYTHONBIN/virtualenvwrapper.sh
+VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+if [ -e "$VIRTUALENVWRAPPER_SCRIPT" ]; then
+    export WORKON_HOME=$HOME/.venv
+    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
+    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
+    source $VIRTUALENVWRAPPER_SCRIPT
 fi
 
 # pew (virtualenvwrapper alternative)
 #type pew >/dev/null 2>&1 && source $(pew shell_config)
-
-# Go
-export GOROOT=/usr/local/opt/go/libexec
-export GOPATH=$HOME/Code/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 # nvm
 function initnvm() {
@@ -155,28 +150,14 @@ _fzf_compgen_path() {
   ag -g "" "$1"
 }
 
-# rvm (not used)
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-#if [ -e $HOME/.rvm/bin ]; then
-    #PATH="$PATH:$HOME/.rvm/bin"
-#fi
-
-# rbenv
-function initrbenv() {
-    eval "$(rbenv init -)"
-}
-
 # tag
 if (( $+commands[tag] )); then
   tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
   alias ag=tag
 fi
 
-## Load desk (put at the end of Program inits to prevent `command not exist`)
-#if [ -e ~/.desk/bin/desk ]; then
-#    export PATH=~/.desk/bin:$PATH
-#fi
-#[ -n "$DESK_ENV" ] && source "$DESK_ENV"
+# vg for go
+command -v vg >/dev/null 2>&1 && eval "$(vg eval --shell zsh)"
 
 #########################
 # Environment Variables #
@@ -199,7 +180,7 @@ export LANG=en_US.UTF-8
 #               | | | | | | | | | 10. directory writable to others, with sticky bit: black, bold green
 #               | | | | | | | | | | 11. directory writable to others, without sticky bit: black, brown
 #               | | | | | | | | | | |
-export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
+#export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 
 # Less
 export LESSCHARSET=utf-8
@@ -220,6 +201,26 @@ export EDITOR=vim
 
 # brew
 #export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
+# mosh
+export MOSH_PREDICTION_DISPLAY=always
+
+# httpstat
+export HTTPSTAT_SHOW_BODY=false
+export HTTPSTAT_SHOW_IP=true
+export HTTPSTAT_SHOW_SPEED=true
+export HTTPSTAT_SAVE_BODY=true
+
+# exa
+if [[ -x /usr/local/bin/exa ]]; then
+  alias ls='exa'
+  alias l='exa -lg --time-style=long-iso --git'
+  alias ll='exa -lga --time-style=long-iso --git'
+# else
+#   alias ls='ls --color=auto -N'
+#   alias l='ls -lF --time-style=long-iso'
+#   alias ll='ls -alF --time-style=long-iso'
+fi
 
 
 #######
@@ -393,8 +394,10 @@ function ips() {
     curl ip.cn/$1
 }
 
+function py_find_packages() {
+    python -c 'from setuptools import find_packages; print find_packages()'
+}
 
-test -e ${HOME}/.iterm2_shell_integration.zsh && source ${HOME}/.iterm2_shell_integration.zsh
 
 ###########
 # Aliases #
