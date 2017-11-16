@@ -33,6 +33,3 @@
 
 # Python #
 *.egg-info/
-
-# Node #
-node_modules/

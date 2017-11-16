@@ -26,6 +26,7 @@
     lscrap = ls-files --other --exclude-standard --directory
     stash-all = stash save --include-untracked
     tags = tag -n99
+    branchupdates = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     # try different log styles
     lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
@@ -54,16 +55,8 @@
 # URL shorthands
 [url "git@github.com:"]
     insteadOf = "gh:"
-    pushInsteadOf = "github:"
-    pushInsteadOf = "git://github.com/"
-[url "git@gist.github.com:"]
-    insteadOf = "gst:"
-    pushInsteadOf = "gist:"
-    pushInsteadOf = "git://gist.github.com/"
-[url "git://github.com/"]
-    insteadOf = "github:"
-[url "git://gist.github.com/"]
-    insteadOf = "gist:"
+    #pushInsteadOf = "github:"
+    #pushInsteadOf = "git://github.com/"
 
 [push]
     default = current
@@ -79,3 +72,5 @@
 [pager]
     diff = diff-so-fancy | less --tabs=1,5 -RFX
     show = diff-so-fancy | less --tabs=1,5 -RFX
+#[http]
+#	proxy = http://127.0.0.1:1235
