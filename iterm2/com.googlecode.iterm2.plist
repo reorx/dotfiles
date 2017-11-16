@@ -10,6 +10,8 @@
 	<false/>
 	<key>AllowClipboardAccess</key>
 	<false/>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>AnimateDimming</key>
 	<false/>
 	<key>AppleAntiAliasingThreshold</key>
@@ -18,6 +20,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AppleWindowTabbingMode</key>
+	<string>manual</string>
 	<key>AutoHideTmuxClientSession</key>
 	<true/>
 	<key>CheckTestRelease</key>
@@ -2952,7 +2956,7 @@
 	<key>HideScrollbar</key>
 	<false/>
 	<key>HideTab</key>
-	<true/>
+	<false/>
 	<key>HighlightTabLabels</key>
 	<true/>
 	<key>HotKeyBookmark</key>
@@ -2965,6 +2969,8 @@
 	<integer>0</integer>
 	<key>HotkeyCode</key>
 	<integer>0</integer>
+	<key>HotkeyMigratedFromSingleToMulti</key>
+	<true/>
 	<key>HotkeyModifiers</key>
 	<integer>0</integer>
 	<key>IRMemory</key>
@@ -3004,7 +3010,7 @@
 	gAKACoAN0xAJChEVGVdOUy5rZXlzoxITFIADgASABaMWFxiABoAHgAiACVpJZGVudGlm
 	aWVyVVdpZHRoVkhpZGRlblEwI0BowAAAAAAACNIhIiMkWiRjbGFzc25hbWVYJGNsYXNz
 	ZXNcTlNEaWN0aW9uYXJ5oiMlWE5TT2JqZWN00xAJCicrGaMSExSAA4AEgAWjLC0YgAuA
-	DIAIgAlRMSNAdCAAAAAAANIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
+	DIAIgAlRMSNAdKAAAAAAANIhIjM0Xk5TTXV0YWJsZUFycmF5ozM1JVdOU0FycmF5XxAP
 	TlNLZXllZEFyY2hpdmVy0Tg5VUFycmF5gAEACAARABoAIwAtADIANwBGAEwAUQBcAGMA
 	ZgBoAGoAbABzAHsAfwCBAIMAhQCJAIsAjQCPAJEAnACiAKkAqwC0ALUAugDFAM4A2wDe
 	AOcA7gDyAPQA9gD4APwA/gEAAQIBBAEGAQ8BFAEjAScBLwFBAUQBSgAAAAAAAAIBAAAA
@@ -3028,25 +3034,25 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>116 814 256 329 0 0 1920 1177 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>1132 273 967 240 0 0 2560 1577 </string>
+	<string>536 465 967 240 0 0 2560 1577 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>1324 1102 606 456 0 0 2560 1577 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>1080 1102 400 129 0 0 2560 1577 </string>
+	<string>1080 1104 400 129 0 0 2560 1577 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>930 733 700 622 0 0 2560 1577 </string>
+	<string>930 734 700 622 0 0 2560 1577 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>738 393 918 512 0 0 2560 1577 </string>
+	<string>744 940 1018 447 0 0 2560 1577 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1181 88 1279 1489 0 0 2560 1577 </string>
+	<string>1069 375 1190 1202 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>767 647 1515 930 0 0 2560 1577 </string>
+	<string>827 159 660 986 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>207 0 920 762 0 0 1280 777 </string>
+	<string>436 50 1310 1200 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>218 186 710 592 0 0 1280 778 </string>
+	<string>708 298 1310 1200 0 0 2560 1577 </string>
 	<key>NeverWarnAboutShortLivedSessions_3AF7B365-37DA-4F1C-B6B7-6BE595F00743</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_4FB1C6F4-083E-43B4-A286-74BC1EB668A1</key>
@@ -3326,7 +3332,7 @@
 			<key>Close Sessions On End</key>
 			<true/>
 			<key>Columns</key>
-			<integer>145</integer>
+			<integer>130</integer>
 			<key>Command</key>
 			<string>/usr/local/bin/zsh</string>
 			<key>Cursor Color</key>
@@ -3726,7 +3732,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Inconsolata 17</string>
+			<string>FiraCode-Regular 17</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -3734,7 +3740,7 @@
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
-			<integer>43</integer>
+			<integer>48</integer>
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
@@ -3895,6 +3901,8 @@
 			<false/>
 			<key>Use Italic Font</key>
 			<false/>
+			<key>Use Non-ASCII Font</key>
+			<true/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -5415,6 +5423,8 @@
 	<integer>1</integer>
 	<key>NoSyncHaveShownPromoWithId_4</key>
 	<true/>
+	<key>NoSyncHaveUsedCopyMode</key>
+	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>694918C1-D645-4971-AF40-3B850BBB5FC6</string>
 	<key>NoSyncNeverRemindPrefsChangesCopy</key>
@@ -5511,9 +5521,9 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-06-24T09:15:20Z</date>
+	<date>2017-10-26T11:39:50Z</date>
 	<key>SUSkippedVersion</key>
-	<string>3.1.beta.5</string>
+	<string>3.1.5.beta.1</string>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -5521,7 +5531,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<true/>
+	<false/>
 	<key>ShowPaneTitles</key>
 	<true/>
 	<key>SkalaPickerTextColourFormat</key>
@@ -5568,10 +5578,12 @@
 	<string>/-+\~_.</string>
 	<key>findIgnoreCase_iTerm</key>
 	<true/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.15</string>
+	<string>3.1.4.beta.1</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
