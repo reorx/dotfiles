@@ -12,6 +12,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'dominikduda/vim_current_word'
 Plug 'jiangmiao/auto-pairs'
 Plug 'SirVer/ultisnips'
+Plug 'wakatime/vim-wakatime'
 " colorscheme
 Plug 'chriskempson/base16-vim'
 Plug 'kristijanhusak/vim-hybrid-material'
@@ -21,6 +22,10 @@ Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+Plug 'chr4/nginx.vim'
+Plug 'codelitt/vim-qtpl'
+Plug 'mattn/emmet-vim', { 'for': 'html' }
+
 
 call plug#end()
 
@@ -81,6 +86,7 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'python': ['flake8'],
 \   'go': ['gometalinter', 'gofmt'],
+\   'html': ['htmlhint'],
 \}
 let g:ale_go_gometalinter_options = '--fast'
 " Error codes reference: http://flake8.readthedocs.org/en/latest/warnings.html
@@ -124,3 +130,10 @@ let g:UltiSnipsExpandTrigger='<c-e>'
 let g:UltiSnipsJumpForwardTrigger='<c-f>'
 let g:UltiSnipsJumpBackwardTrigger='<c-b>'
 let g:UltiSnipsEnableSnipMate=0
+
+" auto-pairs
+"let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+"let g:AutoPairsShortcutToggle = '<leader>p'
+
+" XXX fix yaml indent changed by one of the plugs which I don't know what it is
+autocmd FileType yaml setlocal indentexpr=

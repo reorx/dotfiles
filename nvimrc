@@ -134,10 +134,12 @@ if exists("&undodir")
 endif
 
 " File Specials
-autocmd FileType text setlocal textwidth=80
+"autocmd FileType text setlocal textwidth=80
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType crontab setlocal nowritebackup
-autocmd FileType yaml setlocal indentexpr=
+autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 indentexpr=
+autocmd FileType html setlocal shiftwidth=2 tabstop=2 indentexpr=
+autocmd FileType scss setlocal shiftwidth=2 tabstop=2 indentexpr=
 
 "autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
