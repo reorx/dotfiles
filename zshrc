@@ -112,9 +112,6 @@ fi
 export _Z_DATA=$HOME/.z-data
 source $HOME/.z/z.sh
 
-# Load s (https://github.com/haosdent/s)
-source `brew --prefix`/etc/profile.d/s.sh
-
 # Python
 if [ -e $HOME/.pythonrc.py ]; then
     export PYTHONSTARTUP=$HOME/.pythonrc.py
@@ -134,12 +131,6 @@ fi
 
 # pew (virtualenvwrapper alternative)
 #type pew >/dev/null 2>&1 && source $(pew shell_config)
-
-# nvm
-function initnvm() {
-    source ~/.nvm/nvm.sh
-}
-initnvm
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
