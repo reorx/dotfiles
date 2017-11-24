@@ -3042,11 +3042,11 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>930 734 700 622 0 0 2560 1577 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>744 940 1018 447 0 0 2560 1577 </string>
+	<string>744 940 796 473 0 0 2560 1577 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>155 593 592 584 0 0 1920 1177 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1069 375 1190 1202 0 0 2560 1577 </string>
+	<string>0 872 1280 705 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>827 159 660 986 0 0 2560 1577 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -5521,9 +5521,9 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-10-26T11:39:50Z</date>
+	<date>2017-11-24T06:26:59Z</date>
 	<key>SUSkippedVersion</key>
-	<string>3.1.5.beta.1</string>
+	<string>3.1.5.beta.2</string>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -5583,7 +5583,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.4.beta.1</string>
+	<string>3.1.5.beta.1</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
