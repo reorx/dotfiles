@@ -2,6 +2,10 @@
 # Specially in Mac OSX #
 ########################
 
+# brew
+export HOMEBREW_NO_AUTO_UPDATE=1
+#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+
 export MANPATH=/Users/reorx/AppData/LinuxMan:$MANPATH
 
 hash -d desktop="/Users/reorx/Desktop"

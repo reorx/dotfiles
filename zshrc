@@ -147,9 +147,6 @@ if (( $+commands[tag] )); then
   alias ag=tag
 fi
 
-# vg for go
-command -v vg >/dev/null 2>&1 && eval "$(vg eval --shell zsh)"
-
 #########################
 # Environment Variables #
 #########################
@@ -171,7 +168,7 @@ export LANG=en_US.UTF-8
 #               | | | | | | | | | 10. directory writable to others, with sticky bit: black, bold green
 #               | | | | | | | | | | 11. directory writable to others, without sticky bit: black, brown
 #               | | | | | | | | | | |
-#export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
+export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 
 # Less
 export LESSCHARSET=utf-8
@@ -189,9 +186,6 @@ export LESS_TERMCAP_us=$(printf "\e[1;32m")
 # http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
 
 export EDITOR=vim
-
-# brew
-#export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 # mosh
 export MOSH_PREDICTION_DISPLAY=always
