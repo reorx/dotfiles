@@ -3,9 +3,40 @@
     #email = novoreorx@gmail.com
     useConfigOnly = true
 [core]
-    editor = vim
+    editor = nvim
     excludesfile = ~/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+    tool = nvimdiff
+    conflictstyle = diff3
+[push]
+    default = current
+    followTags = true
+
+[color]
+    ui = true
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[diff]
+    tool = icdiff
+[difftool "icdiff"]
+    cmd = icdiff --line-numbers \"$LOCAL\" \"$REMOTE\"
+[pager]
+    diff = diff-so-fancy | less --tabs=1,5 -RFX
+    show = diff-so-fancy | less --tabs=1,5 -RFX
+[url "git@github.com:"]
+    insteadOf = "gh:"
+[filter "media"]
+    required = true
+    clean = git media clean %f
+    smudge = git media smudge %f
+#[http]
+#    proxy = http://127.0.0.1:1235
+
 [alias]
     st = status -sb
     ci = commit
@@ -41,38 +72,5 @@
         --date=iso \
         --topo-order \
         --decorate \
-        --format=format:'%C(magenta)%h%C(reset) - %C(dim magenta)%ad (%ar)%C(reset)%C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an <%ae>%C(reset)'
+        --format=format:'%C(magenta)%h%C(reset) - %C(dim magenta)%ad%C(reset) %C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim magenta)%ar%C(reset) %C(dim white)- %an <%ae>%C(reset)'
     lol = log --graph --decorate --abbrev-commit --pretty=format
-[color]
-    ui = true
-[merge]
-    # Include summaries of merged commits in newly created merge commit messages
-    log = true
-    #ff = no
-[color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
-
-# URL shorthands
-[url "git@github.com:"]
-    insteadOf = "gh:"
-    #pushInsteadOf = "github:"
-    #pushInsteadOf = "git://github.com/"
-
-[push]
-    default = current
-	followTags = true
-[filter "media"]
-    required = true
-    clean = git media clean %f
-    smudge = git media smudge %f
-[diff]
-    tool = icdiff
-[difftool "icdiff"]
-    cmd = icdiff --line-numbers \"$LOCAL\" \"$REMOTE\"
-[pager]
-    diff = diff-so-fancy | less --tabs=1,5 -RFX
-    show = diff-so-fancy | less --tabs=1,5 -RFX
-#[http]
-#	proxy = http://127.0.0.1:1235
