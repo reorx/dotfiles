@@ -185,7 +185,7 @@ export LESS_TERMCAP_us=$(printf "\e[1;32m")
 # https://www.gnu.org/software/termutils/manual/termcap-1.3/html_chapter/termcap_4.html
 # http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
 
-export EDITOR=vim
+export EDITOR=nvim
 
 # mosh
 export MOSH_PREDICTION_DISPLAY=always
