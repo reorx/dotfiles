@@ -13,6 +13,7 @@ Plug 'dominikduda/vim_current_word'
 Plug 'jiangmiao/auto-pairs'
 Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
+Plug 'chiedo/vim-case-convert'
 " colorscheme
 Plug 'chriskempson/base16-vim'
 Plug 'kristijanhusak/vim-hybrid-material'
