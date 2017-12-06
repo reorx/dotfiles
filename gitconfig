@@ -28,19 +28,21 @@
     tags = tag -n99
     branchupdates = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     # try different log styles
-    lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-    # legit shortcuts http://www.git-legit.org/
-    switch = !legit switch \"$@\"
-    branches = !legit branches
-    sprout = !legit sprout \"$@\"
-    unpublish = !legit unpublish \"$@\"
-    harvest = !legit harvest \"$@\"
-    sync = !legit sync \"$@\"
-    publish = !legit publish \"$@\"
-    graft = !legit graft \"$@\"
+    lg = log \
+        --graph \
+        --abbrev-commit \
+        --date=iso \
+        --topo-order \
+        --decorate \
+        --format=format:'%C(magenta)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(dim magenta)(%ar)%C(reset) %C(dim white)- %an%C(reset)'
+    l = log \
+        --graph \
+        --abbrev-commit \
+        --date=iso \
+        --topo-order \
+        --decorate \
+        --format=format:'%C(magenta)%h%C(reset) - %C(dim magenta)%ad (%ar)%C(reset)%C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an <%ae>%C(reset)'
+    lol = log --graph --decorate --abbrev-commit --pretty=format
 [color]
     ui = true
 [merge]
