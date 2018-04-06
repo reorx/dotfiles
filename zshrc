@@ -173,7 +173,7 @@ export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 # Less
 export LESSCHARSET=utf-8
 export LESS='-R'
-export LESSOPEN='|~/.lessfilter %s'
+#export LESSOPEN='|~/.lessfilter %s'
 export LESS_TERMCAP_mb=$(printf "\e[1;31m")
 export LESS_TERMCAP_md=$(printf "\e[1;31m")
 export LESS_TERMCAP_me=$(printf "\e[0m")
@@ -393,6 +393,7 @@ alias vim="nvim -p"
 alias ovim="/usr/local/bin/vim -p"
 alias tree="tree --dirsfirst"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
+alias cleanpycache="find . -type d -name '__pycache__' -prune -exec rm -r {} \;"
 
 # Load local at last
 if [ -e "$HOME/.zshrc_local" ]; then

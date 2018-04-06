@@ -45,6 +45,7 @@ colorscheme hybrid_reverse
 " nerdtree
 nmap <F4> :NERDTreeFind<cr>
 let g:NERDTreeWinSize = 25
+let NERDTreeIgnore = ['\.pyc$']
 
 " fzf
 nmap <leader><tab> <plug>(fzf-maps-n)

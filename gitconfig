@@ -10,7 +10,7 @@
     # Include summaries of merged commits in newly created merge commit messages
     log = true
     tool = nvimdiff
-    conflictstyle = diff3
+    #conflictstyle = diff3
 [push]
     default = current
     followTags = true
@@ -41,7 +41,7 @@
     st = status -sb
     ci = commit
     cim = commit -m
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
+    #lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
     co = checkout
     # NOTE Dangerous, use with caution
     undopush = push -f origin HEAD^:master
@@ -52,7 +52,7 @@
     ls-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$'
     rm-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$' | xargs -n 1 git branch -d
     ls-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2-
-    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs git push origin --delete
+    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs -L 1 git push origin --delete
     prune-origin = remote prune origin
     lscrap = ls-files --other --exclude-standard --directory
     stash-all = stash save --include-untracked
@@ -60,6 +60,7 @@
     branchupdates = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     # try different log styles
     lg = log \
+        --all \
         --graph \
         --abbrev-commit \
         --date=iso \
