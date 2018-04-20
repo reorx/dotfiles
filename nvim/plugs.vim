@@ -14,6 +14,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
 Plug 'chiedo/vim-case-convert'
+Plug 'airblade/vim-gitgutter'
 " colorscheme
 Plug 'chriskempson/base16-vim'
 Plug 'kristijanhusak/vim-hybrid-material'
@@ -43,9 +44,18 @@ endif
 colorscheme hybrid_reverse
 
 " nerdtree
-nmap <F4> :NERDTreeFind<cr>
 let g:NERDTreeWinSize = 25
 let NERDTreeIgnore = ['\.pyc$']
+
+function! MyNERDTreeToggle()
+    if !g:NERDTree.IsOpen()
+        execute 'NERDTreeFind'
+    else
+        execute 'NERDTreeClose'
+    endif
+endfunction
+
+nmap <F4> :call MyNERDTreeToggle()<cr>
 
 " fzf
 nmap <leader><tab> <plug>(fzf-maps-n)
@@ -74,15 +84,18 @@ let g:deoplete#sources#jedi#show_docstring = 1
 
 " ale
 let g:ale_lint_on_text_changed = 'never'
-let g:ale_sign_error = '❗'
-"let g:ale_sign_warning = '🔸'
-let g:ale_sign_warning = '⚠️'
+let g:ale_sign_error = 'x'
+let g:ale_sign_warning = '~'
 let g:ale_echo_msg_format = '[%severity%] %s <%linter%>'
-let g:ale_set_highlights = 0
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
+"let g:ale_set_highlights = 0
 nmap <leader>] :ALENextWrap<CR>
 nmap <leader>[ :ALEPreviousWrap<CR>
+" emoji sign
+"let g:ale_sign_error = '❗'
+"let g:ale_sign_warning = '🔸'
+"let g:ale_sign_warning = '⚠️'
+"highlight clear ALEErrorSign
+"highlight clear ALEWarningSign
 
 let g:ale_linters = {
 \   'javascript': ['eslint'],
@@ -139,3 +152,23 @@ let g:UltiSnipsEnableSnipMate=0
 
 " XXX fix yaml indent changed by one of the plugs which I don't know what it is
 autocmd FileType yaml setlocal indentexpr=
+
+" git-gutter
+let g:gitgutter_enabled = 0
+nmap <F3> :GitGutterToggle<CR>
+
+" vim-go
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_interfaces = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_autosave = 1
+let g:go_metalinter_enabled = ['vet', 'errcheck']
+let g:go_metalinter_disabled = ['golint']
+
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap gd <Plug>(go-def-tab)
