@@ -196,6 +196,11 @@ export HTTPSTAT_SHOW_IP=true
 export HTTPSTAT_SHOW_SPEED=true
 export HTTPSTAT_SAVE_BODY=true
 
+# csvless
+export CSVLESS_MAX_COLUMN_WIDTH=999
+export CSVLESS_LINE_NUMBERS=1
+export CSVLESS_TABLE_STYLE=markdown
+
 # exa
 if [[ -x /usr/local/bin/exa ]]; then
   alias ls='exa'
