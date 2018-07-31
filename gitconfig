@@ -75,3 +75,5 @@
         --decorate \
         --format=format:'%C(magenta)%h%C(reset) - %C(dim magenta)%ad%C(reset) %C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim magenta)%ar%C(reset) %C(dim white)- %an <%ae>%C(reset)'
     lol = log --graph --decorate --abbrev-commit --pretty=format
+    tags = tag -n --sort=v:refname -l
+    tags-v = tag -n99 --sort=v:refname -l
