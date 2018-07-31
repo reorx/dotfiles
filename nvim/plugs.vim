@@ -10,14 +10,16 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'dominikduda/vim_current_word'
-Plug 'jiangmiao/auto-pairs'
 Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
 Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
+Plug 'plytophogy/vim-virtualenv'
+
 " colorscheme
 Plug 'chriskempson/base16-vim'
 Plug 'kristijanhusak/vim-hybrid-material'
+
 " language specific
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
@@ -27,6 +29,7 @@ Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'chr4/nginx.vim'
 Plug 'codelitt/vim-qtpl'
 Plug 'mattn/emmet-vim', { 'for': 'html' }
+Plug 'justinj/vim-pico8-syntax'
 
 
 call plug#end()
@@ -145,10 +148,6 @@ let g:UltiSnipsExpandTrigger='<c-e>'
 let g:UltiSnipsJumpForwardTrigger='<c-f>'
 let g:UltiSnipsJumpBackwardTrigger='<c-b>'
 let g:UltiSnipsEnableSnipMate=0
-
-" auto-pairs
-"let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
-"let g:AutoPairsShortcutToggle = '<leader>p'
 
 " XXX fix yaml indent changed by one of the plugs which I don't know what it is
 autocmd FileType yaml setlocal indentexpr=
