@@ -184,6 +184,7 @@ endfunction
 noremap <F5> <Esc>:syntax sync fromstart<CR>
 inoremap <F5> <C-o>:syntax sync fromstart<CR>
 
+"let mapleader = "\\"
 let mapleader = " "
 noremap <leader>ss :call StripWhitespace()<CR>
 
@@ -201,8 +202,8 @@ map tc :tabclose<cr>
 
 map <C-n> :tabnext<cr>
 map <C-p> :tabprevious<cr>
-nmap <Leader>n :tabn<CR>
-nmap <Leader>p :tabp<CR>
+"nmap <Leader>n :tabn<CR>
+"nmap <Leader>p :tabp<CR>
 
 " recover from accidental Ctrl-U
 inoremap <C-U> <C-G>u<C-U>

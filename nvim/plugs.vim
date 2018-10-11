@@ -17,6 +17,8 @@ Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
 Plug 'plytophogy/vim-virtualenv'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
+"Plug 'jlanzarotta/bufexplorer'
+Plug 'jeetsukumaran/vim-buffergator'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -68,6 +70,12 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 nmap <c-_> :Files<cr>
+noremap <leader>/ :Buffers<cr>
+
+" buffergator
+let g:buffergator_viewport_split_policy="T"
+let g:buffergator_hsplit_size=13
+let g:buffergator_sort_regime="mru"
 
 " python-syntax
 let python_highlight_builtins = 1
@@ -97,8 +105,8 @@ let g:ale_sign_error = 'x'
 let g:ale_sign_warning = '~'
 let g:ale_echo_msg_format = '[%severity%] %s <%linter%>'
 "let g:ale_set_highlights = 0
-nmap <leader>] :ALENextWrap<CR>
-nmap <leader>[ :ALEPreviousWrap<CR>
+nmap <leader><Right> :ALENextWrap<CR>
+nmap <leader><Left> :ALEPreviousWrap<CR>
 " emoji sign
 "let g:ale_sign_error = '❗'
 "let g:ale_sign_warning = '🔸'
@@ -131,13 +139,15 @@ let g:airline_theme='jellybeans'
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#show_tab_nr = 0
 "let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#buffers_label = 'b'
 let g:airline#extensions#tabline#tabs_label = 't'
+"let g:airline#extensions#tabline#fnamemod = ':t'
+
 
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
