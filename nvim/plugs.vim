@@ -3,6 +3,7 @@ call plug#begin('~/.nvim/plugged')
 " generic
 Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
@@ -15,6 +16,7 @@ Plug 'wakatime/vim-wakatime'
 Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
 Plug 'plytophogy/vim-virtualenv'
+Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -25,6 +27,7 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'chr4/nginx.vim'
 Plug 'codelitt/vim-qtpl'
@@ -85,6 +88,9 @@ let g:deoplete#max_list = 15
 let g:deoplete#max_abbr_width = 50
 let g:deoplete#sources#jedi#show_docstring = 1
 
+" jedi (only for go to definition)
+let g:jedi#auto_vim_configuration = 0
+
 " ale
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_sign_error = 'x'
@@ -120,11 +126,18 @@ endif
 let g:airline_symbols.maxlinenr = ''
 let g:airline_symbols.linenr = ''
 
+" other choices: deus, luna, wombat
+let g:airline_theme='jellybeans'
+
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_splits = 1
+let g:airline#extensions#tabline#show_tab_nr = 0
+"let g:airline#extensions#tabline#tab_nr_type = 1
 let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffers_label = 'b'
+let g:airline#extensions#tabline#tabs_label = 't'
 
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
