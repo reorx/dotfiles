@@ -156,6 +156,12 @@ autocmd BufReadPost *
       \     endif |
       \ endif
 
+" quickfix list auto height
+au FileType qf call AdjustWindowHeight(3, 10)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+endfunction
+
 " Misc
 set mouse=a
 " Prevent flashing when execute external command from vim

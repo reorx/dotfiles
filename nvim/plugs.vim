@@ -19,6 +19,9 @@ Plug 'plytophogy/vim-virtualenv'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
 "Plug 'jlanzarotta/bufexplorer'
 Plug 'jeetsukumaran/vim-buffergator'
+Plug 'mhinz/vim-grepper'
+"Plug 'itchyny/vim-qfedit'
+Plug 'romainl/vim-qf'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -76,6 +79,16 @@ noremap <leader>/ :Buffers<cr>
 let g:buffergator_viewport_split_policy="T"
 let g:buffergator_hsplit_size=13
 let g:buffergator_sort_regime="mru"
+let g:buffergator_suppress_mru_switch_into_splits_keymaps=1
+
+" grepper
+runtime plugin/grepper.vim    " initialize g:grepper with default values
+let g:grepper.tools = ['ag', 'ag_u', 'git']
+let g:grepper.ag_u = {
+    \ 'grepprg':    'ag -u --vimgrep',
+    \ 'grepformat': '%f:%l:%c:%m,%f:%l:%m',
+    \ 'escape': '\^$.*+?()[]{}|',
+    \ }
 
 " python-syntax
 let python_highlight_builtins = 1
