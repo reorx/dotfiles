@@ -26,6 +26,7 @@ Plug 'romainl/vim-qf'
 " colorscheme
 Plug 'chriskempson/base16-vim'
 Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'itchyny/landscape.vim'
 
 " language specific
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -52,7 +53,8 @@ if has("termguicolors")
     set termguicolors
 endif
 "colorscheme base16-default-dark
-colorscheme hybrid_reverse
+"colorscheme hybrid_reverse
+colorscheme landscape
 
 " nerdtree
 let g:NERDTreeWinSize = 25
@@ -176,7 +178,8 @@ nmap <F8> :TagbarToggle<CR>
 
 " current word
 let g:vim_current_word#enabled = 1
-hi CurrentWord guibg=gray25
+hi CurrentWord ctermbg=gray guibg=gray25
+autocmd ColorScheme * hi CurrentWord ctermbg=gray guibg=gray25
 
 " UltiSnips
 let g:UltiSnipsSnippetDirectories=["ultisnips"]

@@ -119,11 +119,11 @@ set completeopt=menu
 " tab characters display dot
 set list!
 set listchars=tab:>-
+"	<- a tab char
 
-" highlight trailing whitespace
-autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=gray40
-highlight TrailWhitespace ctermbg=red guibg=gray40
-match TrailWhitespace /\s\+$/
+" highlight tab char
+autocmd ColorScheme * highlight Whitespace ctermbg=gray guibg=gray40
+highlight Whitespace ctermbg=gray guibg=gray40
 
 " Storage
 " centralize backups, swapfiles and undo history
