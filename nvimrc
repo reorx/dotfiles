@@ -9,6 +9,10 @@ elseif $TERM == "screen-256color"
     set t_Co=256
 endif
 
+if has("termguicolors")
+    set termguicolors
+endif
+
 " Ruler
 set colorcolumn=79
 
