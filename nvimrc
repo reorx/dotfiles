@@ -260,3 +260,15 @@ com! Noqa call setline('.', getline('.') . '  # NOQA')
 "com! HeadUTF call append(line('.')-1, '# coding: utf-8')
 "com! HeadPython call append(line('.')-1, '#!/usr/bin/env python')
 "com! PythonMain call append(line('.'), "if __name__ == '__main__':")
+
+
+" Edit configs
+func! MyVimrc()
+    execute "edit $MYVIMRC"
+endfu
+com! MyVimrc call MyVimrc()
+
+func! MyPlugs()
+    execute "edit $MYPLUGS"
+endfu
+com! MyPlugs call MyPlugs()
