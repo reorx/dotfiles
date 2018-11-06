@@ -9,22 +9,6 @@ elseif $TERM == "screen-256color"
     set t_Co=256
 endif
 
-highlight LineNr term=bold gui=NONE guifg=gray25 guibg=gray13
-
-if has("autocmd")
-  " Highlight TODO, FIXME, NOTE, etc.
-  if v:version > 701
-    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
-    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
-  endif
-endif
-
-" Diff
-highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
-highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
-
 " Ruler
 set colorcolumn=79
 
@@ -82,6 +66,7 @@ set scrolloff=5
 set tabpagemax=7
 set showtabline=2
 set splitright " To make vsplit put the new buffer on the right of the current buffer:
+set splitbelow
 
 " Fold
 set foldmethod=indent
@@ -108,22 +93,10 @@ set wildmenu " When 'wildmenu' is on, command-line completion operates in an enh
 "set wildchar=
 "set wildmode=
 
-" netrw
-let g:netrw_liststyle = 3
-
 " A comma separated list of options for Insert mode completion
 set completeopt=menu
 " get rid of the fucking preview window
 "set completeopt-=preview
-
-" tab characters display dot
-set list!
-set listchars=tab:>-
-"	<- a tab char
-
-" highlight tab char
-autocmd ColorScheme * highlight Whitespace ctermbg=gray guibg=gray40
-highlight Whitespace ctermbg=gray guibg=gray40
 
 " Storage
 " centralize backups, swapfiles and undo history
@@ -156,17 +129,52 @@ autocmd BufReadPost *
       \     endif |
       \ endif
 
+" Misc
+set mouse=a
+
+" Prevent flashing when execute external command from vim
+set shellpipe=&>
+
+" netrw
+let g:netrw_liststyle = 3
+
 " quickfix list auto height
 au FileType qf call AdjustWindowHeight(3, 10)
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
-" Misc
-set mouse=a
-" Prevent flashing when execute external command from vim
-set shellpipe=&>
 
+" ============================================================================
+" Highlight
+" ============================================================================
+
+" Line number
+highlight LineNr term=bold gui=NONE guifg=gray25 guibg=gray13
+
+" Highlight TODO, FIXME, NOTE, etc.
+autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+
+" Diff
+highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffDelete cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffChange cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
+
+" tab characters display dot
+set list!
+set listchars=tab:>-
+"	<- a tab char
+
+" highlight tab char
+autocmd ColorScheme * highlight Whitespace ctermbg=gray guibg=gray10 guifg=gray20
+highlight Whitespace ctermbg=gray guibg=gray10 guifg=gray20
+
+" highlight trailing whitespace (now controlled by vim-better-whitespace)
+"autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=gray40
+"highlight TrailWhitespace ctermbg=red guibg=gray40
+"match TrailWhitespace /\s\+$/
 
 " ============================================================================
 " Custom Functions
@@ -227,16 +235,16 @@ func! DisableAutoIndent()
     setlocal indentexpr=
     echo 'Auto indent is disabled by many ways'
 endfu
-
 com! DisableAutoIndent call DisableAutoIndent()
+
 
 func! SetTabstop(size)
     let &l:tabstop=a:size
     let &l:shiftwidth=a:size
     let &l:softtabstop=a:size
 endfu
-
 com! -nargs=1 SetTabstop call SetTabstop(<f-args>)
+
 
 " Spell check
 " http://vimdoc.sourceforge.net/htmldoc/spell.html
@@ -244,16 +252,16 @@ com! -nargs=1 SetTabstop call SetTabstop(<f-args>)
 func! ToggleSpell()
     execute "setlocal spell! spelllang=en_us"
 endfu
-
 com! ToggleSpell call ToggleSpell()
+
 
 func! Hello(who)
     if a:who=='world'
         echo "Hello ".a:who
     endif
 endfu
-
 com! -nargs=1 Hello call Hello(<f-args>)
+
 
 " Snippets (deprecated since using UltiSnips)
 com! Noqa call setline('.', getline('.') . '  # NOQA')
