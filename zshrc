@@ -103,7 +103,6 @@ if [[ $RC_DEBUG == "true" ]]; then
     #}
 fi
 
-
 #################
 # Program Inits #
 #################
@@ -116,21 +115,6 @@ source $HOME/.z/z.sh
 if [ -e $HOME/.pythonrc.py ]; then
     export PYTHONSTARTUP=$HOME/.pythonrc.py
 fi
-
-# virtualenv
-export VIRTUAL_ENV_DISABLE_PROMPT="true"
-
-# virtualenvwrapper
-VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
-if [ -e "$VIRTUALENVWRAPPER_SCRIPT" ]; then
-    export WORKON_HOME=$HOME/.venv
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python2
-    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-    source $VIRTUALENVWRAPPER_SCRIPT
-fi
-
-# pew (virtualenvwrapper alternative)
-#type pew >/dev/null 2>&1 && source $(pew shell_config)
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -155,21 +139,6 @@ fi
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
-
-# ls colors, described as: foreground, background
-#               1. directory: bold blue
-#               | 2. symbolic link: magenta
-#               | | 3. socket: red, bold blue
-#               | | | 4. pipe: black, bold blue
-#               | | | | 5. executable: red
-#               | | | | | 6. block special: default, bold blue
-#               | | | | | | 7. character special: light grey, bold blue
-#               | | | | | | | 8. executable with setuid bit set: light grey, bold red
-#               | | | | | | | | 9. executable with setgid bit set: black, bold brown
-#               | | | | | | | | | 10. directory writable to others, with sticky bit: black, bold green
-#               | | | | | | | | | | 11. directory writable to others, without sticky bit: black, brown
-#               | | | | | | | | | | |
-export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 
 # Less
 export LESSCHARSET=utf-8
@@ -207,12 +176,29 @@ if [[ -x /usr/local/bin/exa ]]; then
   alias ls='exa'
   alias l='exa -lg --time-style=long-iso --git'
   alias ll='exa -lga --time-style=long-iso --git'
-# else
-#   alias ls='ls --color=auto -N'
-#   alias l='ls -lF --time-style=long-iso'
-#   alias ll='ls -alF --time-style=long-iso'
+else
+  alias ls='ls --color=auto -N'
+  alias l='ls -lF --time-style=long-iso'
+  alias ll='ls -alF --time-style=long-iso'
+
+  # ls colors, described as: foreground, background
+  #               1. directory: bold blue
+  #               | 2. symbolic link: magenta
+  #               | | 3. socket: red, bold blue
+  #               | | | 4. pipe: black, bold blue
+  #               | | | | 5. executable: red
+  #               | | | | | 6. block special: default, bold blue
+  #               | | | | | | 7. character special: light grey, bold blue
+  #               | | | | | | | 8. executable with setuid bit set: light grey, bold red
+  #               | | | | | | | | 9. executable with setgid bit set: black, bold brown
+  #               | | | | | | | | | 10. directory writable to others, with sticky bit: black, bold green
+  #               | | | | | | | | | | 11. directory writable to others, without sticky bit: black, brown
+  #               | | | | | | | | | | |
+  export LSCOLORS=ExfxbEaEbxxEhEhBaDaCad
 fi
 
+# disable virtualenv default PS1
+export VIRTUAL_ENV_DISABLE_PROMPT="true"
 
 #######
 # zsh #
