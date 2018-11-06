@@ -21,6 +21,9 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'mhinz/vim-grepper'
 "Plug 'itchyny/vim-qfedit'
 Plug 'romainl/vim-qf'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'Shougo/echodoc.vim'
+Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
@@ -28,17 +31,27 @@ Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'itchyny/landscape.vim'
 
 " language specific
+" Go
 Plug 'fatih/vim-go', { 'for': 'go' }
+"
+" Go quicktemplate
+Plug 'codelitt/vim-qtpl'
+"
+" Python
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+"Plug 'davidhalter/jedi-vim', { 'for': 'python' }  " enable when you need `go to definition`
+"
+" Nginx
 Plug 'chr4/nginx.vim'
-Plug 'codelitt/vim-qtpl'
+"
+" HTML
 Plug 'mattn/emmet-vim', { 'for': 'html' }
+"
+" PICO-8
 Plug 'justinj/vim-pico8-syntax'
-
 
 call plug#end()
 
@@ -48,12 +61,10 @@ call plug#end()
 
 " colorscheme
 set background=dark
-if has("termguicolors")
-    set termguicolors
-endif
+
 "colorscheme base16-default-dark
-"colorscheme hybrid_reverse
-colorscheme landscape
+colorscheme hybrid_reverse
+"colorscheme landscape
 
 " nerdtree
 let g:NERDTreeWinSize = 25
@@ -66,7 +77,6 @@ function! MyNERDTreeToggle()
         execute 'NERDTreeClose'
     endif
 endfunction
-
 nmap <F4> :call MyNERDTreeToggle()<cr>
 
 " fzf
@@ -111,10 +121,17 @@ let g:deoplete#max_abbr_width = 50
 let g:deoplete#sources#jedi#show_docstring = 1
 
 " jedi (only for go to definition)
-let g:jedi#auto_vim_configuration = 0
+let g:jedi#completions_enabled = 0
+
+" echodoc
+set noshowmode
+let g:echodoc#enable_at_startup=1
+let g:echodoc#enable_force_overwrite=1
 
 " ale
+let g:ale_lint_on_enter = 0
 let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_insert_leave = 1
 let g:ale_sign_error = 'x'
 let g:ale_sign_warning = '~'
 let g:ale_echo_msg_format = '[%severity%] %s <%linter%>'
@@ -188,7 +205,7 @@ let g:UltiSnipsJumpBackwardTrigger='<c-b>'
 let g:UltiSnipsEnableSnipMate=0
 
 " XXX fix yaml indent changed by one of the plugs which I don't know what it is
-autocmd FileType yaml setlocal indentexpr=
+"autocmd FileType yaml setlocal indentexpr=
 
 " git-gutter
 let g:gitgutter_enabled = 0
@@ -209,3 +226,7 @@ let g:go_metalinter_disabled = ['golint']
 au FileType go nmap <Leader>i <Plug>(go-info)
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap gd <Plug>(go-def-tab)
+
+" better whitespace
+let g:better_whitespace_ctermcolor='gray'
+let g:better_whitespace_guicolor='gray40'
