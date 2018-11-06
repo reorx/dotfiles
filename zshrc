@@ -224,67 +224,62 @@ zstyle ':completion:*:hosts' hosts $ssh_hosts
 # Functions #
 #############
 
-sudo-command-line() {
-    [[ -z $BUFFER ]] && zle up-history
-    [[ $BUFFER != sudo\ * ]] && BUFFER="sudo $BUFFER"
-    zle end-of-line
-}
-zle -N sudo-command-line
-bindkey "\e\e" sudo-command-line
-
-#
-#suite_virtualenv() {
-#    if [ -e .virtualenv ]; then
-#        name=$(cat .virtualenv)
-#        if [ $VIRTUAL_ENV ]; then
-#            if [ "$name" = "$(basename $VIRTUAL_ENV)" ]; then
-#                return
-#            fi
-#        fi
-#        workon $name
-#    fi
-#}
-#cd () {
-#    builtin cd "$@" && suite_virtualenv
-#}
-#suite_virtualenv
-
 # Create a data URL from an image (works for other file types too, if you tweak the Content-Type afterwards)
 function dataurl() {
-    echo "data:image/${1##*.};base64,$(openssl base64 -in "$1")" | tr -d '\n'
+  echo "data:image/${1##*.};base64,$(openssl base64 -in "$1")" | tr -d '\n'
 }
 
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
-    local port="${1:-8000}"
-    open "http://localhost:${port}/"
-    # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
-    # And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
-    python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+  local port="${1:-8000}"
+  open "http://localhost:${port}/"
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
+  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
-# Syntax-highlight JSON strings or files
-function json() {
-    if [ -p /dev/stdin ]; then
-        # piping, e.g. `echo '{"foo":42}' | json`
-        python -mjson.tool | pygmentize -l javascript
-    else
-        # e.g. `json '{"foo":42}'`
-        python -mjson.tool <<< "$*" | pygmentize -l javascript
-    fi
-}
-
-# Get a character's Unicode code point
+# Get a character's Unicode code point, requires `python3` and `column` on PATH
 function codepoint() {
-    perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
-    echo # newline
+  python3 -c "$(cat << EOF
+import sys
+import subprocess as sp
+def usage(*args):
+    if args:
+      print(*args)
+    print('Usage: codepoint <chars>')
+try:
+    chars = sys.argv[1]
+except IndexError:
+    usage('invalid arguments, <chars> missing')
+    sys.exit(1)
+if chars == '-h':
+    usage()
+    sys.exit()
+def show_char(c):
+    print('Char: {}, ')
+h = ['Char', 'Ord', 'Hex', 'Code_Point']
+d = [h]
+for i in chars:
+    n = ord(i)
+    x = hex(n)
+    xs = str(x)[2:]
+    if len(xs) < 4:
+      xs = '0' * (4 - len(xs)) + xs
+    cp = 'U+' + xs
+    d.append([i, str(n), str(x), cp])
+text = '\n'.join(' '.join(l) for l in d) + '\n'
+p = sp.Popen(['column', '-t'], stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
+out, err = p.communicate(text.encode())
+if p.returncode == 0:
+    print(out.decode())
+else:
+    print('Out: {}\n\nErr:{}'.format(out.decode(), err.decode()))
+    sys.exit(p.returncode)
+EOF
+)" $@
 }
 
-function clean_pyc() {
-    find $1 -name '*.pyc' -exec rm {} \;
-}
-
-function sshch() {
+function sshfwd() {
     # Options explaination
     #   q  Quiet mode.  Causes most warning and diagnostic messages to be suppressed.
     #   T  Disable pseudo-tty allocation.
@@ -293,61 +288,10 @@ function sshch() {
     ssh -qTNv -D 7070 $@
 }
 
-function github-clone() {
-    git clone git@github.com:$1.git $2
-}
-
-function colortable() {
-    echo "use \\\x1B or \\\e as prefix, \\\x1B[0m as suffix"
-    for x in 0 1 4 5 7 8; do
-        for i in `seq 30 37`; do
-            for a in `seq 40 47`; do
-                echo -ne "\e[$x;$i;$a""m\\\x1B[$x;$i;$a""m\e[0;37;40m ";
-            done;
-            echo;
-        done;
-    done;
-    echo;
-}
-
-function colorcodes() {
-    T='gYw'   # The test text
-
-    echo -e "\n                 40m     41m     42m     43m\
-         44m     45m     46m     47m";
-
-    for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
-               '1;32m' '  33m' '1;33m' '  34m' '1;34m' '  35m' '1;35m' \
-               '  36m' '1;36m' '  37m' '1;37m';
-      do FG=${FGs// /}
-      echo -en " $FGs \033[$FG  $T  "
-      for BG in 40m 41m 42m 43m 44m 45m 46m 47m;
-        do echo -en "$EINS \033[$FG\033[$BG  $T  \033[0m";
-      done
-      echo;
-    done
-    echo
-}
-
 function colortable256() {
     for i in {0..255} ; do
         printf "\x1b[38;5;${i}mcolour${i}\n"
     done
-}
-
-function curlhttpstat() {
-    curl -Ss -w'Timeline:
-|
-|--NAMELOOKUP %{time_namelookup}
-|--|--CONNECT %{time_connect}
-|--|--|--APPCONNECT %{time_appconnect}
-|--|--|--|--PRETRANSFER %{time_pretransfer}
-|--|--|--|--|--STARTTRANSFER %{time_starttransfer}
-|--|--|--|--|--|--TOTAL %{time_total}
-|--|--|--|--|--|--REDIRECT %{time_redirect}
-
-Speed: %{speed_download} Bytes/s
-' -o /dev/null $1
 }
 
 function urlencode() {
