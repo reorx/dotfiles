@@ -15,7 +15,6 @@ Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
 Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
-Plug 'plytophogy/vim-virtualenv'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
 "Plug 'jlanzarotta/bufexplorer'
 Plug 'jeetsukumaran/vim-buffergator'
