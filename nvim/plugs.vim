@@ -52,6 +52,8 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 "
 " PICO-8
 Plug 'justinj/vim-pico8-syntax'
+" protobuf
+Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 
 call plug#end()
 
