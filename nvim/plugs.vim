@@ -1,19 +1,18 @@
 call plug#begin('~/.nvim/plugged')
 
 " generic
-Plug 'ervandew/supertab'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+Plug 'Shougo/echodoc.vim'
 Plug 'majutsushi/tagbar'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'dominikduda/vim_current_word'
 Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
-Plug 'chiedo/vim-case-convert'
+"Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
 "Plug 'jlanzarotta/bufexplorer'
@@ -22,13 +21,19 @@ Plug 'mhinz/vim-grepper'
 "Plug 'itchyny/vim-qfedit'
 Plug 'romainl/vim-qf'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'Shougo/echodoc.vim'
 Plug 'ryanoasis/vim-devicons'  " requires a nerd font
+Plug 'easymotion/vim-easymotion'
 
-" colorscheme
-Plug 'chriskempson/base16-vim'
-Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'itchyny/landscape.vim'
+" completion
+Plug 'ervandew/supertab'
+"
+" plan 1: deoplete
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"
+" plan 2: ncm2 + LanguageClient-neovim
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
 
 " language specific
 " Go
@@ -37,11 +42,16 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 " Go quicktemplate
 Plug 'codelitt/vim-qtpl'
 "
-" Python
+" Python generic
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
-Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
+"
+" Python jedi-vim (works independently with completion)
+"Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+"
+" Python deoplete-jedi + jedi-vim (works with deoplete, jedi-vim provides `go to definition`
+"Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 "Plug 'davidhalter/jedi-vim', { 'for': 'python' }  " enable when you need `go to definition`
 "
 " Nginx
@@ -55,10 +65,52 @@ Plug 'justinj/vim-pico8-syntax'
 " protobuf
 Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 
+" colorscheme
+Plug 'chriskempson/base16-vim'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'itchyny/landscape.vim'
+
 call plug#end()
 
 " ------
-" Config
+" Config - Completion
+" ------
+
+" supertab
+let g:SuperTabDefaultCompletionType = '<c-n>'
+
+" ncm
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+" lsc
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+    \ 'python': ['/Users/reorx/.venv/pyls/bin/pyls'],
+    \ }
+let g:LanguageClient_loggingFile = '/tmp/lsc.log'
+let g:LanguageClient_loggingLevel = 'DEBUG'
+" lsc keys
+noremap <leader>d :call LanguageClient_textDocument_definition()<CR>
+noremap <leader>g :call LanguageClient_textDocument_typeDefinition()<CR>
+noremap <leader>h :call LanguageClient_textDocument_hover()<CR>
+noremap <leader>f :call LanguageClient_contextMenu()<CR>
+
+" deoplete
+"let g:deoplete#disable_auto_complete = 0
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_start_length = 3
+let g:deoplete#max_list = 15
+let g:deoplete#max_abbr_width = 50
+let g:deoplete#sources#jedi#show_docstring = 1
+
+" jedi (only for go to definition)
+let g:jedi#completions_enabled = 0
+
+" ------
+" Config - Other
 " ------
 
 " colorscheme
@@ -111,20 +163,6 @@ let python_highlight_indent_errors = 1
 let python_highlight_doctests = 1
 let python_print_as_function = 1
 
-" supertab
-let g:SuperTabDefaultCompletionType = '<c-n>'
-
-" deoplete
-"let g:deoplete#disable_auto_complete = 0
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_start_length = 3
-let g:deoplete#max_list = 15
-let g:deoplete#max_abbr_width = 50
-let g:deoplete#sources#jedi#show_docstring = 1
-
-" jedi (only for go to definition)
-let g:jedi#completions_enabled = 0
-
 " echodoc
 set noshowmode
 let g:echodoc#enable_at_startup=1
@@ -148,7 +186,7 @@ nmap <leader><Left> :ALEPreviousWrap<CR>
 "highlight clear ALEWarningSign
 
 let g:ale_linters = {
-\   'javascript': ['eslint'],
+\   'javascript': [],
 \   'python': ['flake8'],
 \   'go': ['gometalinter', 'gofmt'],
 \   'html': ['htmlhint'],
@@ -181,7 +219,7 @@ let g:airline#extensions#tabline#buffers_label = 'b'
 let g:airline#extensions#tabline#tabs_label = 't'
 "let g:airline#extensions#tabline#fnamemod = ':t'
 
-
+let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tagbar#enabled = 0
 let g:airline#extensions#whitespace#enabled = 1
