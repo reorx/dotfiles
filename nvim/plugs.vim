@@ -236,6 +236,9 @@ nmap <F8> :TagbarToggle<CR>
 let g:vim_current_word#enabled = 1
 hi CurrentWord ctermbg=gray guibg=gray25
 autocmd ColorScheme * hi CurrentWord ctermbg=gray guibg=gray25
+" change visual mode selection color
+hi Visual guifg=White guibg=SteelBlue gui=none
+
 
 " UltiSnips
 let g:UltiSnipsSnippetDirectories=["ultisnips"]
