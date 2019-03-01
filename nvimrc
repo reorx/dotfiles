@@ -98,7 +98,7 @@ set wildmenu " When 'wildmenu' is on, command-line completion operates in an enh
 "set wildmode=
 
 " A comma separated list of options for Insert mode completion
-set completeopt=menu
+set completeopt=menuone,longest
 " get rid of the fucking preview window
 "set completeopt-=preview
 

@@ -87,7 +87,9 @@ let g:SuperTabLongestHighlight = 1
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 " :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
+"set completeopt=noinsert,menuone,noselect,longest
+au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
+au User Ncm2PopupClose set completeopt=menuone,longest
 
 " lsc
 let g:LanguageClient_serverCommands = {
