@@ -3030,13 +3030,13 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>827 405 933 94 0 0 2560 1577 </string>
+	<string>2805 -170 933 77 2560 -593 1440 2537 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>970 786 620 392 0 0 2560 1417 </string>
+	<string>410 381 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>2882 20 796 486 2560 -593 1440 2537 </string>
+	<string>1392 215 796 486 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2560 -479 1440 1268 2560 -593 1440 2537 </string>
+	<string>0 788 1 22 0 0 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1250 69 1310 1058 0 0 2560 1577 </string>
 	<key>NeverWarnAboutShortLivedSessions_3AF7B365-37DA-4F1C-B6B7-6BE595F00743</key>
@@ -6292,7 +6292,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-11-27T06:05:54Z</date>
+	<date>2019-02-28T11:57:30Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -6356,7 +6356,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.2.6</string>
+	<string>3.2.7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
