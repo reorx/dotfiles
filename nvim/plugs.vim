@@ -23,6 +23,8 @@ Plug 'romainl/vim-qf'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 Plug 'easymotion/vim-easymotion'
+Plug 'wellle/targets.vim'
+Plug 'tpope/vim-surround'
 
 " completion
 Plug 'ervandew/supertab'

@@ -198,6 +198,10 @@ endfunction
 " Keymaps
 " ============================================================================
 
+" paste without overwritting register
+" https://stackoverflow.com/q/290465/596206
+xnoremap p pgvy
+
 " Fix syntax highlighting
 noremap <F5> <Esc>:syntax sync fromstart<CR>
 inoremap <F5> <C-o>:syntax sync fromstart<CR>
