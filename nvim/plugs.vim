@@ -80,6 +80,8 @@ call plug#end()
 "let g:SuperTabDefaultCompletionType = '<c-n>'
 let g:SuperTabDefaultCompletionType = 'context'
 let g:SuperTabContextDefaultCompletionType = '<c-n>'
+let g:SuperTabLongestHighlight = 1
+"let g:SuperTabLongestEnhanced = 1
 
 " ncm
 " enable ncm2 for all buffers
