@@ -312,6 +312,20 @@ function py_find_packages() {
     python -c 'from setuptools import find_packages; print find_packages()'
 }
 
+function td() {
+    local dir="$(basename $PWD)"
+    tmux has-session -t "=$dir" 2>/dev/null 1>&2
+    if [ $? -eq 0 ]; then
+        tmux a -t "=$dir"
+    else
+        tmux new -s "$dir"
+    fi
+}
+
+function lesshelp() {
+    $@ --help | less
+}
+
 
 ###########
 # Aliases #
