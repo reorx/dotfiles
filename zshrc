@@ -314,6 +314,7 @@ function py_find_packages() {
 
 function td() {
     local dir="$(basename $PWD)"
+    dir="${dir/./-}"
     tmux has-session -t "=$dir" 2>/dev/null 1>&2
     if [ $? -eq 0 ]; then
         tmux a -t "=$dir"
