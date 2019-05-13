@@ -113,6 +113,7 @@ endif
 " File Specials
 "autocmd FileType text setlocal textwidth=80
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+autocmd FileType json setlocal shiftwidth=2 tabstop=2
 autocmd FileType crontab setlocal nowritebackup
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 indentexpr=
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 indentexpr=
