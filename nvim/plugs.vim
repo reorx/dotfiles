@@ -100,6 +100,7 @@ let g:LanguageClient_serverCommands = {
     \ }
 let g:LanguageClient_loggingFile = '/tmp/lsc.log'
 let g:LanguageClient_loggingLevel = 'DEBUG'
+let g:LanguageClient_diagnosticsList = 'Location'
 " lsc keys
 noremap <leader>d :call LanguageClient_textDocument_definition()<CR>
 noremap <leader>g :call LanguageClient_textDocument_typeDefinition()<CR>
