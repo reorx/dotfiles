@@ -7,14 +7,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-if [ "$TERM_PROGRAM" = "HyperTerm" ]; then
-    ZSH_THEME="pure"
-else
-    ZSH_THEME="new_steeef"
-fi
-#ZSH_THEME="robbyrussell"
+ZSH_THEME=""  # disable ZSH theme, for pure
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -54,6 +47,9 @@ source $ZSH/oh-my-zsh.sh
 ##############################################################################
 # my zsh
 ##############################################################################
+# use pure prompt
+autoload -U promptinit; promptinit
+prompt pure
 
 # Load other parts of zshrc
 source $HOME/.zshrc_os
