@@ -20,6 +20,7 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'mhinz/vim-grepper'
 "Plug 'itchyny/vim-qfedit'
 Plug 'romainl/vim-qf'
+Plug 'yssl/QFEnter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 Plug 'easymotion/vim-easymotion'
@@ -166,6 +167,11 @@ let g:grepper.ag_u = {
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
+" QFEnter
+let g:qfenter_keymap = {}
+let g:qfenter_keymap.vopen = ['<C-v>']
+let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
+let g:qfenter_keymap.topen = ['<C-t>']
 
 " vim-qf
 nmap <leader>p <Plug>(qf_qf_previous)
@@ -173,6 +179,7 @@ nmap <leader>n  <Plug>(qf_qf_next)
 " these two key maps can replace 'milkypostman/vim-togglelist'
 nmap <leader>q <Plug>(qf_qf_toggle)
 nmap <leader>l <Plug>(qf_loc_toggle)
+
 " python-syntax
 let python_highlight_builtins = 1
 let python_highlight_exceptions = 1
