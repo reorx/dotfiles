@@ -163,6 +163,8 @@ let g:grepper.ag_u = {
     \ 'grepformat': '%f:%l:%c:%m,%f:%l:%m',
     \ 'escape': '\^$.*+?()[]{}|',
     \ }
+nmap gs <plug>(GrepperOperator)
+xmap gs <plug>(GrepperOperator)
 
 " python-syntax
 let python_highlight_builtins = 1
