@@ -166,6 +166,13 @@ let g:grepper.ag_u = {
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 
+
+" vim-qf
+nmap <leader>p <Plug>(qf_qf_previous)
+nmap <leader>n  <Plug>(qf_qf_next)
+" these two key maps can replace 'milkypostman/vim-togglelist'
+nmap <leader>q <Plug>(qf_qf_toggle)
+nmap <leader>l <Plug>(qf_loc_toggle)
 " python-syntax
 let python_highlight_builtins = 1
 let python_highlight_exceptions = 1
