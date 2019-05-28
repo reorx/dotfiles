@@ -187,7 +187,9 @@ else
 fi
 
 # disable virtualenv default PS1
-export VIRTUAL_ENV_DISABLE_PROMPT="true"
+#export VIRTUAL_ENV_DISABLE_PROMPT="true"
+# unset so that pure.zsh can work
+unset VIRTUAL_ENV_DISABLE_PROMPT
 
 #######
 # zsh #
@@ -327,6 +329,10 @@ gco() {
   branch=$(echo "$branches" |
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+fbr() {
+  git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)" | fzf
 }
 
 function lesshelp() {
