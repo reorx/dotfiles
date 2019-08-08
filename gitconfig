@@ -56,7 +56,6 @@
     prune-origin = remote prune origin
     lscrap = ls-files --other --exclude-standard --directory
     stash-all = stash save --include-untracked
-    tags = tag -n99
     branchupdates = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
     # try different log styles
     lg = log \
