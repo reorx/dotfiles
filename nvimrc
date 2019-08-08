@@ -159,7 +159,7 @@ highlight LineNr term=bold gui=NONE guifg=gray25 guibg=gray13
 
 " Highlight TODO, FIXME, NOTE, etc.
 autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
-autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|SECTION\)')
 
 " Diff
 highlight DiffAdd    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
