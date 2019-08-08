@@ -67,6 +67,8 @@ Plug 'mattn/emmet-vim', { 'for': 'html' }
 Plug 'justinj/vim-pico8-syntax'
 " protobuf
 Plug 'uarun/vim-protobuf', { 'for': 'proto' }
+" robot
+Plug 'mfukar/robotframework-vim'
 
 " colorscheme
 Plug 'chriskempson/base16-vim'
