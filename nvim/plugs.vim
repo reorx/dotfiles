@@ -224,7 +224,7 @@ let g:ale_go_gometalinter_options = '--fast'
 " E265: block comment should start with ‘# ‘
 " E501: line too long (<n> characters)
 " W404: 'from <module> import ``*``' used; unable to detect undefined names
-let g:ale_python_flake8_options = '--ignore=E265,E501'
+let g:ale_python_flake8_options = '--ignore=E265,E501,E741'
 
 " airline
 if !exists('g:airline_symbols')
