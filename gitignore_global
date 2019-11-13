@@ -35,3 +35,5 @@ Pipfile
 # Python #
 *.egg-info/
 .pytest_cache/
+venv*/
+pip-wheel-metadata/
