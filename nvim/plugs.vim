@@ -26,6 +26,7 @@ Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-surround'
+Plug 'MattesGroeger/vim-bookmarks'
 
 " completion
 Plug 'ervandew/supertab'
@@ -300,3 +301,11 @@ au FileType go nmap gd <Plug>(go-def-tab)
 " better whitespace
 let g:better_whitespace_ctermcolor='gray'
 let g:better_whitespace_guicolor='gray40'
+
+" bookmarks
+
+"highlight BookmarkLine ctermbg=194 ctermfg=NONE
+highlight BookmarkLine    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+highlight Bookmark    cterm=bold ctermfg=10 ctermbg=17 gui=none guifg=bg guibg=Red
+let g:bookmark_sign_disabled = 1
+"let g:bookmark_highlight_lines = 1
