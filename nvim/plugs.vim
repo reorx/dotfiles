@@ -258,7 +258,13 @@ let g:airline#extensions#default#layout = [
   \ ]
 
 " tagbar
+let g:tagbar_width = 35
 nmap <F8> :TagbarToggle<CR>
+"echo winwidth('%')
+if winwidth('%') > 150
+    autocmd VimEnter * nested :call tagbar#autoopen(1)
+    autocmd FileType * nested :call tagbar#autoopen(0)
+endif
 
 " current word
 let g:vim_current_word#enabled = 1
