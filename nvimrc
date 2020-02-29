@@ -106,9 +106,8 @@ set completeopt=menuone,longest
 " centralize backups, swapfiles and undo history
 set backupdir=~/.nvim/.backups
 set directory=~/.nvim/.swaps
-if exists("&undodir")
-    set undodir=~/.nvim/.undo
-endif
+set undodir=~/.nvim/.undos
+set undofile
 
 " File Specials
 "autocmd FileType text setlocal textwidth=80

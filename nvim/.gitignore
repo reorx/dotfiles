@@ -2,8 +2,8 @@
 !.backups/.gitignore
 .swaps/*
 !.swaps/.gitignore
-.undo/*
-!.undo/.gitignore
+.undos/*
+!.undos/.gitignore
 sessions/*
 !sessions/.gitignore
 
