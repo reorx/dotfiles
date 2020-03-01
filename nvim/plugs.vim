@@ -75,6 +75,7 @@ Plug 'mfukar/robotframework-vim'
 Plug 'chriskempson/base16-vim'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'itchyny/landscape.vim'
+Plug 'haishanh/night-owl.vim'
 
 call plug#end()
 
@@ -129,8 +130,10 @@ let g:jedi#completions_enabled = 0
 " colorscheme
 set background=dark
 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "colorscheme base16-default-dark
-colorscheme hybrid_reverse
+"colorscheme hybrid_reverse
+colorscheme night-owl
 "colorscheme landscape
 
 " nerdtree
