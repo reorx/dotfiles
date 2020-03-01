@@ -70,6 +70,8 @@ Plug 'justinj/vim-pico8-syntax'
 Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 " robot
 Plug 'mfukar/robotframework-vim'
+" ansible yaml
+Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 
 " colorscheme
 Plug 'chriskempson/base16-vim'

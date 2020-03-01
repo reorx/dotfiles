@@ -115,6 +115,7 @@ autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
 autocmd FileType json setlocal shiftwidth=2 tabstop=2
 autocmd FileType crontab setlocal nowritebackup
 autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 indentexpr=
+"autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 indentexpr=
 autocmd FileType scss setlocal shiftwidth=2 tabstop=2 indentexpr=
 autocmd FileType pico8 setlocal noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
