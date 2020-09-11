@@ -352,7 +352,8 @@ function lesshelp() {
 
 alias lsd='ls -ld */'
 alias vim="nvim -p"
-alias ovim="/usr/local/bin/vim -p"
+alias vim0="/usr/local/bin/vim -p"
+# TODO vim1
 alias tree="tree --dirsfirst"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
 alias cleanpycache="find . -type d -name '__pycache__' -prune -exec rm -r {} \;"
@@ -361,3 +362,8 @@ alias cleanpycache="find . -type d -name '__pycache__' -prune -exec rm -r {} \;"
 if [ -e "$HOME/.zshrc_local" ]; then
     source $HOME/.zshrc_local
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

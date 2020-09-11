@@ -78,6 +78,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'itchyny/landscape.vim'
 Plug 'haishanh/night-owl.vim'
+Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 

@@ -6,6 +6,7 @@
     editor = nvim
     excludesfile = ~/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
+	quotepath = off
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true

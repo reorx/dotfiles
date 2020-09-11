@@ -109,6 +109,8 @@ set directory=~/.nvim/.swaps
 set undodir=~/.nvim/.undos
 set undofile
 
+set ambiwidth=double
+
 " File Specials
 "autocmd FileType text setlocal textwidth=80
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
