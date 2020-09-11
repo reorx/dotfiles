@@ -26,8 +26,9 @@ Plug 'tweekmonster/braceless.vim'
 Plug 'junegunn/vim-easy-align'
 
 " Browsing
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-Plug 'Lokaltog/vim-powerline'
+"Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'myusuf3/numbers.vim'
 Plug 'rking/ag.vim'
@@ -37,7 +38,7 @@ Plug 'kien/ctrlp.vim'
 "Plug 'kien/rainbow_parentheses.vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
+"Plug 'rizzatti/dash.vim', { 'on': 'Dash' }
 Plug 'Rykka/riv.vim', { 'for': 'rst' }
 "Plug 'Lokaltog/vim-easymotion'
 
@@ -48,7 +49,7 @@ Plug 'scrooloose/syntastic'
 Plug 'hdima/python-syntax'
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
-Plug 'digitaltoad/vim-jade', { 'for': 'pug' }
+"Plug 'digitaltoad/vim-jade', { 'for': 'pug' }
 Plug 'vim-scripts/applescript.vim'
 Plug 'stephpy/vim-yaml'
 Plug 'othree/yajs.vim'
@@ -66,8 +67,8 @@ Plug 'chriskempson/base16-vim'
 Plug 'guns/xterm-color-table.vim'
 
 " Misc
-Plug 'embear/vim-localvimrc'
-Plug 'mhinz/vim-startify'
+"Plug 'embear/vim-localvimrc'
+"Plug 'mhinz/vim-startify'
 "Plug 'sessionman.vim'
 
 " Add plugins to &runtimepath
@@ -196,11 +197,37 @@ let g:rainbow#colors = {
 "let g:airline_powerline_fonts = 0
 "let g:airline_left_sep = ''
 "let g:airline_right_sep = ''
+" airline
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.linenr = ''
 
-" ----------------------------------------------------------------------------
-" powerline
-" ----------------------------------------------------------------------------
-let g:Powerline_symbols = 'compatible'
+" other choices: deus, luna, wombat
+let g:airline_theme='jellybeans'
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_tab_nr = 0
+"let g:airline#extensions#tabline#tab_nr_type = 1
+let g:airline#extensions#tabline#show_close_button = 0
+let g:airline#extensions#tabline#buffers_label = 'b'
+let g:airline#extensions#tabline#tabs_label = 't'
+"let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#whitespace#symbol = '|'
+let g:airline#extensions#default#layout = [
+  \ [ 'a', 'error', 'warning', 'b', 'c' ],
+  \ [ 'x', 'y', 'z' ]
+  \ ]
+
 
 " ----------------------------------------------------------------------------
 " CtrlSF
