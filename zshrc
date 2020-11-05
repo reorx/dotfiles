@@ -345,6 +345,12 @@ function lesshelp() {
     $@ --help | less
 }
 
+function pyactivate() {
+    local venv="${1%/}"
+    echo "Activiate virtualenv $venv"
+    eval "source $venv/bin/activate"
+}
+
 
 ###########
 # Aliases #
