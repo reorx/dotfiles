@@ -49,6 +49,7 @@
     undocommit = reset --soft HEAD^
     search = "!f() { git log -p -G$1 --all; }; f"
     searchcommit = "!f() { git log -G$1 --all; }; f"
+    searchmessage = "!f() { git log --grep=$1; }; f"
     branchgraph = log --all --graph --decorate --oneline --simplify-by-decoration
     ls-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$'
     rm-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$' | xargs -n 1 git branch -d

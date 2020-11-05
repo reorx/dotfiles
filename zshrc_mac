@@ -26,6 +26,7 @@ hash -d repos="/Users/reorx/Code/repos"
 alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'
 alias cppcompile='c++ -std=c++11 -stdlib=libc++'
+alias marked="open -a Marked\ 2"
 
 # iterm2 integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
