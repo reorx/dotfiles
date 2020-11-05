@@ -104,7 +104,7 @@ au User Ncm2PopupClose set completeopt=menuone,longest
 " lsc
 let g:LanguageClient_serverCommands = {
     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'python': ['/Users/reorx/.venv/pyls/bin/pyls'],
+    \ 'python': ['/Users/reorx/.virtualenvs/pyls/bin/pyls'],
     \ }
 let g:LanguageClient_loggingFile = '/tmp/lsc.log'
 let g:LanguageClient_loggingLevel = 'DEBUG'
