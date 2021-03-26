@@ -10,6 +10,7 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'majutsushi/tagbar'
 Plug 'dominikduda/vim_current_word'
+" TODO use Plug 'Shougo/neosnippet.vim'
 Plug 'SirVer/ultisnips'
 Plug 'wakatime/vim-wakatime'
 "Plug 'chiedo/vim-case-convert'
@@ -27,18 +28,17 @@ Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-surround'
 Plug 'MattesGroeger/vim-bookmarks'
-
+"
 " completion
-Plug 'ervandew/supertab'
 "
-" plan 1: deoplete
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'ervandew/supertab'
 "
-" plan 2: ncm2 + LanguageClient-neovim
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
-
+" deoplete + vim-lsp
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'lighttiger2505/deoplete-vim-lsp'
+"
 " language specific
 " Go
 Plug 'fatih/vim-go', { 'for': 'go' }
@@ -50,13 +50,6 @@ Plug 'codelitt/vim-qtpl'
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
-"
-" Python jedi-vim (works independently with completion)
-"Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-"
-" Python deoplete-jedi + jedi-vim (works with deoplete, jedi-vim provides `go to definition`
-"Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-"Plug 'davidhalter/jedi-vim', { 'for': 'python' }  " enable when you need `go to definition`
 "
 " Nginx
 Plug 'chr4/nginx.vim'
@@ -93,35 +86,36 @@ let g:SuperTabContextDefaultCompletionType = '<c-n>'
 let g:SuperTabLongestHighlight = 1
 "let g:SuperTabLongestEnhanced = 1
 
-" ncm
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-" :help Ncm2PopupOpen for more information
-"set completeopt=noinsert,menuone,noselect,longest
-au User Ncm2PopupOpen set completeopt=noinsert,menuone,noselect
-au User Ncm2PopupClose set completeopt=menuone,longest
-
-" lsc
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-    \ 'python': ['/Users/reorx/.virtualenvs/pyls/bin/pyls'],
-    \ }
-let g:LanguageClient_loggingFile = '/tmp/lsc.log'
-let g:LanguageClient_loggingLevel = 'DEBUG'
-let g:LanguageClient_diagnosticsList = 'Location'
-" lsc keys
+" LanguageClient (deprecated, left keys to be migrated)
 noremap <leader>d :call LanguageClient_textDocument_definition()<CR>
 noremap <leader>g :call LanguageClient_textDocument_typeDefinition()<CR>
 noremap <leader>h :call LanguageClient_textDocument_hover()<CR>
 noremap <leader>f :call LanguageClient_contextMenu()<CR>
 
 " deoplete
-"let g:deoplete#disable_auto_complete = 0
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_start_length = 3
-let g:deoplete#max_list = 15
-let g:deoplete#max_abbr_width = 50
-let g:deoplete#sources#jedi#show_docstring = 1
+
+call deoplete#custom#option({
+\ 'auto_complete': v:false,
+\ 'auto_complete_delay': 200,
+\ 'smart_case': v:true,
+\ 'max_list': 15,
+\ })
+
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ deoplete#manual_complete()
+function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
+inoremap <silent><expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+" vim-lsp
+let g:lsp_diagnostics_enabled = 0
 
 " jedi (only for go to definition)
 let g:jedi#completions_enabled = 0
