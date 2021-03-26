@@ -345,8 +345,24 @@ function lesshelp() {
     $@ --help | less
 }
 
-function pyactivate() {
-    local venv="${1%/}"
+function pve-new() {
+    if [ -n "$1" ]; then
+        local venv="${1%/}"
+    else
+        local venv="venv"
+    fi
+    echo "Create virtualenv $venv"
+    python -m venv "$venv"
+    echo "Activiate virtualenv $venv"
+    eval "source $venv/bin/activate"
+}
+
+function pve-activate() {
+    if [ -n "$1" ]; then
+        local venv="${1%/}"
+    else
+        local venv="venv"
+    fi
     echo "Activiate virtualenv $venv"
     eval "source $venv/bin/activate"
 }
