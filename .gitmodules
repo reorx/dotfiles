@@ -4,3 +4,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = git@github.com:reorx/oh-my-zsh.git
+[submodule "pure"]
+	path = pure
+	url = git@github.com:sindresorhus/pure.git
