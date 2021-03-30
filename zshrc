@@ -48,6 +48,7 @@ source $ZSH/oh-my-zsh.sh
 # my zsh
 ##############################################################################
 # use pure prompt
+fpath+=$HOME/.zsh-pure
 autoload -U promptinit; promptinit
 prompt pure
 
@@ -165,7 +166,7 @@ if [[ -x /usr/local/bin/exa ]]; then
   alias ls='exa'
   alias l='exa -lg --time-style=long-iso --git'
   alias ll='exa -lga --time-style=long-iso --git'
-else
+elif [[ $(uname -s) == Linux ]]; then
   alias ls='ls --color=auto -N'
   alias l='ls -lF --time-style=long-iso'
   alias ll='ls -alF --time-style=long-iso'
@@ -386,6 +387,3 @@ if [ -e "$HOME/.zshrc_local" ]; then
 fi
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
