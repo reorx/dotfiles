@@ -4,9 +4,9 @@ PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\]:\w\$\[\033[00m\] '
 
 # Below are local configs that could be removed #
 
-export MANPATH=/Users/reorx/AppData/LinuxMan:$MANPATH
+export MANPATH=$HOME/AppData/LinuxMan:$MANPATH
 
-BASHSENSIBLE=/Users/reorx/Code/repos/bash-sensible/sensible.bash
+BASHSENSIBLE=$HOME/Code/repos/bash-sensible/sensible.bash
 if [ -f $BASHSENSIBLE ]; then
     source $BASHSENSIBLE
 fi

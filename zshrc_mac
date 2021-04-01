@@ -7,21 +7,22 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 #export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
-export MANPATH=/Users/reorx/AppData/LinuxMan:$MANPATH
+export MANPATH=$HOME/AppData/LinuxMan:$MANPATH
 
-hash -d desktop="/Users/reorx/Desktop"
-hash -d music="/Users/reorx/Music"
-hash -d pictures="/Users/reorx/Pictures"
-hash -d downloads="/Users/reorx/Downloads"
-hash -d documents="/Users/reorx/Documents"
-hash -d dropbox="/Users/reorx/Dropbox"
-hash -d code="/Users/reorx/Code"
-hash -d services="/Users/reorx/Services"
-hash -d projects="/Users/reorx/Projects"
-hash -d backup="/Users/reorx/Dropbox/Backup"
+hash -d desktop="$HOME/Desktop"
+hash -d music="$HOME/Music"
+hash -d pictures="$HOME/Pictures"
+hash -d downloads="$HOME/Downloads"
+hash -d documents="$HOME/Documents"
+hash -d dropbox="$HOME/Dropbox"
+hash -d drivebox="$HOME/Google Drive/Drivebox"
+hash -d code="$HOME/Code"
+hash -d services="$HOME/Services"
+hash -d projects="$HOME/Projects"
+hash -d backup="$HOME/Dropbox/Backup"
 # Code sub dirs
-hash -d lab="/Users/reorx/Code/lab"
-hash -d repos="/Users/reorx/Code/repos"
+hash -d lab="$HOME/Code/lab"
+hash -d repos="$HOME/Code/repos"
 
 alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'
