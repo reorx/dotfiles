@@ -1,3 +1,4 @@
+# vim: set ft=zsh:
 ##############################################################################
 # oh-my-zsh
 ##############################################################################
@@ -108,11 +109,21 @@ eval "$(pyenv init -)"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag -l -g ""'
+
+# fd respects .gitignore
+export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS="--exact --no-mouse"
+# other opts: "--exact"
+export FZF_DEFAULT_OPTS="--height 50% --no-mouse"
+
+# Use fd for listing path candidates.
 _fzf_compgen_path() {
-  ag -g "" "$1"
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
 # tag
