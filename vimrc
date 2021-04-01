@@ -3,12 +3,14 @@
 " ============================================================================
 " Load Bundles
 " ============================================================================
+" NOTE: because nvim has been a successful replace for vim,
+" this vimrc stopped to provide plugins to keep a minimal basic configuration
 
-" So that it can be easily accessed
+" Set vars for config files so that they can be easily accessed
 "let $MYBUNDLES='~/.vim/bundles.vim'
 "source $MYBUNDLES
-let $MYPLUGS='~/.vim/plugs.vim'
-source $MYPLUGS
+"let $MYPLUGS='~/.vim/plugs.vim'
+"source $MYPLUGS
 
 
 " ============================================================================
@@ -72,11 +74,9 @@ set nofoldenable
 
 " Storage
 " centralize backups, swapfiles and undo history
-set backupdir=~/.vim/.backups
-set directory=~/.vim/.swaps
-if exists("&undodir")
-    set undodir=~/.vim/.undo
-endif
+"set backupdir=~/.vim/.backups
+"set directory=~/.vim/.swaps
+"set undodir=~/.vim/.undo
 
 " Command
 "command Now execute "=strftime("%c")<CR>P
@@ -85,17 +85,9 @@ inoremap <F6> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 
 " File Specials
 autocmd FileType text setlocal textwidth=80
-autocmd FileType jade setlocal shiftwidth=2 tabstop=2
-autocmd FileType stylus setlocal shiftwidth=2 tabstop=2
 autocmd FileType crontab setlocal nowritebackup
 
 autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-au BufRead,BufNewFile */sites-available/* set ft=nginx
-au BufRead,BufNewFile */sites-enabled/* set ft=nginx
-au BufRead,BufNewFile nginx.conf set ft=nginx
-au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
-
-"au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
 au BufRead,BufNewFile *.conf set ft=dosini
 au BufRead,BufNewFile *.pac set ft=javascript
 
@@ -194,18 +186,15 @@ endif
 
 if &t_Co == 256
     set background=dark
-    if $TERM_PROGRAM == "Hyper"
-        colorscheme Tomorrow-Night
-    else
+    try
         colorscheme Tomorrow-Night-Bright
-    endif
-    "let base16colorspace=256  " Access colors present in 256 colorspace
-    "colorscheme base16-ocean
+        catch
+    endtry
     highlight Pmenu ctermbg=234 guibg=#606060
     highlight PmenuSel ctermbg=17 guifg=#dddd00
     highlight PmenuSbar ctermbg=17 guibg=#d6d6d6
 else
-    colorscheme caciano
+    "colorscheme caciano
     highlight Pmenu ctermbg=0
     highlight PmenuSel ctermbg=4
     highlight PmenuSbar ctermbg=7
@@ -282,29 +271,10 @@ function! MyToHtml(line1, line2)
 endfunction
 command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
 
-"-- Markdown header --"
-function! MarkdownHeader()
-let date = strftime("%Y-%m-%d %T")
-exe "normal iTitle: "
-exe "normal oDate: " . date
-exe "normal oAuthors: "
-exe "normal oCategory: "
-exe "normal oTags: "
-exe "normal oSlug: "
-exe "normal o"
-endfunction
-
-nmap _m :call MarkdownHeader()<cr>
-
 
 " ============================================================================
 " Keymaps
 " ============================================================================
-
-nmap <F8> :TagbarToggle<cr>
-nmap <F4> :NERDTreeToggle<cr>
-nmap <F7> :GundoToggle<cr>
-nmap <F10> :IndentGuidesToggle<cr>
 
 " Fix syntax highlighting, TODO with RainbowBraces
 noremap <F5> <Esc>:syntax sync fromstart<CR>
@@ -334,8 +304,6 @@ nmap <Leader>] :tabn<CR>
 " recover from accidental Ctrl-U
 inoremap <C-U> <C-G>u<C-U>
 inoremap <c-w> <c-g>u<c-w>
-
-" :map <F2> :w\|!python %<CR>
 
 " Reload Vimrc
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
@@ -380,20 +348,3 @@ func! Hello(who)
 endfu
 
 com! -nargs=1 Hello call Hello(<f-args>)
-" ============================================================================
-" Python
-" ============================================================================
-
-" Add the virtualenv's site-packages to vim path
-if has('python')
-py << EOF
-import os
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    env_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, env_base_dir)
-    activate_this = os.path.join(env_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif

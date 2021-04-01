@@ -83,3 +83,9 @@ nvim a.py
 ```
 
 ### vim
+
+Link:
+- vimrc -> ~/.vimrc
+
+> Note: Because nvim has been a successful replace for vim,
+> this vimrc stopped to provide plugins to keep a minimal basic configuration
