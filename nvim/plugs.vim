@@ -8,7 +8,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'Shougo/echodoc.vim'
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'dominikduda/vim_current_word'
 " TODO use Plug 'Shougo/neosnippet.vim'
 Plug 'SirVer/ultisnips'
@@ -24,10 +24,11 @@ Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ryanoasis/vim-devicons'  " requires a nerd font
-Plug 'easymotion/vim-easymotion'
+"Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-surround'
-Plug 'MattesGroeger/vim-bookmarks'
+Plug 'tpope/vim-repeat'
+"Plug 'MattesGroeger/vim-bookmarks'
 "
 " completion
 "
@@ -44,7 +45,7 @@ Plug 'lighttiger2505/deoplete-vim-lsp'
 Plug 'fatih/vim-go', { 'for': 'go' }
 "
 " Go quicktemplate
-Plug 'codelitt/vim-qtpl'
+"Plug 'codelitt/vim-qtpl'
 "
 " Python generic
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
@@ -58,11 +59,9 @@ Plug 'chr4/nginx.vim'
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 "
 " PICO-8
-Plug 'justinj/vim-pico8-syntax'
+"Plug 'justinj/vim-pico8-syntax'
 " protobuf
 Plug 'uarun/vim-protobuf', { 'for': 'proto' }
-" robot
-Plug 'mfukar/robotframework-vim'
 " ansible yaml
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 
@@ -261,10 +260,6 @@ let g:airline#extensions#default#layout = [
 let g:tagbar_width = 35
 nmap <F8> :TagbarToggle<CR>
 "echo winwidth('%')
-if winwidth('%') > 150
-    autocmd VimEnter * nested :call tagbar#autoopen(1)
-    autocmd FileType * nested :call tagbar#autoopen(0)
-endif
 
 " current word
 let g:vim_current_word#enabled = 1
