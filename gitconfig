@@ -79,3 +79,5 @@
     lol = log --graph --decorate --abbrev-commit --pretty=format
     tags = tag -n --sort=v:refname -l
     tags-v = tag -n99 --sort=v:refname -l
+[init]
+	defaultBranch = master
