@@ -55,6 +55,7 @@ prompt pure
 
 # Load other parts of zshrc
 source $HOME/.zshrc_os
+source $HOME/.zshrc_fzf
 
 # Load shell color
 #SHELL_COLOR="$HOME/.shell-colors/base16-default.dark.sh"

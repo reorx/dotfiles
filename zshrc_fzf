@@ -1,9 +1,15 @@
 # vim: set ft=zsh:
 # fzf functions
 
+fzf_funcs=()
+
+export FZF_PREVIEW_CMD='bat --style=numbers --color=always --line-range :500 {}'
+export FZF_PREVIEW_CONTEXT_CMD='batctx {2} 10 --style=numbers --color=always {1}'
+
 function fpreview() {
-    fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
+    fzf --height 100% --preview "${FZF_PREVIEW_CMD}"
 }
+fzf_funcs+=("fpreview:preview searched files")
 
 function fkill() {
   local pid
@@ -13,26 +19,51 @@ function fkill() {
       | sed 1d \
       | fzf -m \
       | awk '{print $2}'
-  )" || return
+  )"
+  if [ -z "$pid" ]; then
+      return
+  fi
 
   kill -"${1:-9}" "$pid"
 }
+fzf_funcs+=("fkill:kill searched processes")
 
-fedit() {
+fed() {
   local IFS=$'\n'
   local files=()
-  files=(
-    "$(fzf-tmux \
-          --query="$1" \
-          --multi \
-          --select-1 \
-          --exit-0 \
-          --preview="${FZF_PREVIEW_CMD}" \
-          --preview-window='right:hidden:wrap' \
-          --bind=ctrl-v:toggle-preview \
-          --bind=ctrl-x:toggle-sort \
-          --header='(view:ctrl-v) (sort:ctrl-x)'
-    )"
-  ) || return
+  if [ "$TMUX" ]; then
+    files=(
+      "$(fzf-tmux \
+            --query="$1" \
+            --multi \
+            --select-1 \
+            --exit-0 \
+            --preview="${FZF_PREVIEW_CMD}" \
+            --preview-window='right:hidden:wrap' \
+            --bind=ctrl-v:toggle-preview \
+            --bind=ctrl-x:toggle-sort \
+            --header='(view:ctrl-v) (sort:ctrl-x)'
+      )"
+    ) || return
+  else
+    files=(
+      "$(fpreview)"
+    ) || return
+  fi
   "${EDITOR:-vim}" "${files[@]}"
+}
+fzf_funcs+=("fed:open searched files with EDITOR")
+
+# cmds in dotfiles/bin/
+fzf_funcs+=("frg:filter rg result, open with EDITOR")
+fzf_funcs+=("frgi:interactive rg search, open with EDITOR")
+
+fcmds() {
+    echo "fzf commands:"
+    for item in "${fzf_funcs[@]}"; do
+        # truncate string https://stackoverflow.com/a/428580/596206
+        local name="${item%:*}"
+        local desc="${item#*:}"
+        printf "  %-15s %s\n" "$name" "$desc"
+    done
 }

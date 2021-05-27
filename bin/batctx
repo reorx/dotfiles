@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# vim: set ft=bash:
+# batctx <line-number> <context-number> <bat-args...>
+
+start=$(($1 - $2))
+end=$(($1 + $2))
+if [ $start -lt 0 ]; then
+    start=0
+fi
+
+#echo "$@"
+bat --line-range $start:$end -H $1 ${@:3}

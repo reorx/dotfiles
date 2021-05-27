@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+declare preview="$FZF_PREVIEW_CONTEXT_CMD"
+
+while getopts ':l' x; do
+  case "$x" in
+    l) list_files=1
+      preview="$FZF_PREVIEW_CMD"
+      ;;
+  esac
+done
+shift $(( OPTIND - 1 ))
+unset x OPTARG OPTIND
+
+if [ -n "$1" ]; then rg --color=always -n ${list_files:+-l} "$1"; fi 2> /dev/null | fzf -d: \
+    --ansi \
+    --height 100% \
+    --query="$1" \
+    --color "hl:-1:underline,hl+:-1:underline:reverse" \
+    --phony \
+    --bind="change:reload:if [ -n {q} ]; then rg --color=always -n ${list_files:+-l} {q}; fi" \
+    --bind="enter:execute:$EDITOR +{2} {1}" \
+    --preview="[[ -n {1} ]] && $preview"
