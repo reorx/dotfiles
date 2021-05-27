@@ -39,6 +39,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'lighttiger2505/deoplete-vim-lsp'
+Plug 'rhysd/vim-lsp-ale'
 "
 " language specific
 " Go
@@ -215,7 +216,7 @@ nmap <leader><Left> :ALEPreviousWrap<CR>
 let g:ale_linters = {
 \   'javascript': [],
 \   'python': ['flake8'],
-\   'go': ['gometalinter', 'gofmt'],
+\   'go': ['vim-lsp', 'govet', 'golint'],
 \   'html': ['htmlhint'],
 \}
 let g:ale_go_gometalinter_options = '--fast'
