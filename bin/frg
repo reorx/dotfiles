@@ -7,9 +7,10 @@
 
 # TODO use fzf-tmux (ref fed)
 
-if [ -z "$@" ]; then
-    echo "Please input arguments"
-    exit 1
+if [[ -z "$@" || "$1" == "-h" ]]; then
+    echo "Filter rg search result by fzf"
+    echo "Usage: frg PATTERN [PATH]"
+    exit
 fi
 
 # 200:  if err != nil:

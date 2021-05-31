@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [[ "$1" == "-h" ]]; then
+    echo "Interactive rg search"
+    echo "Usage: frgi [PATTERN [PATH]]"
+    exit
+fi
+
 declare preview="$FZF_PREVIEW_CONTEXT_CMD"
 
 while getopts ':l' x; do

@@ -21,7 +21,25 @@ Link files and folders:
 - z/ -> ~/.z
 - zshrc -> ~/.zshrc
 - zshrc_os -> ~/.zshrc_mac
+
+### fzf
+
+Link files:
 - zshrc_fzf -> ~/.zshrc_fzf
+- bin/batctx -> ~/.local/bin
+- bin/frg -> ~/.local/bin
+- bin/frgi -> ~/.local/bin
+
+Show fzf related commands:
+```
+$ fcmds
+fzf commands:
+  fpreview        preview searched files
+  fkill           kill searched processes
+  fed             open searched files with EDITOR
+  frg             filter rg result, open with EDITOR
+  frgi            interactive rg search, open with EDITOR
+```
 
 ### bash
 
