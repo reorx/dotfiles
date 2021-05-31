@@ -1,12 +1,10 @@
 [user]
-    #name = Reorx
-    #email = novoreorx@gmail.com
     useConfigOnly = true
 [core]
     editor = nvim
     excludesfile = ~/.gitignore_global
     pager = diff-so-fancy | less --tabs=4 -RFX
-	quotepath = off
+    quotepath = off
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
     log = true
@@ -26,9 +24,20 @@
     tool = icdiff
 [difftool "icdiff"]
     cmd = icdiff --line-numbers \"$LOCAL\" \"$REMOTE\"
-[pager]
-    diff = diff-so-fancy | less --tabs=1,5 -RFX
-    show = diff-so-fancy | less --tabs=1,5 -RFX
+#[pager]
+#    diff = diff-so-fancy | less --tabs=1,5 -RFX
+#    show = diff-so-fancy | less --tabs=1,5 -RFX
+#[pager]
+#    diff = delta
+#    log = delta
+#    reflog = delta
+#    show = delta
+#[delta]
+#    features = side-by-side line-numbers decorations
+#    whitespace-error-style = 22 reverse
+[interactive]
+    #diffFilter = delta --color-only
+    diffFilter = diff-so-fancy --patch
 [url "git@github.com:"]
     insteadOf = "gh:"
 [filter "media"]
