@@ -12,7 +12,7 @@ done
 shift $(( OPTIND - 1 ))
 unset x OPTARG OPTIND
 
-if [ -n "$1" ]; then rg --color=always -n ${list_files:+-l} "$1"; fi 2> /dev/null | fzf -d: \
+if [ -n "$1" ]; then rg --color=always -n -H ${list_files:+-l} "$1"; fi 2> /dev/null | fzf -d: \
     --ansi \
     --height 100% \
     --query="$1" \

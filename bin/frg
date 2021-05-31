@@ -12,8 +12,12 @@ if [ -z "$@" ]; then
     exit 1
 fi
 
+# 200:  if err != nil:
+# └{1}  └{2}
+#declare preview="batctx {1} 10 --style=numbers --color=always $1"
+
 IFS=: read -ra selected < <(
-  rg --color=always --line-number --no-heading --smart-case $@ |
+  rg --color=always -n -H --smart-case $@ |
     fzf --ansi \
         --height 100% \
         --color "hl:-1:underline,hl+:-1:underline:reverse" \
