@@ -41,6 +41,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 
 plugins=( autoenv2 )
+#plugins=( autoenv2 forgit )
 
 source $ZSH/oh-my-zsh.sh
 
