@@ -228,6 +228,8 @@ highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Re
 " Ruler
 set colorcolumn=79
 
+" Other highlights
+highlight Visual cterm=reverse ctermbg=NONE
 
 " ============================================================================
 " Custom Functions
