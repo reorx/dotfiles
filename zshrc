@@ -381,6 +381,12 @@ function pve-activate() {
     eval "source $venv/bin/activate"
 }
 
+function ssldates() {
+    host=$1;
+    port=${2:-443};
+    openssl s_client -connect $host:$port -servername $host 2>&1 < /dev/null | openssl x509 -noout -dates
+}
+
 
 ###########
 # Aliases #
