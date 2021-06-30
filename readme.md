@@ -1,6 +1,22 @@
 # Dotfiles
 
-## Setup
+reorx's configuration for the whole command line.
+
+## Auto Setup
+
+Setup all dotfiles:
+
+```bash
+$ ./implement.sh -i
+```
+
+Setup a specific software::
+
+```bash
+$ ./implement.sh -s nvim
+```
+
+## Manually Setup
 
 prerequisite:
 - git clone
@@ -12,13 +28,14 @@ requires:
 - fzf (brew)
   - Run `$(brew --prefix)/opt/fzf/install` after install
 - fd (brew)
-- pyenv (github)
+- [pyenv](https://github.com/pyenv/pyenv#installation)
 
 Link files and folders:
 - oh-my-zsh/ -> ~/.oh-my-zsh
 - oh-my-zsh-custom/ -> ~/.oh-my-zsh-custom
 - pure/ -> ~/.zsh-pure
 - z/ -> ~/.z
+- zshenv -> ~/.zshenv
 - zshrc -> ~/.zshrc
 - zshrc_os -> ~/.zshrc_mac
 
@@ -105,5 +122,5 @@ nvim a.py
 Link:
 - vimrc -> ~/.vimrc
 
-> Note: Because nvim has been a successful replace for vim,
-> this vimrc stopped to provide plugins to keep a minimal basic configuration
+> Note: Because nvim has been a successful replacement for vim,
+> this vimrc stopped to provide plugins, keeps a minimal basic configuration
