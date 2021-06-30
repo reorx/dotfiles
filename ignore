@@ -3,8 +3,7 @@ Applications/
 Library/
 
 AppData/
-iPhoto Library.photolibrary/
-Photos Library.photolibrary/
+*.photolibrary/
 
 node_modules/
 bower_components/
