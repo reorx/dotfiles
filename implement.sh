@@ -61,6 +61,7 @@ function impl_zsh() {
     ln2home oh-my-zsh-custom
     ln2home pure .zsh-pure
     ln2home z
+    ln2home zprofile
     # ln2home zshenv
     ln2home zshrc
     ln2home zshrc_fzf

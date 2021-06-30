@@ -104,10 +104,10 @@ if [ -e $HOME/.pythonrc.py ]; then
     export PYTHONSTARTUP=$HOME/.pythonrc.py
 fi
 
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+# pyenv (git install)
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# NOTE 'eval "$(pyenv init --path)"' should be added to .zprofile
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
