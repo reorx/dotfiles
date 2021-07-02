@@ -17,12 +17,20 @@ fi
 # └{1}  └{2}
 #declare preview="batctx {1} 10 --style=numbers --color=always $1"
 
-IFS=: read -ra selected < <(
-  rg --color=always -n -H --smart-case "$@" |
-    fzf --ansi \
-        --height 100% \
-        --color "hl:-1:underline,hl+:-1:underline:reverse" \
-        --delimiter : \
-        --preview "[[ -n {1} ]] && $FZF_PREVIEW_CONTEXT_CMD"
-)
-[ -n "${selected[0]}" ] && $EDITOR "${selected[0]}" "+${selected[1]}"
+
+rg --color=always -n -H --smart-case "$@" | fzf -d: \
+    --ansi \
+    --height 100% \
+    --color "hl:-1:underline,hl+:-1:underline:reverse" \
+    --bind="enter:execute:$EDITOR +{2} {1}" \
+    --preview="[[ -n {1} ]] && $FZF_PREVIEW_CONTEXT_CMD"
+
+
+#IFS=: read -ra selected < <(
+#  rg --color=always -n -H --smart-case "$@" | fzf -d: -m \
+#        --ansi \
+#        --height 100% \
+#        --color "hl:-1:underline,hl+:-1:underline:reverse" \
+#        --preview "[[ -n {1} ]] && $FZF_PREVIEW_CONTEXT_CMD"
+#)
+#[ -n "${selected[0]}" ] && $EDITOR "${selected[0]}" "+${selected[1]}"
