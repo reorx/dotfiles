@@ -1,1 +1,2 @@
+eval "$(pyenv init --path)"
 export PATH="$PATH:$HOME/.cargo/bin"
