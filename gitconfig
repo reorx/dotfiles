@@ -90,3 +90,5 @@
     tags-v = tag -n99 --sort=v:refname -l
 [init]
 	defaultBranch = master
+[pull]
+	ff = only
