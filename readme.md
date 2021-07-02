@@ -37,12 +37,31 @@ Link files and folders:
 - z/ -> ~/.z
 - zshenv -> ~/.zshenv
 - zshrc -> ~/.zshrc
-- zshrc_os -> ~/.zshrc_mac
+- zshrc\_os -> ~/.zshrc\_mac
+
+Note about zsh startup files:
+ 
+> There are five startup files that zsh will read commands from:
+> 
+> - `$ZDOTDIR/.zshenv`
+> 
+>   `.zshenv` is sourced on all invocations of the shell, unless the -f option is set. It should contain commands to set the command search path, plus other important environment variables. `.zshenv' should not contain commands that produce output or assume the shell is attached to a tty.
+> - `$ZDOTDIR/.zprofile`
+> - `$ZDOTDIR/.zshrc`
+> 
+>   `.zshrc` is sourced in interactive shells. It should contain commands to set up aliases, functions, options, key bindings, etc.
+> - `$ZDOTDIR/.zlogin`
+> 
+>   `.zlogin` is sourced in login shells. It should contain commands that should be executed only in login shells. `.zlogout' is sourced when login shells exit. `.zprofile' is similar to `.zlogin', except that it is sourced before `.zshrc'. `.zprofile' is meant as an alternative to `.zlogin' for ksh fans; the two are not intended to be used together, although this could certainly be done if desired. `.zlogin' is not the place for alias definitions, options, environment variable settings, etc.; as a general rule, it should not change the shell environment at all. Rather, it should be used to set the terminal type and run a series of external commands (fortune, msgs, etc).
+> - `$ZDOTDIR/.zlogout`
+> 
+>   If ZDOTDIR is not set, then the value of HOME is used; this is the usual case.
+
 
 ### fzf
 
 Link files:
-- zshrc_fzf -> ~/.zshrc_fzf
+- zshrc\_fzf -> ~/.zshrc\_fzf
 - bin/batctx -> ~/.local/bin
 - bin/frg -> ~/.local/bin
 - bin/frgi -> ~/.local/bin
