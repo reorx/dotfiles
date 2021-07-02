@@ -45,6 +45,8 @@ if [ "$v_uname" == "Darwin" ]; then
 else
     OS="${v_uname,,}"
 fi
+# for M1 chip mac, ARCH is arm64
+ARCH="$(uname -m)"
 
 
 # Logics
@@ -61,7 +63,7 @@ function impl_zsh() {
     ln2home oh-my-zsh-custom
     ln2home pure .zsh-pure
     ln2home z
-    ln2home zprofile
+    ln2home "zprofile.$ARCH" .zprofile
     # ln2home zshenv
     ln2home zshrc
     ln2home zshrc_fzf
