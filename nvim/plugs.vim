@@ -6,7 +6,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
 Plug 'Shougo/echodoc.vim'
 Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'dominikduda/vim_current_word'
@@ -150,7 +150,7 @@ nmap <F4> :call MyNERDTreeToggle()<cr>
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
-nmap <c-_> :Files<cr>
+nmap <c-_> :FZF<cr>
 noremap <leader>/ :Buffers<cr>
 
 " buffergator
