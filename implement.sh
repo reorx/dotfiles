@@ -156,16 +156,14 @@ function create_link() {
 }
 
 function installed() {
-    if type -P $1 &>/dev/null; then
-        echo 1
-    else
-        return "0"
-    fi
+    type "$1" >/dev/null 2>&1
 }
 
 function require_installed() {
-    if [ ! $(installed "$1") ]; then
-        paint RED '$1 must be installed !'
+    if (installed "$1"); then
+        true
+    else
+        paint RED "$1 must be installed !"
         exit 1
     fi
 }

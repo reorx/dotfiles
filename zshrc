@@ -170,7 +170,7 @@ export CSVLESS_LINE_NUMBERS=1
 export CSVLESS_TABLE_STYLE=markdown
 
 # exa
-if [[ -x /usr/local/bin/exa ]]; then
+if ( type exa >/dev/null 2>&1 ); then
   alias ls='exa'
   alias l='exa -lg --time-style=long-iso --git'
   alias ll='exa -lga --time-style=long-iso --git'
