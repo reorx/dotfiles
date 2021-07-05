@@ -108,7 +108,7 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # fd respects .gitignore
-export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_COMMAND='fd -H -t f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # other opts: "--exact"
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse"
