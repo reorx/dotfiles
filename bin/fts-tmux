@@ -1,0 +1,13 @@
+#!/bin/bash
+
+tmux_session=(
+    "$(tmux list-sessions \
+        -F "#{session_name}" | \
+        fzf-tmux --height '20%' --layout=reverse \
+        --prompt "session:" \
+        --preview 'tmux ls | grep -e ^{}:' --preview-window up:1
+    )"
+)
+if [ -n "$tmux_session" ]; then
+    tmux switch -t "$tmux_session"
+fi
