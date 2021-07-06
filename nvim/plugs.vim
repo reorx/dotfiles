@@ -7,7 +7,7 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'junegunn/fzf'
-Plug 'Shougo/echodoc.vim'
+Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'dominikduda/vim_current_word'
 " TODO use Plug 'Shougo/neosnippet.vim'
@@ -18,7 +18,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
 "Plug 'jlanzarotta/bufexplorer'
 Plug 'jeetsukumaran/vim-buffergator'
-Plug 'mhinz/vim-grepper'
 "Plug 'itchyny/vim-qfedit'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
@@ -40,6 +39,7 @@ Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'lighttiger2505/deoplete-vim-lsp'
 Plug 'rhysd/vim-lsp-ale'
+"Plug 'Shougo/echodoc.vim'
 "
 " language specific
 " Go
@@ -147,28 +147,21 @@ endfunction
 nmap <F4> :call MyNERDTreeToggle()<cr>
 
 " fzf
+let g:fzf_preview_window = ['right:50%', 'ctrl-f']
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'border': 'rounded' } }
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
-nmap <c-_> :FZF<cr>
+nmap <c-_> :Files<cr>
 noremap <leader>/ :Buffers<cr>
+nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
+vnoremap <silent><leader>f <Esc>:Rg <C-R>=GetVisualSelection()<CR><CR>
 
 " buffergator
 let g:buffergator_viewport_split_policy="T"
 let g:buffergator_hsplit_size=13
 let g:buffergator_sort_regime="mru"
 let g:buffergator_suppress_mru_switch_into_splits_keymaps=1
-
-" grepper
-runtime plugin/grepper.vim    " initialize g:grepper with default values
-let g:grepper.tools = ['ag', 'ag_u', 'git']
-let g:grepper.ag_u = {
-    \ 'grepprg':    'ag -u --vimgrep',
-    \ 'grepformat': '%f:%l:%c:%m,%f:%l:%m',
-    \ 'escape': '\^$.*+?()[]{}|',
-    \ }
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
 
 " QFEnter
 let g:qfenter_keymap = {}
