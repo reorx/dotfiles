@@ -54,6 +54,19 @@ fed() {
 }
 fzf_funcs+=("fed:open searched files with EDITOR")
 
+fts() {
+    tmux_session=(
+        "$(tmux list-sessions \
+            -F "#{session_name}" | \
+            fzf --height 20% --layout=reverse \
+            --prompt "session:" \
+            --preview 'tmux ls | grep -e ^{}:' --preview-window up:1
+        )"
+    ) || return
+    tmux switch -t "$tmux_session"
+}
+fzf_funcs+=("fts:select tmux session and switch to it")
+
 # cmds in dotfiles/bin/
 fzf_funcs+=("frg:filter rg result, open with EDITOR")
 fzf_funcs+=("frgi:interactive rg search, open with EDITOR")
