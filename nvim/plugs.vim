@@ -59,6 +59,9 @@ Plug 'chr4/nginx.vim'
 " HTML
 Plug 'mattn/emmet-vim', { 'for': 'html' }
 "
+" JSX
+Plug 'maxmellon/vim-jsx-pretty'
+"
 " PICO-8
 "Plug 'justinj/vim-pico8-syntax'
 " protobuf
