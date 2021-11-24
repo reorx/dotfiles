@@ -376,12 +376,32 @@ function pve-activate() {
     eval "source $venv/bin/activate"
 }
 
-function ssldates() {
+# openssl function series
+
+function ssl-dates() {
     host=$1;
     port=${2:-443};
     openssl s_client -connect $host:$port -servername $host 2>&1 < /dev/null | openssl x509 -noout -dates
 }
 
+function ssl-chain() {
+    host=$1;
+    port=${2:-443};
+    openssl s_client -connect $host:$port -servername $host 2>&1 < /dev/null | sed -n '1,/^---$/d;/^---$/,$!p'
+}
+
+function ssl-text() {
+    host=$1;
+    port=${2:-443};
+    openssl s_client -connect $host:$port -servername $host 2>&1 < /dev/null | openssl x509 -text
+}
+
+function ssl-download-crt() {
+    host=$1;
+    port=${2:-443};
+    openssl s_client -connect $host:$port -servername $host 2>&1 < /dev/null |\
+        sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > $1.crt
+}
 
 ###########
 # Aliases #
