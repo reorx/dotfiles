@@ -12,7 +12,6 @@ Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'dominikduda/vim_current_word'
 " TODO use Plug 'Shougo/neosnippet.vim'
 Plug 'SirVer/ultisnips'
-Plug 'wakatime/vim-wakatime'
 "Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
@@ -173,8 +172,8 @@ let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
 let g:qfenter_keymap.topen = ['<C-t>']
 
 " vim-qf
-nmap <leader>p <Plug>(qf_qf_previous)
-nmap <leader>n  <Plug>(qf_qf_next)
+nmap <leader><Up> <Plug>(qf_qf_previous)
+nmap <leader><Down>  <Plug>(qf_qf_next)
 " these two key maps can replace 'milkypostman/vim-togglelist'
 nmap <leader>q <Plug>(qf_qf_toggle)
 nmap <leader>l <Plug>(qf_loc_toggle)
@@ -200,8 +199,8 @@ let g:ale_sign_error = 'x'
 let g:ale_sign_warning = '~'
 let g:ale_echo_msg_format = '[%severity%] %s <%linter%>'
 "let g:ale_set_highlights = 0
-nmap <leader><Right> :ALENextWrap<CR>
-nmap <leader><Left> :ALEPreviousWrap<CR>
+nmap <leader>n :ALENextWrap<CR>
+nmap <leader>p :ALEPreviousWrap<CR>
 " emoji sign
 "let g:ale_sign_error = '❗'
 "let g:ale_sign_warning = '🔸'
