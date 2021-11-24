@@ -1,5 +1,7 @@
 #-- Key-Bindings --------------------------------------------------------------
 set -g prefix C-a
+# type "C-a a" to move cursor to the start of line
+bind a send-keys C-a
 
 # reload config file
 bind r source-file ~/.tmux.conf
@@ -29,8 +31,8 @@ set-option -g allow-rename off
 
 # auto rename
 set-option -g status-interval 1
-set-option -g automatic-rename on
-set-option -g automatic-rename-format '#{b:pane_current_path}'
+#set-option -g automatic-rename on
+#set-option -g automatic-rename-format '#{b:pane_current_path}'
 
 # move between panes using vi keys 'hjkl'
 bind h select-pane -L
@@ -98,4 +100,4 @@ set -g history-limit 100000
 
 #-- Mouse ---------------------------------------------------------------------
 # While mouse is on, hold option key to select text
-set -g mouse on
+#set -g mouse on
