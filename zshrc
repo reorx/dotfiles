@@ -238,47 +238,6 @@ function server() {
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
-# Get a character's Unicode code point, requires `python3` and `column` on PATH
-function codepoint() {
-  python3 -c "$(cat << EOF
-import sys
-import subprocess as sp
-def usage(*args):
-    if args:
-      print(*args)
-    print('Usage: codepoint <chars>')
-try:
-    chars = sys.argv[1]
-except IndexError:
-    usage('invalid arguments, <chars> missing')
-    sys.exit(1)
-if chars == '-h':
-    usage()
-    sys.exit()
-def show_char(c):
-    print('Char: {}, ')
-h = ['Char', 'Ord', 'Hex', 'Code_Point']
-d = [h]
-for i in chars:
-    n = ord(i)
-    x = hex(n)
-    xs = str(x)[2:]
-    if len(xs) < 4:
-      xs = '0' * (4 - len(xs)) + xs
-    cp = 'U+' + xs
-    d.append([i, str(n), str(x), cp])
-text = '\n'.join(' '.join(l) for l in d) + '\n'
-p = sp.Popen(['column', '-t'], stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
-out, err = p.communicate(text.encode())
-if p.returncode == 0:
-    print(out.decode())
-else:
-    print('Out: {}\n\nErr:{}'.format(out.decode(), err.decode()))
-    sys.exit(p.returncode)
-EOF
-)" $@
-}
-
 function sshfwd() {
     # Options explaination
     #   q  Quiet mode.  Causes most warning and diagnostic messages to be suppressed.
@@ -298,10 +257,6 @@ function urlencode() {
     python -c 'import urllib, sys; print urllib.quote(sys.argv[1])' $1
 }
 
-function aws-du() {
-    aws s3 ls --summarize --human-readable --recursive s3://$@
-}
-
 function download_benchmark() {
     DOWNLOAD_SPEED=`wget -O /dev/null $1 2>&1 | awk '/\/dev\/null/ {speed=$3 $4} END {gsub(/\(|\)/,"",speed); print speed}'`
     echo "$DOWNLOAD_SPEED ($1)"
@@ -309,10 +264,6 @@ function download_benchmark() {
 
 function tarczf() {
     tar czf $1.tar.gz $1
-}
-
-function ips() {
-    curl ip.cn/$1
 }
 
 function py_find_packages() {
@@ -334,20 +285,6 @@ function tmux-resurrect-reset-last() {
     cd ~/.tmux/resurrect && \
         ln -f -s $(/bin/ls -t tmux_resurrect_*.txt | head -n 1) last && \
         /bin/ls -l last
-}
-
-
-# fbr - checkout git branch (including remote branches), sorted by most recent commit, limit 30 last branches
-gco() {
-  local branches branch
-  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
-}
-
-fbr() {
-  git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)" | fzf
 }
 
 function lesshelp() {

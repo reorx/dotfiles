@@ -67,6 +67,15 @@ fts() {
 }
 fzf_funcs+=("fts:select tmux session and switch to it")
 
+fbr() {
+  local branches branch
+  branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+fzf_funcs+=("fbr:search and checkout git branch (sort by commit date desc)")
+
 # cmds in dotfiles/bin/
 fzf_funcs+=("frg:filter rg result, open with EDITOR")
 fzf_funcs+=("frgi:interactive rg search, open with EDITOR")
