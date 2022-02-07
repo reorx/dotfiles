@@ -6,11 +6,9 @@
 " NOTE: because nvim has been a successful replace for vim,
 " this vimrc stopped to provide plugins to keep a minimal basic configuration
 
-" Set vars for config files so that they can be easily accessed
-"let $MYBUNDLES='~/.vim/bundles.vim'
-"source $MYBUNDLES
-"let $MYPLUGS='~/.vim/plugs.vim'
-"source $MYPLUGS
+" load plugins (could be removed)
+let $MYPLUGS='~/.vim/plugs.vim'
+source $MYPLUGS
 
 
 " ============================================================================
@@ -77,11 +75,6 @@ set nofoldenable
 "set backupdir=~/.vim/.backups
 "set directory=~/.vim/.swaps
 "set undodir=~/.vim/.undo
-
-" Command
-"command Now execute "=strftime("%c")<CR>P
-nnoremap <F6> "=strftime("%Y-%m-%d %H:%M:%S")<CR>P
-inoremap <F6> <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
 
 " File Specials
 autocmd FileType text setlocal textwidth=80
@@ -183,7 +176,6 @@ elseif $TERM == "screen-256color"
     set t_Co=256
 endif
 
-
 if &t_Co == 256
     set background=dark
     try
@@ -194,7 +186,7 @@ if &t_Co == 256
     highlight PmenuSel ctermbg=17 guifg=#dddd00
     highlight PmenuSbar ctermbg=17 guibg=#d6d6d6
 else
-    "colorscheme caciano
+    colorscheme caciano
     highlight Pmenu ctermbg=0
     highlight PmenuSel ctermbg=4
     highlight PmenuSbar ctermbg=7
@@ -231,19 +223,6 @@ set colorcolumn=79
 " Other highlights
 highlight Visual cterm=reverse ctermbg=NONE
 
-" ============================================================================
-" Custom Functions
-" ============================================================================
-
-" Strip trailing whitespace (\ss)
-function! StripWhitespace()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    :%s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfunction
-
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
       \ if ! exists("g:leave_my_cursor_position_alone") |
@@ -252,28 +231,6 @@ autocmd BufReadPost *
       \     endif |
       \ endif
 
-function! MyToHtml(line1, line2)
-  " make sure to generate in the correct format
-  let old_css = 1
-  if exists('g:html_use_css')
-    let old_css = g:html_use_css
-  endif
-  let g:html_use_css = 0
-
-  " generate and delete unneeded lines
-  exec a:line1.','.a:line2.'TOhtml'
-  %g/<body/normal k$dgg
-
-  " convert body to a table
-  %s/<body\s*\(bgcolor="[^"]*"\)\s*text=\("[^"]*"\)\s*>/<table \1 cellPadding=0><tr><td><font color=\2>/
-  %s#</body>\(.\|\n\)*</html>#\='</font></td></tr></table>'#i
-
-  " restore old setting
-  let g:html_use_css = old_css
-endfunction
-command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
-
-
 " ============================================================================
 " Keymaps
 " ============================================================================
@@ -281,7 +238,6 @@ command! -range=% MyToHtml :call MyToHtml(<line1>,<line2>)
 " Fix syntax highlighting, TODO with RainbowBraces
 noremap <F5> <Esc>:syntax sync fromstart<CR>
 inoremap <F5> <C-o>:syntax sync fromstart<CR>
-
 noremap <leader>ss :call StripWhitespace()<CR>
 
 " Save a file as root (,W)
@@ -315,6 +271,15 @@ map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimr
 " Commands
 " ============================================================================
 
+" Strip trailing whitespace (\ss)
+function! StripWhitespace()
+    let save_cursor = getpos(".")
+    let old_query = getreg('/')
+    :%s/\s\+$//e
+    call setpos('.', save_cursor)
+    call setreg('/', old_query)
+endfunction
+
 func! DisableAutoIndent()
     setlocal noautoindent
     setlocal nocindent
@@ -343,10 +308,13 @@ endfu
 
 com! ToggleSpell call ToggleSpell()
 
-func! Hello(who)
-    if a:who=='world'
-        echo "Hello ".a:who
-    endif
+" Edit configs
+func! MyVimrc()
+    execute "edit $MYVIMRC"
 endfu
+com! MyVimrc call MyVimrc()
 
-com! -nargs=1 Hello call Hello(<f-args>)
+func! MyPlugs()
+    execute "edit $MYPLUGS"
+endfu
+com! MyPlugs call MyPlugs()
