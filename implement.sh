@@ -13,8 +13,8 @@
 
 # Global variables
 # Change this varible to choose the targets you want
-PROFILE_macos=( zsh git vim nvim python tmux misc bin )
-PROFILE_linux_server=( bash git vim python tmux_server misc bin )
+PROFILE_macos=( zsh git fzf vim nvim python tmux misc bin )
+PROFILE_linux_server=( bash git fzf vim python tmux_server misc bin )
 LINESHIFT="  "
 INITED_FILE=".inited"
 
@@ -90,8 +90,8 @@ function impl_fzf() {
     else
         echo "Download git repo to $install_path"
         git clone --depth 1 https://github.com/junegunn/fzf.git "$install_path"
+        $install_path/install
     fi
-    $install_path/install
 }
 
 function impl_vim() {
