@@ -28,11 +28,11 @@
     dark = true
     file-added-label = [+]
     file-copied-label = [C]
-    file-decoration-style = "#606018" overline
+    file-decoration-style = yellow ul
     file-modified-label = [M]
     file-removed-label = [-]
     file-renamed-label = [R]
-    file-style = 232 bold 184
+    file-style = yellow
     hunk-header-decoration-style = none
     hunk-header-file-style = bold reverse purple
     hunk-header-line-number-style = bold reverse purple
