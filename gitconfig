@@ -1,7 +1,7 @@
 [user]
     useConfigOnly = true
 [core]
-    editor = nvim
+    editor = vim
     excludesfile = ~/.gitignore_global
     pager = delta
     quotepath = off
