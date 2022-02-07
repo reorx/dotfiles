@@ -3,7 +3,7 @@
 [core]
     editor = nvim
     excludesfile = ~/.gitignore_global
-    pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta
     quotepath = off
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
@@ -20,24 +20,36 @@
     added = yellow
     changed = green
     untracked = cyan
-[diff]
-    tool = icdiff
-[difftool "icdiff"]
-    cmd = icdiff --line-numbers \"$LOCAL\" \"$REMOTE\"
-#[pager]
-#    diff = diff-so-fancy | less --tabs=1,5 -RFX
-#    show = diff-so-fancy | less --tabs=1,5 -RFX
-#[pager]
-#    diff = delta
-#    log = delta
-#    reflog = delta
-#    show = delta
-#[delta]
-#    features = side-by-side line-numbers decorations
-#    whitespace-error-style = 22 reverse
+[delta]
+    features = decorations
+[delta "decorations"]
+    commit-decoration-style = 232 130 box
+    commit-style = 232 bold italic 130
+    dark = true
+    file-added-label = [+]
+    file-copied-label = [C]
+    file-decoration-style = "#606018" overline
+    file-modified-label = [M]
+    file-removed-label = [-]
+    file-renamed-label = [R]
+    file-style = 232 bold 184
+    hunk-header-decoration-style = none
+    hunk-header-file-style = bold reverse purple
+    hunk-header-line-number-style = bold reverse purple
+    hunk-header-style = file line-number syntax
+    # the following is from --diff-so-fancy emulation
+    minus-style                   = bold red
+    minus-non-emph-style          = bold red
+    minus-emph-style              = bold red 52
+    minus-empty-line-marker-style = normal "#3f0001"
+    zero-style                    = normal
+    plus-style                    = bold green
+    plus-non-emph-style           = bold green
+    plus-emph-style               = bold green 22
+    plus-empty-line-marker-style  = normal "#002800"
+
 [interactive]
-    #diffFilter = delta --color-only
-    diffFilter = diff-so-fancy --patch
+    diffFilter = delta --color-only --features=interactive
 [url "git@github.com:"]
     insteadOf = "gh:"
 [filter "media"]
