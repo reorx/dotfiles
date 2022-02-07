@@ -13,7 +13,8 @@
 
 # Global variables
 # Change this varible to choose the targets you want
-IMPL_DOTFILES=( zsh git vim nvim python tmux misc bin )
+PROFILE_macos=( zsh git vim nvim python tmux misc bin )
+PROFILE_linux_server=( bash git vim python tmux misc bin )
 LINESHIFT="  "
 INITED_FILE=".inited"
 
@@ -52,7 +53,8 @@ ARCH="$(uname -m)"
 # Logics
 
 function set_dotfiles() {
-    for i in ${IMPL_DOTFILES[@]}; do
+    local items=($1)
+    for i in "${items[@]}"; do
         paint GREEN "Setting $i's dotfiles"
         eval "impl_$i"
     done
@@ -68,6 +70,10 @@ function impl_zsh() {
     ln2home zshrc
     ln2home zshrc_fzf
     ln2home zshrc_$OS .zshrc_os
+}
+
+function impl_bash() {
+    ln2home bashrc
 }
 
 function impl_vim() {
@@ -114,7 +120,6 @@ function impl_bin {
 
 function impl_misc {
     ln2home ignore
-    ln2home bashrc
 }
 
 # Utils
@@ -170,13 +175,12 @@ function require_installed() {
 
 function show_help() {
     cat <<EOF
-Usage: implement.sh [-i | -f | -s name | -h]
+Usage: implement.sh [-p profile | -s dotfile | -h]
        require option arguments
        non-option arguments is not needed
 Options:
--i : Initialize everything, for virgin system.
--f : Initialize by force.
--s : Set dotfiles specially.
+-p : Set specified profile, available: macos, linux_server
+-s : Set specified dotfile.
 -h : Show help information.
 EOF
 }
@@ -197,22 +201,30 @@ require_installed git
 # cd to where implment.sh located in
 cd "$(dirname "$0")"
 
-while getopts ":hTiuxs:c:" opt; do
+while getopts ":hp:s:" opt; do
     case $opt in
         h)
             show_help
             exit
             ;;
-        i)
+        p)
+            varname="PROFILE_$OPTARG[@]"
+            dotfiles="${!varname}"
+            if [ -z "$dotfiles" ]; then
+                echo "Invalid profile $OPTARG"
+                exit 1
+            fi
+            paint GREEN "Set profile: $OPTARG"
+
             check_git_submodules
 
-            set_dotfiles
+            set_dotfiles "${dotfiles[@]}"
 
             paint GREEN "\nAll done!"
             exit
             ;;
         s)
-            paint GREEN "Set $OPTARG"
+            paint GREEN "Set dotfile: $OPTARG"
 
             eval "impl_$OPTARG"
 
