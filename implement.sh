@@ -14,7 +14,7 @@
 # Global variables
 # Change this varible to choose the targets you want
 PROFILE_macos=( zsh git vim nvim python tmux misc bin )
-PROFILE_linux_server=( bash git vim python tmux misc bin )
+PROFILE_linux_server=( bash git vim python tmux_server misc bin )
 LINESHIFT="  "
 INITED_FILE=".inited"
 
@@ -74,6 +74,24 @@ function impl_zsh() {
 
 function impl_bash() {
     ln2home bashrc
+    local install_path=~/.bash-sensible
+    if [ -e "$install_path" ]; then
+        paint BLUE "$install_path exists, skip"
+    else
+        echo "Download git repo to $install_path"
+        git clone https://github.com/mrzool/bash-sensible.git "$install_path"
+    fi
+}
+
+function impl_fzf() {
+    local install_path=~/.fzf
+    if [ -e "$install_path" ]; then
+        paint BLUE "$install_path exists, skip"
+    else
+        echo "Download git repo to $install_path"
+        git clone --depth 1 https://github.com/junegunn/fzf.git "$install_path"
+    fi
+    $install_path/install
 }
 
 function impl_vim() {
@@ -99,13 +117,21 @@ function impl_python() {
 
 function impl_tmux {
     ln2home tmux.conf
-    local tpm=~/.tmux/plugins/tpm
-    if [ -e "$tpm" ]; then
-        paint BLUE "$tpm exists, skip"
+    impl_tpm
+}
+
+function impl_tmux_server {
+    ln2home tmux.server.conf .tmux.conf
+}
+
+function impl_tpm {
+    local install_path=~/.tmux/plugins/tpm
+    if [ -e "$install_path" ]; then
+        paint BLUE "$install_path exists, skip"
     else
-        echo "Download git repo to $tpm"
-        mkdir -p "$(dirname $tpm)"
-        git clone https://github.com/tmux-plugins/tpm "$tpm"
+        echo "Download git repo to $install_path"
+        mkdir -p "$(dirname $install_path)"
+        git clone https://github.com/tmux-plugins/tpm "$install_path"
     fi
 }
 
