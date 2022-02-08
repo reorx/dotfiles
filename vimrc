@@ -1,17 +1,6 @@
 " Author: reorx
 
 " ============================================================================
-" Load Bundles
-" ============================================================================
-" NOTE: because nvim has been a successful replace for vim,
-" this vimrc stopped to provide plugins to keep a minimal basic configuration
-
-" load plugins (could be removed)
-let $MYPLUGS='~/.vim/plugs.vim'
-source $MYPLUGS
-
-
-" ============================================================================
 " General
 " ============================================================================
 
@@ -178,10 +167,6 @@ endif
 
 if &t_Co == 256
     set background=dark
-    try
-        colorscheme Tomorrow-Night-Bright
-        catch
-    endtry
     highlight Pmenu ctermbg=234 guibg=#606060
     highlight PmenuSel ctermbg=17 guifg=#dddd00
     highlight PmenuSbar ctermbg=17 guibg=#d6d6d6
@@ -234,6 +219,10 @@ autocmd BufReadPost *
 " ============================================================================
 " Keymaps
 " ============================================================================
+
+" Leader key
+"let mapleader = "\\"
+let mapleader = " "
 
 " Fix syntax highlighting, TODO with RainbowBraces
 noremap <F5> <Esc>:syntax sync fromstart<CR>
@@ -308,6 +297,22 @@ endfu
 
 com! ToggleSpell call ToggleSpell()
 
+
+" Get visual selected text in vim, the only useful answer on the Internet:
+" https://stackoverflow.com/a/6271254/596206
+function! GetVisualSelection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+
 " Edit configs
 func! MyVimrc()
     execute "edit $MYVIMRC"
@@ -318,3 +323,14 @@ func! MyPlugs()
     execute "edit $MYPLUGS"
 endfu
 com! MyPlugs call MyPlugs()
+
+
+" ============================================================================
+" Load plugins
+" ============================================================================
+" NOTE: because nvim has been a successful replace for vim,
+" this vimrc stopped to provide plugins to keep a minimal basic configuration
+
+" load plugins (could be removed)
+let $MYPLUGS='~/.vim/plugs.vim'
+source $MYPLUGS

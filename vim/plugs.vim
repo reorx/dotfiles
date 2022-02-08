@@ -8,6 +8,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'myusuf3/numbers.vim'
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 
@@ -28,6 +29,20 @@ call plug#end()
 " ============================================================================
 " Plug Configs
 " ============================================================================
+
+" ----------------------------------------------------------------------------
+" fzf
+" ----------------------------------------------------------------------------
+let g:fzf_preview_window = ['right:50%', 'ctrl-f']
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'border': 'rounded' } }
+nmap <c-_> :Files<cr>
+noremap <leader>/ :Buffers<cr>
+nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
+vnoremap <silent><leader>f <Esc>:Rg <C-R>=GetVisualSelection()<CR><CR>
+" show mappings for the current mode, see https://github.com/junegunn/fzf.vim/pull/20
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
 
 " ----------------------------------------------------------------------------
 " NERDTree
@@ -87,3 +102,6 @@ let g:airline#extensions#default#layout = [
   \ [ 'a', 'error', 'warning', 'b', 'c' ],
   \ [ 'x', 'y', 'z' ]
   \ ]
+
+" colorschemes
+colorscheme Tomorrow-Night-Bright
