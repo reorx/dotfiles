@@ -1,11 +1,8 @@
+# only backups dir must be created before use
 .backups/*
 !.backups/.gitignore
-.swaps/*
-!.swaps/.gitignore
-.undos/*
-!.undos/.gitignore
-sessions/*
-!sessions/.gitignore
+.swaps/
+.undos/
 
 plugged/
 
