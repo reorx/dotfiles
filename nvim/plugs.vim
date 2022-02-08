@@ -151,13 +151,14 @@ nmap <F4> :call MyNERDTreeToggle()<cr>
 " fzf
 let g:fzf_preview_window = ['right:50%', 'ctrl-f']
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'border': 'rounded' } }
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
 nmap <c-_> :Files<cr>
 noremap <leader>/ :Buffers<cr>
 nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
 vnoremap <silent><leader>f <Esc>:Rg <C-R>=GetVisualSelection()<CR><CR>
+" show mappings for the current mode, see https://github.com/junegunn/fzf.vim/pull/20
+nmap <leader>? <plug>(fzf-maps-n)
+xmap <leader>? <plug>(fzf-maps-x)
+omap <leader>? <plug>(fzf-maps-o)
 
 " buffergator
 let g:buffergator_viewport_split_policy="T"
