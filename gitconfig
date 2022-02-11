@@ -33,10 +33,10 @@
     file-removed-label = [-]
     file-renamed-label = [R]
     file-style = yellow
-    hunk-header-decoration-style = none
+    hunk-header-decoration-style = box blue
     hunk-header-file-style = bold reverse purple
-    hunk-header-line-number-style = bold reverse purple
-    hunk-header-style = file line-number syntax
+    hunk-header-line-number-style = bold blue
+    hunk-header-style = line-number
     # the following is from --diff-so-fancy emulation
     minus-style                   = bold red
     minus-non-emph-style          = bold red
