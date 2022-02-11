@@ -11,4 +11,4 @@ fi
 # debug
 [[ -n "$DEBUG" ]] && echo -e "bat --line-range $start:$end -H $1 \n\t${@:3}"
 
-bat --line-range $start:$end -H $1 ${@:3}
+bat --line-range $start:$end -H $1 "${@:3}"
