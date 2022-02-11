@@ -69,7 +69,7 @@ set nofoldenable
 autocmd FileType text setlocal textwidth=80
 autocmd FileType crontab setlocal nowritebackup
 
-autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+au BufRead,BufNewFile *.json set ft=json syntax=javascript
 au BufRead,BufNewFile *.conf set ft=dosini
 au BufRead,BufNewFile *.pac set ft=javascript
 
