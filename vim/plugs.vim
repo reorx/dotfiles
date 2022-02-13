@@ -15,7 +15,6 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Syntax
 Plug 'hdima/python-syntax'
 Plug 'stephpy/vim-yaml'
-Plug 'fatih/vim-go'
 Plug 'chr4/nginx.vim'
 
 " Colorscheme
