@@ -7,7 +7,9 @@ export FZF_PREVIEW_CMD='bat --style=numbers --color=always --line-range :500 {}'
 export FZF_PREVIEW_CONTEXT_CMD='batctx {2} 10 --style=numbers --color=always {1}'
 
 function fpreview() {
-    fzf --height 100% --preview "${FZF_PREVIEW_CMD}"
+    fzf --height 100% \
+        --query="$1" \
+        --preview "${FZF_PREVIEW_CMD}"
 }
 fzf_funcs+=("fpreview:preview searched files")
 
