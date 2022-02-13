@@ -220,6 +220,9 @@ autocmd BufReadPost *
 " Keymaps
 " ============================================================================
 
+" command+c copy, requires terminal send escape sequence "Esc+c" on command+c
+vnoremap <M-c> "+y
+
 " Leader key
 "let mapleader = "\\"
 let mapleader = " "
