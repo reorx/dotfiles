@@ -1,11 +1,9 @@
 .backups/*
 !.backups/.gitignore
-.swaps/*
+.swaps/
 !.swaps/.gitignore
-.undo/*
-!.undo/.gitignore
-sessions/*
-!sessions/.gitignore
+.undos/
+!.undos/.gitignore
 
 plugged/
 

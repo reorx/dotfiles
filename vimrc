@@ -61,9 +61,10 @@ set nofoldenable
 
 " Storage
 " centralize backups, swapfiles and undo history
-"set backupdir=~/.vim/.backups
-"set directory=~/.vim/.swaps
-"set undodir=~/.vim/.undo
+set backupdir=~/.vim/.backups
+set directory=~/.vim/.swaps
+set undodir=~/.vim/.undos
+set undofile
 
 " File Specials
 autocmd FileType text setlocal textwidth=80
