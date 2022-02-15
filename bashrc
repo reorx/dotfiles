@@ -1,3 +1,6 @@
+# If not running interactively, don't do anything (from Arch Linux)
+[[ $- != *i* ]] && return
+
 PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\]:\w\$\[\033[00m\] '
 
 BASHSENSIBLE=$HOME/.bash-sensible/sensible.bash
