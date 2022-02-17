@@ -317,6 +317,16 @@ function! GetVisualSelection()
     return join(lines, "\n")
 endfunction
 
+" Disable numbers completely
+func! NN()
+    execute "NumbersOnOff"
+    execute "NumbersToggle"
+    "setlocal nonumber
+endfu
+
+com! NN call NN()
+
+
 " Edit configs
 func! MyVimrc()
     execute "edit $MYVIMRC"
