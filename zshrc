@@ -340,6 +340,12 @@ function ssl-download-crt() {
         sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > $1.crt
 }
 
+# docker functions
+
+function divein {
+    docker exec -it $1 /bin/bash
+}
+
 ###########
 # Aliases #
 ###########
