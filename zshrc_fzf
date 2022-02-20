@@ -3,6 +3,16 @@
 
 fzf_funcs=()
 
+fcmds() {
+    echo "fzf commands:"
+    for item in "${fzf_funcs[@]}"; do
+        # truncate string https://stackoverflow.com/a/428580/596206
+        local name="${item%:*}"
+        local desc="${item#*:}"
+        printf "  %-15s %s\n" "$name" "$desc"
+    done
+}
+
 export FZF_PREVIEW_CMD='bat --style=numbers --color=always --line-range :500 {}'
 export FZF_PREVIEW_CONTEXT_CMD='batctx {2} 10 --style=numbers --color=always {1}'
 
@@ -82,12 +92,191 @@ fzf_funcs+=("fbr:search and checkout git branch (sort by commit date desc)")
 fzf_funcs+=("frg:filter rg result, open with EDITOR")
 fzf_funcs+=("frgi:interactive rg search, open with EDITOR")
 
-fcmds() {
-    echo "fzf commands:"
-    for item in "${fzf_funcs[@]}"; do
+
+###############################################################################
+# docker                                                                      #
+###############################################################################
+
+df_funcs=()
+
+dfcmds() {
+    echo "docker fzf commands:"
+    for item in "${df_funcs[@]}"; do
         # truncate string https://stackoverflow.com/a/428580/596206
         local name="${item%:*}"
         local desc="${item#*:}"
         printf "  %-15s %s\n" "$name" "$desc"
     done
 }
+
+__df_fzf_opts=(
+    --ansi
+    --layout=reverse
+    --height 50%
+    --color "hl:-1:underline,hl+:-1:underline:reverse"
+)
+
+__docker_pre_test() {
+  if [[ $(docker ps "$@" -q) ]]; then
+    return 0;
+  fi
+
+  echo "No containers found";
+  return 1;
+}
+
+__docker_container_fmt='{{.Names}} ({{.Image}}) - {{.State}} - {{.Status}}'
+__get_first_arg() {
+    echo "$1" | awk '{print $1}'
+}
+__docker_cmd() {
+    echo -n "  docker $@ ... \t"
+    local outerr=$(docker "$@" 2>&1)
+    if [ $? -eq 0 ]; then
+        if [ -n "$SHOW_OUT_ON_SUCCESS" ]; then
+            echo
+            echo "$outerr" | awk '{print "  "$0}'
+            echo "...done"
+        else
+            echo "done."
+        fi
+    else
+        echo "error:"
+        echo "$outerr" | awk '{print "  "$0}'
+        exit 1
+    fi
+}
+
+######################################
+# Normal commands (multiple choices) #
+######################################
+
+# docker rm
+dfrm() {(
+    set -e
+    __docker_pre_test || return
+    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        -m | \
+        while read -r line; do
+            echo "Removing $line:"
+            local name=$(__get_first_arg "$line")
+            __docker_cmd rm "$name"
+        done
+)}
+df_funcs+=("dfrm:docker rm")
+
+# docker stop
+dfs() {(
+    set -e
+    __docker_pre_test || return
+    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        -m | \
+        while read -r line; do
+            echo "Stopping $line:"
+            local name=$(__get_first_arg "$line")
+            __docker_cmd update --restart=no "$name"
+            __docker_cmd stop "$name"
+            if [ "$1" = "--rm" ]; then
+                __docker_cmd rm "$name"
+            fi
+        done
+)}
+df_funcs+=("dfs [--rm]:docker stop")
+
+
+# docker kill
+dfk() {(
+    set -e
+    __docker_pre_test || return
+    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        -m | \
+        while read -r line; do
+            echo "Killing $line:"
+            local name=$(__get_first_arg "$line")
+            __docker_cmd update --restart=no "$name"
+            __docker_cmd stop "$name"
+            if [ "$1" = "--rm" ]; then
+                __docker_cmd rm "$name"
+            fi
+        done
+)}
+df_funcs+=("dfk [--rm]:docker kill")
+
+# docker restart containers
+dfrs() {(
+    set -e
+    __docker_pre_test || return
+    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        -m | \
+        while read -r line; do
+            echo "Restaring $line:"
+            local name=$(__get_first_arg "$line")
+            __docker_cmd restart "$name"
+            if [ "$1" = "--logs" ]; then
+                docker logs --since 1m -t "$name"
+            fi
+        done
+)}
+df_funcs+=("dfrs [--logs]:docker restart (multi-select)")
+
+# docker rmi
+dfrmi() {
+    echo "Loading images, this may take a while...\n"
+    docker images --format "{{.Repository}}:{{.Tag}} - {{.CreatedSince}} - {{.Size}}" --filter "dangling=false" | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        -m | \
+        while read -r line; do
+            echo "Removing image $line:"
+            local name=$(__get_first_arg "$line")
+            SHOW_OUT_ON_SUCCESS=1 __docker_cmd rmi "$name"
+        done
+}
+df_funcs+=("dfrmi:docker rmi")
+
+########################################
+# Interactive commands (single choice) #
+########################################
+
+# docker exec
+dfe() {
+    local cmd="$1"
+    if [ -z "$cmd" ]; then
+        cmd=/bin/sh
+    fi
+    __docker_pre_test || return
+    docker ps --format $__docker_container_fmt | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        --bind="enter:execute(echo Entering {} && docker exec -it {1} $cmd)+abort"
+}
+df_funcs+=("dfe [CMD]:docker exec, default CMD is /bin/sh")
+
+
+# docker logs
+dfl() {
+    __docker_pre_test || return
+    docker ps --format $__docker_container_fmt | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        --bind="enter:execute(echo Logging {} && docker logs -n 1000 -t -f {1})+abort"
+}
+df_funcs+=("dfl:docker logs")
+
+# docker restart
+dfr() {(
+    __docker_pre_test || return
+    docker ps --format $__docker_container_fmt | fzf -d" " \
+        ${__df_fzf_opts[@]} \
+        -m | \
+        while read -r line; do
+            echo "Restarting $line:"
+            local name=$(__get_first_arg "$line")
+            __docker_cmd restart "$name"
+            if [ "$1" = "--logs" ]; then
+                docker logs --since 1m -t -f "$name"
+            fi
+        done
+)}
+df_funcs+=("dfr [--logs]:docker restart")
