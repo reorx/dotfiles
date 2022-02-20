@@ -346,6 +346,14 @@ function divein {
     docker exec -it $1 /bin/bash
 }
 
+function runsh {
+    docker run -it --rm $1 /bin/sh
+}
+
+function imagesize {
+    docker image inspect $@ --format='{{.RepoTags}} {{.Size}}'
+}
+
 ###########
 # Aliases #
 ###########
