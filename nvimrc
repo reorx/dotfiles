@@ -203,7 +203,7 @@ endfunction
 
 " command+c copy, requires terminal send escape sequence "Esc+c" on command+c
 " source: https://github.com/neovim/neovim/issues/5052#issuecomment-232083842
-vnoremap <M-c> "+y
+vnoremap <M-0> "+y
 
 " paste without overwritting register
 " https://stackoverflow.com/q/290465/596206
