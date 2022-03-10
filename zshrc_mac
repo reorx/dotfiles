@@ -19,6 +19,7 @@ hash -d code="$HOME/Code"
 hash -d services="$HOME/Services"
 hash -d projects="$HOME/Projects"
 hash -d backup="$HOME/Dropbox/Backup"
+hash -d icloud="$HOME/Library/Mobile Documents"
 # Code sub dirs
 hash -d lab="$HOME/Code/lab"
 hash -d repos="$HOME/Code/repos"
