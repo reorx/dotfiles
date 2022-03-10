@@ -371,6 +371,24 @@ function server() {
   # And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
+
+###########
+# Widgets #
+###########
+
+run-and-copy-stdout-widget() {
+    local buf="${BUFFER}"
+    zle push-line # Clear buffer. Auto-restored on next prompt.
+    BUFFER="${buf} | pbcopy"
+    zle accept-line
+    unset buf # ensure this doesn't end up appearing in prompt expansion
+    zle reset-prompt
+    return 0
+}
+
+zle -N run-and-copy-stdout-widget
+bindkey '^Y' run-and-copy-stdout-widget
+
 ###########
 # Aliases #
 ###########
