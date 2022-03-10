@@ -229,15 +229,6 @@ function dataurl() {
   echo "data:image/${1##*.};base64,$(openssl base64 -in "$1")" | tr -d '\n'
 }
 
-# Start an HTTP server from a directory, optionally specifying the port
-function server() {
-  local port="${1:-8000}"
-  open "http://localhost:${port}/"
-  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
-  # And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
-  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
-}
-
 function sshfwd() {
     # Options explaination
     #   q  Quiet mode.  Causes most warning and diagnostic messages to be suppressed.
@@ -253,10 +244,6 @@ function colortable256() {
     done
 }
 
-function urlencode() {
-    python -c 'import urllib, sys; print urllib.quote(sys.argv[1])' $1
-}
-
 function download_benchmark() {
     DOWNLOAD_SPEED=`wget -O /dev/null $1 2>&1 | awk '/\/dev\/null/ {speed=$3 $4} END {gsub(/\(|\)/,"",speed); print speed}'`
     echo "$DOWNLOAD_SPEED ($1)"
@@ -264,10 +251,6 @@ function download_benchmark() {
 
 function tarczf() {
     tar czf $1.tar.gz $1
-}
-
-function py_find_packages() {
-    python -c 'from setuptools import find_packages; print find_packages()'
 }
 
 function td() {
@@ -354,6 +337,40 @@ function imagesize {
     docker image inspect $@ --format='{{.RepoTags}} {{.Size}}'
 }
 
+# python functions
+#
+function uuid {
+    python -c 'import uuid; print(str(uuid.uuid4()))'
+}
+
+function iso8601 {
+    python -c 'import datetime as dt; print(dt.datetime.now().isoformat()[:-3] + "Z")'
+}
+
+function urlencode() {
+    python -c 'import urllib, sys; print urllib.quote(sys.argv[1])' $1
+}
+
+function py_find_packages() {
+    python -c 'from setuptools import find_packages; print find_packages()'
+}
+
+function b64encode() {
+    python -c 'import sys, base64 as b64; print(b64.b64encode(sys.stdin.read().encode()).decode())'
+}
+
+function b64decode() {
+    python -c 'import sys, base64 as b64; print(b64.b64decode(sys.stdin.read().encode()).decode())'
+}
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+  local port="${1:-8000}"
+  open "http://localhost:${port}/"
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn't break anything for binary files)
+  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
 ###########
 # Aliases #
 ###########
