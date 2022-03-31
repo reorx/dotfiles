@@ -106,6 +106,10 @@ function impl_nvim() {
     ln2home nvimrc
 }
 
+function impl_fd() {
+    create_link "$PWD/fd" ~/.config/fd
+}
+
 function impl_git() {
     ln2home gitconfig
     ln2home gitignore_global
