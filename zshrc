@@ -310,6 +310,13 @@ function ssl-chain() {
     openssl s_client -connect $host:$port -servername $host 2>&1 < /dev/null | sed -n '1,/^---$/d;/^---$/,$!p'
 }
 
+function ssl-chain-resolve() {
+    host=$1;
+    port=${2:-443};
+    ip=$3;
+    openssl s_client -connect $ip:$port -servername $host 2>&1 < /dev/null | sed -n '1,/^---$/d;/^---$/,$!p'
+}
+
 function ssl-text() {
     host=$1;
     port=${2:-443};
@@ -361,6 +368,10 @@ function b64encode() {
 
 function b64decode() {
     python -c 'import sys, base64 as b64; print(b64.b64decode(sys.stdin.read().encode()).decode())'
+}
+
+function jsonstr() {
+    python -c 'import sys, json; s = sys.stdin.read(); print(json.dumps(s))'
 }
 
 # Start an HTTP server from a directory, optionally specifying the port

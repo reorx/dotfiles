@@ -10,18 +10,14 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 export MANPATH=$HOME/AppData/LinuxMan:$MANPATH
 
 hash -d desktop="$HOME/Desktop"
-hash -d music="$HOME/Music"
-hash -d pictures="$HOME/Pictures"
 hash -d downloads="$HOME/Downloads"
 hash -d documents="$HOME/Documents"
 hash -d dropbox="$HOME/Dropbox"
 hash -d code="$HOME/Code"
-hash -d services="$HOME/Services"
-hash -d projects="$HOME/Projects"
-hash -d backup="$HOME/Dropbox/Backup"
 hash -d icloud="$HOME/Library/Mobile Documents"
+hash -d onedrive="$HOME/Library/CloudStorage/OneDrive-Personal"
+hash -d backup="$HOME/Library/CloudStorage/OneDrive-Personal/Backup"
 # Code sub dirs
-hash -d lab="$HOME/Code/lab"
 hash -d repos="$HOME/Code/repos"
 
 alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
