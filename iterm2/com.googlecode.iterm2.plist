@@ -6,6 +6,8 @@
 	<true/>
 	<key>AboutToPasteTabsWithCancel_selection</key>
 	<integer>2</integer>
+	<key>Actions</key>
+	<array/>
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>AllowClipboardAccess</key>
@@ -3782,7 +3784,7 @@
 					<key>Label</key>
 					<string></string>
 					<key>Text</key>
-					<string>c</string>
+					<string>0</string>
 					<key>Version</key>
 					<integer>1</integer>
 				</dict>
