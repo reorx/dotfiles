@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+import os
+import json
+import sys
+from pathlib import Path
+from collections import OrderedDict
+
+home_path = os.path.expanduser('~')
+vaults_json_path = f"{home_path}/Library/Application Support/obsidian/obsidian.json"
+
+with open(vaults_json_path, 'r') as f:
+    vaults = json.loads(f.read())['vaults']
+
+"""
+{
+    "13b03373bcca5817": {
+        "path": "/Users/reorx/Library/Application Support/obsidian/Obsidian Help",
+        "ts": 1650016965962
+    },
+    "f7196891c2f347b0": {
+        "path": "/Users/reorx/Documents/Plugins-Playground",
+        "ts": 1650377941958,
+        "open": true
+    }
+}
+"""
+
+vaults_id_path = OrderedDict([])
+number = 0
+for k, v in vaults.items():
+    number += 1
+    vault_path = Path(v["path"])
+    vaults_id_path[number] = vault_path
+
+
+def get_plugins_path(vault_path):
+    return vault_path.joinpath('.obsidian/plugins')
+
+
+command = sys.argv[1]
+
+if command == 'vaults':
+    for k, v in vaults_id_path.items():
+        print(f'{k} : {v.name} -> ~/{v.relative_to(home_path)}')
+
+elif command == 'link-plugin':
+    src = sys.argv[2]
+    src_path = Path(os.getcwd()).joinpath(src)
+    dest_number = int(sys.argv[3])
+    plugins_path = get_plugins_path(vaults_id_path[dest_number])
+    plugin_name = src_path.name
+    dest_path = plugins_path.joinpath(plugin_name)
+    print(f'link plugin: {src_path} -> {dest_path}')
+    os.symlink(src_path, dest_path)
