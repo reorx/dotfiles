@@ -5,7 +5,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
@@ -15,32 +15,35 @@ Plug 'SirVer/ultisnips'
 "Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
-"Plug 'jlanzarotta/bufexplorer'
-Plug 'jeetsukumaran/vim-buffergator'
-"Plug 'itchyny/vim-qfedit'
-Plug 'romainl/vim-qf'
-Plug 'yssl/QFEnter'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 "Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'wakatime/vim-wakatime'
+Plug 'ActivityWatch/aw-watcher-vim'
+Plug 'editorconfig/editorconfig-vim'
 "Plug 'MattesGroeger/vim-bookmarks'
 "
-" completion
+" Useful but no frequently used
+""Plug 'jlanzarotta/bufexplorer'
+"Plug 'jeetsukumaran/vim-buffergator'
+""Plug 'itchyny/vim-qfedit'
+"Plug 'romainl/vim-qf'
+"Plug 'yssl/QFEnter'
 "
-"Plug 'ervandew/supertab'
+" Completion
 "
-" deoplete + vim-lsp
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'prabirshrestha/vim-lsp'
-Plug 'mattn/vim-lsp-settings'
-Plug 'lighttiger2505/deoplete-vim-lsp'
-Plug 'rhysd/vim-lsp-ale'
-"Plug 'Shougo/echodoc.vim'
+Plug 'williamboman/nvim-lsp-installer'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
 "
-" language specific
+" Language specific
 " Go
 Plug 'fatih/vim-go', { 'for': 'go' }
 "
@@ -81,46 +84,95 @@ call plug#end()
 " Config - Completion
 " ------
 
-" supertab
-"let g:SuperTabDefaultCompletionType = '<c-n>'
-let g:SuperTabDefaultCompletionType = 'context'
-let g:SuperTabContextDefaultCompletionType = '<c-n>'
-let g:SuperTabLongestHighlight = 1
-"let g:SuperTabLongestEnhanced = 1
+set completeopt=menu,menuone,noselect
 
-" LanguageClient (deprecated, left keys to be migrated)
-noremap <leader>d :call LanguageClient_textDocument_definition()<CR>
-noremap <leader>g :call LanguageClient_textDocument_typeDefinition()<CR>
-noremap <leader>h :call LanguageClient_textDocument_hover()<CR>
-noremap <leader>f :call LanguageClient_contextMenu()<CR>
+lua <<EOF
+  -- Setup lsp installer
+  require("nvim-lsp-installer").setup {}
 
-" deoplete
-let g:deoplete#enable_at_startup = 1
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
 
-call deoplete#custom#option({
-\ 'auto_complete': v:false,
-\ 'auto_complete_delay': 200,
-\ 'smart_case': v:true,
-\ 'max_list': 15,
-\ })
+  cmp.setup({
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      --['<Tab>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif vim.fn["vsnip#available"](1) == 1 then
+          feedkey("<Plug>(vsnip-expand-or-jump)", "")
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+        end
+      end, { "i", "s" }),
 
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ deoplete#manual_complete()
-function! s:check_back_space() abort "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
+      ["<S-Tab>"] = cmp.mapping(function()
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+          feedkey("<Plug>(vsnip-jump-prev)", "")
+        end
+      end, { "i", "s" }),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      -- { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer' },
+    })
+  })
 
-inoremap <silent><expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
 
-" vim-lsp
-let g:lsp_diagnostics_enabled = 0
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
 
-" jedi (only for go to definition)
-let g:jedi#completions_enabled = 0
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  --require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+  --  capabilities = capabilities
+  --}
+  require'lspconfig'.pylsp.setup{
+    capabilities = capabilities
+  }
+EOF
+
 
 " ------
 " Config - Other
@@ -192,35 +244,6 @@ set noshowmode
 let g:echodoc#enable_at_startup=1
 let g:echodoc#enable_force_overwrite=1
 
-" ale
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 'never'
-"let g:ale_lint_on_insert_leave = 1
-let g:ale_sign_error = 'x'
-let g:ale_sign_warning = '~'
-let g:ale_echo_msg_format = '[%severity%] %s <%linter%>'
-"let g:ale_set_highlights = 0
-nmap <leader>n :ALENextWrap<CR>
-nmap <leader>p :ALEPreviousWrap<CR>
-" emoji sign
-"let g:ale_sign_error = '❗'
-"let g:ale_sign_warning = '🔸'
-"let g:ale_sign_warning = '⚠️'
-"highlight clear ALEErrorSign
-"highlight clear ALEWarningSign
-
-let g:ale_linters = {
-\   'javascript': [],
-\   'python': ['flake8'],
-\   'go': ['vim-lsp', 'govet', 'golint'],
-\   'html': ['htmlhint'],
-\}
-let g:ale_go_gometalinter_options = '--fast'
-" Error codes reference: http://flake8.readthedocs.org/en/latest/warnings.html
-" E265: block comment should start with ‘# ‘
-" E501: line too long (<n> characters)
-" W404: 'from <module> import ``*``' used; unable to detect undefined names
-let g:ale_python_flake8_options = '--ignore=E265,E501,E741'
 
 " airline
 if !exists('g:airline_symbols')
