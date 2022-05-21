@@ -205,6 +205,10 @@ endfunction
 " source: https://github.com/neovim/neovim/issues/5052#issuecomment-232083842
 vnoremap <M-0> "+y
 
+" nvim's default Y is y$ (no line feed)
+" https://www.reddit.com/r/neovim/comments/petq61/neovim_060_y_not_yanking_line_but_to_end_of_line/
+map Y yy
+
 " paste without overwritting register
 " https://stackoverflow.com/q/290465/596206
 xnoremap p pgvy
