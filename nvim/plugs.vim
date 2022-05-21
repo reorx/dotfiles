@@ -78,6 +78,10 @@ Plug 'itchyny/landscape.vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'arcticicestudio/nord-vim'
 
+" utils
+Plug 'folke/which-key.nvim'
+
+
 call plug#end()
 
 " ------
@@ -87,6 +91,8 @@ call plug#end()
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
+  require("which-key").setup {}
+
   -- Setup lsp installer
   require("nvim-lsp-installer").setup {}
 
