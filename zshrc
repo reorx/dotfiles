@@ -383,6 +383,21 @@ function server() {
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
+function link-local-bin() {
+    if [ -n "$2" ]; then
+        ln -s "$PWD/$1" ~/.local/bin/$2
+    else
+        ln -s "$PWD/$1" ~/.local/bin
+    fi
+}
+
+function tmp-upload() {
+    local download_url=$(curl --upload-file ./$1 https://transfer.sh/$1)
+    echo "curl -o $1 $download_url"
+    echo "curl -o $1 $download_url" | pbcopy
+    echo "The above command has been copied to clipboard."
+}
+
 ###########
 # Widgets #
 ###########
