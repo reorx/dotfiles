@@ -47,6 +47,7 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'ray-x/lsp_signature.nvim'
 "
 " Language specific
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Go
 Plug 'fatih/vim-go', { 'for': 'go' }
 "
@@ -99,6 +100,8 @@ lua require('lsp')
 " ------
 " Config - Other
 " ------
+
+lua require('misc')
 
 " colorscheme
 set background=dark
