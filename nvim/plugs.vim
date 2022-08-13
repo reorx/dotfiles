@@ -128,7 +128,8 @@ nmap <F4> :call MyNERDTreeToggle()<cr>
 " fzf
 let g:fzf_preview_window = ['right:50%', 'ctrl-f']
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'border': 'rounded' } }
-nmap <c-_> :Files<cr>
+" use Ctrl-V Ctrl-/ to determine the keycode in vim
+noremap <c-/> :Files<cr>
 noremap <leader>/ :Buffers<cr>
 nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
 vnoremap <silent><leader>f <Esc>:Rg <C-R>=GetVisualSelection()<CR><CR>
