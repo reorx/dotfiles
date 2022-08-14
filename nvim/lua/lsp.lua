@@ -153,3 +153,11 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 require "lsp_signature".setup({
   -- add you config here
 })
+
+goto_preview = require('goto-preview')
+goto_preview.setup {}
+
+vim.keymap.set('n', 'pd', goto_preview.goto_preview_definition, {noremap = true})
+vim.keymap.set('n', 'pt', goto_preview.goto_preview_type_definition, {noremap = true})
+vim.keymap.set('n', 'pi', goto_preview.goto_preview_implementation, {noremap = true})
+vim.keymap.set('n', 'pc', goto_preview.close_all_win, {noremap = true})

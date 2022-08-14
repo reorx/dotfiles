@@ -45,6 +45,7 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'rmagatti/goto-preview'
 "
 " Language specific
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
