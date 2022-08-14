@@ -1,7 +1,8 @@
--- References
+-- ## References
 -- * https://github.com/jdhao/nvim-config/blob/master/lua/config/nvim-cmp.lua
 
--- Setup nvim-cmp.
+
+-- ## nvim-cmp.
 local cmp = require'cmp'
 
 local has_words_before = function()
@@ -43,10 +44,10 @@ cmp.setup({
     { name = 'emoji' },
   }),
   -- Looks.
-  completion = {
-    keyword_length = 1,
-    completeopt = "menu,noselect"
-  },
+  -- completion = {
+  --   keyword_length = 1,
+  --   completeopt = "menu,noselect"
+  -- },
   formatting = {
     format = function(entry, vim_item)
       vim_item.menu = ({
