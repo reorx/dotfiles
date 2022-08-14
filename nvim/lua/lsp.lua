@@ -1,22 +1,11 @@
--- References:
+-- ## References:
 -- * https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
 -- * https://github.com/jdhao/nvim-config/blob/master/lua/config/lsp.lua
 
-local utils = require("utils")
 
--- this global option affects how long it takes to trigger the CursorHold event
-vim.o.updatetime = 200
+-- ## lspconfig
 
--- override floating window globally
-local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-  opts = opts or {}
-  opts.max_width = 160
-  return orig_util_open_floating_preview(contents, syntax, opts, ...)
-end
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
+-- Define on_attach function for lspconfig
 local custom_attach = function(client, bufnr)
   -- Mappings.
   --local opts = { silent = true, buffer = bufnr }
@@ -96,15 +85,15 @@ local custom_attach = function(client, bufnr)
   end
 end
 
-
--- Setup lsp installer
-require("nvim-lsp-installer").setup {}
-
-
+-- Get capabilities for lspconfig
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+-- Setup lsp installer before lspconfig use the language servers
+require("nvim-lsp-installer").setup {}
+
+-- Setup language servers
 local lspconfig = require("lspconfig")
 
 lspconfig.pyright.setup{
@@ -128,6 +117,8 @@ lspconfig['cssls'].setup{
 }
 
 
+-- ## nvim built-in configs
+
 -- global config for diagnostic
 vim.diagnostic.config({
   virtual_text = {
@@ -139,12 +130,24 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
+-- this global option affects how long it takes to trigger the CursorHold event
+vim.o.updatetime = 200
+
+-- override floating window globally
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.max_width = 160
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
 
 -- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
 
+
+-- ## Other LSP related plugins:
 
 -- Setup lsp_signature (has been replaced by lspsaga)
 require "lsp_signature".setup({
