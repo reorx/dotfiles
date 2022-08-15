@@ -5,6 +5,10 @@
 
 -- ## lspconfig
 
+-- determine diagnostic style: use lsp_lines or show floating window on hover
+local use_lsp_lines = true
+local use_floating_window_border = false
+
 -- Define on_attach function for lspconfig
 local custom_attach = function(client, bufnr)
   -- Mappings.
@@ -39,31 +43,34 @@ local custom_attach = function(client, bufnr)
     vim.keymap.set("x", "<space>f", vim.lsp.buf.range_formatting, opts)
   end
 
-  vim.api.nvim_create_autocmd("CursorHold", {
-    buffer=bufnr,
-    callback = function()
-      local opts = {
-        focusable = false,
-        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-        border = 'rounded',
-        source = 'always',  -- show source in diagnostic popup window
-        prefix = ' ',
-      }
+  -- Show diagnostic window on hoverif not using lsp_lines
+  if not use_lsp_lines then
+    vim.api.nvim_create_autocmd("CursorHold", {
+      buffer=bufnr,
+      callback = function()
+        local opts = {
+          focusable = false,
+          close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+          border = 'rounded',
+          source = 'always',  -- show source in diagnostic popup window
+          prefix = ' ',
+        }
 
-      if not vim.b.diagnostics_pos then
-        vim.b.diagnostics_pos = { nil, nil }
+        if not vim.b.diagnostics_pos then
+          vim.b.diagnostics_pos = { nil, nil }
+        end
+
+        local cursor_pos = vim.api.nvim_win_get_cursor(0)
+        if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2]) and
+          #vim.diagnostic.get() > 0
+        then
+            vim.diagnostic.open_float(nil, opts)
+        end
+
+        vim.b.diagnostics_pos = cursor_pos
       end
-
-      local cursor_pos = vim.api.nvim_win_get_cursor(0)
-      if (cursor_pos[1] ~= vim.b.diagnostics_pos[1] or cursor_pos[2] ~= vim.b.diagnostics_pos[2]) and
-        #vim.diagnostic.get() > 0
-      then
-          vim.diagnostic.open_float(nil, opts)
-      end
-
-      vim.b.diagnostics_pos = cursor_pos
-    end
-  })
+    })
+  end
 
   -- The blow command will highlight the current variable and its usages in the buffer.
   if client.resolved_capabilities.document_highlight then
@@ -120,10 +127,14 @@ lspconfig['cssls'].setup{
 -- ## nvim built-in configs
 
 -- global config for diagnostic
+local diagnostic_virtual_text = {
+  source = "if_many",
+}
+if use_lsp_lines then
+  diagnostic_virtual_text = false
+end
 vim.diagnostic.config({
-  virtual_text = {
-      source = "if_many",
-  },
+  virtual_text = diagnostic_virtual_text,
   signs = true,
   underline = true,
   update_in_insert = false,
@@ -133,11 +144,24 @@ vim.diagnostic.config({
 -- this global option affects how long it takes to trigger the CursorHold event
 vim.o.updatetime = 200
 
--- override floating window globally
+-- floating window border style
+if use_floating_window_border then
+  -- vim.cmd [[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]]
+  vim.cmd [[autocmd! ColorScheme * highlight FloatBorder guifg=white]]
+  local FB = "FloatBorder"
+  local border = {
+    {"┌", FB}, {"─", FB}, {"┐", FB}, {"│", FB}, {"┘", FB}, {"─", FB}, {"└", FB}, {"│", FB},
+  }
+end
+
+-- override floating window globally, set max_width and border (if enabled)
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   opts = opts or {}
   opts.max_width = 160
+  if use_floating_window_border then
+    opts.border = opts.border or border
+  end
   return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
@@ -149,11 +173,12 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 
 -- ## Other LSP related plugins:
 
--- Setup lsp_signature (has been replaced by lspsaga)
+-- lsp_signature
 require "lsp_signature".setup({
   -- add you config here
 })
 
+-- goto-preview
 goto_preview = require('goto-preview')
 goto_preview.setup {}
 
