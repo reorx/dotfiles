@@ -19,7 +19,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 "Plug 'easymotion/vim-easymotion'
 Plug 'wellle/targets.vim'
-Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-repeat'
 Plug 'wakatime/vim-wakatime'
 Plug 'ActivityWatch/aw-watcher-vim'
@@ -55,10 +55,8 @@ Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Go
 Plug 'fatih/vim-go', { 'for': 'go' }
-"
 " Go quicktemplate
 "Plug 'codelitt/vim-qtpl'
-"
 " Python generic
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
@@ -80,6 +78,7 @@ Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'itchyny/landscape.vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'arcticicestudio/nord-vim'
+Plug 'lifepillar/vim-gruvbox8'
 
 
 call plug#end()
@@ -242,6 +241,24 @@ let g:go_metalinter_disabled = ['golint']
 " better whitespace
 let g:better_whitespace_ctermcolor='gray'
 let g:better_whitespace_guicolor='gray40'
+
+" sandwich
+let g:sandwich_no_default_key_mappings = 1
+"
+" add
+nmap <leader>sa <Plug>(sandwich-add)
+xmap <leader>sa <Plug>(sandwich-add)
+omap <leader>sa <Plug>(sandwich-add)
+"
+" delete
+nmap <leader>sd <Plug>(sandwich-delete)
+xmap <leader>sd <Plug>(sandwich-delete)
+nmap <leader>sdb <Plug>(sandwich-delete-auto)
+"
+" replace
+nmap <leader>sr <Plug>(sandwich-replace)
+xmap <leader>sr <Plug>(sandwich-replace)
+nmap <leader>srb <Plug>(sandwich-replace-auto)
 
 " bookmarks
 

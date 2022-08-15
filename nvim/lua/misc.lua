@@ -26,11 +26,31 @@ wk.register({
   -- FZF
   ["?"] = "Show key mappings",
   ["/"] = "Show buffers",
+
+  -- sandwich
+  s = {
+    name = "Sandwich surround combos",
+    a = "add surround (e.g. saiw')",
+    d = "delete surround with match",
+    db = "delete surround for any block",
+    r = "replace surround with match",
+    rb = "replace surround for any block",
+  },
 }, { prefix = "<leader>" })
 
 wk.register({
   -- FZF
   f = "Rg find selection",
+
+  -- sandwich
+  s = {
+    name = "Sandwich surround combos",
+    a = "add surround (e.g. sa')",
+    d = "delete surround with match",
+    db = "delete surround for any block",
+    r = "replace surround with match",
+    rb = "replace surround for any block",
+  },
 }, { prefix = "<leader>", mode = "v" })
 
 --wk.register({
