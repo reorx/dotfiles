@@ -186,3 +186,8 @@ vim.keymap.set('n', 'pd', goto_preview.goto_preview_definition, {noremap = true}
 vim.keymap.set('n', 'pt', goto_preview.goto_preview_type_definition, {noremap = true})
 vim.keymap.set('n', 'pi', goto_preview.goto_preview_implementation, {noremap = true})
 vim.keymap.set('n', 'pc', goto_preview.close_all_win, {noremap = true})
+
+-- lsp_lines
+if use_lsp_lines then
+  require("lsp_lines").setup()
+end
