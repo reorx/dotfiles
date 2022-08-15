@@ -3,7 +3,43 @@
 -- * https://github.com/jdhao/nvim-config/blob/master/lua/config/lsp.lua
 
 
+-- ## documenting keymaps in which-key
+
+local wk = require("which-key")
+
+wk.register({
+  -- LSP go to
+  d = "go to definition",
+  D = "go to declaration",
+  t = "go to type definition",
+  R = "go to references",
+
+  -- LSP diagnostic
+  ["<Left>"] = "previous diagnostic",
+  ["<Right>"] = "next diagnostic",
+  l = "open diagnostic quickfix list",
+
+  -- LSP others
+  a = "code actions",
+  R = "format code",
+  r = {
+    name = "Refactor combos",
+    r = "Rename",
+  },
+}, { prefix = "<leader>" })
+
+wk.register({
+  e = "open diagnostic floating window",
+  d = "get definition (floating)",
+  t = "get type definition (floating)",
+  i = "get implementation (floating)",
+  c = "close all (floating)",
+}, { prefix = "g" })
+
 -- ## lspconfig
+
+goto_preview = require('goto-preview')
+local gpopts = {noremap = true}
 
 -- determine diagnostic style: use lsp_lines or show floating window on hover
 local use_lsp_lines = true
@@ -16,9 +52,10 @@ local custom_attach = function(client, bufnr)
   local opts = { silent = true, buffer = bufnr, noremap = true }
 
   vim.keymap.set('n', 'ge', vim.diagnostic.open_float, opts)
-  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+  vim.keymap.set('n', 'gd', goto_preview.goto_preview_definition, gpopts)
+  vim.keymap.set('n', 'gt', goto_preview.goto_preview_type_definition, gpopts)
+  vim.keymap.set('n', 'gi', goto_preview.goto_preview_implementation, gpopts)
+  vim.keymap.set('n', 'gc', goto_preview.close_all_win, gpopts)
   -- hover doc
   -- https://neovim.io/doc/user/lsp.html#vim.lsp.buf.hover%28%29
   -- According to :help vim.lsp.buf.hover(), you should be able to jump into the floating window by calling the function twice in a row (or pressing K twice in your case)
@@ -29,18 +66,19 @@ local custom_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>d', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.declaration, opts)
   vim.keymap.set('n', '<space>t', vim.lsp.buf.type_definition, opts)
-  vim.keymap.set("n", "<space>p", vim.diagnostic.goto_prev, opts)
-  vim.keymap.set("n", "<space>n", vim.diagnostic.goto_next, opts)
-  vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-  vim.keymap.set("n", "<space>q", function() vim.diagnostic.setqflist({open = true}) end, opts)
+  vim.keymap.set('n', '<space>R', vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "<space><Left>", vim.diagnostic.goto_prev, opts)
+  vim.keymap.set("n", "<space><Right>", vim.diagnostic.goto_next, opts)
+  vim.keymap.set("n", "<space>l", function() vim.diagnostic.setqflist({open = true}) end, opts)
   vim.keymap.set("n", "<space>a", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "<space>rr", vim.lsp.buf.rename, opts)
 
   -- Set some key bindings conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    vim.keymap.set("n", "<space>f", vim.lsp.buf.formatting_sync, opts)
+    vim.keymap.set("n", "<space>F", vim.lsp.buf.formatting_sync, opts)
   end
   if client.resolved_capabilities.document_range_formatting then
-    vim.keymap.set("x", "<space>f", vim.lsp.buf.range_formatting, opts)
+    vim.keymap.set("x", "<space>F", vim.lsp.buf.range_formatting, opts)
   end
 
   -- Show diagnostic window on hoverif not using lsp_lines
@@ -179,13 +217,8 @@ require "lsp_signature".setup({
 })
 
 -- goto-preview
-goto_preview = require('goto-preview')
 goto_preview.setup {}
 
-vim.keymap.set('n', 'pd', goto_preview.goto_preview_definition, {noremap = true})
-vim.keymap.set('n', 'pt', goto_preview.goto_preview_type_definition, {noremap = true})
-vim.keymap.set('n', 'pi', goto_preview.goto_preview_implementation, {noremap = true})
-vim.keymap.set('n', 'pc', goto_preview.close_all_win, {noremap = true})
 
 -- lsp_lines
 if use_lsp_lines then

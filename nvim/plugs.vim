@@ -24,13 +24,13 @@ Plug 'tpope/vim-repeat'
 Plug 'wakatime/vim-wakatime'
 Plug 'ActivityWatch/aw-watcher-vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'romainl/vim-qf'
+Plug 'folke/which-key.nvim'
 "Plug 'MattesGroeger/vim-bookmarks'
 "
 " Useful but no frequently used
 ""Plug 'jlanzarotta/bufexplorer'
 "Plug 'jeetsukumaran/vim-buffergator'
-""Plug 'itchyny/vim-qfedit'
-"Plug 'romainl/vim-qf'
 "Plug 'yssl/QFEnter'
 "
 " Completion
@@ -63,18 +63,12 @@ Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'Vimjas/vim-python-pep8-indent', { 'for': 'python' }
 Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'tmhedberg/SimpylFold', { 'for': 'python' }
-"
 " Nginx
 Plug 'chr4/nginx.vim'
-"
 " HTML
 Plug 'mattn/emmet-vim', { 'for': 'html' }
-"
 " JSX
 Plug 'maxmellon/vim-jsx-pretty'
-"
-" PICO-8
-"Plug 'justinj/vim-pico8-syntax'
 " protobuf
 Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 " ansible yaml
@@ -86,9 +80,6 @@ Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'itchyny/landscape.vim'
 Plug 'haishanh/night-owl.vim'
 Plug 'arcticicestudio/nord-vim'
-
-" utils
-Plug 'folke/which-key.nvim'
 
 
 call plug#end()
@@ -136,12 +127,18 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'border': 'rounded
 " use Ctrl-V Ctrl-/ to determine the keycode in vim
 noremap <c-/> :Files<cr>
 noremap <leader>/ :Buffers<cr>
-nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
+"nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
 vnoremap <silent><leader>f <Esc>:Rg <C-R>=GetVisualSelection()<CR><CR>
 " show mappings for the current mode, see https://github.com/junegunn/fzf.vim/pull/20
 nmap <leader>? <plug>(fzf-maps-n)
 xmap <leader>? <plug>(fzf-maps-x)
 omap <leader>? <plug>(fzf-maps-o)
+
+" vim-qf
+nmap <leader>qp <Plug>(qf_qf_previous)
+nmap <leader>qn  <Plug>(qf_qf_next)
+" can replace 'milkypostman/vim-togglelist'
+nmap <leader>qq <Plug>(qf_qf_toggle)
 
 " buffergator
 let g:buffergator_viewport_split_policy="T"
@@ -154,13 +151,6 @@ let g:qfenter_keymap = {}
 let g:qfenter_keymap.vopen = ['<C-v>']
 let g:qfenter_keymap.hopen = ['<C-CR>', '<C-s>', '<C-x>']
 let g:qfenter_keymap.topen = ['<C-t>']
-
-" vim-qf
-nmap <leader><Up> <Plug>(qf_qf_previous)
-nmap <leader><Down>  <Plug>(qf_qf_next)
-" these two key maps can replace 'milkypostman/vim-togglelist'
-nmap <leader>q <Plug>(qf_qf_toggle)
-nmap <leader>l <Plug>(qf_loc_toggle)
 
 " python-syntax
 let python_highlight_builtins = 1
@@ -246,9 +236,8 @@ let g:go_fmt_autosave = 1
 let g:go_metalinter_enabled = ['vet', 'errcheck']
 let g:go_metalinter_disabled = ['golint']
 
-au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>gd <Plug>(go-doc)
-au FileType go nmap gd <Plug>(go-def-tab)
+"au FileType go nmap <Leader>i <Plug>(go-info)
+"au FileType go nmap <Leader>gd <Plug>(go-doc)
 
 " better whitespace
 let g:better_whitespace_ctermcolor='gray'
