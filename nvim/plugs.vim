@@ -1,4 +1,11 @@
 call plug#begin('~/.nvim/plugged')
+" TODO
+" - https://github.com/phaazon/hop.nvim
+" - https://github.com/kevinhwang91/nvim-bqf
+" - https://github.com/tpope/vim-commentary/blob/master/plugin/commentary.vim
+" - https://github.com/kevinhwang91/nvim-hlslens
+" - https://github.com/gelguy/wilder.nvim
+" - https://github.com/liuchengxu/vista.vim
 
 " generic
 Plug 'vim-airline/vim-airline'
