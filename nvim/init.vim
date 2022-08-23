@@ -8,6 +8,7 @@ let g:python3_host_prog='~/.virtualenvs/neovim-python3/bin/python'
 " vars
 let $MYVIMRC='~/.nvimrc'
 let $MYPLUGS='~/.nvim/plugs.vim'
+let $MYLUA='~/.nvim/lua'
 
 source ~/.nvimrc
 source ~/.nvim/plugs.vim

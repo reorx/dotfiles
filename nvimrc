@@ -315,3 +315,8 @@ func! MyPlugs()
     execute "edit $MYPLUGS"
 endfu
 com! MyPlugs call MyPlugs()
+
+func! MyLua()
+    execute "edit $MYLUA"
+endfu
+com! MyLua call MyLua()
