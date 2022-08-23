@@ -15,10 +15,7 @@ Plug 'scrooloose/nerdtree'
 "Plug 'w0rp/ale'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle' }
 Plug 'dominikduda/vim_current_word'
-" TODO use Plug 'Shougo/neosnippet.vim'
-"Plug 'SirVer/ultisnips'
 "Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
@@ -28,12 +25,14 @@ Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 Plug 'wellle/targets.vim'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-repeat'
-Plug 'wakatime/vim-wakatime'
-Plug 'ActivityWatch/aw-watcher-vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'romainl/vim-qf'
 Plug 'folke/which-key.nvim'
 "Plug 'MattesGroeger/vim-bookmarks'
+"
+" statistics
+Plug 'wakatime/vim-wakatime'
+Plug 'ActivityWatch/aw-watcher-vim'
 "
 " Useful but no frequently used
 ""Plug 'jlanzarotta/bufexplorer'
@@ -54,9 +53,10 @@ Plug 'hrsh7th/vim-vsnip'
 "
 Plug 'williamboman/nvim-lsp-installer'
 Plug 'neovim/nvim-lspconfig'
-Plug 'ray-x/lsp_signature.nvim'
-Plug 'rmagatti/goto-preview'
+Plug 'ray-x/lsp_signature.nvim' " 🐼
+" lsp_lines: renders diagnostics using virtual lines on top of the real line of code.
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+Plug 'rmagatti/goto-preview'
 "
 " Language specific
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -166,12 +166,6 @@ let python_highlight_indent_errors = 1
 let python_highlight_doctests = 1
 let python_print_as_function = 1
 
-" echodoc
-set noshowmode
-let g:echodoc#enable_at_startup=1
-let g:echodoc#enable_force_overwrite=1
-
-
 " airline
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
@@ -203,9 +197,6 @@ let g:airline#extensions#default#layout = [
   \ [ 'x', 'y', 'z' ]
   \ ]
 
-" tagbar
-let g:tagbar_width = 35
-nmap <F8> :TagbarToggle<CR>
 "echo winwidth('%')
 
 " current word
@@ -214,14 +205,6 @@ hi CurrentWord ctermbg=gray guibg=gray25
 autocmd ColorScheme * hi CurrentWord ctermbg=gray guibg=gray25
 " change visual mode selection color
 hi Visual guifg=White guibg=SteelBlue gui=none
-
-
-" UltiSnips
-let g:UltiSnipsSnippetDirectories=["ultisnips"]
-let g:UltiSnipsExpandTrigger='<c-e>'
-let g:UltiSnipsJumpForwardTrigger='<c-f>'
-let g:UltiSnipsJumpBackwardTrigger='<c-b>'
-let g:UltiSnipsEnableSnipMate=0
 
 " XXX fix yaml indent changed by one of the plugs which I don't know what it is
 "autocmd FileType yaml setlocal indentexpr=
