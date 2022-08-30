@@ -81,7 +81,7 @@ local custom_attach = function(client, bufnr)
     vim.keymap.set("x", "<space>F", vim.lsp.buf.range_formatting, opts)
   end
 
-  -- Show diagnostic window on hoverif not using lsp_lines
+  -- Show diagnostic window on hover if not using lsp_lines
   if not use_lsp_lines then
     vim.api.nvim_create_autocmd("CursorHold", {
       buffer=bufnr,
@@ -142,6 +142,8 @@ require("nvim-lsp-installer").setup {}
 local lspconfig = require("lspconfig")
 
 -- pyright (Pylance in VSCode)
+-- https://github.com/microsoft/pyright/blob/main/docs/configuration.md
+-- https://github.com/microsoft/pyright/blob/main/docs/comments.md
 -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
 lspconfig.pyright.setup{
   on_attach = custom_attach,
@@ -181,11 +183,17 @@ lspconfig['cssls'].setup{
 local diagnostic_virtual_text = {
   source = "if_many",
 }
+local diagnostic_virtual_lines = false
 if use_lsp_lines then
   diagnostic_virtual_text = false
+  diagnostic_virtual_lines = true
+  --diagnostic_virtual_lines = { only_current_line = true }
 end
 vim.diagnostic.config({
   virtual_text = diagnostic_virtual_text,
+  virtual_lines = diagnostic_virtual_lines,
+  -- signs are: E for Error, W for Warn, I for Info, H for Hint
+  -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#change-diagnostic-symbols-in-the-sign-column-gutter
   signs = true,
   underline = true,
   update_in_insert = false,
@@ -227,6 +235,19 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
 -- lsp_signature
 require "lsp_signature".setup({
   -- add you config here
+  bind = true, -- This is mandatory, otherwise border config won't get registered.
+  handler_opts = {
+    border = use_floating_window_border and "single" or "none",
+  },
+  --floating_window_off_x = -2,
+  --floating_window_off_y = 0,
+  floating_window = false,
+  floating_window_above_cur_line = true,
+  max_width = 80,
+  max_height = 10,
+  --wrap = true,
+  hint_enable = false,
+  toggle_key = '<C-h>',
 })
 
 -- goto-preview
