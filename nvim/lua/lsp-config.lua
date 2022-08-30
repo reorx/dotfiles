@@ -141,10 +141,23 @@ require("nvim-lsp-installer").setup {}
 -- Setup language servers
 local lspconfig = require("lspconfig")
 
+-- pyright (Pylance in VSCode)
+-- https://github.com/microsoft/pyright/blob/main/docs/settings.md
 lspconfig.pyright.setup{
   on_attach = custom_attach,
-  capabilities = capabilities
+  capabilities = capabilities,
+  settings = {
+    python = {
+      analysis = {
+        -- disable auto import so that it won't complete from the whole library
+        autoImportCompletions = false,
+      }
+    }
+  }
 }
+
+-- pylsp
+-- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
 
 lspconfig['tsserver'].setup{
   on_attach = custom_attach,
