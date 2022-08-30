@@ -38,6 +38,7 @@ cmp.setup({
   -- Groups of sources.
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'omni' },
     { name = 'buffer' },
     { name = 'path' },

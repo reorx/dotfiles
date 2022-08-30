@@ -59,6 +59,7 @@ Plug 'ray-x/lsp_signature.nvim' " 🐼
 " lsp_lines: renders diagnostics using virtual lines on top of the real line of code.
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'rmagatti/goto-preview'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
 "
 " Language specific
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
