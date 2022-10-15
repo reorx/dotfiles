@@ -1,0 +1,15 @@
+#!/bin/bash
+
+selected=$(
+python -c 'import json; d = json.load(open("package.json")); l = list(d.get("dependencies", {})) + list(d.get("devDependencies", {})); print("\n".join(sorted(l)))' | fzf \
+    --height 50% --border --layout=reverse --info=inline \
+    --header="wtf: {}" \
+    -m
+)
+
+echo -e "Uninstall:\n$selected"
+read -p "Are you sure? "
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    npm uninstall $selected
+fi
