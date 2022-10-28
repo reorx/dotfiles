@@ -1,0 +1,14 @@
+#!/bin/bash
+
+filepath="$1"
+
+filename=$(basename "$filepath")
+filestem="${filename%.*}"
+
+newfile="$2"
+if [ -z "$newfile" ]; then
+    newfile=index.md
+fi
+
+echo -e "# $filestem\n" > $newfile
+cat "$filepath" >> $newfile
