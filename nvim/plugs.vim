@@ -32,7 +32,7 @@ Plug 'folke/which-key.nvim'
 "
 " statistics
 Plug 'wakatime/vim-wakatime'
-Plug 'ActivityWatch/aw-watcher-vim'
+"Plug 'ActivityWatch/aw-watcher-vim'
 "
 " Useful but no frequently used
 ""Plug 'jlanzarotta/bufexplorer'
