@@ -194,7 +194,9 @@ vim.diagnostic.config({
   virtual_lines = diagnostic_virtual_lines,
   -- signs are: E for Error, W for Warn, I for Info, H for Hint
   -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#change-diagnostic-symbols-in-the-sign-column-gutter
-  signs = true,
+  -- because we have virtual lines or lsp_lines, the signs are not need.
+  -- besides, using the signs causes the inconsistency of width/height when switching editing mode
+  signs = false,
   underline = true,
   update_in_insert = false,
   severity_sort = true,
