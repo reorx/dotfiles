@@ -155,7 +155,7 @@ __docker_cmd() {
 dfrm() {(
     set -e
     __docker_pre_test || return
-    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+    docker ps -a --format "$__docker_container_fmt" | fzf -d" " \
         ${__df_fzf_opts[@]} \
         -m | \
         while read -r line; do
@@ -170,7 +170,7 @@ df_funcs+=("dfrm:docker rm")
 dfs() {(
     set -e
     __docker_pre_test || return
-    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+    docker ps -a --format "$__docker_container_fmt" | fzf -d" " \
         ${__df_fzf_opts[@]} \
         -m | \
         while read -r line; do
@@ -190,7 +190,7 @@ df_funcs+=("dfs [--rm]:docker stop")
 dfk() {(
     set -e
     __docker_pre_test || return
-    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+    docker ps -a --format "$__docker_container_fmt" | fzf -d" " \
         ${__df_fzf_opts[@]} \
         -m | \
         while read -r line; do
@@ -209,7 +209,7 @@ df_funcs+=("dfk [--rm]:docker kill")
 dfrs() {(
     set -e
     __docker_pre_test || return
-    docker ps -a --format $__docker_container_fmt | fzf -d" " \
+    docker ps -a --format "$__docker_container_fmt" | fzf -d" " \
         ${__df_fzf_opts[@]} \
         -m | \
         while read -r line; do
@@ -248,7 +248,7 @@ dfe() {
         cmd=/bin/sh
     fi
     __docker_pre_test || return
-    docker ps --format $__docker_container_fmt | fzf -d" " \
+    docker ps --format "$__docker_container_fmt" | fzf -d" " \
         ${__df_fzf_opts[@]} \
         --bind="enter:execute(echo Entering {} && docker exec -it {1} $cmd)+abort"
 }
@@ -258,7 +258,7 @@ df_funcs+=("dfe [CMD]:docker exec, default CMD is /bin/sh")
 # docker logs
 dfl() {
     __docker_pre_test || return
-    docker ps --format $__docker_container_fmt | fzf -d" " \
+    docker ps --format "$__docker_container_fmt" | fzf -d" " \
         ${__df_fzf_opts[@]} \
         --bind="enter:execute(echo Logging {} && docker logs -n 1000 -t -f {1})+abort"
 }
@@ -267,7 +267,7 @@ df_funcs+=("dfl:docker logs")
 # docker restart
 dfr() {(
     __docker_pre_test || return
-    docker ps --format $__docker_container_fmt | fzf -d" " \
+    docker ps --format "$__docker_container_fmt" | fzf -d" " \
         ${__df_fzf_opts[@]} \
         -m | \
         while read -r line; do
