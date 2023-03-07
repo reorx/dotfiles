@@ -1,3 +1,5 @@
+notify = true
+
 [keybindings]
 "Ctrl+l" = "focus library"
 "Ctrl+f" = "focus search"

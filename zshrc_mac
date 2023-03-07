@@ -18,6 +18,7 @@ hash -d code="$HOME/Code"
 hash -d icloud="$HOME/Library/Mobile Documents"
 hash -d onedrive="$HOME/Library/CloudStorage/OneDrive-Personal"
 hash -d backup="$HOME/Library/CloudStorage/OneDrive-Personal/Backup"
+hash -d drafts-backup="$HOME/Library/Mobile Documents/iCloud~com~agiletortoise~Drafts5/Documents/Backups/Drafts"
 # Code sub dirs
 hash -d repos="$HOME/Code/repos"
 

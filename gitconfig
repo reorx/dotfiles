@@ -3,6 +3,7 @@
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
+    # remove this line or use `less` if delta is not installed
     pager = delta
     quotepath = off
 [merge]
