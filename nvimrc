@@ -81,7 +81,8 @@ set nofoldenable
 set ruler " Show the line and column number of the cursor position, separated by a comma.
 set showcmd " Show (partial) command in the last line of the screen.
 set cmdheight=1 " Number of screen lines to use for the command-line.
-set rnu " relative number
+set relativenumber " relative number
+"set number
 set laststatus=2 " The value of this option influences when the last window will have a
 "                  status line:
 "                    0: never
