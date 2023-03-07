@@ -18,7 +18,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'dominikduda/vim_current_word'
 "Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive', { 'on':  'Gblame' }
+Plug 'tpope/vim-fugitive', { 'on':  'Git' }
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ryanoasis/vim-devicons'  " requires a nerd font
 "Plug 'easymotion/vim-easymotion'
