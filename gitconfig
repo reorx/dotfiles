@@ -64,6 +64,7 @@
     st = status -sb
     ci = commit
     cm = commit -m
+    cam = commit --amend
     #lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
     co = checkout
     # NOTE Dangerous, use with caution
