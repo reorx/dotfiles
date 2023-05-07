@@ -119,6 +119,11 @@ function impl_python() {
     ln2home pythonrc.py
 }
 
+function impl_wezterm {
+    mkdir -p ~/.config/wezterm
+    create_link "$PWD/wezterm.lua" ~/.config/wezterm/wezterm.lua
+}
+
 function impl_tmux {
     ln2home tmux.conf
     impl_tpm

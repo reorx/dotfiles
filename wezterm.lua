@@ -17,10 +17,54 @@ config.color_scheme = "Tomorrow Night Bright"
 config.font_size = 16
 config.font = wezterm.font 'mononoki Nerd Font Mono'
 config.window_background_opacity = 0.85
+config.window_decorations = 'RESIZE'
+
+local tab_bar_theme = {
+  bg = '#888',
+  active_bg = '#000',
+  active_fg = '#fafafa',
+  inactive_bg = '#666',
+  inactive_fg =  '#ddd',
+}
+
+--config.use_fancy_tab_bar = false
+config.window_frame = {
+  -- The font used in the tab bar.
+  -- Roboto Bold is the default; this font is bundled
+  -- with wezterm.
+  -- Whatever font is selected here, it will have the
+  -- main font setting appended to it to pick up any
+  -- fallback fonts you may have used there.
+  font = wezterm.font { family = 'Hack', weight = 'Bold' },
+
+  -- The size of the font in the tab bar.
+  -- Default to 10. on Windows but 12.0 on other systems
+  font_size = 12.0,
+
+  -- The overall background color of the tab bar when
+  -- the window is focused or not
+  active_titlebar_bg = tab_bar_theme.bg,
+  inactive_titlebar_bg = tab_bar_theme.bg,
+}
+
+config.colors = {
+  tab_bar = {
+    active_tab = {
+      bg_color = tab_bar_theme.active_bg,
+      fg_color = tab_bar_theme.active_fg,
+    },
+    inactive_tab = {
+      bg_color = tab_bar_theme.inactive_bg,
+      fg_color = tab_bar_theme.inactive_fg,
+    },
+    -- The color of the inactive tab bar edge/divider
+    inactive_tab_edge = tab_bar_theme.bg,
+  },
+}
 
 -- workspace
 wezterm.on('update-right-status', function(window, pane)
-  window:set_right_status(window:active_workspace())
+  window:set_right_status(window:active_workspace() .. '  ')
 end)
 
 
