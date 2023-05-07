@@ -31,7 +31,7 @@ Plug 'folke/which-key.nvim'
 "Plug 'MattesGroeger/vim-bookmarks'
 "
 " statistics
-Plug 'wakatime/vim-wakatime'
+"Plug 'wakatime/vim-wakatime'
 "Plug 'ActivityWatch/aw-watcher-vim'
 "
 " Useful but no frequently used
@@ -83,12 +83,14 @@ Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 
 " colorscheme
-Plug 'chriskempson/base16-vim'
-Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'itchyny/landscape.vim'
-Plug 'haishanh/night-owl.vim'
-Plug 'arcticicestudio/nord-vim'
-Plug 'lifepillar/vim-gruvbox8'
+"Plug 'chriskempson/base16-vim'
+"Plug 'kristijanhusak/vim-hybrid-material'
+"Plug 'itchyny/landscape.vim'
+"Plug 'haishanh/night-owl.vim'
+"Plug 'lifepillar/vim-gruvbox8'
+"Plug 'Yagua/nebulous.nvim'
+"Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 
 call plug#end()
@@ -114,8 +116,10 @@ set background=dark
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "colorscheme base16-default-dark
 "colorscheme hybrid_reverse
-colorscheme night-owl
+"colorscheme night-owl
 "colorscheme landscape
+"colorscheme moonfly
+lua require('colorscheme/catppuccin')
 
 " nerdtree
 let g:NERDTreeWinSize = 25
