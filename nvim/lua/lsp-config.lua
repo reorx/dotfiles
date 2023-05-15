@@ -42,7 +42,7 @@ goto_preview = require('goto-preview')
 local gpopts = {noremap = true}
 
 -- determine diagnostic style: use lsp_lines or show floating window on hover
-local use_lsp_lines = true
+local use_lsp_lines = false
 local use_floating_window_border = false
 
 -- Define on_attach function for lspconfig
@@ -231,6 +231,14 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = "rounded",
 })
 
+
+-- Disable diagnostics in INSERT mode
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- delay update diagnostics
+    update_in_insert = false,
+  }
+)
 
 -- ## Other LSP related plugins:
 
