@@ -257,6 +257,13 @@ func! DisableAutoIndent()
 endfu
 com! DisableAutoIndent call DisableAutoIndent()
 
+func! DisableInteractive()
+    setlocal norelativenumber
+    setlocal mouse-=a
+    echo 'Line number and mouse are disabled'
+endfu
+com! DisableInteractive call DisableInteractive()
+
 
 func! SetTabstop(size)
     let &l:tabstop=a:size
