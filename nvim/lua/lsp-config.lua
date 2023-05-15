@@ -131,12 +131,12 @@ local custom_attach = function(client, bufnr)
 end
 
 -- Get capabilities for lspconfig
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Setup lsp installer before lspconfig use the language servers
-require("nvim-lsp-installer").setup {}
+--require("nvim-lsp-installer").setup {}
+require("mason").setup()
 
 -- Setup language servers
 local lspconfig = require("lspconfig")
