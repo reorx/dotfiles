@@ -1,2 +1,7 @@
 patch:
-  "switcher/caption": 「Schemas Switcher」
+  "switcher/caption": 「Schemas」
+  'punctuator/half_shape/[' : '「'
+  'punctuator/half_shape/]' : '」'
+  'punctuator/half_shape/{' : '【'
+  'punctuator/half_shape/}' : '】'
+
