@@ -5,6 +5,7 @@
     excludesfile = ~/.gitignore_global
     # remove this line or use `less` if delta is not installed
     pager = delta
+    #pager = less -F -X
     quotepath = off
 [merge]
     # Include summaries of merged commits in newly created merge commit messages
@@ -99,10 +100,13 @@
         --topo-order \
         --decorate \
         --format=format:'%C(magenta)%h%C(reset) - %C(dim magenta)%ad%C(reset) %C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim magenta)%ar%C(reset) %C(dim white)- %an <%ae>%C(reset)'
-    lol = log --graph --decorate --abbrev-commit --pretty=format
+    lol = log --graph --decorate --abbrev-commit
     tags = tag -n --sort=v:refname -l
     tags-v = tag -n99 --sort=v:refname -l
 [init]
 	defaultBranch = master
 [pull]
 	ff = only
+
+[includeIf "gitdir:~/Code/smu/"]
+  path = ~/Code/smu/.gitconfig
