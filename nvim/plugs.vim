@@ -53,6 +53,7 @@ Plug 'hrsh7th/vim-vsnip'
 "
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/mason.nvim', { 'do': ':MasonUpdate' }
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'ray-x/lsp_signature.nvim' " 🐼
 " lsp_lines: renders diagnostics using virtual lines on top of the real line of code.
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'

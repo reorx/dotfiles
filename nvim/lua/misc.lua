@@ -1,5 +1,7 @@
 -- https://github.com/nvim-treesitter/nvim-treesitter
 require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "python", "javascript", "typescript", "html", "css", "go", "vim", "vimdoc" },
+
   highlight = {
     enable = true,
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.

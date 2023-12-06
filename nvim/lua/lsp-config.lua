@@ -137,6 +137,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- Setup lsp installer before lspconfig use the language servers
 --require("nvim-lsp-installer").setup {}
 require("mason").setup()
+require("mason-lspconfig").setup()
 
 -- Setup language servers
 local lspconfig = require("lspconfig")
@@ -161,10 +162,10 @@ lspconfig.pyright.setup{
 -- pylsp
 -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
 
-lspconfig['tsserver'].setup{
-  on_attach = custom_attach,
-  capabilities = capabilities
-}
+---lspconfig['tsserver'].setup{
+---  on_attach = custom_attach,
+---  capabilities = capabilities
+---}
 
 lspconfig['html'].setup{
   on_attach = custom_attach,
@@ -172,6 +173,12 @@ lspconfig['html'].setup{
 }
 
 lspconfig['cssls'].setup{
+  on_attach = custom_attach,
+  capabilities = capabilities,
+}
+
+-- marksman (markdown)
+lspconfig.marksman.setup{
   on_attach = custom_attach,
   capabilities = capabilities,
 }
