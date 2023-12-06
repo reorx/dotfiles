@@ -7,3 +7,4 @@ notify = true
 "q" = "queue"
 "Space" = "playpause"
 "Shift+q" = "quit"
+"Esc" = "back"
