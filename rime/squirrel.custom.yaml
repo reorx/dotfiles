@@ -3,6 +3,15 @@ patch:
   style/horizontal: true
   # this has higher priority than style/horizontal
   style/candidate_list_layout: linear
+  # app options
+  app_options/com.runningwithcrayons.Alfred:
+    ascii_mode: true
+  app_options/com.microsoft.VSCode:
+    ascii_mode: true
+  app_options/com.googlecode.iterm2:
+    no_inline: true
+  app_options/md.obsidian:
+    ascii_mode: false
   # color schemes preview: https://github.com/NavisLab/rime-pifu
   preset_color_schemes/reorx:
     name: "Reorx (based on Purity of Form Custom)"
