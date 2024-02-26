@@ -1,0 +1,43 @@
+matches:
+  - trigger: ":hugoblog"
+    label: Hugo blog template
+    replace: |-
+      ---
+      title: 
+      slug: 
+      date: {{mydate}}
+      description:
+      draft: true
+      tags:
+      ShowToc: true
+      writeTime: ""
+      cover:
+        image: 
+      socialLinks:
+        twitter:
+          user: novoreorx
+          id: 
+      ---
+    vars:
+      - name: mydate
+        type: match
+        params:
+          trigger: ":tztime"
+
+  - trigger: ":hugoessay"
+    label: Hugo essay template
+    replace: |-
+      ---
+      title: 
+      date: {{mydate}}
+      draft: true
+      tags:
+      ---
+    vars:
+      - name: mydate
+        type: match
+        params:
+          trigger: ":tztime"
+
+  - trigger: ":hugoref"
+    replace: "{{< ref \"$|$\" >}}"

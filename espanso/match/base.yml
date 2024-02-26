@@ -1,0 +1,181 @@
+# espanso match file
+# Docs:
+# - https://espanso.org/docs/matches/extensions/#script-extension
+
+# For a complete introduction, visit the official docs at: https://espanso.org/docs/
+
+# You can use this file to define the base matches (aka snippets)
+# that will be available in every application when using espanso.
+
+# Matches are substitution rules: when you type the "trigger" string
+# it gets replaced by the "replace" string.
+matches:
+  - trigger: ":today"
+    replace: "{{mydate}}"
+    label: current date
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y-%m-%d"
+
+  - trigger: ":ntoday"
+    replace: "{{mydate}}"
+    label: current date (number only)
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y%m%d"
+
+  - trigger: ":time"
+    replace: "{{mydate}}"
+    label: current date time
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y-%m-%dT%H:%M:%S"
+
+  - trigger: ":tztime"
+    replace: "{{mydate}}"
+    label: current date time in ISO 8601 format
+    vars:
+      - name: mydate
+        type: date
+        params:
+          format: "%Y-%m-%dT%H:%M:%S+08:00"
+
+  - trigger: ":yesterday"
+    replace: "{{mytime}}"
+    label: date for yesterday
+    vars:
+      - name: mytime
+        type: date
+        params:
+          format: "%Y-%m-%d"
+          offset: -86400
+
+  - trigger: ":tomorrow"
+    replace: "{{mytime}}"
+    label: date for tomorrow
+    vars:
+      - name: mytime
+        type: date
+        params:
+          format: "%Y-%m-%d"
+          offset: 86400
+  - trigger: ":esptri"
+    replace: |-
+      - trigger: ":$|$"
+      - replace: 
+
+  # symbols
+  - trigger: ":sp"
+    replace: " $|$ "
+  - trigger: ":man"
+    replace: ♂
+  - trigger: ":bullet"
+    replace: •
+  - trigger: ":check"
+    replace: ✔
+  - trigger: ":no"
+    replace: ✗
+  - trigger: ":right"
+    replace: →
+  - trigger: ":->"
+    replace: →
+  - trigger: ":left"
+    replace: ←
+  - trigger: ":endash"
+    replace: –
+    label: represent a span or range of numbers, dates, or time.
+  - trigger: ":emdash"
+    replace: —
+    label: in place of commas, parentheses, and colon.
+  - trigger: ":zhq"
+    replace: "「$|$」"
+  - trigger: ":enq"
+    replace: "“$|$”"
+  - trigger: ":ensq"
+    replace: "‘$|$’"
+  - trigger: ":celsius"
+    replace: "℃"
+
+  # emojis
+  - trigger: ":xd"
+    replace: 😆
+  - trigger: ":relief"
+    replace: 😌
+  - trigger: ":wink"
+    replace: 😏
+  - trigger: ":tearl"
+    replace: 😂
+  - trigger: ":sweatl"
+    replace: 😅
+  - trigger: ":smile"
+    replace: ☺️
+  - trigger: ":happy"
+    replace: 😄
+  - trigger: ":rofl"
+    replace: 🤣
+  - trigger: ":thinking"
+    replace: 🤔
+  - trigger: ":thumb"
+    replace: 👍
+  - trigger: ":ok"
+    replace: 👌
+  - trigger: ":strong"
+    replace: 💪
+  - trigger: ":fistbump"
+    replace: 🤜🤛
+  - trigger: ":teareye"
+    replace: 🥹
+  - trigger: ":tearsm"
+    replace: 🥲
+  - trigger: ":star"
+    replace: ⭐️
+  - trigger: ":poop"
+    replace: 💩
+  - trigger: ":handfolded"
+    replace: 🙏
+  - trigger: ":heart"
+    replace: ❤️
+  - trigger: ":expressionless"
+    replace: 😑
+  - trigger: ":redx"
+    replace: ❌
+  - trigger: ":greenc"
+    replace: ✅
+  - trigger: ":wave"
+    replace: 👋
+  - trigger: ":melting"
+    replace: 🫠
+  - trigger: ":eyes"
+    replace: 👀
+  - trigger: ":facepalm"
+    replace: 🤦
+  - trigger: ":shrug"
+    replace: 🤷
+
+  # keyboard
+  - trigger: ":kbdcmd"
+    replace: ⌘
+  - trigger: ":kbdctrl"
+    replace: ⌃
+  - trigger: ":kbdopt"
+    replace: ⌥
+  - trigger: ":kbdshift"
+    replace: ⇧
+  - trigger: ":kbdenter"
+    replace: ⏎
+  - trigger: ":kbdtab"
+    replace: ⇥
+  - trigger: ":kbdback"
+    replace: ⌫
+  - trigger: ":kbdesc"
+    replace: ⎋
+
+  # xpath
+  - trigger: ":xcls"
+    replace: "[has-class(\"$|$\")]"
