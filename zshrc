@@ -347,7 +347,7 @@ function imagesize {
 # python functions
 #
 function uuid {
-    python -c 'import uuid; print(str(uuid.uuid4()))'
+    python -c 'import uuid; print(str(uuid.uuid4()), end="")'
 }
 
 function iso8601 {
@@ -426,6 +426,7 @@ alias vim0="/usr/local/bin/vim -p"
 alias tree="tree --dirsfirst"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
 alias cleanpycache="find . -type d -name '__pycache__' -prune -exec rm -r {} \;"
+alias kill9="kill -9"
 
 # Load local at last
 if [ -e "$HOME/.zshrc_local" ]; then
