@@ -15,6 +15,9 @@ Plug 'scrooloose/nerdtree'
 "Plug 'w0rp/ale'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+" telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.5' }
 Plug 'dominikduda/vim_current_word'
 "Plug 'chiedo/vim-case-convert'
 Plug 'airblade/vim-gitgutter'
@@ -90,6 +93,8 @@ Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 "Plug 'Yagua/nebulous.nvim'
 "Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'rebelot/kanagawa.nvim'  " https://github.com/rebelot/kanagawa.nvim
+Plug 'EdenEast/nightfox.nvim'  " https://github.com/EdenEast/nightfox.nvim
 
 
 call plug#end()
@@ -133,18 +138,28 @@ function! MyNERDTreeToggle()
 endfunction
 nmap <F4> :call MyNERDTreeToggle()<cr>
 
+
 " fzf
 let g:fzf_preview_window = ['right:50%', 'ctrl-f']
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8, 'border': 'rounded' } }
 " use Ctrl-V Ctrl-/ to determine the keycode in vim
 noremap <c-/> :Files<cr>
-noremap <leader>/ :Buffers<cr>
+"noremap <leader>/ :Buffers<cr>
 "nnoremap <silent><Leader>rg :Rg <C-R><C-W><CR>
 vnoremap <silent><leader>f <Esc>:Rg <C-R>=GetVisualSelection()<CR><CR>
 " show mappings for the current mode, see https://github.com/junegunn/fzf.vim/pull/20
 nmap <leader>? <plug>(fzf-maps-n)
 xmap <leader>? <plug>(fzf-maps-x)
 omap <leader>? <plug>(fzf-maps-o)
+
+" telescope
+" Find files using Telescope command-line sugar.
+"nnoremap <leader>ff <cmd>Telescope find_files<cr>
+noremap <c-/> <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
 
 " vim-qf
 nmap <leader>qp <Plug>(qf_qf_previous)
