@@ -3420,7 +3420,28 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
-		<key>0x3c-0x120000-0x2b</key>
+		<key>0x3d-0x40000</key>
+		<dict>
+			<key>Action</key>
+			<integer>32</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0x6d-0x100000-0x2e</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>Maximize Active Pane
+Maximize Active Pane</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x7b-0x60000-0x21</key>
 		<dict>
 			<key>Action</key>
 			<integer>33</integer>
@@ -3431,14 +3452,7 @@
 			<key>Version</key>
 			<integer>0</integer>
 		</dict>
-		<key>0x3d-0x40000</key>
-		<dict>
-			<key>Action</key>
-			<integer>32</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
-		<key>0x3e-0x120000-0x2f</key>
+		<key>0x7d-0x60000-0x1e</key>
 		<dict>
 			<key>Action</key>
 			<integer>34</integer>
@@ -4419,7 +4433,7 @@
 			<key>Thin Strokes</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.11125332446808493</real>
+			<real>0.1561059397163119</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unicode Normalization</key>
@@ -5231,7 +5245,7 @@
 			<key>Thin Strokes</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.07622174202127642</real>
+			<real>0.10007480053191473</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unicode Normalization</key>
