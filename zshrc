@@ -398,6 +398,22 @@ function tmp-upload() {
     echo "The above command has been copied to clipboard."
 }
 
+function tgz-create() {
+    local dir="$1"
+    local delete_source=""
+    if [ "$1" = "-d" ]; then
+        dir="$2"
+        delete_source="true"
+    fi
+    local out="${dir%/}.tgz"
+    tar czf "$out" "$dir"
+    ls -lh "$out"
+    if [ -n "$delete_source" ]; then
+        echo "Delete source dir $dir"
+        rm -rf "$dir"
+    fi
+}
+
 ###########
 # Widgets #
 ###########
