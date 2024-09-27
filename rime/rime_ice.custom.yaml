@@ -1,2 +1,4 @@
 patch:
   melt_eng/initial_quality: 0.5
+  # ascii_mode always off
+  "switches/@0/reset": 0

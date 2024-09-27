@@ -6,8 +6,6 @@ patch:
   # app options
   app_options/com.runningwithcrayons.Alfred:
     ascii_mode: true
-  app_options/com.microsoft.VSCode:
-    ascii_mode: true
   app_options/com.googlecode.iterm2:
     no_inline: true
   app_options/md.obsidian:
@@ -16,8 +14,6 @@ patch:
   preset_color_schemes/reorx:
     name: "Reorx (based on Purity of Form Custom)"
     author: Reorx, 雨過之後、佛振
-    # 如果将字体设置为 PingFangSC-Regular
-    # 会让 🈶🈚️🉑🈲🉐 这几个 Emoji 失去彩色效果，留空反而可以显示。。。
     font_face: ""                   # 字体及大小
     font_point: 17
     label_font_face: "Helvetica"    # 序号字体及大小
