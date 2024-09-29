@@ -10,7 +10,7 @@
 # Matches are substitution rules: when you type the "trigger" string
 # it gets replaced by the "replace" string.
 matches:
-  - trigger: ":today"
+  - trigger: "!today"
     replace: "{{mydate}}"
     label: current date
     vars:
@@ -19,7 +19,7 @@ matches:
         params:
           format: "%Y-%m-%d"
 
-  - trigger: ":ntoday"
+  - trigger: "!ntoday"
     replace: "{{mydate}}"
     label: current date (number only)
     vars:
@@ -28,7 +28,7 @@ matches:
         params:
           format: "%Y%m%d"
 
-  - trigger: ":time"
+  - trigger: "!time"
     replace: "{{mydate}}"
     label: current date time
     vars:
@@ -37,7 +37,7 @@ matches:
         params:
           format: "%Y-%m-%dT%H:%M:%S"
 
-  - trigger: ":tztime"
+  - trigger: "!tztime"
     replace: "{{mydate}}"
     label: current date time in ISO 8601 format
     vars:
@@ -46,7 +46,7 @@ matches:
         params:
           format: "%Y-%m-%dT%H:%M:%S+08:00"
 
-  - trigger: ":yesterday"
+  - trigger: "!yesterday"
     replace: "{{mytime}}"
     label: date for yesterday
     vars:
@@ -56,7 +56,7 @@ matches:
           format: "%Y-%m-%d"
           offset: -86400
 
-  - trigger: ":tomorrow"
+  - trigger: "!tomorrow"
     replace: "{{mytime}}"
     label: date for tomorrow
     vars:
@@ -65,117 +65,117 @@ matches:
         params:
           format: "%Y-%m-%d"
           offset: 86400
-  - trigger: ":esptri"
+  - trigger: "!esptri"
     replace: |-
-      - trigger: ":$|$"
+      - trigger: "!$|$"
       - replace: 
 
   # symbols
-  - trigger: ":sp"
+  - trigger: "!sp"
     replace: " $|$ "
-  - trigger: ":man"
+  - trigger: "!man"
     replace: ♂
-  - trigger: ":bullet"
+  - trigger: "!bullet"
     replace: •
-  - trigger: ":check"
+  - trigger: "!check"
     replace: ✔
-  - trigger: ":no"
+  - trigger: "!no"
     replace: ✗
-  - trigger: ":right"
+  - trigger: "!right"
     replace: →
-  - trigger: ":->"
+  - trigger: "!->"
     replace: →
-  - trigger: ":left"
+  - trigger: "!left"
     replace: ←
-  - trigger: ":endash"
+  - trigger: "!endash"
     replace: –
     label: represent a span or range of numbers, dates, or time.
-  - trigger: ":emdash"
+  - trigger: "!emdash"
     replace: —
     label: in place of commas, parentheses, and colon.
-  - trigger: ":zhq"
+  - trigger: "!zhq"
     replace: "「$|$」"
-  - trigger: ":enq"
+  - trigger: "!enq"
     replace: "“$|$”"
-  - trigger: ":ensq"
+  - trigger: "!ensq"
     replace: "‘$|$’"
-  - trigger: ":celsius"
+  - trigger: "!celsius"
     replace: "℃"
 
   # emojis
-  - trigger: ":xd"
+  - trigger: "!xd"
     replace: 😆
-  - trigger: ":relief"
+  - trigger: "!relief"
     replace: 😌
-  - trigger: ":wink"
+  - trigger: "!wink"
     replace: 😏
-  - trigger: ":tearl"
+  - trigger: "!tearl"
     replace: 😂
-  - trigger: ":sweatl"
+  - trigger: "!sweatl"
     replace: 😅
-  - trigger: ":smile"
+  - trigger: "!smile"
     replace: ☺️
-  - trigger: ":happy"
+  - trigger: "!happy"
     replace: 😄
-  - trigger: ":rofl"
+  - trigger: "!rofl"
     replace: 🤣
-  - trigger: ":thinking"
+  - trigger: "!thinking"
     replace: 🤔
-  - trigger: ":thumb"
+  - trigger: "!thumb"
     replace: 👍
-  - trigger: ":ok"
+  - trigger: "!ok"
     replace: 👌
-  - trigger: ":strong"
+  - trigger: "!strong"
     replace: 💪
-  - trigger: ":fistbump"
+  - trigger: "!fistbump"
     replace: 🤜🤛
-  - trigger: ":teareye"
+  - trigger: "!teareye"
     replace: 🥹
-  - trigger: ":tearsm"
+  - trigger: "!tearsm"
     replace: 🥲
-  - trigger: ":star"
+  - trigger: "!star"
     replace: ⭐️
-  - trigger: ":poop"
+  - trigger: "!poop"
     replace: 💩
-  - trigger: ":handfolded"
+  - trigger: "!handfolded"
     replace: 🙏
-  - trigger: ":heart"
+  - trigger: "!heart"
     replace: ❤️
-  - trigger: ":expressionless"
+  - trigger: "!expressionless"
     replace: 😑
-  - trigger: ":redx"
+  - trigger: "!redx"
     replace: ❌
-  - trigger: ":greenc"
+  - trigger: "!greenc"
     replace: ✅
-  - trigger: ":wave"
+  - trigger: "!wave"
     replace: 👋
-  - trigger: ":melting"
+  - trigger: "!melting"
     replace: 🫠
-  - trigger: ":eyes"
+  - trigger: "!eyes"
     replace: 👀
-  - trigger: ":facepalm"
+  - trigger: "!facepalm"
     replace: 🤦
-  - trigger: ":shrug"
+  - trigger: "!shrug"
     replace: 🤷
 
   # keyboard
-  - trigger: ":kbdcmd"
+  - trigger: "!kbdcmd"
     replace: ⌘
-  - trigger: ":kbdctrl"
+  - trigger: "!kbdctrl"
     replace: ⌃
-  - trigger: ":kbdopt"
+  - trigger: "!kbdopt"
     replace: ⌥
-  - trigger: ":kbdshift"
+  - trigger: "!kbdshift"
     replace: ⇧
-  - trigger: ":kbdenter"
+  - trigger: "!kbdenter"
     replace: ⏎
-  - trigger: ":kbdtab"
+  - trigger: "!kbdtab"
     replace: ⇥
-  - trigger: ":kbdback"
+  - trigger: "!kbdback"
     replace: ⌫
-  - trigger: ":kbdesc"
+  - trigger: "!kbdesc"
     replace: ⎋
 
   # xpath
-  - trigger: ":xcls"
+  - trigger: "!xcls"
     replace: "[has-class(\"$|$\")]"

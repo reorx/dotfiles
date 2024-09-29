@@ -1,5 +1,5 @@
 matches:
-  - trigger: ":hugoblog"
+  - trigger: "!hugoblog"
     label: Hugo blog template
     replace: |-
       ---
@@ -22,9 +22,9 @@ matches:
       - name: mydate
         type: match
         params:
-          trigger: ":tztime"
+          trigger: "!tztime"
 
-  - trigger: ":hugoessay"
+  - trigger: "!hugoessay"
     label: Hugo essay template
     replace: |-
       ---
@@ -37,7 +37,7 @@ matches:
       - name: mydate
         type: match
         params:
-          trigger: ":tztime"
+          trigger: "!tztime"
 
-  - trigger: ":hugoref"
+  - trigger: "!hugoref"
     replace: "{{< ref \"$|$\" >}}"
