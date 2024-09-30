@@ -30,7 +30,7 @@ Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-repeat'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'romainl/vim-qf'
-Plug 'folke/which-key.nvim'
+Plug 'folke/which-key.nvim', { 'tag': 'v1.6.1' }
 "Plug 'MattesGroeger/vim-bookmarks'
 "
 " statistics
