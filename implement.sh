@@ -247,7 +247,9 @@ while getopts ":hp:s:" opt; do
             fi
             paint GREEN "Set profile: $OPTARG"
 
-            check_git_submodules
+            if [ "$OPTARG" == "macos" ]; then
+                check_git_submodules
+            fi
 
             set_dotfiles "${dotfiles[@]}"
 
