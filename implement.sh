@@ -13,8 +13,8 @@
 
 # Global variables
 # Change this varible to choose the targets you want
-PROFILE_macos=( zsh git fzf vim nvim python tmux misc bin )
-PROFILE_linux_server=( bash git fzf vim python tmux_server misc bin )
+PROFILE_macos=( zsh git fzf vim nvim tmux misc bin )
+PROFILE_linux_server=( bash git fzf vim tmux_server misc bin )
 LINESHIFT="  "
 INITED_FILE=".inited"
 
@@ -113,10 +113,6 @@ function impl_fd() {
 function impl_git() {
     ln2home gitconfig
     ln2home gitignore_global
-}
-
-function impl_python() {
-    ln2home pythonrc.py
 }
 
 function impl_wezterm {
