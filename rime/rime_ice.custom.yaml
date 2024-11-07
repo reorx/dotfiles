@@ -1,4 +1,7 @@
 patch:
   melt_eng/initial_quality: 0.5
   # ascii_mode always off
-  "switches/@0/reset": 0
+  #"switches/@0/reset": 0
+  # delete ascii_composer and ascii_mode to throughly disable English input, see: https://github.com/rime/squirrel/issues/221
+  engine/processors/@1:
+  switches/@0:

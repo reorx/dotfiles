@@ -4,6 +4,8 @@ patch:
   'punctuator/half_shape/]' : '」'
   'punctuator/half_shape/{' : '【'
   'punctuator/half_shape/}' : '】'
-  ascii_composer/switch_key/Shift_L: inline_ascii
+  #ascii_composer/switch_key/Shift_L: inline_ascii
   #'key_binder/bindings/+': { when: always, accept: Control+Shift+2, toggle: ascii_mode }
+  # 中英文标点
+  #'key_binder/bindings/+': { when: always, accept: Control+semicolon, toggle: ascii_punct }
 
