@@ -95,6 +95,9 @@ Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'rebelot/kanagawa.nvim'  " https://github.com/rebelot/kanagawa.nvim
 Plug 'EdenEast/nightfox.nvim'  " https://github.com/EdenEast/nightfox.nvim
+Plug 'oxfist/night-owl.nvim'  " https://github.com/oxfist/night-owl.nvim
+Plug 'bluz71/vim-moonfly-colors', { 'as': 'moonfly' }
+Plug 'tanvirtin/monokai.nvim'  " https://github.com/tanvirtin/monokai.nvim
 
 
 call plug#end()
