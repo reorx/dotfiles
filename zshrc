@@ -110,7 +110,7 @@ fi
 # fd respects .gitignore
 export FZF_DEFAULT_COMMAND='fd -H -t f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# other opts: "--exact"
+# other opts: "--ezact"
 export FZF_DEFAULT_OPTS="--height 50% --no-mouse"
 
 # Use fd for listing path candidates.
@@ -169,11 +169,11 @@ export CSVLESS_MAX_COLUMN_WIDTH=64
 export CSVLESS_LINE_NUMBERS=1
 export CSVLESS_TABLE_STYLE=markdown
 
-# exa
-if ( type exa >/dev/null 2>&1 ); then
-  alias ls='exa'
-  alias l='exa -lg --time-style=long-iso --git'
-  alias ll='exa -lga --time-style=long-iso --git'
+# eza
+if ( type eza >/dev/null 2>&1 ); then
+  alias ls='eza'
+  alias l='eza -lg --time-style=long-iso --git'
+  alias ll='eza -lga --time-style=long-iso --git'
 elif [[ $(uname -s) == Linux ]]; then
   alias ls='ls --color=auto -N'
   alias l='ls -lF --time-style=long-iso'
@@ -459,3 +459,7 @@ case ":$PATH:" in
 esac
 # pnpm end
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
