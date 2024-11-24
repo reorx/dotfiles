@@ -61,8 +61,7 @@ function set_dotfiles() {
 }
 
 function impl_zsh() {
-    ln2home oh-my-zsh
-    ln2home oh-my-zsh-custom
+    ln2home ohmyzsh
     ln2home pure .zsh-pure
     ln2home z
     ln2home "zprofile.$ARCH" .zprofile
