@@ -1,5 +1,7 @@
 [user]
     useConfigOnly = true
+	name = Reorx
+	email = novoreorx@gmail.com
 [core]
     editor = vim
     excludesfile = ~/.gitignore_global
@@ -25,6 +27,7 @@
     changed = green
     untracked = cyan
 [delta]
+    navigate = true
     features = decorations
 [delta "decorations"]
     commit-decoration-style = 232 130 box
