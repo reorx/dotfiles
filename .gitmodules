@@ -7,3 +7,6 @@
 [submodule "git-extras"]
 	path = git-extras
 	url = git@github.com:tj/git-extras.git
+[submodule "ohmyzsh"]
+	path = ohmyzsh
+	url = git@github.com:ohmyzsh/ohmyzsh.git
