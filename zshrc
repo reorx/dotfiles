@@ -2,6 +2,8 @@
 ##############################################################################
 # oh-my-zsh
 ##############################################################################
+# profiling start
+#zmodload zsh/zprof
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -40,7 +42,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 
-plugins=( autoenv2 )
+#plugins=( autoenv2 )
 #plugins=( autoenv2 forgit )
 
 source $ZSH/oh-my-zsh.sh
@@ -462,4 +464,11 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# profiling end
+#zprof
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
