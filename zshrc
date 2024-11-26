@@ -33,6 +33,12 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # output based on the system you're running and which ls commands are available.
 DISABLE_LS_COLORS=true
 
+
+# Plugins
+# use ohmyzsh's nvm plugin to enable lazy loading of nvm, thus the zsh startup could be quick af
+zstyle ':omz:plugins:nvm' lazy yes
+plugins=( nvm )
+
 source $ZSH/oh-my-zsh.sh
 
 
@@ -439,6 +445,12 @@ if [ -e "$HOME/.zshrc_local" ]; then
     source $HOME/.zshrc_local
 fi
 
+
+################
+# Integrations #
+################
+
+# iterm2
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # pnpm
@@ -450,13 +462,9 @@ esac
 # pnpm end
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# atuin
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init zsh)"
 
 # profiling end
 #zprof
-
-. "$HOME/.atuin/bin/env"
-
-eval "$(atuin init zsh)"
