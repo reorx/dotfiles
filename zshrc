@@ -107,7 +107,7 @@ fi
 export FZF_DEFAULT_COMMAND='fd -H -t f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # other opts: "--ezact"
-export FZF_DEFAULT_OPTS="--height 50% --no-mouse"
+export FZF_DEFAULT_OPTS=( --height "50%" --no-mouse )
 
 # Use fd for listing path candidates.
 _fzf_compgen_path() {
@@ -464,7 +464,45 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # atuin
 . "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh)"
+# use fzf as the frontend of atuin
+# copy from: https://news.ycombinator.com/item?id=35256206
+atuin-setup() {
+    #if ! which atuin &> /dev/null; then return 1; fi
+    bindkey '^H' _atuin_search_widget
+
+    export ATUIN_NOBIND="true"
+    eval "$(atuin init zsh)"
+    fzf-atuin-history-widget() {
+        local selected num
+        setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
+
+        # local atuin_opts="--cmd-only --limit ${ATUIN_LIMIT:-5000}"
+        local atuin_opts="--cmd-only"
+        local fzf_opts=(
+            --tac
+            "-n2..,.."
+            --tiebreak=index
+            "--query=${LBUFFER}"
+            "+m"
+            "--bind=ctrl-d:reload(atuin search $atuin_opts -c $PWD),ctrl-r:reload(atuin search $atuin_opts)"
+        )
+
+        selected=$(
+            eval "atuin search ${atuin_opts}" |
+                fzf "${FZF_DEFAULT_OPTS[@]}" "${fzf_opts[@]}"
+        )
+        local ret=$?
+        if [ -n "$selected" ]; then
+            # the += lets it insert at current pos instead of replacing
+            LBUFFER+="${selected}"
+        fi
+        zle reset-prompt
+        return $ret
+    }
+    zle -N fzf-atuin-history-widget
+    bindkey '^R' fzf-atuin-history-widget
+}
+atuin-setup
 
 # profiling end
 #zprof
