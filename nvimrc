@@ -127,6 +127,7 @@ au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
 au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
 au BufRead,BufNewFile *.conf set ft=dosini
 au BufRead,BufNewFile *.pac set ft=javascript
+autocmd BufRead,BufNewFile *gitconfig setlocal noexpandtab
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *

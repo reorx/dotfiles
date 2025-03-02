@@ -1,21 +1,21 @@
 [user]
-    useConfigOnly = true
+	useConfigOnly = true
 	name = Reorx
 	email = novoreorx@gmail.com
 [core]
-    editor = vim
-    excludesfile = ~/.gitignore_global
-    # remove this line or use `less` if delta is not installed
-    pager = delta
-    #pager = less -F -X
-    quotepath = off
+	editor = vim
+	excludesfile = ~/.gitignore_global
+	# remove this line or use `less` if delta is not installed
+	pager = delta
+	#pager = less -F -X
+	quotepath = off
 [merge]
-    # Include summaries of merged commits in newly created merge commit messages
-    log = true
-    tool = nvimdiff
-    #conflictstyle = diff3
+	# Include summaries of merged commits in newly created merge commit messages
+	log = true
+	tool = nvimdiff
+	#conflictstyle = diff3
 [push]
-    default = current
+	default = current
 	followTags = true
 	autoSetupRemote = true
 [rebase]
@@ -24,94 +24,94 @@
 	updateRefs = true
 
 [color]
-    ui = true
+	ui = true
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 [delta]
-    navigate = true
-    features = decorations
+	navigate = true
+	features = decorations
 [delta "decorations"]
-    commit-decoration-style = 232 130 box
-    commit-style = 232 bold italic 130
-    dark = true
-    file-added-label = [+]
-    file-copied-label = [C]
-    file-decoration-style = yellow ul
-    file-modified-label = [M]
-    file-removed-label = [-]
-    file-renamed-label = [R]
-    file-style = yellow
-    hunk-header-decoration-style = box blue
-    hunk-header-file-style = bold reverse purple
-    hunk-header-line-number-style = bold blue
-    hunk-header-style = line-number
-    # the following is from --diff-so-fancy emulation
-    minus-style                   = bold red
-    minus-non-emph-style          = bold red
-    minus-emph-style              = bold red 52
-    minus-empty-line-marker-style = normal "#3f0001"
-    zero-style                    = normal
-    plus-style                    = bold green
-    plus-non-emph-style           = bold green
-    plus-emph-style               = bold green 22
-    plus-empty-line-marker-style  = normal "#002800"
+	commit-decoration-style = 232 130 box
+	commit-style = 232 bold italic 130
+	dark = true
+	file-added-label = [+]
+	file-copied-label = [C]
+	file-decoration-style = yellow ul
+	file-modified-label = [M]
+	file-removed-label = [-]
+	file-renamed-label = [R]
+	file-style = yellow
+	hunk-header-decoration-style = box blue
+	hunk-header-file-style = bold reverse purple
+	hunk-header-line-number-style = bold blue
+	hunk-header-style = line-number
+	# the following is from --diff-so-fancy emulation
+	minus-style					  = bold red
+	minus-non-emph-style		  = bold red
+	minus-emph-style			  = bold red 52
+	minus-empty-line-marker-style = normal "#3f0001"
+	zero-style					  = normal
+	plus-style					  = bold green
+	plus-non-emph-style			  = bold green
+	plus-emph-style				  = bold green 22
+	plus-empty-line-marker-style  = normal "#002800"
 
 [interactive]
-    diffFilter = delta --color-only --features=interactive
+	diffFilter = delta --color-only --features=interactive
 [url "git@github.com:"]
-    insteadOf = "gh:"
+	insteadOf = "gh:"
 [filter "media"]
-    required = true
-    clean = git media clean %f
-    smudge = git media smudge %f
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
 #[http]
-#    proxy = http://127.0.0.1:1235
+#	 proxy = http://127.0.0.1:1235
 
 [alias]
-    st = status -sb
-    ci = commit
-    cm = commit -m
-    cam = commit --amend
-    #lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
-    co = checkout
-    fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
-    # NOTE Dangerous, use with caution
-    undopush = push -f origin HEAD^:master
-    undocommit = reset --soft HEAD^
-    search = "!f() { git log -p -G$1 --all; }; f"
-    searchcommit = "!f() { git log -G$1 --all; }; f"
-    searchmessage = "!f() { git log --grep=$1; }; f"
-    filehistory = "!f() { git log --follow -p -- $1; }; f"
-    branchgraph = log --all --graph --decorate --oneline --simplify-by-decoration
-    ls-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$'
-    rm-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$' | xargs -n 1 git branch -d
-    ls-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2-
-    rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs -L 1 git push origin --delete
-    prune-origin = remote prune origin
-    lscrap = ls-files --other --exclude-standard --directory
-    stash-all = stash save --include-untracked
-    branchupdates = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
-    # try different log styles
-    lg = log \
-        --all \
-        --graph \
-        --abbrev-commit \
-        --date=iso \
-        --topo-order \
-        --decorate \
-        --format=format:'%C(magenta)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(dim magenta)(%ar)%C(reset) %C(dim white)- %an%C(reset)'
-    l = log \
-        --graph \
-        --abbrev-commit \
-        --date=iso \
-        --topo-order \
-        --decorate \
-        --format=format:'%C(magenta)%h%C(reset) - %C(dim magenta)%ad%C(reset) %C(yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim magenta)%ar%C(reset) %C(dim white)- %an <%ae>%C(reset)'
-    lol = log --graph --decorate --abbrev-commit
-    tags = tag -n --sort=v:refname -l
-    tags-v = tag -n99 --sort=v:refname -l
+	st = status -sb
+	ci = commit
+	cm = commit -m
+	cam = commit --amend
+	#lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
+	co = checkout
+	fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
+	# NOTE Dangerous, use with caution
+	undopush = push -f origin HEAD^:master
+	undocommit = reset --soft HEAD^
+	search = "!f() { git log -p -G$1 --all; }; f"
+	searchcommit = "!f() { git log -G$1 --all; }; f"
+	searchmessage = "!f() { git log --grep=$1; }; f"
+	filehistory = "!f() { git log --follow -p -- $1; }; f"
+	branchgraph = log --all --graph --decorate --oneline --simplify-by-decoration
+	ls-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$'
+	rm-merged = ! git branch --merged | grep -Ev '[*\\s]* (master|develop)$' | xargs -n 1 git branch -d
+	ls-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2-
+	rm-merged-remote = ! git branch --remote --merged | grep origin | grep -Ev '>|master|develop' | xargs -L1 | cut -d'/' -f2- | xargs -L 1 git push origin --delete
+	prune-origin = remote prune origin
+	lscrap = ls-files --other --exclude-standard --directory
+	stash-all = stash save --include-untracked
+	branchupdates = for-each-ref --sort=-committerdate refs/heads/ --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+	# try different log styles
+	lg = log \
+		--all \
+		--graph \
+		--abbrev-commit \
+		--date=iso \
+		--topo-order \
+		--decorate \
+		--format=format:'%C(magenta)%h%C(reset) -%C(yellow)%d%C(reset) %s %C(dim magenta)(%ar)%C(reset) %C(dim white)- %an%C(reset)'
+	l = log \
+		--graph \
+		--abbrev-commit \
+		--date=iso \
+		--topo-order \
+		--decorate \
+		--format=format:'%C(magenta)%h%C(reset) - %C(dim magenta)%ad%C(reset) %C(yellow)%d%C(reset)%n''			 %C(white)%s%C(reset) %C(dim magenta)%ar%C(reset) %C(dim white)- %an <%ae>%C(reset)'
+	lol = log --graph --decorate --abbrev-commit
+	tags = tag -n --sort=v:refname -l
+	tags-v = tag -n99 --sort=v:refname -l
 [init]
 	defaultBranch = master
 [pull]
