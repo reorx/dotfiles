@@ -16,9 +16,12 @@
     #conflictstyle = diff3
 [push]
     default = current
-    followTags = true
+	followTags = true
+	autoSetupRemote = true
 [rebase]
-    autosquash = true
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
 
 [color]
     ui = true
@@ -116,3 +119,25 @@
 
 [includeIf "gitdir:~/Code/smu/"]
   path = ~/Code/smu/.gitconfig
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
