@@ -494,7 +494,7 @@ atuin-setup() {
         local ret=$?
         if [ -n "$selected" ]; then
             # the += lets it insert at current pos instead of replacing
-            LBUFFER+="${selected}"
+            LBUFFER="${selected}"
         fi
         zle reset-prompt
         return $ret
