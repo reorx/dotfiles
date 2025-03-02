@@ -120,24 +120,36 @@
 [includeIf "gitdir:~/Code/smu/"]
   path = ~/Code/smu/.gitconfig
 [column]
+	# make `git branch` show as columns
 	ui = auto
 [branch]
 	sort = -committerdate
 [tag]
+	# sort semver tags correctly
 	sort = version:refname
 [diff]
+	# would be clearer than myers for code block movement
 	algorithm = histogram
+	# make diff recognize block movement and show in different color other than red/green
 	colorMoved = plain
+	# replace the a/ and b/ in your diff header output with where the diff is coming from, so i/ (index), w/ (working directory) or c/ commit.
 	mnemonicPrefix = true
+	# detect if a file has been renamed
 	renames = true
 [fetch]
+	# auto delete obsolete remote branches
 	prune = true
+	# auto delete obsolete tags
 	pruneTags = true
+	# fetch all remote at once
 	all = true
 [help]
 	autocorrect = prompt
 [commit]
+	# show diffs in commit editor
 	verbose = true
 [rerere]
+	# memorizes the conflict and the resolution to it
 	enabled = true
+	# automatically re-solve the memorized resolution that it's seen before
 	autoupdate = true
