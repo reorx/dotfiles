@@ -16,11 +16,12 @@ hash -d documents="$HOME/Documents"
 hash -d dropbox="$HOME/Dropbox"
 hash -d code="$HOME/Code"
 hash -d icloud="$HOME/Library/Mobile Documents"
+hash -d icloud_drive="$HOME/Library/Mobile Documents/com~apple~CloudDocs"
+hash -d drafts-backup="$HOME/Library/Mobile Documents/iCloud~com~agiletortoise~Drafts5/Documents/Backups/Drafts"
 export ONEDRIVE_PATH="$HOME/Library/CloudStorage/OneDrive-Personal"
 hash -d onedrive="$ONEDRIVE_PATH"
 export ALFRED_PREF_DIR="$ONEDRIVE_PATH/Library/Alfred"
 hash -d backup="$HOME/Library/CloudStorage/OneDrive-Personal/Backup"
-hash -d drafts-backup="$HOME/Library/Mobile Documents/iCloud~com~agiletortoise~Drafts5/Documents/Backups/Drafts"
 # Code sub dirs
 hash -d repos="$HOME/Code/repos"
 
