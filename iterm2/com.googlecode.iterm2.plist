@@ -20,6 +20,8 @@
 	<false/>
 	<key>CheckTestRelease</key>
 	<false/>
+	<key>ClickToSelectCommand</key>
+	<false/>
 	<key>ClosingHotkeySwitchesSpaces</key>
 	<false/>
 	<key>CommandSelection</key>
@@ -3569,6 +3571,8 @@ Maximize Active Pane</string>
 	<integer>2</integer>
 	<key>MaxVertically</key>
 	<false/>
+	<key>NeverBlockSystemShutdown</key>
+	<true/>
 	<key>NeverWarnAboutShortLivedSessions_3AF7B365-37DA-4F1C-B6B7-6BE595F00743</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_4FB1C6F4-083E-43B4-A286-74BC1EB668A1</key>
@@ -3576,6 +3580,10 @@ Maximize Active Pane</string>
 	<key>NeverWarnAboutShortLivedSessions_D8DBA946-BAF7-4C04-AC53-4D4CA18908AB</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_D8DBA946-BAF7-4C04-AC53-4D4CA18908AB_selection</key>
+	<integer>0</integer>
+	<key>NeverWarnAboutShortLivedSessions_F659D206-FEA7-4FFD-8613-E3CBE04660FA</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_F659D206-FEA7-4FFD-8613-E3CBE04660FA_selection</key>
 	<integer>0</integer>
 	<key>New Bookmarks</key>
 	<array>
@@ -5277,10 +5285,12 @@ Maximize Active Pane</string>
 		</dict>
 	</array>
 	<key>OnlyWhenMoreTabs</key>
-	<true/>
+	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
 	<key>OpenBookmark</key>
+	<false/>
+	<key>OpenFileInNewWindows</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
 	<false/>
@@ -5332,7 +5342,7 @@ Maximize Active Pane</string>
 	<key>PromptOnClose</key>
 	<true/>
 	<key>PromptOnQuit</key>
-	<true/>
+	<false/>
 	<key>QuitWhenAllWindowsClosed</key>
 	<false/>
 	<key>RightCommand</key>
