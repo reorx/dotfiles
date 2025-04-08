@@ -156,10 +156,14 @@ export CSVLESS_MAX_COLUMN_WIDTH=64
 export CSVLESS_LINE_NUMBERS=1
 export CSVLESS_TABLE_STYLE=markdown
 
-# disable virtualenv default PS1
-#export VIRTUAL_ENV_DISABLE_PROMPT="true"
-# unset so that pure.zsh can work
-unset VIRTUAL_ENV_DISABLE_PROMPT
+# virtualenv
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+    # disable virtualenv default PS1
+    export VIRTUAL_ENV_DISABLE_PROMPT="true"
+else
+    # unset so that pure.zsh can work
+    unset VIRTUAL_ENV_DISABLE_PROMPT
+fi
 
 # Python
 if [ -e $HOME/.pythonrc.py ]; then
