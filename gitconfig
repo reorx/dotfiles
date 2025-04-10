@@ -144,8 +144,8 @@
 [fetch]
 	# auto delete obsolete remote branches
 	prune = true
-	# auto delete obsolete tags
-	pruneTags = true
+	# auto delete obsolete tags, NOTE this may cause local tag disappear
+	#pruneTags = true
 	# fetch all remote at once
 	all = true
 [help]
