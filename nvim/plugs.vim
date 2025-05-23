@@ -84,6 +84,9 @@ Plug 'uarun/vim-protobuf', { 'for': 'proto' }
 " ansible yaml
 Plug 'pearofducks/ansible-vim', { 'for': 'yaml' }
 
+" AI
+Plug 'github/copilot.vim'
+
 " colorscheme
 "Plug 'chriskempson/base16-vim'
 "Plug 'kristijanhusak/vim-hybrid-material'
