@@ -13,8 +13,9 @@ let $MYLUA='~/.nvim/lua'
 let $MYLAZY='~/.nvim/lua/config/lazy.lua'
 
 source ~/.nvimrc
+" deprecated, now using lazy to load plugins
 "source ~/.nvim/plugs.vim
 
-require("config.lazy")
-require("config.cmp-config")
-require("config.lsp-config")
+lua require("config.lazy")
+lua require("config.cmp")
+lua require("config.lsp")
