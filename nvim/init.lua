@@ -1,5 +1,5 @@
 require('config.lazy')
-require('config.cmp')
+--require('config.cmp')
 --require('config.lsp')
 require('config.lsp_old')
 

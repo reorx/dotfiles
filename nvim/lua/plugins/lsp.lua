@@ -14,5 +14,4 @@ return {
   -- lsp_lines: renders diagnostics using virtual lines on top of the real line of code.
   -- { 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' },
   { 'rmagatti/goto-preview' },
-  { 'hrsh7th/cmp-nvim-lsp-signature-help' },
 }
