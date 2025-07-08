@@ -15,6 +15,7 @@ return {
       vim.g.gitgutter_sign_removed_first_line = '^'
       vim.g.gitgutter_sign_removed_above_and_below = 'x'
       vim.cmd([[
+        set signcolumn=yes
         highlight GitGutterAdd    guifg=#009900 ctermfg=2
         highlight GitGutterChange guifg=#bbbb00 ctermfg=3
         highlight GitGutterDelete guifg=#ff2222 ctermfg=1
@@ -32,5 +33,4 @@ return {
   { 'romainl/vim-qf' },
   { 'nvim-treesitter/nvim-treesitter', branch = 'master', lazy = false, build = ':TSUpdate' },
   { 'github/copilot.vim' },
-
 }

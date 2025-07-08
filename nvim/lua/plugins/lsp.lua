@@ -1,14 +1,13 @@
 return {
-  { 'neovim/nvim-lspconfig' },
-  -- TODO { 'do': ':MasonUpdate' }
-  { 'mason-org/mason.nvim' },
+  --{ 'neovim/nvim-lspconfig' },
+  --{ 'mason-org/mason.nvim', build = ':MasonUpdate' },
   {
-    "mason-org/mason-lspconfig.nvim",
-    --opts = {},
-    --dependencies = {
-    --  { "mason-org/mason.nvim", opts = {} },
-    --  "neovim/nvim-lspconfig",
-    --},
+    'mason-org/mason-lspconfig.nvim',
+    opts = {},
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
+    },
   },
   -- 🐼
   { 'ray-x/lsp_signature.nvim' },

@@ -27,7 +27,7 @@ return {
   -- Nginx
   {
     'chr4/nginx.vim',
-    -- ft = 'nginx',
+     ft = 'nginx',
   },
 
   -- HTML (emmet)
@@ -39,7 +39,7 @@ return {
   -- JSX
   {
     'maxmellon/vim-jsx-pretty',
-    -- ft = { 'javascript', 'javascriptreact', 'typescriptreact' },
+    ft = { 'javascript', 'javascriptreact', 'typescriptreact' },
   },
 
   -- Protocol Buffers
