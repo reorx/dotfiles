@@ -7,8 +7,15 @@ let g:python3_host_prog='~/.virtualenvs/neovim-python3/bin/python'
 
 " vars
 let $MYVIMRC='~/.nvimrc'
-let $MYPLUGS='~/.nvim/plugs.vim'
+"let $MYPLUGS='~/.nvim/plugs.vim'
+let $MYPLUGS='~/.nvim/lua/plugins'
 let $MYLUA='~/.nvim/lua'
+let $MYLAZY='~/.nvim/lua/config/lazy.lua'
 
 source ~/.nvimrc
-source ~/.nvim/plugs.vim
+" deprecated, now using lazy to load plugins
+"source ~/.nvim/plugs.vim
+
+lua require("config.lazy")
+lua require("config.cmp")
+lua require("config.lsp")

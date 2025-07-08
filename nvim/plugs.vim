@@ -111,9 +111,6 @@ call plug#end()
 
 set completeopt=menuone
 
-lua require('cmp-config')
-lua require('lsp-config')
-
 " ------
 " Config - Other
 " ------
