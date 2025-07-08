@@ -226,39 +226,8 @@ if (( $+commands[tag] )); then
   alias ag=tag  # replace with rg for ripgrep
 fi
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-
-# https://github.com/nvm-sh/nvm#zsh
-use-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-function auto-load-and-use-nvm() {
-    if ! typeset -f nvm_find_nvmrc &> /dev/null; then
-        # load nvm if nvm_find_nvmrc is not defined
-        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    fi
-    use-nvmrc
-}
-# add hook for change directory commands
-add-zsh-hook chpwd auto-load-and-use-nvm
-# if current directory has .nvmrc, call auto-load-and-use-nvm immediately
-[[ -f .nvmrc ]] && auto-load-and-use-nvm
+# nvm
+# see: zshrc_nvm
 
 # pnpm
 export PNPM_HOME="/Users/reorx/Library/pnpm"
@@ -327,6 +296,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 ####################
 
 # Load other parts of zshrc
+source $HOME/.zshrc_nvm
 source $HOME/.zshrc_os
 source $HOME/.zshrc_fn
 source $HOME/.zshrc_fn_fzf

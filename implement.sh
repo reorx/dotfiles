@@ -67,6 +67,7 @@ function impl_zsh() {
     ln2home "zprofile.$ARCH" .zprofile
     # ln2home zshenv
     ln2home zshrc
+    ln2home zshrc_nvm
     ln2home zshrc_fn
     ln2home zshrc_fn_fzf
     ln2home zshrc_$OS .zshrc_os

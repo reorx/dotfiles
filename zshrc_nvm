@@ -1,0 +1,144 @@
+# NVM
+export NVM_DIR="$HOME/.nvm"
+
+# https://github.com/nvm-sh/nvm#zsh
+use-nvmrc() {
+  local nvmrc_path
+  nvmrc_path="$(nvm_find_nvmrc)"
+
+  if [ -n "$nvmrc_path" ]; then
+    local nvmrc_node_version
+    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+    if [ "$nvmrc_node_version" = "N/A" ]; then
+      nvm install
+    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+      nvm use
+    fi
+  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+function auto-load-and-use-nvm() {
+    if ! typeset -f nvm_find_nvmrc &> /dev/null; then
+        # load nvm if nvm_find_nvmrc is not defined
+        [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    fi
+    use-nvmrc
+}
+# add hook for change directory commands
+add-zsh-hook chpwd auto-load-and-use-nvm
+# if current directory has .nvmrc, call auto-load-and-use-nvm immediately
+[[ -f .nvmrc ]] && auto-load-and-use-nvm
+
+
+
+# nvm-lts-bin: link, unlink, or list node executables for nvm lts default version
+
+nvm-lts-bin() {
+  # Directory for local bin links
+  local local_bin="${HOME}/.local/bin"
+
+  # Ensure local bin exists
+  [ -d "$local_bin" ] || mkdir -p "$local_bin"
+
+  # Get the alias file for lts default version from nvm
+  local alias_file="${HOME}/.nvm/alias/lts/*"
+  # Read alias value (e.g., lts/jod)
+  local alias_value
+  alias_value=$(cat $alias_file 2>/dev/null)
+  if [ -z "$alias_value" ]; then
+    echo "Failed to read nvm lts alias file."
+    return 1
+  fi
+
+  # Construct the file path to get the node version (e.g., ~/.nvm/alias/lts/jod)
+  local version_file="${HOME}/.nvm/alias/lts/${alias_value#lts/}"
+  local node_version
+  node_version=$(cat "$version_file" 2>/dev/null)
+  if [ -z "$node_version" ]; then
+    echo "Failed to read node version from $version_file."
+    return 1
+  fi
+
+  # Full node version path
+  local node_path="${HOME}/.nvm/versions/node/${node_version}"
+  
+  case "$1" in
+    link)
+      # Validate argument for linking
+      if [ -z "$2" ]; then
+        echo "Usage: nvm-lts-bin link executable_name"
+        return 1
+      fi
+      local exe="$2"
+      local exe_source="${node_path}/bin/${exe}"
+      local link_target="${local_bin}/${exe}"
+      
+      if [ ! -x "$exe_source" ]; then
+        echo "Executable not found or not executable: $exe_source"
+        return 1
+      fi
+      
+      # Create symbolic link, overwrite if exists
+      ln -sf "$exe_source" "$link_target"
+      echo "Created link: ${link_target} -> ${exe_source}"
+      ;;
+      
+    unlink)
+      if [ -z "$2" ]; then
+        echo "Usage: nvm-lts-bin unlink executable_name"
+        return 1
+      fi
+      local exe="$2"
+      local link_target="${local_bin}/${exe}"
+      
+      # Only remove if it is a symlink and points into ~/.nvm/versions/node
+      if [ -L "$link_target" ]; then
+        local target_path
+        target_path=$(readlink "$link_target")
+        case "$target_path" in
+          "${HOME}/.nvm/versions/node/"* )
+            rm "$link_target"
+            echo "Removed link: ${link_target}"
+            ;;
+          *)
+            echo "Link $link_target does not point to a nvm node executable."
+            return 1
+            ;;
+        esac
+      else
+        echo "Not a symbolic link: ${link_target}"
+        return 1
+      fi
+      ;;
+      
+    ls)
+      # Iterate over entries in local bin
+      local target
+      for file in "$local_bin"/*; do
+        # Only proceed if file exists and is symbolic link
+        if [ -L "$file" ]; then
+          target=$(readlink "$file")
+          # Only process links that point to nvm node versions
+          case "$target" in
+            "${HOME}/.nvm/versions/node/"* )
+              # Extract node version from the path: ".../v22.16.0/bin/foo"
+              local version
+              version=$(echo "$target" | awk -F'/' '{for(i=1;i<=NF;i++){if($i ~ /^v[0-9]+\.[0-9]+\.[0-9]+$/){print $i; exit}}}')
+              echo "$(basename "$file") ${version} <link created at>"
+              ;;
+          esac
+        fi
+      done
+      ;;
+      
+    *)
+      echo "Usage: nvm-lts-bin {link|unlink|ls} [executable_name]"
+      return 1
+      ;;
+  esac
+
+  return 0
+}
