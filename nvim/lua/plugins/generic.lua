@@ -32,5 +32,21 @@ return {
   { 'editorconfig/editorconfig-vim' },
   { 'romainl/vim-qf' },
   { 'nvim-treesitter/nvim-treesitter', branch = 'master', lazy = false, build = ':TSUpdate' },
-  { 'github/copilot.vim' },
+
+  -- LLM
+  -- { 'github/copilot.vim' },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+      filetypes = {
+        markdown = true,
+        help = true,
+      },
+    },
+  },
+
 }

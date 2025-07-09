@@ -8,6 +8,7 @@ return {
         'onsails/lspkind.nvim',
         opts = {},
       },
+      'fang2hou/blink-copilot',
     },
 
     -- use a release tag to download pre-built binaries
@@ -44,19 +45,27 @@ return {
 
       signature = {
         enabled = true,
-        show_documentation = true,
       },
 
       completion = {
         -- (Default) Only show the documentation popup when manually triggered
         documentation = { auto_show = false },
-        list = { selection = { preselect = true, auto_insert = true } },
+        -- Controls whether the list will automatically select the first item in the list, and whether a "preview" will be inserted on selection.
+        list = { selection = { preselect = true, auto_insert = false } },
       },
 
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'buffer' },
+        default = { 'lsp', 'path', 'buffer', 'copilot' },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+          },
+        },
       },
 
       -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
