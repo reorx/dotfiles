@@ -24,8 +24,4 @@ require('config.lazy')
 -- Vim configuration
 vim.cmd[[
   source ~/.config/nvim/nvimrc
-  let $MYVIMRC='~/.nvim/nvimrc'
-  let $MYLUA='~/.nvim/lua'
-  let $MYLAZY='~/.nvim/lua/config/lazy.lua'
-  let $MYPLUGS='~/.nvim/lua/plugins'
 ]]

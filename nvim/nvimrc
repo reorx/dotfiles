@@ -314,6 +314,10 @@ com! Noqa call setline('.', getline('.') . '  # NOQA')
 
 
 " Edit configs
+let $MYVIMRC='~/.config/nvim/nvimrc'
+let $MYPLUGS='~/.config/nvim/lua/plugins'
+let $MYLAZY='~/.config/nvim/lua/config/lazy.lua'
+
 func! MyVimrc()
     execute "edit $MYVIMRC"
 endfu
@@ -324,7 +328,7 @@ func! MyPlugs()
 endfu
 com! MyPlugs call MyPlugs()
 
-func! MyLua()
-    execute "edit $MYLUA"
+func! MyLazy()
+    execute "edit $MYLAZY"
 endfu
-com! MyLua call MyLua()
+com! MyLazy call MyLazy()
