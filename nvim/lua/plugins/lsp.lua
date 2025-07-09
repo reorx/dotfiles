@@ -1,7 +1,10 @@
 return {
   -- Docs:
-  -- https://github.com/mason-org/mason-lspconfig.nvim
-  -- https://github.com/neovim/nvim-lspconfig
+  -- * https://github.com/mason-org/mason-lspconfig.nvim
+  -- * https://github.com/neovim/nvim-lspconfig
+  --
+  -- References:
+  -- * https://github.com/joshmedeski/dotfiles/blob/main/.config/nvim/lua/plugins/lspconfig.lua
   {
     'mason-org/mason-lspconfig.nvim',
     opts = {
@@ -61,26 +64,64 @@ return {
         vim.lsp.config(server_name, config)
       end
 
-      -- Key mappings --
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(event)
+          -- Key mappings --
+          local telescope_builtin = require('telescope.builtin')
 
-      local opts = { silent = true, buffer = bufnr, noremap = true }
-      vim.keymap.set('n', 'ge', vim.diagnostic.open_float, opts)
-      -- hover doc
-      -- https://neovim.io/doc/user/lsp.html#vim.lsp.buf.hover%28%29
-      -- According to :help vim.lsp.buf.hover(), you should be able to jump into the floating window by calling the function twice in a row (or pressing K twice in your case)
-      -- vim.keymap.set("n", 'K', '<cmd>lua vim.lsp.buf.hover()<cr>')
-      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-      vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+          -- In this case, we create a function that lets us more easily define mappings specific
+          -- for LSP related items. It sets the mode, buffer and description for us each time.
+          local map = function(keys, func, desc, mode)
+            mode = mode or 'n'
+            vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+          end
 
-      vim.keymap.set('n', '<space>d', vim.lsp.buf.definition, opts)
-      vim.keymap.set('n', '<space>D', vim.lsp.buf.declaration, opts)
-      vim.keymap.set('n', '<space>t', vim.lsp.buf.type_definition, opts)
-      vim.keymap.set('n', '<space>R', vim.lsp.buf.references, opts)
-      vim.keymap.set("n", "<C-[>", vim.diagnostic.goto_prev, opts)
-      vim.keymap.set("n", "<C-]>", vim.diagnostic.goto_next, opts)
-      vim.keymap.set("n", "<space>l", function() vim.diagnostic.setqflist({open = true}) end, opts)
-      vim.keymap.set("n", "<space>a", vim.lsp.buf.code_action, opts)
-      vim.keymap.set("n", "<space>rr", vim.lsp.buf.rename, opts)
+          -- hover doc
+          -- https://neovim.io/doc/user/lsp.html#vim.lsp.buf.hover%28%29
+          -- According to :help vim.lsp.buf.hover(), you should be able to jump into the floating window by calling the function twice in a row (or pressing K twice in your case)
+          map("K", function() vim.lsp.buf.hover({ border = "rounded", max_height = 25, max_width = 120 }) end, 'Displays hover info about the symbol.')
+
+          -- Jump to the definition of the word under your cursor.
+          map('gd', telescope_builtin.lsp_definitions, '[G]oto [D]efinition')
+          --vim.keymap.set('n', '<space>d', vim.lsp.buf.definition, opts)
+
+          map('gb', '<cmd>pop<CR>', '[G]o [B]ack in tag stack')
+
+          -- Jump to the declaration of the word under your cursor.
+          map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+          --vim.keymap.set('n', '<space>D', vim.lsp.buf.declaration, opts)
+
+          -- Jump to the type of the word under your cursor.
+          map('gt', telescope_builtin.lsp_type_definitions, '[G]oto [T]ype Definition')
+          --map('gt', vim.lsp.buf.type_definition, '[G]oto [T]ype Definition')
+
+          -- Find references for the word under your cursor.
+          map('gr', telescope_builtin.lsp_references, '[G]oto [R]eferences')
+          --map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
+
+          -- Jump to the implementation of the word under your cursor.
+          map('gi', telescope_builtin.lsp_implementations, '[G]oto [I]mplementation')
+
+          -- Fuzzy find all the symbols in your current document.
+          --  Symbols are things like variables, functions, types, etc.
+          map('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
+
+          -- Fuzzy find all the symbols in your current workspace.
+          --  Similar to document symbols, except searches over your entire project.
+          map('<leader>ws', telescope_builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+
+          map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+
+          map("<leader>a", vim.lsp.buf.code_action, 'Code [A]ction')
+
+          map("<leader>[", vim.diagnostic.goto_prev, 'Prev Diagnostic')
+          map("<leader>]", vim.diagnostic.goto_next, 'Next Diagnostic')
+
+          --map("<leader>l", function() vim.diagnostic.setqflist({open = true}) end, '[L]ist Diagnostics')
+          map("<leader>l", telescope_builtin.diagnostics, '[L]ist Diagnostics')
+        end,
+      })
+
     end,
   },
 }
