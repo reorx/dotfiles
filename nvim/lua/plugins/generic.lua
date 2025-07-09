@@ -34,12 +34,14 @@ return {
   { 'nvim-treesitter/nvim-treesitter', branch = 'master', lazy = false, build = ':TSUpdate' },
 
   -- LLM
-  { 'github/copilot.vim' },
+  {
+    'github/copilot.vim',
+    cmd = 'Copilot',
+  },
 
   -- File finder
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.5',
     dependencies = {
       'nvim-lua/plenary.nvim',
     },
@@ -51,13 +53,21 @@ return {
       ]])
 
       local builtin = require('telescope.builtin')
-      local opts = { noremap = true, silent = true }
+      local map = function(mode, keys, func, desc)
+        vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
+      end
 
-      vim.keymap.set('n', '<leader>f', builtin.grep_string, opts)
-      vim.keymap.set('v', '<leader>f', function()
+      map('n', '<leader>F', builtin.grep_string, '[F]ind string globally')
+      map('v', '<leader>F', function()
+        local text = vim.getVisualSelection()
+        builtin.grep_string({ default_text = text })
+      end, '[F]ind string')
+
+      map('n', '<leader>f', builtin.current_buffer_fuzzy_find, '[F]ind string in current buffer')
+      map('v', '<leader>f', function()
         local text = vim.getVisualSelection()
         builtin.current_buffer_fuzzy_find({ default_text = text })
-      end, opts)
+      end, '[F]ind string in current buffer')
     end,
   },
 }
