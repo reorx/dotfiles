@@ -1,4 +1,5 @@
 return {
+  -- https://cmp.saghen.dev/configuration/general.html
   {
     'saghen/blink.cmp',
     dependencies = {
