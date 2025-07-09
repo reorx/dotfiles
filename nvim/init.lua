@@ -1,8 +1,6 @@
-require('config.lazy')
---require('config.cmp')
---require('config.lsp')
-require('config.lsp_old')
+-- Nvim init file --
 
+-- Utility functions used by plugins
 function vim.getVisualSelection()
   local current_clipboard_content = vim.fn.getreg('"')
 
@@ -20,6 +18,10 @@ function vim.getVisualSelection()
   end
 end
 
+-- Load lazy.nvim
+require('config.lazy')
+
+-- Vim configuration
 vim.cmd[[
   source ~/.config/nvim/nvimrc
   let $MYVIMRC='~/.nvim/nvimrc'
