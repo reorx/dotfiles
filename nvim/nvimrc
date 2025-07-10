@@ -219,7 +219,7 @@ map Y yy
 xnoremap p pgvy
 
 " select just pasted text
-nnoremap <leader>v `[v`]
+nnoremap vy `[v`]
 
 " Fix syntax highlighting
 noremap <F5> <Esc>:syntax sync fromstart<CR>
