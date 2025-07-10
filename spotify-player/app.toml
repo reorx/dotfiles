@@ -1,6 +1,6 @@
 theme = "catppuccin_mocha"
 #client_id = "65b708073fc0480ea92a077233ca87bd"
-client_id_command = "echo $SPOTIFYD_CLIENT_ID"
+client_id_command = { command = "cat", args = ["/Users/reorx/.cache/spotify-player/client_id.txt"] }
 client_port = 8080
 login_redirect_uri = "http://127.0.0.1:8989/login"
 playback_format = """
