@@ -27,7 +27,7 @@ set fileencodings=utf-8,chinese,latin-1
 set fileencoding=utf-8
 set fencs=utf-8,chinese
 
-syntax on
+"syntax on
 filetype on
 
 set history=100
@@ -183,6 +183,10 @@ highlight Whitespace ctermbg=gray guibg=gray10 guifg=gray20
 "autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=gray40
 "highlight TrailWhitespace ctermbg=red guibg=gray40
 "match TrailWhitespace /\s\+$/
+
+" Put syntax on at the end to workaround the problem that `autocmd FileType lua`
+" does not work properly, see: https://github.com/neovim/neovim/issues/31589
+syntax on
 
 " ============================================================================
 " Custom Functions
