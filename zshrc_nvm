@@ -20,7 +20,7 @@ use-nvmrc() {
     nvm use default
   fi
 }
-function auto-load-and-use-nvm() {
+use-nvm() {
     if ! typeset -f nvm_find_nvmrc &> /dev/null; then
         # load nvm if nvm_find_nvmrc is not defined
         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
@@ -28,9 +28,9 @@ function auto-load-and-use-nvm() {
     use-nvmrc
 }
 # add hook for change directory commands
-add-zsh-hook chpwd auto-load-and-use-nvm
-# if current directory has .nvmrc, call auto-load-and-use-nvm immediately
-[[ -f .nvmrc ]] && auto-load-and-use-nvm
+add-zsh-hook chpwd use-nvm
+# if current directory has .nvmrc, call use-nvm immediately
+[[ -f .nvmrc ]] && use-nvm
 
 
 
