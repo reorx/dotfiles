@@ -18,10 +18,10 @@ function vim.getVisualSelection()
   end
 end
 
--- Load lazy.nvim
-require('config.lazy')
-
 -- Vim configuration
 vim.cmd[[
   source ~/.config/nvim/nvimrc
 ]]
+
+-- Load lazy.nvim
+require('config.lazy')
