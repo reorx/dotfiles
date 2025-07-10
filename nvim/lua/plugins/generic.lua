@@ -31,7 +31,34 @@ return {
   { 'tpope/vim-repeat' },
   { 'editorconfig/editorconfig-vim' },
   { 'romainl/vim-qf' },
-  { 'nvim-treesitter/nvim-treesitter', branch = 'master', lazy = false, build = ':TSUpdate' },
+
+  -- Tree sitter
+  {
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'master',
+    lazy = false,
+    build = ':TSUpdate',
+
+    dependencies = {
+      {
+        'nvim-treesitter/nvim-treesitter-context',
+        event = 'BufReadPost',
+        opts = function()
+          return { mode = 'cursor', max_lines = 3 }
+        end,
+      },
+    },
+
+    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    opts = {
+      ensure_installed = {
+        "lua", "vim", "vimdoc", "markdown", "markdown_inline",
+        "go", "python", "javascript", 'typescript', 'tsx',
+      },
+      auto_install = true,
+      highlight = { enable = true, },
+    },
+  },
 
   -- LLM
   {
