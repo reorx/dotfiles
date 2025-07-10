@@ -1,0 +1,23 @@
+[[keymaps]]
+command = "CurrentlyPlayingContextPage"
+key_sequence = "o"
+
+[[keymaps]]
+command = "LibraryPage"
+key_sequence = "H"
+
+[[keymaps]]
+command = "LikedTrackPage"
+key_sequence = "L"
+
+[[keymaps]]
+command = "SearchPage"
+key_sequence = "S"
+
+[[keymaps]]
+command = "BrowsePage"
+key_sequence = "B"
+
+#[[keymaps]]
+#command = ""
+#key_sequence = ""
