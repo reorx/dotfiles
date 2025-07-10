@@ -4,7 +4,6 @@ return {
   { 'junegunn/rainbow_parentheses.vim' },
   { 'junegunn/fzf' },
   { 'junegunn/fzf.vim' },
-  { 'scrooloose/nerdtree' },
   { 'dominikduda/vim_current_word' },
   {
     'airblade/vim-gitgutter',
@@ -24,13 +23,40 @@ return {
   },
   { 'tpope/vim-fugitive', cmd = 'Git' },
   { 'ntpeters/vim-better-whitespace' },
-  -- requires a nerd font
-  { 'ryanoasis/vim-devicons' },
   { 'wellle/targets.vim' },
   { 'machakann/vim-sandwich' },
   { 'tpope/vim-repeat' },
   { 'editorconfig/editorconfig-vim' },
   { 'romainl/vim-qf' },
+
+  -- File explorer
+  --{ 'scrooloose/nerdtree' },
+  {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    init = function()
+      vim.g.loaded_netrw = 1
+      vim.g.loaded_netrwPlugin = 1
+    end,
+    config = function()
+      require("nvim-tree").setup({
+        sort = {
+          sorter = "case_sensitive",
+        },
+        view = {
+          width = 30,
+        },
+        renderer = {
+          group_empty = true,
+        },
+        filters = {
+          dotfiles = true,
+        },
+      })
+    end,
+  },
 
   -- Tree sitter
   {
