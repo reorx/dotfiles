@@ -6,7 +6,7 @@ return {
     event = 'VimEnter',
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
-      delay = 0,
+      delay = 500,
       -- spec = {}
     }
   }
