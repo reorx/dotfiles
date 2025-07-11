@@ -1,4 +1,6 @@
 return {
+  -- UI
+  -- https://github.com/Bekaboo/dropbar.nvim
   --{ 'vim-airline/vim-airline' },
   --{ 'vim-airline/vim-airline-themes' },
   {
@@ -9,33 +11,40 @@ return {
       require('lualine').setup()
     end,
   },
-  { 'junegunn/rainbow_parentheses.vim' },
-  { 'junegunn/fzf' },
-  { 'junegunn/fzf.vim' },
-  { 'dominikduda/vim_current_word' },
+  { 'romainl/vim-qf' },
+
+  -- Editing
   {
-    'airblade/vim-gitgutter',
-    init = function()
-      -- https://github.com/airblade/vim-gitgutter
-      vim.g.gitgutter_sign_modified = '~'
-      vim.g.gitgutter_sign_modified_removed = '~'
-      vim.g.gitgutter_sign_removed_first_line = '^'
-      vim.g.gitgutter_sign_removed_above_and_below = 'x'
+    'machakann/vim-sandwich',
+    config = function()
       vim.cmd([[
-        set signcolumn=yes
-        highlight GitGutterAdd    guifg=#009900 ctermfg=2
-        highlight GitGutterChange guifg=#bbbb00 ctermfg=3
-        highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+        " sandwich
+        let g:sandwich_no_default_key_mappings = 1
+        "
+        " add
+        nmap <leader>sa <Plug>(sandwich-add)
+        xmap <leader>sa <Plug>(sandwich-add)
+        omap <leader>sa <Plug>(sandwich-add)
+        "
+        " delete
+        nmap <leader>sd <Plug>(sandwich-delete)
+        xmap <leader>sd <Plug>(sandwich-delete)
+        nmap <leader>sdb <Plug>(sandwich-delete-auto)
+        "
+        " replace
+        nmap <leader>sr <Plug>(sandwich-replace)
+        xmap <leader>sr <Plug>(sandwich-replace)
+        nmap <leader>srb <Plug>(sandwich-replace-auto)
       ]])
     end,
   },
-  { 'tpope/vim-fugitive', cmd = 'Git' },
-  { 'ntpeters/vim-better-whitespace' },
-  { 'wellle/targets.vim' },
-  { 'machakann/vim-sandwich' },
   { 'tpope/vim-repeat' },
+  { 'wellle/targets.vim' },
   { 'editorconfig/editorconfig-vim' },
-  { 'romainl/vim-qf' },
+
+  -- Navigation
+  -- https://github.com/folke/flash.nvim
+  -- "Plug 'easymotion/vim-easymotion'
 
   -- File explorer
   --{ 'scrooloose/nerdtree' },
@@ -66,7 +75,7 @@ return {
     end,
   },
 
-  -- Tree sitter
+  -- Text rendering
   {
     'nvim-treesitter/nvim-treesitter',
     branch = 'master',
@@ -89,10 +98,13 @@ return {
         "lua", "vim", "vimdoc", "markdown", "markdown_inline",
         "go", "python", "javascript", 'typescript', 'tsx',
       },
-      auto_install = true,
+      --auto_install = true,
       highlight = { enable = true, },
     },
   },
+  { 'junegunn/rainbow_parentheses.vim' },
+  { 'dominikduda/vim_current_word' },
+  { 'ntpeters/vim-better-whitespace' },
 
   -- LLM
   {
@@ -131,4 +143,5 @@ return {
       end, '[F]ind string in current buffer')
     end,
   },
+
 }
