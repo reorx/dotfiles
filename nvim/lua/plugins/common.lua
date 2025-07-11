@@ -1,3 +1,6 @@
+-- References:
+-- - https://github.com/joshmedeski/dotfiles/tree/main/.config/nvim/lua/plugins
+
 return {
   -- UI
   --{ 'vim-airline/vim-airline' },

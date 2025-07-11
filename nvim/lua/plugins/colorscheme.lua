@@ -7,9 +7,7 @@ return {
 
       require("catppuccin").setup {
         flavour = "mocha", -- latte, frappe, macchiato, mocha
-        term_colors = true,
         transparent_background = true,
-        term_colors = false,
         dim_inactive = {
             enabled = false,
             shade = "dark",
@@ -18,6 +16,7 @@ return {
         no_italic = false, -- Force no italic
         no_bold = false, -- Force no bold
         custom_highlights = function(C)
+          -- see colors: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
           return {
             -- barbar.lua: https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/barbar.lua
             BufferCurrent = { bg = C.surface1, fg = C.text },
@@ -27,6 +26,8 @@ return {
             TreesitterContextBottom = { style = { 'underline' } },
             -- dropbar
             WinBar = { style = { 'underline' }, sp = C.surface2 },
+            -- blink.cmp
+            Pmenu = { bg = C.surface0 },
           }
         end,
         styles = {
@@ -50,6 +51,7 @@ return {
           telescope = true,
           notify = false,
           mini = false,
+          --blink_cmp = true,
           -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
         },
       }
