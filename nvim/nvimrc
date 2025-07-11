@@ -105,9 +105,9 @@ set completeopt=menuone,longest
 
 " Storage
 " centralize backups, swapfiles and undo history
-set backupdir=~/.nvim/.backups
-set directory=~/.nvim/.swaps
-set undodir=~/.nvim/.undos
+set backupdir=~/.cache/nvim/backups
+set directory=~/.cache/nvim/swaps
+set undodir=~/.cache/nvim/undos
 set undofile
 
 " File Specials
