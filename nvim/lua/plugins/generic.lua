@@ -1,6 +1,14 @@
 return {
-  { 'vim-airline/vim-airline' },
-  { 'vim-airline/vim-airline-themes' },
+  --{ 'vim-airline/vim-airline' },
+  --{ 'vim-airline/vim-airline-themes' },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      -- https://github.com/nvim-lualine/lualine.nvim
+      require('lualine').setup()
+    end,
+  },
   { 'junegunn/rainbow_parentheses.vim' },
   { 'junegunn/fzf' },
   { 'junegunn/fzf.vim' },
