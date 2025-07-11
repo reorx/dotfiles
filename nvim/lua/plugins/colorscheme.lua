@@ -30,7 +30,8 @@ return {
             -- dropbar
             WinBar = { style = { 'underline' }, sp = C.surface2 },
             -- blink.cmp
-            Pmenu = { bg = C.surface0 },
+            --Pmenu = { bg = C.surface0 },
+            Pmenu = { link = 'CursorLine' },
           }
         end,
         styles = {
