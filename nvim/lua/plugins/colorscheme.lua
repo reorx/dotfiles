@@ -17,6 +17,13 @@ return {
         },
         no_italic = false, -- Force no italic
         no_bold = false, -- Force no bold
+        custom_highlights = function(C)
+          return {
+            -- barbar.lua: https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/barbar.lua
+            BufferCurrent = { bg = C.surface1, fg = C.text },
+            BufferCurrentSign = { bg = C.surface1, fg = C.blue },
+          }
+        end,
         styles = {
             comments = { "italic" },
             conditionals = { "italic" },
