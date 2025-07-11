@@ -179,10 +179,6 @@ set list!
 set listchars=tab:>-
 "	<- a tab char
 
-" highlight tab char
-autocmd ColorScheme * highlight Whitespace ctermbg=gray guibg=gray10 guifg=gray20
-highlight Whitespace ctermbg=gray guibg=gray10 guifg=gray20
-
 " highlight trailing whitespace (now controlled by vim-better-whitespace)
 "autocmd ColorScheme * highlight TrailWhitespace ctermbg=red guibg=gray40
 "highlight TrailWhitespace ctermbg=red guibg=gray40

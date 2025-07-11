@@ -54,6 +54,11 @@ return {
           telescope = true,
           notify = false,
           mini = false,
+          indent_blankline = {
+            enabled = true,
+            -- scope_color = "base", -- catppuccin color (eg. `lavender`) Default: text
+            colored_indent_levels = false,
+          },
           --blink_cmp = true,
           -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
         },

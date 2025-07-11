@@ -198,6 +198,7 @@ return {
   { 'dominikduda/vim_current_word' },
   { 'ntpeters/vim-better-whitespace' },
   {
+    -- https://github.com/lukas-reineke/indent-blankline.nvim
     'lukas-reineke/indent-blankline.nvim',
     main = "ibl",
     opts = {
