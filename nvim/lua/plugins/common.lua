@@ -38,13 +38,30 @@ return {
       ]])
     end,
   },
+  -- consider replace vim-sandwich
+  {
+    "kylechui/nvim-surround",
+    enable = false,
+    version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      -- https://github.com/kylechui/nvim-surround
+      require("nvim-surround").setup({
+          -- Configuration here, or leave empty to use defaults
+      })
+    end
+  },
   { 'tpope/vim-repeat' },
   { 'wellle/targets.vim' },
   { 'editorconfig/editorconfig-vim' },
+  -- https://github.com/MagicDuck/grug-far.nvim
+  -- https://github.com/j-hui/fidget.nvim
 
   -- Navigation
   -- https://github.com/folke/flash.nvim
   -- "Plug 'easymotion/vim-easymotion'
+  -- https://github.com/justinmk/vim-sneak
+  -- https://github.com/ggandor/leap.nvim
 
   -- File explorer
   --{ 'scrooloose/nerdtree' },
@@ -102,6 +119,7 @@ return {
       highlight = { enable = true, },
     },
   },
+  -- alternative: https://github.com/HiPhish/rainbow-delimiters.nvim
   { 'junegunn/rainbow_parentheses.vim' },
   { 'dominikduda/vim_current_word' },
   { 'ntpeters/vim-better-whitespace' },
@@ -148,5 +166,8 @@ return {
       end, '[F]ind string in current buffer')
     end,
   },
+
+  -- Additional panels
+  -- https://github.com/hedyhli/outline.nvim
 
 }

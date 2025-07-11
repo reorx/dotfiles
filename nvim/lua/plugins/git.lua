@@ -1,4 +1,5 @@
 return {
+  -- better alternative: https://github.com/lewis6991/gitsigns.nvim
   {
     'airblade/vim-gitgutter',
     init = function()
@@ -18,4 +19,5 @@ return {
   { 'tpope/vim-fugitive', cmd = 'Git' },
 
   -- https://github.com/sindrets/diffview.nvim
+  -- https://github.com/NeogitOrg/neogit
 }
