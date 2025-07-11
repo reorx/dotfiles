@@ -22,6 +22,11 @@ return {
             -- barbar.lua: https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/barbar.lua
             BufferCurrent = { bg = C.surface1, fg = C.text },
             BufferCurrentSign = { bg = C.surface1, fg = C.blue },
+            -- nvim-treesitter-context
+            TreesitterContext = { bg = C.surface1 },
+            TreesitterContextBottom = { style = { 'underline' } },
+            -- dropbar
+            WinBar = { style = { 'underline' }, sp = C.surface2 },
           }
         end,
         styles = {

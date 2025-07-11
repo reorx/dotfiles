@@ -30,6 +30,20 @@ return {
   },
   -- https://github.com/Bekaboo/dropbar.nvim
   {
+    'Bekaboo/dropbar.nvim',
+    -- optional, but required for fuzzy finder support
+    dependencies = {
+      'nvim-telescope/telescope-fzf-native.nvim',
+      build = 'make'
+    },
+    config = function()
+      local dropbar_api = require('dropbar.api')
+      vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
+      vim.keymap.set('n', '[;', dropbar_api.goto_context_start, { desc = 'Go to start of current context' })
+      vim.keymap.set('n', '];', dropbar_api.select_next_context, { desc = 'Select next context' })
+    end
+  },
+  {
     -- https://github.com/folke/trouble.nvim
     "folke/trouble.nvim",
     opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -153,13 +167,14 @@ return {
     build = ':TSUpdate',
 
     dependencies = {
-      {
-        'nvim-treesitter/nvim-treesitter-context',
-        event = 'BufReadPost',
-        opts = function()
-          return { mode = 'cursor', max_lines = 3 }
-        end,
-      },
+      -- NOTE: use dropbar instead of nvim-treesitter-context for code context
+      --{
+      --  'nvim-treesitter/nvim-treesitter-context',
+      --  event = 'BufReadPost',
+      --  opts = function()
+      --    return { mode = 'cursor', max_lines = 2 }
+      --  end,
+      --},
     },
 
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
