@@ -9,7 +9,7 @@ return {
     'mason-org/mason-lspconfig.nvim',
     opts = {
       ensure_installed = {
-        'pyright',
+        'pyright', 'lua_ls',
       },
     },
     dependencies = {
