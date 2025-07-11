@@ -1,6 +1,5 @@
 return {
   -- UI
-  -- https://github.com/Bekaboo/dropbar.nvim
   --{ 'vim-airline/vim-airline' },
   --{ 'vim-airline/vim-airline-themes' },
   {
@@ -12,6 +11,30 @@ return {
     end,
   },
   { 'romainl/vim-qf' },
+  -- https://github.com/Bekaboo/dropbar.nvim
+  {
+    -- https://github.com/folke/trouble.nvim
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>bx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>bX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>bs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+    },
+  },
 
   -- Editing
   {
