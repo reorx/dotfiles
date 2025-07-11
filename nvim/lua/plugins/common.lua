@@ -105,6 +105,11 @@ return {
   { 'junegunn/rainbow_parentheses.vim' },
   { 'dominikduda/vim_current_word' },
   { 'ntpeters/vim-better-whitespace' },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {},
+  },
 
   -- LLM
   {
