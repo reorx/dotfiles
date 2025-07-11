@@ -3,11 +3,15 @@ return {
   --{ 'vim-airline/vim-airline' },
   --{ 'vim-airline/vim-airline-themes' },
   {
+    -- https://github.com/nvim-lualine/lualine.nvim
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      -- https://github.com/nvim-lualine/lualine.nvim
-      require('lualine').setup()
+      require('lualine').setup({
+        extensions = {
+          'nvim-tree', 'trouble',
+        }
+      })
     end,
   },
   { 'romainl/vim-qf' },
@@ -63,12 +67,12 @@ return {
   },
   -- consider replace vim-sandwich
   {
+    -- https://github.com/kylechui/nvim-surround
     "kylechui/nvim-surround",
-    enable = false,
+    enabled = false,
     version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      -- https://github.com/kylechui/nvim-surround
       require("nvim-surround").setup({
           -- Configuration here, or leave empty to use defaults
       })
@@ -111,8 +115,20 @@ return {
         filters = {
           dotfiles = true,
         },
+
+        --on_attach = function(bufnr)
+        --  local map = function(mode, keys, func, desc)
+        --    vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
+        --  end
+        --end,
       })
+
+      local map = function(mode, keys, func, desc)
+        vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
+      end
+      map('n', '<C-1>', '<cmd>NvimTreeFindFileToggle<CR>', 'Toggle Tree on current file')
     end,
+
   },
 
   -- Text rendering
@@ -139,7 +155,10 @@ return {
         "go", "python", "javascript", 'typescript', 'tsx',
       },
       --auto_install = true,
-      highlight = { enable = true, },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
     },
   },
   -- alternative: https://github.com/HiPhish/rainbow-delimiters.nvim
@@ -147,9 +166,15 @@ return {
   { 'dominikduda/vim_current_word' },
   { 'ntpeters/vim-better-whitespace' },
   {
-    "lukas-reineke/indent-blankline.nvim",
+    'lukas-reineke/indent-blankline.nvim',
     main = "ibl",
-    opts = {},
+    opts = {
+      scope = {
+        enabled = false,
+        show_start = false,
+        show_end = false,
+      },
+    },
   },
 
   -- LLM

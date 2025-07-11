@@ -122,12 +122,16 @@ autocmd FileType html setlocal shiftwidth=2 tabstop=2 indentexpr=
 autocmd FileType scss setlocal shiftwidth=2 tabstop=2 indentexpr=
 autocmd FileType pico8 setlocal noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
 
+" show vim help in vertical split
+autocmd FileType help wincmd L
+
 "autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
 au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
 au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
 au BufRead,BufNewFile *.conf set ft=dosini
 au BufRead,BufNewFile *.pac set ft=javascript
 autocmd BufRead,BufNewFile *gitconfig setlocal noexpandtab
+
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *

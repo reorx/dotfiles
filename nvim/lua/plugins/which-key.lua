@@ -7,7 +7,10 @@ return {
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       delay = 500,
-      -- spec = {}
+      spec = {
+        { '<leader>b', group = 'Side[b]ars' },
+        { '<leader>s', group = '[S]andwich' },
+      },
     }
   }
 }
