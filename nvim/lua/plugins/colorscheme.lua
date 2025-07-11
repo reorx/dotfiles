@@ -18,9 +18,12 @@ return {
         custom_highlights = function(C)
           -- see colors: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
           return {
-            -- barbar.lua: https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/barbar.lua
+            -- barbar.lua:
+            -- - https://github.com/romgrk/barbar.nvim#highlighting
+            -- - https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/barbar.lua
             BufferCurrent = { bg = C.surface1, fg = C.text },
             BufferCurrentSign = { bg = C.surface1, fg = C.blue },
+            BufferCurrentMod = { bg = C.surface1 },
             -- nvim-treesitter-context
             TreesitterContext = { bg = C.surface1 },
             TreesitterContextBottom = { style = { 'underline' } },
