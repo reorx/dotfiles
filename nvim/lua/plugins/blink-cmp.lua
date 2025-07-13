@@ -52,6 +52,8 @@ return {
         documentation = { auto_show = false },
         -- Controls whether the list will automatically select the first item in the list, and whether a "preview" will be inserted on selection.
         list = { selection = { preselect = true, auto_insert = false } },
+        -- TODO add colorful-menu https://github.com/xzbdmw/colorful-menu.nvim#use-it-in-blinkcmp
+        -- menu = {}
       },
 
       -- Default list of enabled providers defined so that you can extend it

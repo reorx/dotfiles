@@ -1,7 +1,8 @@
 -- References:
 -- - https://github.com/joshmedeski/dotfiles/tree/main/.config/nvim/lua/plugins
+--
 
-return {
+local plugins = {
   -- UI
   --{ 'vim-airline/vim-airline' },
   --{ 'vim-airline/vim-airline-themes' },
@@ -104,7 +105,7 @@ return {
     version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup({
+      require('nvim-surround').setup({
           -- Configuration here, or leave empty to use defaults
       })
     end
@@ -133,9 +134,9 @@ return {
       vim.g.loaded_netrwPlugin = 1
     end,
     config = function()
-      require("nvim-tree").setup({
+      require('nvim-tree').setup({
         sort = {
-          sorter = "case_sensitive",
+          sorter = 'case_sensitive',
         },
         view = {
           width = 30,
@@ -183,7 +184,7 @@ return {
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     opts = {
       ensure_installed = {
-        "lua", "vim", "vimdoc", "markdown", "markdown_inline",
+        'comment', "lua", "vim", "vimdoc", "markdown", "markdown_inline",
         "go", "python", "javascript", 'typescript', 'tsx',
       },
       --auto_install = true,
@@ -192,6 +193,16 @@ return {
         additional_vim_regex_highlighting = false,
       },
     },
+  },
+  {
+    -- https://github.com/folke/todo-comments.nvim
+    'folke/todo-comments.nvim',
+    main = "todo-comments",
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    opts = {},
   },
   -- alternative: https://github.com/HiPhish/rainbow-delimiters.nvim
   { 'junegunn/rainbow_parentheses.vim' },
@@ -213,6 +224,7 @@ return {
   -- LLM
   {
     'github/copilot.vim',
+    enabled = false,
     cmd = 'Copilot',
   },
 
@@ -234,6 +246,8 @@ return {
         vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
       end
 
+      map('n', '<C-\\>', builtin.live_grep, 'Live grep string')
+
       map('n', '<leader>F', builtin.grep_string, '[F]ind string globally')
       map('v', '<leader>F', function()
         local text = vim.getVisualSelection()
@@ -250,5 +264,6 @@ return {
 
   -- Additional panels
   -- https://github.com/hedyhli/outline.nvim
-
 }
+
+return plugins
