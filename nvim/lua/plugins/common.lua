@@ -123,7 +123,7 @@ local plugins = {
   -- https://github.com/ggandor/leap.nvim
 
   -- File explorer
-  --{ 'scrooloose/nerdtree' },
+  -- alternative: https://github.com/echasnovski/mini.files
   {
     'nvim-tree/nvim-tree.lua',
     dependencies = {
@@ -203,7 +203,9 @@ local plugins = {
       indent = {
         animate = { enabled = false },
       },
-    }
+      notifier = { enabled = true },
+      --quickfile = { enabled = true },
+    },
  },
   {
     -- https://github.com/folke/todo-comments.nvim
@@ -240,7 +242,8 @@ local plugins = {
     cmd = 'Copilot',
   },
 
-  -- File finder
+  -- Fuzzy finder
+  -- alternative: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
   {
     'nvim-telescope/telescope.nvim',
     dependencies = {
