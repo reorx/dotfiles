@@ -35,6 +35,9 @@ return {
             BlinkCmpSignatureHelp = { link = 'CursorLine' },
             --BlinkCmpSignatureHelpBorder = { bg = C.surface2, fg = C.surface2 },
             LspSignatureActiveParameter = { style = { 'underline' } },
+            -- snacks
+            --SnacksIndent = { fg = C.surface1 },
+            --SnacksIndentScope = { fg = C.surface3 },
           }
         end,
         styles = {
@@ -62,6 +65,10 @@ return {
             enabled = true,
             -- scope_color = "base", -- catppuccin color (eg. `lavender`) Default: text
             colored_indent_levels = false,
+          },
+          snacks = {
+            enabled = true,
+            indent_scope_color = 'overlay2', -- catppuccin color (eg. `lavender`) Default: text
           },
           --blink_cmp = true,
           -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)

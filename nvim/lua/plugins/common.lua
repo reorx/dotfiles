@@ -195,6 +195,17 @@ local plugins = {
     },
   },
   {
+    "folke/snacks.nvim",
+    ---@module 'snacks'
+    ---@type snacks.Config
+    opts = {
+      -- works better than indent-blankline.nvim
+      indent = {
+        animate = { enabled = false },
+      },
+    }
+ },
+  {
     -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
     main = "todo-comments",
@@ -211,6 +222,7 @@ local plugins = {
   {
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     'lukas-reineke/indent-blankline.nvim',
+    enabled = false,
     main = "ibl",
     opts = {
       scope = {
