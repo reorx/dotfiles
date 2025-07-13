@@ -32,6 +32,9 @@ return {
             -- blink.cmp
             --Pmenu = { bg = C.surface0 },
             Pmenu = { link = 'CursorLine' },
+            BlinkCmpSignatureHelp = { link = 'CursorLine' },
+            --BlinkCmpSignatureHelpBorder = { bg = C.surface2, fg = C.surface2 },
+            LspSignatureActiveParameter = { style = { 'underline' } },
           }
         end,
         styles = {
