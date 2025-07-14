@@ -9,7 +9,8 @@ return {
       delay = 500,
       spec = {
         { '<leader>b', group = 'Side[b]ars' },
-        { '<leader>s', group = '[S]andwich' },
+        { '<leader>s', group = '[S]andwichs' },
+        { '<leader>p', group = '[P]ickers' },
       },
     }
   }

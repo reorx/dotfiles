@@ -4,8 +4,6 @@
 
 local plugins = {
   -- UI
-  --{ 'vim-airline/vim-airline' },
-  --{ 'vim-airline/vim-airline-themes' },
   {
     -- https://github.com/nvim-lualine/lualine.nvim
     'nvim-lualine/lualine.nvim',
@@ -25,15 +23,10 @@ local plugins = {
       'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
     },
     init = function() vim.g.barbar_auto_setup = false end,
-    opts = {
-      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-      -- animation = true,
-      -- insert_at_start = true,
-      -- …etc.
-    },
+    opts = {},
   },
-  -- https://github.com/Bekaboo/dropbar.nvim
   {
+    -- https://github.com/Bekaboo/dropbar.nvim
     'Bekaboo/dropbar.nvim',  -- The symbol breadcrumb plugin
     -- optional, but required for fuzzy finder support
     dependencies = {
@@ -124,8 +117,8 @@ local plugins = {
       ]])
     end,
   },
-  -- consider replace vim-sandwich
   {
+    -- consider replace vim-sandwich with this one
     -- https://github.com/kylechui/nvim-surround
     "kylechui/nvim-surround",
     enabled = false,
@@ -230,7 +223,10 @@ local plugins = {
       indent = {
         animate = { enabled = false },
       },
-      notifier = { enabled = true },
+      notifier = {
+        enabled = true,
+        top_down = false,
+      },
       --quickfile = { enabled = true },
     },
  },
@@ -261,6 +257,7 @@ local plugins = {
       },
     },
   },
+  -- https://github.com/luukvbaal/statuscol.nvim (fold/unfold chevrons)
 
   -- LLM
   {
@@ -288,6 +285,8 @@ local plugins = {
         vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
       end
 
+      -- Text search
+
       map('n', '<C-\\>', builtin.live_grep, 'Live grep string')
 
       map('n', '<leader>F', builtin.grep_string, '[F]ind string globally')
@@ -301,6 +300,9 @@ local plugins = {
         local text = vim.getVisualSelection()
         builtin.current_buffer_fuzzy_find({ default_text = text })
       end, '[F]ind string in current buffer')
+
+      -- Other pickers
+      map('n', '<leader>pg', builtin.git_commits, '[G]it commits')
     end,
   },
 
