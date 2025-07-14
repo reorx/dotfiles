@@ -82,7 +82,7 @@ set ruler " Show the line and column number of the cursor position, separated by
 set showcmd " Show (partial) command in the last line of the screen.
 set cmdheight=1 " Number of screen lines to use for the command-line.
 set relativenumber " relative number
-"set number
+set number " set `number` with `relativenumber` enables hybrid number
 set laststatus=2 " The value of this option influences when the last window will have a
 "                  status line:
 "                    0: never
@@ -140,6 +140,14 @@ autocmd BufReadPost *
       \         exe "normal g'\"" |
       \     endif |
       \ endif
+
+" Toggles between hybrid and absolute line numbers automatically
+" https://github.com/jeffkreeftmeijer/vim-numbertoggle
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
 
 " Misc
 set mouse=a
