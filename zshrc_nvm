@@ -1,36 +1,46 @@
 # NVM
 export NVM_DIR="$HOME/.nvm"
 
-# https://github.com/nvm-sh/nvm#zsh
-use-nvmrc() {
-  local nvmrc_path
-  nvmrc_path="$(nvm_find_nvmrc)"
-
-  if [ -n "$nvmrc_path" ]; then
-    local nvmrc_node_version
-    nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-    if [ "$nvmrc_node_version" = "N/A" ]; then
-      nvm install
-    elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
-      nvm use
-    fi
-  elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
-    echo "Reverting to nvm default version"
-    nvm use default
-  fi
-}
-use-nvm() {
+load-nvm() {
     if ! typeset -f nvm_find_nvmrc &> /dev/null; then
         # load nvm if nvm_find_nvmrc is not defined
         [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
     fi
-    use-nvmrc
+}
+
+# https://github.com/nvm-sh/nvm#zsh
+nvm-use-on-cd() {
+    load-nvm
+
+    local nvmrc_path
+    nvmrc_path="$(nvm_find_nvmrc)"
+
+    if [ -n "$nvmrc_path" ]; then
+        local nvmrc_node_version
+        nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+        if [ "$nvmrc_node_version" = "N/A" ]; then
+            nvm install
+        elif [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+            nvm use
+        fi
+    # Explain: if current directory has no nvmrc and previous directory has nvmrc, AND current node version is not the default one, switch to the default
+    # comment this as I sometimes want to keep the node version when switch context, and I can run `use-nvm` as the universal entry to load nvm and switch to default version
+    #elif [ -n "$(PWD=$OLDPWD nvm_find_nvmrc)" ] && [ "$(nvm version)" != "$(nvm version default)" ]; then
+        # echo "Reverting to nvm default version"
+        # nvm use default
+    fi
 }
 # add hook for change directory commands
-add-zsh-hook chpwd use-nvm
+add-zsh-hook chpwd nvm-use-on-cd
 # if current directory has .nvmrc, call use-nvm immediately
-[[ -f .nvmrc ]] && use-nvm
+[[ -f .nvmrc ]] && nvm-use-on-cd
+
+# use nvm default version
+use-nvm() {
+    load-nvm
+    nvm use default
+}
 
 
 
@@ -64,7 +74,7 @@ nvm-lts-bin() {
 
   # Full node version path
   local node_path="${HOME}/.nvm/versions/node/${node_version}"
-  
+
   case "$1" in
     link)
       # Validate argument for linking
@@ -75,17 +85,17 @@ nvm-lts-bin() {
       local exe="$2"
       local exe_source="${node_path}/bin/${exe}"
       local link_target="${local_bin}/${exe}"
-      
+
       if [ ! -x "$exe_source" ]; then
         echo "Executable not found or not executable: $exe_source"
         return 1
       fi
-      
+
       # Create symbolic link, overwrite if exists
       ln -sf "$exe_source" "$link_target"
       echo "Created link: ${link_target} -> ${exe_source}"
       ;;
-      
+
     unlink)
       if [ -z "$2" ]; then
         echo "Usage: nvm-lts-bin unlink executable_name"
@@ -93,7 +103,7 @@ nvm-lts-bin() {
       fi
       local exe="$2"
       local link_target="${local_bin}/${exe}"
-      
+
       # Only remove if it is a symlink and points into ~/.nvm/versions/node
       if [ -L "$link_target" ]; then
         local target_path
@@ -113,7 +123,7 @@ nvm-lts-bin() {
         return 1
       fi
       ;;
-      
+
     ls)
       # Iterate over entries in local bin
       local target
@@ -133,7 +143,7 @@ nvm-lts-bin() {
         fi
       done
       ;;
-      
+
     *)
       echo "Usage: nvm-lts-bin {link|unlink|ls} [executable_name]"
       return 1
