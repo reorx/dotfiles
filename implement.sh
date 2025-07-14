@@ -101,10 +101,7 @@ function impl_vim() {
 }
 
 function impl_nvim() {
-    mkdir -p ~/.config/nvim
-    create_link "$PWD/nvim/init.vim" ~/.config/nvim/init.vim
-    ln2home nvim
-    ln2home nvimrc
+    ln2config nvim
 }
 
 function impl_fd() {
@@ -162,6 +159,16 @@ function ln2home() {
         local target="$HOME/$2"
     else
         local target="$HOME/.$1"
+    fi
+    create_link $source $target
+}
+
+function ln2config() {
+    local source="$PWD/$1"
+    if [ "$2" ]; then
+        local target="$HOME/.config/$2"
+    else
+        local target="$HOME/.config/$1"
     fi
     create_link $source $target
 }
