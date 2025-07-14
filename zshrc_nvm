@@ -44,17 +44,21 @@ use-nvm() {
 
 
 
-# nvm-lts-bin: link, unlink, or list node executables for nvm lts default version
+# nvm-bin: link, unlink, or list node executables for nvm lts default version
 
-nvm-lts-bin() {
+nvm-bin() {
   # Directory for local bin links
   local local_bin="${HOME}/.local/bin"
 
   # Ensure local bin exists
   [ -d "$local_bin" ] || mkdir -p "$local_bin"
 
+  # load nvm first
+  load-nvm
+
+
   # Get the alias file for lts default version from nvm
-  local alias_file="${HOME}/.nvm/alias/lts/*"
+  local alias_file="${HOME}/.nvm/alias/default"
   # Read alias value (e.g., lts/jod)
   local alias_value
   alias_value=$(cat $alias_file 2>/dev/null)
@@ -63,14 +67,8 @@ nvm-lts-bin() {
     return 1
   fi
 
-  # Construct the file path to get the node version (e.g., ~/.nvm/alias/lts/jod)
-  local version_file="${HOME}/.nvm/alias/lts/${alias_value#lts/}"
-  local node_version
-  node_version=$(cat "$version_file" 2>/dev/null)
-  if [ -z "$node_version" ]; then
-    echo "Failed to read node version from $version_file."
-    return 1
-  fi
+  # Get default version use nvm's function
+  local node_version=$(nvm_version "$alias_value")
 
   # Full node version path
   local node_path="${HOME}/.nvm/versions/node/${node_version}"
@@ -79,7 +77,7 @@ nvm-lts-bin() {
     link)
       # Validate argument for linking
       if [ -z "$2" ]; then
-        echo "Usage: nvm-lts-bin link executable_name"
+        echo "Usage: nvm-bin link executable_name"
         return 1
       fi
       local exe="$2"
@@ -98,7 +96,7 @@ nvm-lts-bin() {
 
     unlink)
       if [ -z "$2" ]; then
-        echo "Usage: nvm-lts-bin unlink executable_name"
+        echo "Usage: nvm-bin unlink executable_name"
         return 1
       fi
       local exe="$2"
@@ -145,7 +143,7 @@ nvm-lts-bin() {
       ;;
 
     *)
-      echo "Usage: nvm-lts-bin {link|unlink|ls} [executable_name]"
+      echo "Usage: nvm-bin {link|unlink|ls} [executable_name]"
       return 1
       ;;
   esac
