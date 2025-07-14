@@ -1,0 +1,3 @@
+# prevent file from opening multiple times,
+# see: https://github.com/neovide/neovide/issues/2609
+tabs = false
