@@ -197,8 +197,7 @@ alias kill9="kill -9"
 #################
 
 # Load z
-export _Z_DATA=$HOME/.z-data
-source $HOME/.z/z.sh
+eval "$(zoxide init zsh)"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

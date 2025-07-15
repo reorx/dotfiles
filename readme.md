@@ -28,13 +28,14 @@ requires:
 - fzf (brew)
   - Run `$(brew --prefix)/opt/fzf/install` after install
 - fd (brew)
+- zoxide (brew)
 - [pyenv](https://github.com/pyenv/pyenv#installation)
+- nvm
 
 Link files and folders:
 - oh-my-zsh/ -> ~/.oh-my-zsh
 - oh-my-zsh-custom/ -> ~/.oh-my-zsh-custom
 - pure/ -> ~/.zsh-pure
-- z/ -> ~/.z
 - zshenv -> ~/.zshenv
 - zshrc -> ~/.zshrc
 - zshrc\_os -> ~/.zshrc\_mac
