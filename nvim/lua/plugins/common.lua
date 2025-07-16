@@ -17,13 +17,83 @@ local plugins = {
     end,
   },
   {
-    'romgrk/barbar.nvim',
-    version = '^1.0.0', -- optional: only update when a new 1.x version is released
-    dependencies = {
-      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-    },
-    init = function() vim.g.barbar_auto_setup = false end,
-    opts = {},
+    'crispgm/nvim-tabline',
+    enabled = false,
+    dependencies = { 'nvim-tree/nvim-web-devicons' }, -- optional
+    opts = {
+      show_index = false,           -- show tab index
+      show_modify = true,          -- show buffer modification indicator
+      show_icon = true,           -- show file extension icon
+      fnamemodify = ':t',          -- file name modifier string
+                                   -- can be a function to modify buffer name
+      modify_indicator = '*',    -- modify indicator
+      no_name = 'No name',         -- no name buffer name
+      brackets = { '', '' },     -- file name brackets surrounding
+      inactive_tab_max_length = 0  -- max length of inactive tab titles, 0 to ignore
+    }
+  },
+  {
+    'nanozuki/tabby.nvim',
+    config = function()
+      function interleave(array, separator)
+        local result = {}
+        for i, v in ipairs(array) do
+          table.insert(result, v)
+          if i < #array then
+            table.insert(result, separator)
+          end
+        end
+        return result
+      end
+      local theme = {
+        -- Also you can do this: fill = { fg='#f2e9de', bg='#907aa9', style='italic' }
+        fill = 'TabLineFill',
+        tab = 'TabLine',
+        current_tab = 'TabLineSel',
+        current_tab_sep = 'TabLineSelSep',
+        win = 'TabLine',
+        focused = 'TabLineFocused',
+      }
+      require('tabby').setup({
+        line = function(line)
+          return {
+            line.tabs().foreach(function(tab)
+              return {
+                {
+                  '▎ ',
+                  hl = tab.is_current() and theme.current_tab_sep or theme.tab,
+                },
+                --line.sep('▎ ', theme.sep, theme.sep),  -- don't use line.sep as it works like shit-get fg from the first group and bg from the second group, why the fuck not using one single group?
+                --tab.number(),
+                tab.name(),
+                ' ',
+                tab.close_btn(''),
+                ' ',
+                hl = tab.is_current() and theme.current_tab or theme.tab,
+                --margin = ' ',
+              }
+            end),
+            line.spacer(),
+            interleave(
+              line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+                return {
+                  ' ',
+                  {
+                    win.buf_name(),
+                    hl = win.is_current() and theme.focused or theme.win,
+                  },
+                  ' ',
+                  --margin = ' ',
+                }
+              end),
+              { '|', hl = theme.win }
+            ),
+            --hl = theme.fill,
+          }
+        end,
+        -- option = {}, -- setup modules' option,
+      })
+    end,
   },
   {
     -- https://github.com/Bekaboo/dropbar.nvim
@@ -41,7 +111,6 @@ local plugins = {
           sources = function(buf, _)
             if vim.bo[buf].ft == 'markdown' then
               return {
-                sources.path,
                 sources.markdown,
               }
             end

@@ -24,6 +24,10 @@ return {
             BufferCurrent = { bg = C.surface1, fg = C.text },
             BufferCurrentSign = { bg = C.surface1, fg = C.blue },
             BufferCurrentMod = { bg = C.surface1 },
+            -- tabby
+            TabLineSel = { bg = C.surface1, fg = C.text },
+            TabLineSelSep = { bg = C.surface1, fg = C.blue },
+            TabLineFocused = { fg = C.subtext0, style = { 'underline' } },
             -- nvim-treesitter-context
             TreesitterContext = { bg = C.surface1 },
             TreesitterContextBottom = { style = { 'underline' } },
