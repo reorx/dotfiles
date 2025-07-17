@@ -10,6 +10,29 @@ local plugins = {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('lualine').setup({
+        options = {
+          theme = 'catppuccin',
+          --component_separators = { left = '', right = ''},
+          component_separators = { left = '│', right = '│'},
+          --section_separators = { left = '', right = ''},
+          section_separators = { left = '', right = ''},
+        },
+        sections = {
+          lualine_a = {'mode'},
+          lualine_b = {"require'lsp-status'.status()", 'diagnostics'},
+          lualine_c = {'searchcount'},
+          lualine_x = {'encoding', 'filetype', 'location' },
+          lualine_y = {},
+          lualine_z = {}
+        },
+        inactive_sections = {
+          lualine_a = {'mode'},
+          lualine_b = {'diagnostics'},
+          lualine_c = {},
+          lualine_x = {'encoding', 'filetype', 'location' },
+          lualine_y = {},
+          lualine_z = {}
+        },
         extensions = {
           'nvim-tree', 'trouble',
         }
