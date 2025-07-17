@@ -218,6 +218,12 @@ local plugins = {
   -- https://github.com/j-hui/fidget.nvim
 
   -- Navigation
+  {
+    -- https://github.com/abecodes/tabout.nvim
+    'abecodes/tabout.nvim',
+    lazy = false,
+    opts = {}
+  },
   -- https://github.com/folke/flash.nvim
   -- "Plug 'easymotion/vim-easymotion'
   -- https://github.com/justinmk/vim-sneak
@@ -332,7 +338,7 @@ local plugins = {
     main = "ibl",
     opts = {
       scope = {
-        enabled = false,
+        enabled = true,
         show_start = false,
         show_end = false,
       },
