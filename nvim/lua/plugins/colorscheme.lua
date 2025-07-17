@@ -30,8 +30,8 @@ local plugins = {
           return {
             -- tabby
             TabLine = { bg = C.mantle },
-            TabLineSel = { bg = C.surface1, fg = C.text },
-            TabLineSelSep = { bg = C.surface1, fg = C.blue },
+            TabLineSel = { bg = C.surface0, fg = C.text },
+            TabLineSelSep = { bg = C.surface0, fg = C.blue },
             TabLineFocused = { fg = C.subtext0, style = { 'underline' } },
 
             -- nvim-treesitter-context
