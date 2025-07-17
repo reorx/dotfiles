@@ -7,41 +7,43 @@ return {
 
       require("catppuccin").setup {
         flavour = "mocha", -- latte, frappe, macchiato, mocha
-        transparent_background = true,
-        dim_inactive = {
-            enabled = false,
-            shade = "dark",
-            percentage = 0.15,
-        },
+        term_colors = true,
         no_italic = false, -- Force no italic
         no_bold = false, -- Force no bold
+        -- No need to override color if enabling transparent_background
+        --transparent_background = true,
+        color_overrides = {
+          mocha = {
+            base = "#030303",
+            mantle = "#1A1A1A",
+            crust = "#2B2B2B",
+          },
+        },
         custom_highlights = function(C)
-          -- see colors: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
+          -- colors: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
           return {
-            -- barbar.lua:
-            -- - https://github.com/romgrk/barbar.nvim#highlighting
-            -- - https://github.com/catppuccin/nvim/blob/main/lua/catppuccin/groups/integrations/barbar.lua
-            BufferCurrent = { bg = C.surface1, fg = C.text },
-            BufferCurrentSign = { bg = C.surface1, fg = C.blue },
-            BufferCurrentMod = { bg = C.surface1 },
             -- tabby
+            TabLine = { bg = C.mantle },
             TabLineSel = { bg = C.surface1, fg = C.text },
             TabLineSelSep = { bg = C.surface1, fg = C.blue },
             TabLineFocused = { fg = C.subtext0, style = { 'underline' } },
+
             -- nvim-treesitter-context
             TreesitterContext = { bg = C.surface1 },
             TreesitterContextBottom = { style = { 'underline' } },
+
             -- dropbar
             WinBar = { style = { 'underline' }, sp = C.surface2 },
+
             -- blink.cmp
-            --Pmenu = { bg = C.surface0 },
             Pmenu = { link = 'CursorLine' },
             BlinkCmpSignatureHelp = { link = 'CursorLine' },
             --BlinkCmpSignatureHelpBorder = { bg = C.surface2, fg = C.surface2 },
             LspSignatureActiveParameter = { style = { 'underline' } },
+
             -- snacks
             --SnacksIndent = { fg = C.surface0 },
-            SnacksIndentScope = { fg = C.surface2 },
+            SnacksIndentScope = { fg = C.surface0 },
           }
         end,
         styles = {
