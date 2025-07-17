@@ -106,12 +106,24 @@ local plugins = {
     config = function()
       local sources = require('dropbar.sources')
       local utils = require('dropbar.utils')
+      local default_opts = require('dropbar.configs').opts
+
+      local excluded_ft = {
+        lua = true
+      }
       require('dropbar').setup({
         bar = {
+          enable = function(buf, win, info)
+            if excluded_ft[vim.bo[buf].ft] then
+              return false
+            end
+            return default_opts.bar.enable(buf, win, info)
+          end,
           sources = function(buf, _)
-            if vim.bo[buf].ft == 'markdown' then
+            local ft = vim.bo[buf].ft
+            if ft == 'markdown' then
               return {
-                sources.markdown,
+                sources.markdown
               }
             end
             if vim.bo[buf].buftype == 'terminal' then
