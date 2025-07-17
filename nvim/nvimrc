@@ -78,7 +78,7 @@ set foldmethod=indent
 set nofoldenable
 
 " Display
-set ruler " Show the line and column number of the cursor position, separated by a comma.
+"set ruler " Show the line and column number of the cursor position, separated by a comma.
 set showcmd " Show (partial) command in the last line of the screen.
 set cmdheight=1 " Number of screen lines to use for the command-line.
 set relativenumber " relative number
