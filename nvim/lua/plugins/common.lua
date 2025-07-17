@@ -355,6 +355,14 @@ local plugins = {
       'nvim-lua/plenary.nvim',
     },
     config = function()
+      require("telescope").setup({
+        pickers = {
+          colorscheme = {
+            enable_preview = true
+          }
+        }
+      })
+
       vim.cmd([[
         noremap <c-/> :Telescope find_files<cr>
         noremap <c-t> :Telescope<cr>
