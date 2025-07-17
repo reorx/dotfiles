@@ -40,8 +40,8 @@ return {
             --BlinkCmpSignatureHelpBorder = { bg = C.surface2, fg = C.surface2 },
             LspSignatureActiveParameter = { style = { 'underline' } },
             -- snacks
-            --SnacksIndent = { fg = C.surface1 },
-            --SnacksIndentScope = { fg = C.surface3 },
+            --SnacksIndent = { fg = C.surface0 },
+            SnacksIndentScope = { fg = C.surface2 },
           }
         end,
         styles = {

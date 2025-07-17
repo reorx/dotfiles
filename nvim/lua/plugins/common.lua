@@ -218,13 +218,7 @@ local plugins = {
   -- https://github.com/j-hui/fidget.nvim
 
   -- Navigation
-  {
-    -- https://github.com/abecodes/tabout.nvim
-    'abecodes/tabout.nvim',
-    lazy = false,
-    opts = {}
-  },
-  -- https://github.com/folke/flash.nvim
+    -- https://github.com/folke/flash.nvim
   -- "Plug 'easymotion/vim-easymotion'
   -- https://github.com/justinmk/vim-sneak
   -- https://github.com/ggandor/leap.nvim
@@ -302,22 +296,6 @@ local plugins = {
     },
   },
   {
-    "folke/snacks.nvim",
-    ---@module 'snacks'
-    ---@type snacks.Config
-    opts = {
-      -- works better than indent-blankline.nvim
-      indent = {
-        animate = { enabled = false },
-      },
-      notifier = {
-        enabled = true,
-        top_down = false,
-      },
-      --quickfile = { enabled = true },
-    },
- },
-  {
     -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
     main = "todo-comments",
@@ -332,7 +310,36 @@ local plugins = {
   { 'dominikduda/vim_current_word' },
   { 'ntpeters/vim-better-whitespace' },
   {
+    "folke/snacks.nvim",
+    enabled = true,
+    opts = {
+      -- works better than indent-blankline.nvim
+      ---@module 'snacks'
+      ---@type snacks.indent.Config
+      indent = {
+        indent = {
+          -- only show the guide for scope, make the UI clearer
+          enabled = false,
+          -- use the same char as indent-blankline uses, which shift the guide a little left, this is the only good thing that plugin has
+          char = '▎',
+          priority = 1000,
+        },
+        scope = {
+          char = '▎',
+          priority = 1000,
+        },
+        animate = { enabled = false },
+      },
+      notifier = {
+        enabled = true,
+        top_down = false,
+      },
+      --quickfile = { enabled = true },
+    },
+  },
+  {
     -- https://github.com/lukas-reineke/indent-blankline.nvim
+    -- configuration is complex, scope works bad for lua and easily stops when switching windows
     'lukas-reineke/indent-blankline.nvim',
     enabled = false,
     main = "ibl",
