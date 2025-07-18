@@ -121,6 +121,9 @@ bindkey '^Y' run-and-copy-stdout-widget
 
 export PATH="$HOME/.local/bin:$PATH"
 
+# make sure programs that respects XDG_CONFIG_HOME uses ~/.config rather than ~/Library/Application Support
+export XDG_CONFIG_HOME="$HOME/.config"
+
 # Prefer US English and use UTF-8
 export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
