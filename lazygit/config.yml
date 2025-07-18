@@ -1,0 +1,19 @@
+gui:
+  scrollHeight: 15
+  statusPanelView: dashboard
+git:
+  # See https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Pagers.md
+  paging:
+    # Value of the --color arg in the git diff command. Some pagers want this to be set to 'always' and some want it set to 'never'
+    colorArg: always
+
+    # e.g.
+    # diff-so-fancy
+    # delta --dark --paging=never
+    # ydiff -p cat -s --wrap --width={{columnWidth}}
+    pager: "delta --dark --paging=never"
+keybinding:
+  universal:
+    focusMainView: m
+    scrollUpMain: <c-k>
+    scrollDownMain: <c-j>
