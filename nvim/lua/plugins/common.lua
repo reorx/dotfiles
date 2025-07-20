@@ -58,7 +58,7 @@ local plugins = {
   {
     'nanozuki/tabby.nvim',
     config = function()
-      function interleave(array, separator)
+      local function interleave(array, separator)
         local result = {}
         for i, v in ipairs(array) do
           table.insert(result, v)
@@ -68,6 +68,31 @@ local plugins = {
         end
         return result
       end
+
+      local function format_filename(filename, max_len)
+        max_len = max_len or 20
+        -- Extract the stem and extension:
+        local stem, ext = filename:match("(.+)%.([^.]+)$")
+
+        -- If there's no extension, treat the whole filename as the stem.
+        if not stem then
+          stem = filename
+          ext = ""
+        else
+          ext = "." .. ext
+        end
+
+        -- If the stem exceeds the maximum length, truncate it and add ellipsis.
+        if #stem > max_len then
+          -- Ensure we have enough space for the ellipsis.
+          local trunc_len = max_len - 1
+          if trunc_len < 0 then trunc_len = 0 end
+          stem = stem:sub(1, trunc_len) .. "…"
+        end
+
+        return stem .. ext
+      end
+
       local theme = {
         -- Also you can do this: fill = { fg='#f2e9de', bg='#907aa9', style='italic' }
         fill = 'TabLineFill',
@@ -88,7 +113,7 @@ local plugins = {
                 },
                 --line.sep('▎ ', theme.sep, theme.sep),  -- don't use line.sep as it works like shit-get fg from the first group and bg from the second group, why the fuck not using one single group?
                 --tab.number(),
-                tab.name(),
+                format_filename(tab.name()),
                 ' ',
                 tab.close_btn(''),
                 ' ',
@@ -102,7 +127,7 @@ local plugins = {
                 return {
                   ' ',
                   {
-                    win.buf_name(),
+                    format_filename(win.buf_name()),
                     hl = win.is_current() and theme.focused or theme.win,
                   },
                   ' ',
