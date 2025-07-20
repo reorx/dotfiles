@@ -23,23 +23,36 @@ return {
       require("mason-lspconfig").setup()
 
       -- Auto show diagnostic when cursor over a place with problem
-      vim.cmd([[ set updatetime=2000 ]]) -- set CursorHold wait time to 1s
-      --vim.api.nvim_create_autocmd('CursorHold', {
-      --  pattern = {"*"},
-      --  callback = function()
-      --    vim.diagnostic.open_float(nil, {focus=false, max_width=80})
-      --  end,
-      --})
+      vim.cmd([[ set updatetime=1000 ]]) -- set CursorHold wait time to 1s
+      vim.api.nvim_create_autocmd({ "CursorHold" }, {
+        pattern = "*",
+        callback = function()
+          vim.diagnostic.open_float({
+            scope = "line",
+            --focusable = false,
+            --close_events = {
+            --  "CursorMoved",
+            --  "CursorMovedI",
+            --  "BufHidden",
+            --  "InsertCharPre",
+            --  "WinLeave",
+            --},
+          })
+        end
+      })
 
       -- Setup lsp diagnostic
       -- (if set in nvim-lspconfig opts, virtual_text does not work)
       vim.diagnostic.config({
         severity_sort = true,
-        float = { border = 'rounded', source = 'if_many' },
+        float = {
+          border = 'rounded',
+          source = 'if_many'
+        },
         underline = { severity = vim.diagnostic.severity.ERROR },
         virtual_text = {
           virt_text_pos = 'eol',
-          prefix = '',
+          prefix = '←',
         },
       })
 
