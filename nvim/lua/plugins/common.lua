@@ -414,13 +414,6 @@ local plugins = {
   },
   -- https://github.com/luukvbaal/statuscol.nvim (fold/unfold chevrons)
 
-  -- LLM
-  {
-    'github/copilot.vim',
-    enabled = false,
-    cmd = 'Copilot',
-  },
-
   -- Fuzzy finder
   -- alternative: https://github.com/folke/snacks.nvim/blob/main/docs/picker.md
   {
