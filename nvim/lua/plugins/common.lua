@@ -430,10 +430,12 @@ local plugins = {
         }
       })
 
+      -- NOTE c-/ works for iTerm, c-_ works for tmux in iTerm
       vim.cmd([[
         noremap <c-/> :Telescope find_files<cr>
-        noremap <c-t> :Telescope<cr>
+        noremap <c-_> :Telescope find_files<cr>
         noremap <c-f> :Telescope current_buffer_fuzzy_find<cr>
+        noremap <c-t> :Telescope<cr>
       ]])
 
       local builtin = require('telescope.builtin')
