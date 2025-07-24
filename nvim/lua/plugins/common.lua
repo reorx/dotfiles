@@ -275,6 +275,7 @@ local plugins = {
   -- File explorer
   -- alternative: https://github.com/echasnovski/mini.files
   {
+    -- https://github.com/nvim-tree/nvim-tree.lua
     'nvim-tree/nvim-tree.lua',
     dependencies = {
       'nvim-tree/nvim-web-devicons',
@@ -296,6 +297,9 @@ local plugins = {
         },
         filters = {
           dotfiles = true,
+        },
+        git = {
+          enable = false,
         },
 
         --on_attach = function(bufnr)
