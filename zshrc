@@ -205,8 +205,8 @@ eval "$(zoxide init zsh)"
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# fd respects .gitignore
-export FZF_DEFAULT_COMMAND='fd -H -t f'
+# fd respects .gitignore, see more: https://github.com/sharkdp/fd#hidden-and-ignored-files
+export FZF_DEFAULT_COMMAND='fd -t f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # other opts: "--ezact"
 export FZF_DEFAULT_OPTS=( --height "50%" --no-mouse )
