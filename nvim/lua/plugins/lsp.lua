@@ -27,6 +27,14 @@ return {
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         pattern = "*",
         callback = function()
+          -- Get all floating windows
+          local float_wins = vim.tbl_filter(function(win)
+            return vim.api.nvim_win_get_config(win).relative ~= ""
+          end, vim.api.nvim_list_wins())
+          -- Only open if no floating windows exist
+          if #float_wins == 0 then
+            return
+          end
           vim.diagnostic.open_float({
             scope = "line",
             --focusable = false,
