@@ -1,3 +1,45 @@
+-- Symbols
+-- @lsp.type.class          Identifiers that declare or reference a class type
+-- @lsp.type.comment        Tokens that represent a comment
+-- @lsp.type.decorator      Identifiers that declare or reference decorators and annotations
+-- @lsp.type.enum           Identifiers that declare or reference an enumeration type
+-- @lsp.type.enumMember     Identifiers that declare or reference an enumeration property, constant, or member
+-- @lsp.type.event          Identifiers that declare an event property
+-- @lsp.type.function       Identifiers that declare a function
+-- @lsp.type.interface      Identifiers that declare or reference an interface type
+-- @lsp.type.keyword        Tokens that represent a language keyword
+-- @lsp.type.macro          Identifiers that declare a macro
+-- @lsp.type.method         Identifiers that declare a member function or method
+-- @lsp.type.modifier       Tokens that represent a modifier
+-- @lsp.type.namespace      Identifiers that declare or reference a namespace, module, or package
+-- @lsp.type.number         Tokens that represent a number literal
+-- @lsp.type.operator       Tokens that represent an operator
+-- @lsp.type.parameter      Identifiers that declare or reference a function or method parameters
+-- @lsp.type.property       Identifiers that declare or reference a member property, member field, or member variable
+-- @lsp.type.regexp         Tokens that represent a regular expression literal
+-- @lsp.type.string         Tokens that represent a string literal
+-- @lsp.type.struct         Identifiers that declare or reference a struct type
+-- @lsp.type.type           Identifiers that declare or reference a type that is not covered above
+local list_lsp_symbols = function(telescope_builtin)
+  local symbols = {
+    'interface',
+    'struct',
+    'type',
+    'class',
+    'constructor',
+    'method',
+    'function',
+    'enum',
+    'comment',
+  }
+  if vim.bo.filetype == "typescript" then
+    table.insert(symbols, 'namespace')
+  end
+  telescope_builtin.lsp_document_symbols({
+    symbols = symbols
+  })
+end
+
 return {
   -- Docs:
   -- * https://github.com/mason-org/mason-lspconfig.nvim
@@ -125,7 +167,7 @@ return {
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', telescope_builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>o', function() list_lsp_symbols(telescope_builtin) end, 'Symb[o]ls')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.

@@ -498,9 +498,6 @@ local plugins = {
         local text = vim.getVisualSelection()
         builtin.current_buffer_fuzzy_find({ default_text = text })
       end, '[F]ind string in current buffer')
-
-      -- Other pickers
-      map('n', '<leader>o', builtin.lsp_document_symbols, 'Symb[o]ls')
     end,
   },
 
