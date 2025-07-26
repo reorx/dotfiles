@@ -188,11 +188,6 @@ local plugins = {
     -- https://github.com/Bekaboo/dropbar.nvim
     'Bekaboo/dropbar.nvim',  -- The symbol breadcrumb plugin
     enabled = false,
-    -- optional, but required for fuzzy finder support
-    dependencies = {
-      'nvim-telescope/telescope-fzf-native.nvim',
-      build = 'make'
-    },
     config = function()
       local sources = require('dropbar.sources')
       local utils = require('dropbar.utils')
@@ -505,7 +500,7 @@ local plugins = {
       end, '[F]ind string in current buffer')
 
       -- Other pickers
-      map('n', '<leader>pg', builtin.git_commits, '[G]it commits')
+      map('n', '<leader>o', builtin.lsp_document_symbols, 'Symb[o]ls')
     end,
   },
 
