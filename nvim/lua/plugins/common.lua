@@ -107,11 +107,19 @@ local plugins = {
         return false
       end
 
-      local function is_tab_current_win_modified(tab)
-        -- indicate if any of buffers in tab have unsaved changes
-        --local win_ids = api.get_tab_wins(tab.id)
-        local win_id = api.get_tab_current_win(tab.id)
-        return is_win_modified(win_id)
+      local function get_win_name(win_id)
+        local name = ''
+        local win = vim.w[win_id]
+        if api.is_float_win(win_id) then
+          name = '[Floating]'
+        -- if it's a trouble.vim sidebar
+        elseif win.trouble ~= nil then
+          name = '[Trouble]'
+        -- NOTE add more plugins support here
+        else
+          name = win_name.get(win_id)
+        end
+        return name
       end
 
       local theme = {
@@ -124,25 +132,12 @@ local plugins = {
         focused = 'TabLineFocused',
       }
       require('tabby').setup({
-        option = {
-          tab_name = {
-            name_fallback = function(tabid)
-              local cur_win = api.get_tab_current_win(tabid)
-              local name = ''
-              if api.is_float_win(cur_win) then
-                name = '[Floating]'
-              else
-                name = win_name.get(cur_win)
-              end
-              return name
-            end,
-          },
-        },
         line = function(line)
           return {
             line.tabs().foreach(function(tab)
               local wins = api.get_tab_wins(tab.id)
-              local modified = is_tab_current_win_modified(tab)
+              local cur_win_id = api.get_tab_current_win(tab.id)
+              local modified = is_win_modified(cur_win_id)
               return {
                 {
                   '▎ ',
@@ -150,7 +145,7 @@ local plugins = {
                 },
                 --line.sep('▎ ', theme.sep, theme.sep),  -- don't use line.sep as it works like shit-get fg from the first group and bg from the second group, why the fuck not using one single group?
                 --tab.number(),
-                format_filename(tab.name()),
+                format_filename(get_win_name(cur_win_id)),
                 modified and { '+', hl = tab.is_current() and theme.current_tab_sep or theme.tab },
                 #wins > 1 and ' ◫',
                 --' ',
@@ -167,7 +162,7 @@ local plugins = {
                 return {
                   ' ',
                   {
-                    format_filename(win.buf_name()),
+                    format_filename(get_win_name(win.id)),
                     is_win_modified(win.id) and '+',
                     hl = win.is_current() and theme.focused or theme.win,
                   },
