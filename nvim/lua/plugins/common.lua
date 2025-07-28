@@ -133,6 +133,7 @@ local plugins = {
       }
       require('tabby').setup({
         line = function(line)
+          local current_tab_wins = line.wins_in_tab(line.api.get_current_tab())
           return {
             line.tabs().foreach(function(tab)
               local wins = api.get_tab_wins(tab.id)
@@ -157,8 +158,8 @@ local plugins = {
               }
             end),
             line.spacer(),
-            interleave(
-              line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+            #current_tab_wins.wins > 1 and interleave(
+              current_tab_wins.foreach(function(win)
                 return {
                   ' ',
                   {
