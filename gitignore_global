@@ -37,6 +37,7 @@ Pipfile
 venv*/
 pip-wheel-metadata/
 __pycache__/
+.ruff_cache
 
 # Node
 node_modules/
