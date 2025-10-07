@@ -9,3 +9,4 @@ node_modules/
 bower_components/
 yarn.lock
 package-lock.json
+venv/
