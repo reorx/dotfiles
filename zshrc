@@ -306,5 +306,7 @@ if [ -e "$HOME/.zshrc_local" ]; then
     source $HOME/.zshrc_local
 fi
 
+eval "$(/Users/reorx/.local/bin/mise activate zsh)"
+
 # profiling end
 #zprof
