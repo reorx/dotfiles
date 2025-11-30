@@ -9,7 +9,6 @@ stty -ixon
 BASHSENSIBLE=$HOME/.bash-sensible/sensible.bash
 [ -f $BASHSENSIBLE ] && source $BASHSENSIBLE
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 osname="$(uname -s)"
 # Linux special
@@ -28,7 +27,9 @@ fi
 alias l="ls -la"
 
 # atuin
-[ -f "$HOME/.atuin/bin/env" ] && . "$HOME/.atuin/bin/env"
+. "$HOME/.atuin/bin/env"
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash)"
 
 # Load local at last
 if [ -e "$HOME/.bashrc_local" ]; then
