@@ -14,7 +14,7 @@
 # Global variables
 # Change this varible to choose the targets you want
 PROFILE_macos=( zsh git fzf vim nvim tmux misc bin )
-PROFILE_linux_server=( bash git fzf vim tmux_server misc bin )
+PROFILE_linux_server=( bash git vim tmux_server misc bin )
 LINESHIFT="  "
 INITED_FILE=".inited"
 

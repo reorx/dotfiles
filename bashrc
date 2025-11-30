@@ -27,6 +27,9 @@ fi
 # aliases
 alias l="ls -la"
 
+# atuin
+[ -f "$HOME/.atuin/bin/env" ] && . "$HOME/.atuin/bin/env"
+
 # Load local at last
 if [ -e "$HOME/.bashrc_local" ]; then
     source $HOME/.bashrc_local
