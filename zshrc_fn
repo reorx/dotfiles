@@ -197,3 +197,10 @@ function ccglm() {
         ANTHROPIC_MODEL=glm-4.5 \
         claude --dangerously-skip-permissions $@
 }
+
+function cl() {
+    claude --dangerously-skip-permissions $@
+}
+function clc() {
+    claude --dangerously-skip-permissions --continue $@
+}
