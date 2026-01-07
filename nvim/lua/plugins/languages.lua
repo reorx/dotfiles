@@ -63,10 +63,10 @@ return {
   },
 
   -- Ansible YAML
-  {
-    'pearofducks/ansible-vim',
-    ft = 'yaml',
-  },
+  --{
+  --  'pearofducks/ansible-vim',
+  --  ft = 'yaml',
+  --},
 
   -- Markdown
   {
