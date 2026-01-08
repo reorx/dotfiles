@@ -204,3 +204,9 @@ function cl() {
 function clc() {
     claude --dangerously-skip-permissions --continue $@
 }
+
+function echo-server() {
+    local port="${1:-8080}"
+    echo "Echo server running on port $port"
+    while true; do echo -e "HTTP/1.1 200 OK\r\n\r\nOK" | nc -l "$port" | tee /dev/stderr; done
+}
