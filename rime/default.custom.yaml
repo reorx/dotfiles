@@ -4,7 +4,12 @@ patch:
   'punctuator/half_shape/]' : '」'
   'punctuator/half_shape/{' : '【'
   'punctuator/half_shape/}' : '】'
-  #ascii_composer/switch_key/Shift_L: inline_ascii
+  ascii_composer/switch_key:
+    # commit_code: 上屏且切换为英文输入
+    # inline_ascii: 切换为英文输入
+    #Control_L: commit_code
+    Shift_L: noop
+    Shift_R: commit_code
   #'key_binder/bindings/+': { when: always, accept: Control+Shift+2, toggle: ascii_mode }
   # 中英文标点
   #'key_binder/bindings/+': { when: always, accept: Control+semicolon, toggle: ascii_punct }
