@@ -5,8 +5,8 @@ patch:
   style/candidate_list_layout: linear
   # may be useful someday: https://github.com/rime/squirrel/issues/584
   # app options
-  app_options/com.googlecode.iterm2:
-    no_inline: true
+  #app_options/com.googlecode.iterm2:
+  #  no_inline: true
   # color schemes preview: https://github.com/NavisLab/rime-pifu
   preset_color_schemes/reorx:
     name: "Reorx (based on Purity of Form Custom)"
