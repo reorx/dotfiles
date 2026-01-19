@@ -1,7 +1,11 @@
+# Rime dictionary
+# encoding: utf-8
+# QuickAdd - 快速添加的用户词库
+
 ---
 name: quickadd
-version: "2026-01-16"
+version: "1.0"
 sort: by_weight
 ...
 
-吸雾	xi wu
+雾凇拼音	wu song pin yin
