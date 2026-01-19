@@ -173,6 +173,10 @@ if [ -e $HOME/.pythonrc.py ]; then
     export PYTHONSTARTUP=$HOME/.pythonrc.py
 fi
 
+# Obsidian
+export OBSIDIAN_VAULT_PATH="/Users/reorx/Library/Mobile Documents/iCloud~md~obsidian/Documents/Obsidian-Base"
+export OBSIDIAN_BACKUP_DIR="/Users/reorx/Library/CloudStorage/OneDrive-Personal/Backups/Obsidian"
+
 
 ###########
 # Aliases #
