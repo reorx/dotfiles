@@ -25,6 +25,7 @@ export ALFRED_PREF_DIR="$ONEDRIVE_PATH/Library/Alfred"
 hash -d backup="$HOME/Library/CloudStorage/OneDrive-Personal/Backup"
 # Code sub dirs
 hash -d repos="$HOME/Code/repos"
+hash -d openclaw="$HOME/Library/Mobile Documents/com~apple~CloudDocs/openclaw"
 
 alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'

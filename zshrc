@@ -296,6 +296,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun completions
 [ -s "/Users/reorx/.bun/_bun" ] && source "/Users/reorx/.bun/_bun"
 
+# postgres
+export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+
 
 ####################
 # Load other zshrc #
