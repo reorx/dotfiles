@@ -1,0 +1,46 @@
+agents:
+  default:
+    - claude
+    - standard
+    - codex
+    - openclaw
+
+packages:
+  - local_path: ~/Code/scripts
+  - repo: https://github.com/firecrawl/cli
+  - repo: https://github.com/vercel-labs/agent-skills
+    skills:
+      - vercel-react-best-practices
+      - web-design-guidelines
+    agents:
+      excludes:
+       - openclaw
+  - repo: https://github.com/ibelick/ui-skills
+    skills:
+      - baseline-ui
+  - repo: https://github.com/Leonxlnx/taste-skill
+    skills:
+      - design-taste-frontend
+      - redesign-existing-projects
+  - repo: https://github.com/OthmanAdi/planning-with-files
+    skills:
+      - planning-with-files
+    agents:
+      excludes:
+       - openclaw
+  - repo: https://github.com/blader/humanizer
+  - repo: http://github.com/better-auth/skills
+    skills:
+      - better-auth-best-practices
+      - create-auth-skill
+  - repo: https://github.com/PsiACE/skills
+    skills:
+      - friendly-python
+  - repo: https://github.com/SawyerHood/dev-browser
+    skills:
+      - dev-browser
+    agents:
+      excludes:
+        - openclaw
+  #- repo: https://github.com/vercel-labs/agent-browser
+  #- repo: https://github.com/browser-use/browser-use
