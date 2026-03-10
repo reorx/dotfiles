@@ -14,7 +14,7 @@ packages:
       - web-design-guidelines
     agents:
       excludes:
-       - openclaw
+        - openclaw
   - repo: https://github.com/ibelick/ui-skills
     skills:
       - baseline-ui
@@ -27,7 +27,7 @@ packages:
       - planning-with-files
     agents:
       excludes:
-       - openclaw
+        - openclaw
   - repo: https://github.com/blader/humanizer
   - repo: http://github.com/better-auth/skills
     skills:
@@ -36,6 +36,7 @@ packages:
   - repo: https://github.com/PsiACE/skills
     skills:
       - friendly-python
+      - piglet
   - repo: https://github.com/SawyerHood/dev-browser
     skills:
       - dev-browser
