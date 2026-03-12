@@ -43,5 +43,12 @@ packages:
     agents:
       excludes:
         - openclaw
-  #- repo: https://github.com/vercel-labs/agent-browser
+  - repo: https://github.com/vercel-labs/agent-browser
+    skills:
+      - agent-browser
+      - dogfood
+      - electron
+    agents:
+      includes:
+        - openclaw
   #- repo: https://github.com/browser-use/browser-use
