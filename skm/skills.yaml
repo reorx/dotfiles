@@ -1,9 +1,9 @@
 agents:
   default:
     - claude
-    - standard
     - codex
     - openclaw
+    - pi
 
 packages:
   - local_path: ~/Code/scripts
