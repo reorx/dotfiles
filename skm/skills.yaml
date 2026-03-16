@@ -52,3 +52,4 @@ packages:
       includes:
         - openclaw
   #- repo: https://github.com/browser-use/browser-use
+  #- repo: https://github.com/badlogic/pi-skills
