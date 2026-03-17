@@ -28,6 +28,8 @@ hash -d repos="$HOME/Code/repos"
 # openclaw
 export OPENCLAW_WORKSPACE_PATH="$HOME/Library/Mobile Documents/com~apple~CloudDocs/openclaw"
 hash -d openclaw="$OPENCLAW_WORKSPACE_PATH"
+# clash
+hash -d clashverge="$HOME/Library/Application Support/io.github.clash-verge-rev.clash-verge-rev"
 
 alias finder_show='defaults write com.apple.finder AppleShowAllFiles YES'
 alias finder_hide='defaults write com.apple.finder AppleShowAllFiles NO'
