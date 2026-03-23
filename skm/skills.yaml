@@ -22,6 +22,9 @@ packages:
     skills:
       - design-taste-frontend
       - redesign-existing-projects
+  - repo: https://github.com/openai/skills
+    skills:
+      - frontend-skill
   - repo: https://github.com/OthmanAdi/planning-with-files
     skills:
       - planning-with-files
