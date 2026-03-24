@@ -8,6 +8,11 @@ agents:
 packages:
   - local_path: ~/Code/scripts
   - repo: https://github.com/firecrawl/cli
+    skills:
+      # all-in-one skill
+      # - firecrawl
+      - firecrawl-scrape
+      - firecrawl-search
   - repo: https://github.com/vercel-labs/agent-skills
     skills:
       - vercel-react-best-practices
