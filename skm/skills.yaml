@@ -7,6 +7,7 @@ agents:
 
 packages:
   - local_path: ~/Code/scripts
+  - local_path: ~/Code/devblocks
   - repo: https://github.com/firecrawl/cli
     skills:
       # all-in-one skill
