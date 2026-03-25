@@ -46,12 +46,6 @@ packages:
     skills:
       - friendly-python
       - piglet
-  #- repo: https://github.com/SawyerHood/dev-browser
-  #  skills:
-  #    - dev-browser
-  #  agents:
-  #    excludes:
-  #      - openclaw
   - repo: https://github.com/vercel-labs/agent-browser
     skills:
       - agent-browser
