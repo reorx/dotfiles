@@ -9,6 +9,10 @@ agents:
 packages:
   - local_path: ~/Code/scripts
   - local_path: ~/Code/devblocks
+    agents:
+      includes:
+        - claude
+        - codex
   - repo: https://github.com/firecrawl/cli
     skills:
       # all-in-one skill
