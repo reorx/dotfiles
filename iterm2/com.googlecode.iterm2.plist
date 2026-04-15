@@ -22,6 +22,8 @@
 	<integer>2</integer>
 	<key>Actions</key>
 	<array/>
+	<key>AddNewTabAtEndOfTabs</key>
+	<false/>
 	<key>AdjustWindowForFontSizeChange</key>
 	<false/>
 	<key>AiMaxTokens</key>
