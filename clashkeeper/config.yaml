@@ -1,0 +1,40 @@
+clash:
+  api_url: "http://127.0.0.1:9097"
+  api_secret: "set-your-secret"
+
+log:
+  file: "~/.local/share/clashkeeper/clashkeeper.log"
+  level: "INFO"
+
+url_monitors:
+  - name: claude
+    url: https://api.anthropic.com/
+    clash_group: Claude
+    proxy_filter:
+      include: '美国'
+      exclude: '家宽'
+    check_interval: 600
+    max_latency: 1500
+
+  - name: codex
+    url: https://chatgpt.com/backend-api/codex
+    clash_group: ChatGPT
+    proxy_filter:
+      include: '美国'
+    check_interval: 610
+
+  - name: gemini
+    url: https://gemini.google.com
+    clash_group: Google
+    proxy_filter:
+      include: '美国'
+    check_interval: 620
+
+  - name: telegram
+    url: https://api.telegram.org/
+    clash_group: Proxy
+    proxy_filter:
+      include:
+        - '香港'
+        - '日本'
+    check_interval: 630
