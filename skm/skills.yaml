@@ -56,5 +56,9 @@ packages:
       - agent-browser
       - dogfood
       - electron
+  - repo: https://github.com/cloudflare/skills
+    skills:
+      - cloudflare
+      - wrangler
   #- repo: https://github.com/browser-use/browser-use
   #- repo: https://github.com/badlogic/pi-skills
