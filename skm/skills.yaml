@@ -3,12 +3,18 @@ agents:
     - claude
     - codex
     - standard
-    - openclaw
-    - pi
+    #- openclaw
+    #- pi
 
 packages:
   - local_path: ~/Code/scripts
   - local_path: ~/Code/devblocks
+    agents:
+      includes:
+        - claude
+        - codex
+  - repo: https://github.com/getpaseo/paseo
+    clone_strategy: shallow
     agents:
       includes:
         - claude
@@ -26,6 +32,12 @@ packages:
     agents:
       excludes:
         - openclaw
+  - repo: https://github.com/pbakaus/impeccable
+    skills_dir: source
+    agents:
+      includes:
+        - claude
+        - codex
   - repo: https://github.com/ibelick/ui-skills
     skills:
       - baseline-ui
@@ -36,12 +48,14 @@ packages:
   - repo: https://github.com/openai/skills
     skills:
       - frontend-skill
-  - repo: https://github.com/OthmanAdi/planning-with-files
-    skills:
-      - planning-with-files
-    agents:
-      excludes:
-        - openclaw
+  # 2026-04-30: stoping using as 1. its quite annoying to write 3 .md files in project root;
+  # 2. the improvement of harness makes this skill less necessary
+  #- repo: https://github.com/OthmanAdi/planning-with-files
+  #  skills:
+  #    - planning-with-files
+  #  agents:
+  #    excludes:
+  #      - openclaw
   - repo: https://github.com/blader/humanizer
   - repo: http://github.com/better-auth/skills
     skills:
