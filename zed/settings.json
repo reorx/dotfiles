@@ -7,10 +7,19 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "cli_default_open_behavior": "existing_window",
+  "session": {
+    "trust_all_worktrees": true
+  },
+  "theme": {
+    "mode": "system",
+    "light": "Ayu Light",
+    "dark": "Ayu Dark"
+  },
   "soft_wrap": "editor_width",
   "telemetry": {
     "diagnostics": false,
-    "metrics": true
+    "metrics": false
   },
   "terminal": {
     "font_size": 14.0
@@ -50,7 +59,7 @@
     "button": true
   },
   "project_panel": {
-    "dock": "right",
+    "dock": "left",
     "hide_hidden": true,
     "hide_root": true,
     "indent_guides": {
