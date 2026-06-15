@@ -1,3 +1,4 @@
 background-opacity = 1
 font-size = 14
 cursor-style = bar
+theme = itermcolor
