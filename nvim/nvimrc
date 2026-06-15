@@ -215,7 +215,13 @@ endfunction
 " Keymaps
 " ============================================================================
 
-" command+c copy, requires terminal send escape sequence "Esc+c" on command+c
+" CMD+C copies the visual selection to the system clipboard. nvim can't see the
+" CMD key directly, so the terminal must translate CMD+C into the escape sequence
+" ESC+0, which nvim receives as <M-0>:
+"   - iTerm2:  Keys -> CMD+C -> "Send Escape Sequence", text "0"
+"   - ghostty: keybind = cmd+c=esc:0   (see ghostty/config)
+" Terminal-independent alternative: <leader>y (defined below) yanks to the system
+" clipboard with no terminal cooperation (works over ssh/tmux/any terminal).
 " source: https://github.com/neovim/neovim/issues/5052#issuecomment-232083842
 vnoremap <M-0> "+y
 
@@ -236,6 +242,10 @@ inoremap <F5> <C-o>:syntax sync fromstart<CR>
 
 "let mapleader = "\\"
 let mapleader = " "
+
+" copy visual selection to the system clipboard (terminal-independent; see <M-0> above)
+vnoremap <leader>y "+y
+
 noremap <leader>ss :call StripWhitespace()<CR>
 
 " Save a file as root (,W)
