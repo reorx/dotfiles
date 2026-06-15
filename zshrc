@@ -299,6 +299,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # postgres
 export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
 
+# colima
+export COLIMA_HOME="$HOME/.config/colima"
+
 
 ####################
 # Load other zshrc #
