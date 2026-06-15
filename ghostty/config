@@ -2,3 +2,13 @@ background-opacity = 1
 font-size = 14
 cursor-style = bar
 theme = itermcolor
+
+# iTerm2-style copy-on-select: mouse selection goes straight to the system
+# clipboard (Cmd+V pastes it). Default `true` uses the selection clipboard,
+# which doesn't map to the macOS system clipboard; `clipboard` does both.
+copy-on-select = clipboard
+
+# CMD+C sends Esc+0 so nvim's `vnoremap <M-0> "+y` (nvimrc) copies the
+# visual selection to the system clipboard, matching the iTerm2 setup.
+# Tradeoff: CMD+C no longer copies the terminal mouse-selection here.
+keybind = cmd+c=esc:0
