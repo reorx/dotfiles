@@ -85,6 +85,25 @@ fpath+=$HOME/.zsh-pure
 autoload -U promptinit; promptinit
 prompt pure
 
+# --- cmux (libghostty) prompt-redraw workaround ---------------------------
+# cmux mishandles `zle reset-prompt` for Pure's two-line prompt: every in-place
+# redraw leaves a stale preprompt, so it accumulates (1→2→3…) on each command,
+# git dir or not (Pure's async vcs_info forces a redraw every command). iTerm2
+# and Ghostty.app render the same config fine, so it's a cmux terminal bug.
+#
+# Fix: no-op Pure's reset_prompt — the single chokepoint for every async
+# `zle .reset-prompt` (pure.zsh). The prompt is then only drawn by precmd
+# (normal draw, no reset), which cmux handles correctly. Tradeoff: async git
+# info (branch / dirty / ⇡⇣ arrows) refreshes on your *next* prompt instead of
+# updating the current one live — no visual drift, info lags by one prompt.
+#
+# cmux exports CMUX_SURFACE_ID / CMUX_WORKSPACE_ID — gate on that (TERM_PROGRAM
+# is just inherited from Ghostty, so it can't distinguish cmux from Ghostty.app).
+if [[ -n $CMUX_SURFACE_ID || -n $CMUX_WORKSPACE_ID ]]; then
+    prompt_pure_reset_prompt() { }  # cmux: suppress in-place multi-line redraw
+fi
+# --------------------------------------------------------------------------
+
 
 # Disable autocorrect
 unsetopt correct_all
