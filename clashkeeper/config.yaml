@@ -10,25 +10,28 @@ url_monitors:
   - name: claude
     url: https://api.anthropic.com/
     clash_group: Claude
+    valid_criterias:
+      status_code: '404'
     proxy_filter:
       include: ['美国', '洛杉磯']
       exclude: '家宽'
-    check_interval: 600
-    max_latency: 1500
+      prefer: 'flower'
+    check_interval: 1800
+    max_latency: 2500
 
   - name: codex
     url: https://chatgpt.com/backend-api/codex
     clash_group: ChatGPT
     proxy_filter:
       include: '美国'
-    check_interval: 610
+    check_interval: 1800
 
   - name: gemini
     url: https://gemini.google.com
     clash_group: Google
     proxy_filter:
       include: '美国'
-    check_interval: 620
+    check_interval: 3600
 
   - name: telegram
     url: https://api.telegram.org/
@@ -37,4 +40,4 @@ url_monitors:
       include:
         - '香港'
         - '日本'
-    check_interval: 630
+    check_interval: 3600
