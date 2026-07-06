@@ -80,3 +80,5 @@ packages:
       - django-perf-review
   #- repo: https://github.com/browser-use/browser-use
   #- repo: https://github.com/badlogic/pi-skills
+  #- repo: supabase/supabase
+  #  path: .agents/skills/vitest
