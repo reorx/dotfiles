@@ -204,6 +204,10 @@ function cl() {
 function clc() {
     claude --dangerously-skip-permissions --continue $@
 }
+function fable() {
+    CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1 \
+        claude --dangerously-skip-permissions --model fable --effort high $@
+}
 
 function echo-server() {
     local port="${1:-8080}"
