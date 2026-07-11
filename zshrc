@@ -216,6 +216,7 @@ alias tree-size="tree -h --du"
 alias cleanpyc="find . -name '*.pyc' -exec rm {} \;"
 alias cleanpycache="find . -type d -name '__pycache__' -prune -exec rm -r {} \;"
 alias kill9="kill -9"
+alias zj=zellij
 
 
 #################

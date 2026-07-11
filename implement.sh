@@ -123,6 +123,10 @@ function impl_tmux {
     impl_tpm
 }
 
+function impl_zellij {
+    ln2config zellij
+}
+
 function impl_tmux_server {
     ln2home tmux.server.conf .tmux.conf
 }

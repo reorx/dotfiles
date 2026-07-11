@@ -97,6 +97,15 @@ Link files:
 Post install:
 - start tmux and press `prefix + I` to fetch plugins
 
+### zellij
+
+Link files and folders:
+- zellij/ -> ~/.config/zellij
+
+Notes:
+- Keybindings mimic tmux.conf: `Ctrl a` acts as the prefix (enters zellij's "tmux" mode)
+- Config is live-reloaded by zellij, no reload binding needed
+
 ### a local build python 3
 
 ```
