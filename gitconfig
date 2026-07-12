@@ -78,7 +78,7 @@
 	st = status -sb
 	ci = commit
 	cm = commit -m
-	cam = commit --amend
+	cma = commit --amend
 	#lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit
 	co = checkout
 	fixup = "!git log -n 50 --pretty=format:'%h %s' --no-merges | fzf | cut -c -7 | xargs -o git commit --fixup"
