@@ -125,6 +125,12 @@ function impl_tmux {
 
 function impl_zellij {
     ln2config zellij
+    # zjstatus (statusbar plugin used by layouts/default.kdl), not committed to the repo
+    local zjstatus="$PWD/zellij/plugins/zjstatus.wasm"
+    if [ ! -f "$zjstatus" ]; then
+        mkdir -p "$(dirname $zjstatus)"
+        curl -sL -o "$zjstatus" "https://github.com/dj95/zjstatus/releases/download/v0.23.0/zjstatus.wasm"
+    fi
 }
 
 function impl_tmux_server {

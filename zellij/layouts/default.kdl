@@ -1,0 +1,40 @@
+// Default layout: replaces the builtin tab-bar/status-bar with zjstatus
+// (https://github.com/dj95/zjstatus), a single top bar with:
+// - session name only (the builtin tab-bar hardcodes a "Zellij " prefix)
+// - traditional rectangular tabs (no arrow/ribbon glyphs)
+// - mode indicator on the right: hidden in normal mode, red LOCKED when
+//   Ctrl g is pressed, yellow otherwise (tmux prefix, scroll, search...)
+//   (a locked-mode border color is impossible: zellij hardcodes Locked to
+//   render frames the same as Normal, see zellij-server pane_contents_and_ui.rs)
+//
+// zjstatus.wasm is downloaded by implement.sh (not committed to the repo).
+// On first load zellij asks for plugin permissions: focus the bar and press y.
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+                format_left   "#[bold] {session} {tabs}"
+                format_right  "{mode}"
+                format_space  ""
+
+                border_enabled  "false"
+                hide_frame_for_single_pane "false"
+
+                mode_normal          ""
+                mode_locked          "#[bg=red,fg=black,bold] LOCKED "
+                mode_tmux            "#[bg=yellow,fg=black,bold] {name} "
+                mode_default_to_mode "tmux"
+
+                tab_normal    "#[fg=#B8B8B8,bg=#3A3A3A] {index} {name} "
+                tab_active    "#[fg=black,bg=green,bold] {index} {name} "
+                tab_rename    "#[fg=black,bg=yellow] {index} {name} "
+                tab_separator " "
+
+                tab_sync_indicator       "<> "
+                tab_fullscreen_indicator "[] "
+                tab_floating_indicator   "⬚ "
+            }
+        }
+        children
+    }
+}

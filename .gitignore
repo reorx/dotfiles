@@ -1,2 +1,3 @@
 .inited
 .netrwhist
+zellij/plugins/*.wasm
