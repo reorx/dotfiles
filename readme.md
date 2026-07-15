@@ -30,7 +30,7 @@ requires:
 - fd (brew)
 - zoxide (brew)
 - [pyenv](https://github.com/pyenv/pyenv#installation)
-- nvm
+- [mise](https://mise.jdx.dev/) (replaces nvm; config in `mise/`, link with `./implement.sh -s mise`)
 
 Link files and folders:
 - oh-my-zsh/ -> ~/.oh-my-zsh

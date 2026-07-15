@@ -133,6 +133,10 @@ function impl_zellij {
     fi
 }
 
+function impl_mise {
+    ln2config mise
+}
+
 function impl_tmux_server {
     ln2home tmux.server.conf .tmux.conf
 }
