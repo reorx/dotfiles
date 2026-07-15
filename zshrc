@@ -73,6 +73,42 @@ DISABLE_LS_COLORS=true
 #zstyle ':omz:plugins:nvm' lazy yes
 #plugins=( nvm )
 
+# --- zsh startup optimization (2026-07) ------------------------------------
+# Startup used to waste ~500ms because compinit rebuilt .zcompdump on EVERY
+# shell. Two separate causes, both fixed here + one system-level fix:
+#
+# (a) /opt/homebrew/share/zsh{,/site-functions} were group-writable, so
+#     compaudit flagged them insecure and `compinit -i` silently dropped them
+#     from fpath. The dump was then written with the reduced file count but
+#     validated against the full one on the next startup -> never matched ->
+#     full rebuild (800 compdef calls + compdump write) every time.
+#     System fix (redo if brew ever restores group-write):
+#       chmod -R go-w /opt/homebrew/share/zsh
+#
+# (b) brew shellenv (in ~/.zprofile) exports FPATH, so nested shells (zellij
+#     panes, zsh-in-zsh) inherit the parent's fully-built fpath while fresh
+#     login shells start from the system default. The two contexts disagree on
+#     the completion file count and keep invalidating each other's dump.
+#     Fixed by resetting fpath to a fixed baseline before compinit runs (in
+#     oh-my-zsh) and un-exporting FPATH so it stops leaking into children.
+fpath=(/opt/homebrew/share/zsh/site-functions /usr/local/share/zsh/site-functions /usr/share/zsh/site-functions /usr/share/zsh/$ZSH_VERSION/functions)
+typeset +x FPATH
+
+# Skip compaudit's security audit (~10-20ms): it stats every completion dir
+# and file looking for insecure ownership/permissions, which is pointless on a
+# single-user machine (and the homebrew dir permissions are already fixed).
+# ZSH_DISABLE_COMPFIX alone is NOT enough: it makes omz run `compinit -u`
+# instead of `compinit -i`, but both still run the audit -- only `compinit -C`
+# skips it, and omz doesn't expose that. So we stub compaudit out before
+# oh-my-zsh autoloads it (zsh's autoload silently keeps an existing function).
+# The stub must still populate _i_files (list of completion files in fpath):
+# the real compaudit computes it as a side effect and compinit compares its
+# count against the header of .zcompdump to decide whether to rebuild.
+# To restore the real one: unfunction compaudit; autoload -Uz compaudit
+ZSH_DISABLE_COMPFIX=true
+compaudit() { _i_files=( "${(@)^fpath:/.}"/^([^_]*|*~|*.zwc)(N) ); _i_wdirs=(); _i_wfiles=(); return 0 }
+# ----------------------------------------------------------------------------
+
 source $ZSH/oh-my-zsh.sh
 
 
@@ -255,6 +291,9 @@ fi
 # nvm
 # see: zshrc_nvm
 
+# mise
+eval "$(/Users/reorx/.local/bin/mise activate zsh)"
+
 # pnpm
 export PNPM_HOME="/Users/reorx/Library/pnpm"
 case ":$PATH:" in
@@ -268,6 +307,11 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # bun
 export PATH="$PATH:~/.bun/bin"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+# bun completions
+[ -s "/Users/reorx/.bun/_bun" ] && source "/Users/reorx/.bun/_bun"
 
 # atuin
 . "$HOME/.atuin/bin/env"
@@ -278,7 +322,16 @@ atuin-setup() {
     bindkey '^H' _atuin_search_widget
 
     export ATUIN_NOBIND="true"
-    eval "$(atuin init zsh)"
+    # Cache `atuin init zsh` output instead of eval-ing it on every startup:
+    # spawning the atuin binary cost ~20ms per shell. The cache regenerates
+    # automatically when the atuin binary is newer than the cache file (i.e.
+    # after an atuin upgrade); delete the cache file to force a refresh.
+    local atuin_init_cache="$HOME/.cache/atuin-init.zsh"
+    if [[ ! -s $atuin_init_cache || $HOME/.atuin/bin/atuin -nt $atuin_init_cache ]]; then
+        mkdir -p "$HOME/.cache"
+        atuin init zsh > "$atuin_init_cache"
+    fi
+    source "$atuin_init_cache"
     fzf-atuin-history-widget() {
         local selected num
         setopt localoptions noglobsubst noposixbuiltins pipefail no_aliases 2>/dev/null
@@ -310,12 +363,6 @@ atuin-setup() {
 }
 atuin-setup
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-# bun completions
-[ -s "/Users/reorx/.bun/_bun" ] && source "/Users/reorx/.bun/_bun"
-
 # postgres
 export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
 
@@ -328,7 +375,7 @@ export COLIMA_HOME="$HOME/.config/colima"
 ####################
 
 # Load other parts of zshrc
-source $HOME/.zshrc_nvm
+#source $HOME/.zshrc_nvm
 source $HOME/.zshrc_os
 source $HOME/.zshrc_fn
 source $HOME/.zshrc_fn_fzf
@@ -336,7 +383,6 @@ if [ -e "$HOME/.zshrc_local" ]; then
     source $HOME/.zshrc_local
 fi
 
-eval "$(/Users/reorx/.local/bin/mise activate zsh)"
 
 # profiling end
 #zprof
