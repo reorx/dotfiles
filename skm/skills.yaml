@@ -9,10 +9,14 @@ agents:
 packages:
   - local_path: ~/Code/scripts
   - local_path: ~/Code/devblocks
+    skills_excludes:
+        - team-council
+        - team-squad
     agents:
       includes:
         - claude
         - codex
+  - repo: https://github.com/reorx/envops
   - repo: https://github.com/getpaseo/paseo
     clone_strategy: shallow
     agents:
