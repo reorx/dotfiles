@@ -294,6 +294,28 @@ fi
 # mise
 eval "$(/Users/reorx/.local/bin/mise activate zsh)"
 
+# Show active mise tool versions (node, python, ...) on the right side of the
+# prompt. Parses $PATH instead of running `mise current` (~40ms/prompt): mise
+# activate puts .../mise/installs/<tool>/<version>/bin entries in PATH, and
+# its precmd hook (registered above, so it runs before this one) keeps them
+# current. <version> may be an alias symlink like "24"; :A resolves it to the
+# real version. Tools pinned but not installed don't appear in PATH, so they
+# are simply not shown.
+_mise_prompt_versions() {
+    local -aU parts
+    local p seg tool ver
+    for p in $path; do
+        [[ $p == */mise/installs/*/*/bin ]] || continue
+        seg=${${p:A}%/bin}
+        ver=${seg##*/}
+        tool=${${seg%/*}##*/}
+        parts+=("${tool}:${ver}")
+    done
+    RPROMPT=${parts:+"%F{242}${(j: :)parts}%f"}
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _mise_prompt_versions
+
 # pnpm
 export PNPM_HOME="/Users/reorx/Library/pnpm"
 case ":$PATH:" in
