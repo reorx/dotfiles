@@ -23,6 +23,13 @@ packages:
       includes:
         - claude
         - codex
+  - repo: https://github.com/mattpocock/skills
+    skills:
+      - grilling
+      - grill-me
+      - grill-with-docs
+      - handoff
+      - to-spec
   - repo: https://github.com/shadcn/improve
   - repo: https://github.com/firecrawl/cli
     skills:
