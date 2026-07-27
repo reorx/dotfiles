@@ -204,6 +204,9 @@ function cl() {
 function clc() {
     claude --dangerously-skip-permissions --continue $@
 }
+function clr() {
+    claude --dangerously-skip-permissions --resume $@
+}
 function fable() {
     CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1 \
         claude --dangerously-skip-permissions --model fable --effort high $@
