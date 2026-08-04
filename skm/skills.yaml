@@ -17,12 +17,6 @@ packages:
         - claude
         - codex
   - repo: https://github.com/reorx/envops
-  - repo: https://github.com/getpaseo/paseo
-    clone_strategy: shallow
-    agents:
-      includes:
-        - claude
-        - codex
   - repo: https://github.com/mattpocock/skills
     skills:
       - grilling
@@ -30,7 +24,6 @@ packages:
       - grill-with-docs
       - handoff
       - to-spec
-  - repo: https://github.com/shadcn/improve
   - repo: https://github.com/firecrawl/cli
     skills:
       # all-in-one skill
@@ -40,26 +33,30 @@ packages:
   - repo: https://github.com/vercel-labs/agent-skills
     skills:
       - vercel-react-best-practices
-      - web-design-guidelines
+      #- web-design-guidelines
     agents:
       excludes:
         - openclaw
+
+  ## Frontend skills
   - repo: https://github.com/pbakaus/impeccable
     skills_dir: source
     agents:
       includes:
         - claude
         - codex
-  - repo: https://github.com/ibelick/ui-skills
-    skills:
-      - baseline-ui
-  - repo: https://github.com/Leonxlnx/taste-skill
-    skills:
-      - design-taste-frontend
-      - redesign-existing-projects
-  - repo: https://github.com/openai/skills
-    skills:
-      - frontend-skill
+  #- repo: https://github.com/shadcn/improve
+  #- repo: https://github.com/ibelick/ui-skills
+  #  skills:
+  #    - baseline-ui
+  #- repo: https://github.com/Leonxlnx/taste-skill
+  #  skills:
+  #    - design-taste-frontend
+  #    - redesign-existing-projects
+  #- repo: https://github.com/openai/skills
+  #  skills:
+  #    - frontend-skill
+
   # 2026-04-30: stoping using as 1. its quite annoying to write 3 .md files in project root;
   # 2. the improvement of harness makes this skill less necessary
   #- repo: https://github.com/OthmanAdi/planning-with-files
@@ -69,10 +66,10 @@ packages:
   #    excludes:
   #      - openclaw
   - repo: https://github.com/blader/humanizer
-  - repo: http://github.com/better-auth/skills
-    skills:
-      - better-auth-best-practices
-      - create-auth-skill
+  #- repo: http://github.com/better-auth/skills
+  #  skills:
+  #    - better-auth-best-practices
+  #    - create-auth-skill
   - repo: https://github.com/PsiACE/skills
     skills:
       - friendly-python
@@ -86,9 +83,17 @@ packages:
     skills:
       - cloudflare
       - wrangler
-  - repo: https://github.com/getsentry/skills
-    skills:
-      - django-perf-review
+  #- repo: https://github.com/getsentry/skills
+  #  skills:
+  #    - django-perf-review
+
+  # Permanently disabled:
+  #- repo: https://github.com/getpaseo/paseo
+  #  clone_strategy: shallow
+  #  agents:
+  #    includes:
+  #      - claude
+  #      - codex
   #- repo: https://github.com/browser-use/browser-use
   #- repo: https://github.com/badlogic/pi-skills
   #- repo: supabase/supabase
