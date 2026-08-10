@@ -211,6 +211,9 @@ function fable() {
     CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1 \
         claude --dangerously-skip-permissions --model fable --effort high $@
 }
+function shelf() {
+    open -a Dropover $@
+}
 
 function echo-server() {
     local port="${1:-8080}"
