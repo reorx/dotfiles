@@ -36,3 +36,5 @@ eval "$(atuin init bash)"
 if [ -e "$HOME/.bashrc_local" ]; then
     source $HOME/.bashrc_local
 fi
+
+export PATH="$HOME/.local/bin:$PATH"
