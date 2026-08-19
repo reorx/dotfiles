@@ -1,3 +1,4 @@
+# ref: https://herdr.dev/docs/config-reference/
 onboarding = false
 [ui.toast]
 delivery = "herdr"
