@@ -1,0 +1,31 @@
+onboarding = false
+[ui.toast]
+delivery = "herdr"
+
+[ui]
+show_agent_labels_on_pane_borders = true
+
+[theme]
+name = "terminal"
+auto_switch = false
+
+[keys]
+prefix = "ctrl+a"
+goto = "ctrl+o"
+next_tab = ["ctrl+right", "prefix+n"]
+previous_tab = ["ctrl+left", "prefix+p"]
+new_tab = "prefix+c"
+rename_tab = "prefix+r"
+next_workspace = ["ctrl+]", "prefix+up"]
+previous_workspace = ["ctrl+[", "prefix+down"]
+cycle_pane_next = "shift+right"
+cycle_pane_previous = "shift+left"
+split_vertical =  "prefix+|"
+toggle_sidebar = "prefix+b"
+reload_config = "prefix+shift+r"
+resize_mode = "prefix+shift+s"
+detach = "prefix+d"
+zoom = "prefix+m"
+
+[session]
+resume_agents_on_restore = true
