@@ -391,6 +391,9 @@ export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
 # colima
 export COLIMA_HOME="$HOME/.config/colima"
 
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+
 
 ####################
 # Load other zshrc #
