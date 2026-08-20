@@ -1,0 +1,26 @@
+id = "navigate_line"
+name = "Navigate Line"
+version = "0.1.0"
+min_herdr_version = "0.7.0"
+description = "Send readline cursor-movement keys to the focused pane, so prefix keys like ctrl+a can be forwarded to the shell"
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "jump_start"
+title = "Line: jump to start (ctrl+a)"
+command = ["sh", "send-keys.sh", "ctrl+a"]
+
+[[actions]]
+id = "jump_end"
+title = "Line: jump to end (ctrl+e)"
+command = ["sh", "send-keys.sh", "ctrl+e"]
+
+[[actions]]
+id = "word_back"
+title = "Line: word back (alt+b)"
+command = ["sh", "send-keys.sh", "alt+b"]
+
+[[actions]]
+id = "word_forward"
+title = "Line: word forward (alt+f)"
+command = ["sh", "send-keys.sh", "alt+f"]

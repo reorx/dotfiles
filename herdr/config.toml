@@ -5,6 +5,10 @@ delivery = "herdr"
 
 [ui]
 show_agent_labels_on_pane_borders = true
+#sidebar.spaces.rows = [["state_icon", "workspace"], ["branch", "git_status"]]
+sidebar.spaces.rows = [["state_icon", "workspace"]]
+#sidebar.agents.rows = [["state_icon", "workspace", "tab"], ["agent"]]
+sidebar.agents.rows = [["state_icon", "workspace", "tab"]]
 
 [theme]
 name = "terminal"
@@ -13,20 +17,55 @@ auto_switch = false
 [keys]
 prefix = "ctrl+a"
 goto = "ctrl+o"
-next_tab = ["ctrl+right", "prefix+n"]
-previous_tab = ["ctrl+left", "prefix+p"]
-new_tab = "prefix+c"
-rename_tab = "prefix+r"
-next_workspace = ["ctrl+]", "prefix+up"]
-previous_workspace = ["ctrl+[", "prefix+down"]
-cycle_pane_next = "shift+right"
-cycle_pane_previous = "shift+left"
-split_vertical =  "prefix+|"
 toggle_sidebar = "prefix+b"
 reload_config = "prefix+shift+r"
 resize_mode = "prefix+shift+s"
 detach = "prefix+d"
+# workspace
+next_workspace = ["ctrl+.", "prefix+."]
+previous_workspace = ["ctrl+,", "prefix+,"]
+switch_workspace = "prefix+1..9"
+# tab
+next_tab = ["ctrl+right", "prefix+n"]
+previous_tab = ["ctrl+left", "prefix+p"]
+new_tab = "prefix+c"
+rename_tab = "prefix+r"
+switch_tab = "ctrl+1..9"
+# pane
+cycle_pane_next = "shift+right"
+cycle_pane_previous = "shift+left"
+split_vertical =  "prefix+|"
 zoom = "prefix+m"
+# agent
+next_agent = ["ctrl+;"]
+previous_agent = ["ctrl+'"]
+# worktree
+remove_worktree = "prefix+shift+d"
+
+[[keys.command]]
+key = "prefix+l"
+type = "popup"
+command = "lazygit"
+description = "run lazygit"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+i"
+type = "popup"
+command = "exec \"${SHELL:-sh}\""
+description = "open scratch terminal"
+width = "90%"
+height = "90%"
+
+[[keys.command]]
+key = "prefix+a"
+type = "plugin_action"
+command = "navigate_line.jump_start"
+description = "send ctrl+a to pane"
 
 [session]
 resume_agents_on_restore = true
+
+[experimental]
+pane_history = true
