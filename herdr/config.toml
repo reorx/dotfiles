@@ -3,13 +3,33 @@
 [theme]
 name = "catppuccin"
 auto_switch = false
+# ref: https://github.com/herdrdev/herdr/blob/master/src/app/state.rs
+custom.panel_bg = "rgb(24, 24, 37)"
+custom.sidebar_bg = "reset"
+custom.active_row_bg = "rgb(48, 48, 70)"
+custom.selection_bg = "rgb(49, 50, 68)"
+custom.surface0 = "rgb(49, 50, 68)"
+custom.surface1 = "rgb(69, 71, 90)"
+custom.surface_dim = "rgb(30, 30, 46)"
+custom.overlay0 = "rgb(182, 190, 242)"
+custom.overlay1 = "rgb(127, 132, 156)"
+custom.text = "rgb(205, 214, 244)"
+custom.subtext0 = "rgb(166, 173, 200)"
+custom.mauve = "rgb(203, 166, 247)"
+custom.green = "rgb(166, 227, 161)"
+custom.yellow = "rgb(249, 226, 175)"
+custom.red = "rgb(243, 139, 168)"
+custom.blue = "rgb(137, 180, 250)"
+custom.teal = "rgb(148, 226, 213)"
+custom.peach = "rgb(250, 179, 135)"
 
 [ui]
 show_agent_labels_on_pane_borders = true
 #sidebar.spaces.rows = [["state_icon", "workspace"], ["branch", "git_status"]]
-#sidebar.spaces.rows = [["state_icon", "workspace"]]
+sidebar.spaces.rows = [["state_icon", "workspace", "git_status"]]
 #sidebar.agents.rows = [["state_icon", "workspace", "tab"], ["agent"]]
 sidebar.agents.rows = [["state_icon", "workspace", "tab"]]
+accent = "#ec4899"
 
 [keys]
 prefix = "ctrl+a"
@@ -19,11 +39,13 @@ detach = "prefix+d"
 next_workspace = ["ctrl+."]
 previous_workspace = ["ctrl+,"]
 switch_workspace = "prefix+1..9"
+close_workspace = "prefix+shift+x"
 
 # tab
 next_tab = ["ctrl+right", "prefix+n"]
 previous_tab = ["ctrl+left", "prefix+p"]
 rename_tab = "prefix+r"
+#switch_tab = "ctrl+1..9"
 
 # pane
 cycle_pane_next = "shift+right"

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>herdr color picker</title>
+<style>
+  :root {
+    --bg: #11111b;
+    --fg: #cdd6f4;
+    --muted: #7f849c;
+    --border: #313244;
+    --row-hover: #1e1e2e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 24px 96px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 14px;
+  }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 auto 20px; max-width: 860px; }
+  h1 small { color: var(--muted); font-weight: 400; font-size: 12px; margin-left: 8px; }
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    max-width: 860px;
+    width: 100%;
+  }
+  th {
+    text-align: left;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  tr:hover td { background: var(--row-hover); }
+  td.name { color: var(--fg); white-space: nowrap; }
+  .cell { display: flex; align-items: center; gap: 10px; }
+  .swatch {
+    width: 36px;
+    height: 24px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    flex: none;
+  }
+  .swatch.special {
+    background: repeating-linear-gradient(45deg, #333 0 6px, #555 6px 12px);
+  }
+  .swatch.pickable { cursor: pointer; position: relative; }
+  .swatch.pickable input[type="color"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+  }
+  code.copyable {
+    cursor: pointer;
+    color: var(--fg);
+    background: none;
+    white-space: nowrap;
+  }
+  code.copyable:hover { text-decoration: underline; }
+  code.copyable.copied { color: #a6e3a1; }
+  .modified code.dirty { color: #f9e2af; }
+  button {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 5px;
+    padding: 2px 8px;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  button:hover:not(:disabled) { color: var(--fg); border-color: var(--muted); }
+  button:disabled { opacity: 0.4; cursor: default; }
+  button.reset { margin-left: auto; visibility: hidden; }
+  tr.dirty button.reset { visibility: visible; }
+  #footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 12px 24px;
+  }
+  #footer .inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #footer button { padding: 6px 16px; font-size: 13px; }
+  #footer button#save { color: #a6e3a1; border-color: #a6e3a1; }
+  #footer button#save:disabled { color: var(--muted); border-color: var(--border); }
+  #footer #status { color: var(--muted); font-size: 12px; }
+  #toast {
+    position: fixed;
+    bottom: 64px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #313244;
+    color: var(--fg);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  #toast.show { opacity: 1; }
+</style>
+</head>
+<body>
+<h1>herdr theme colors <small>click swatch to pick · click rgb to copy · save writes to config.toml</small></h1>
+<table>
+  <thead>
+    <tr><th>Name</th><th>Current</th><th>Modified</th></tr>
+  </thead>
+  <tbody id="rows"></tbody>
+</table>
+<div id="footer">
+  <div class="inner">
+    <button id="save">save</button>
+    <button id="reset-all">reset all</button>
+    <span id="status"></span>
+  </div>
+</div>
+<div id="toast"></div>
+<script src="colors.js"></script>
+<script>
+const toastEl = document.getElementById('toast');
+let toastTimer;
+function toast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1800);
+}
+
+function parseRgb(s) {
+  const m = /^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/.exec(s);
+  return m ? [+m[1], +m[2], +m[3]] : null;
+}
+function rgbToHex(s) {
+  const c = parseRgb(s);
+  if (!c) return '#000000';
+  return '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
+}
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+async function copyText(text, codeEl) {
+  await navigator.clipboard.writeText(text);
+  codeEl.classList.add('copied');
+  setTimeout(() => codeEl.classList.remove('copied'), 600);
+  toast('copied');
+}
+
+async function saveToConfig(name, value) {
+  const res = await fetch('/update', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({name, value}),
+  });
+  const data = await res.json();
+  return data.ok;
+}
+
+function makeSwatch(value, pickable) {
+  const div = document.createElement('div');
+  div.className = 'swatch';
+  if (parseRgb(value)) div.style.background = value;
+  else div.classList.add('special');
+  if (pickable) div.classList.add('pickable');
+  return div;
+}
+
+const rows = [];
+
+function buildRow(name, original) {
+  const tr = document.createElement('tr');
+  // value: what the UI shows; savedValue: what config.toml currently has
+  const state = {name, original, value: original, savedValue: original};
+
+  const nameTd = document.createElement('td');
+  nameTd.className = 'name';
+  nameTd.textContent = name;
+  tr.appendChild(nameTd);
+
+  // current column
+  const curTd = document.createElement('td');
+  const curCell = document.createElement('div');
+  curCell.className = 'cell';
+  curCell.appendChild(makeSwatch(original, false));
+  const curCode = document.createElement('code');
+  curCode.className = 'copyable';
+  curCode.textContent = original;
+  curCode.onclick = () => copyText(original, curCode);
+  curCell.appendChild(curCode);
+  curTd.appendChild(curCell);
+  tr.appendChild(curTd);
+
+  // modified column
+  const modTd = document.createElement('td');
+  modTd.className = 'modified';
+  const modCell = document.createElement('div');
+  modCell.className = 'cell';
+
+  const modSwatch = makeSwatch(original, true);
+  const picker = document.createElement('input');
+  picker.type = 'color';
+  picker.value = rgbToHex(original);
+  modSwatch.appendChild(picker);
+
+  const modCode = document.createElement('code');
+  modCode.className = 'copyable';
+  modCode.textContent = original;
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'reset';
+  resetBtn.textContent = 'reset';
+
+  state.render = function render() {
+    modCode.textContent = state.value;
+    if (parseRgb(state.value)) {
+      modSwatch.style.background = state.value;
+      modSwatch.classList.remove('special');
+      picker.value = rgbToHex(state.value);
+    } else {
+      modSwatch.style.background = '';
+      modSwatch.classList.add('special');
+    }
+    modCode.classList.toggle('dirty', state.value !== original);
+    tr.classList.toggle('dirty', state.value !== original || state.savedValue !== original);
+    renderFooter();
+  };
+
+  picker.oninput = () => {
+    state.value = hexToRgb(picker.value);
+    state.render();
+  };
+
+  modCode.onclick = () => copyText(state.value, modCode);
+
+  resetBtn.onclick = () => {
+    state.value = original;
+    state.render();
+  };
+
+  modCell.appendChild(modSwatch);
+  modCell.appendChild(modCode);
+  modCell.appendChild(resetBtn);
+  modTd.appendChild(modCell);
+  tr.appendChild(modTd);
+
+  rows.push(state);
+  return tr;
+}
+
+const saveBtn = document.getElementById('save');
+const resetAllBtn = document.getElementById('reset-all');
+const statusEl = document.getElementById('status');
+
+function unsavedRows() {
+  return rows.filter(s => s.value !== s.savedValue);
+}
+
+function renderFooter() {
+  const unsaved = unsavedRows().length;
+  const savedChanges = rows.filter(s => s.savedValue !== s.original).length;
+  saveBtn.disabled = unsaved === 0;
+  resetAllBtn.disabled = unsaved === 0 && savedChanges === 0;
+  const parts = [];
+  if (unsaved) parts.push(`${unsaved} unsaved`);
+  if (savedChanges) parts.push(`${savedChanges} saved to config`);
+  statusEl.textContent = parts.join(' · ');
+}
+
+saveBtn.onclick = async () => {
+  const pending = unsavedRows();
+  let ok = 0, failed = 0;
+  for (const s of pending) {
+    if (await saveToConfig(s.name, s.value)) {
+      s.savedValue = s.value;
+      ok++;
+    } else {
+      failed++;
+    }
+    s.render();
+  }
+  toast(failed ? `saved ${ok}, FAILED ${failed}` : `saved ${ok} color(s) to config.toml`);
+};
+
+resetAllBtn.onclick = async () => {
+  let reverted = 0, failed = 0;
+  for (const s of rows) {
+    s.value = s.original;
+    if (s.savedValue !== s.original) {
+      if (await saveToConfig(s.name, s.original)) {
+        s.savedValue = s.original;
+        reverted++;
+      } else {
+        failed++;
+      }
+    }
+    s.render();
+  }
+  if (failed) toast(`reset all: reverted ${reverted}, FAILED ${failed}`);
+  else if (reverted) toast(`reset all · reverted ${reverted} color(s) in config.toml`);
+  else toast('reset all');
+};
+
+const tbody = document.getElementById('rows');
+for (const [name, value] of Object.entries(window.COLORS)) {
+  tbody.appendChild(buildRow(name, value));
+}
+renderFooter();
+</script>
+</body>
+</html>

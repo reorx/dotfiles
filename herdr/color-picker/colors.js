@@ -1,0 +1,20 @@
+window.COLORS = {
+  "panel_bg": "rgb(24, 24, 37)",
+  "sidebar_bg": "reset",
+  "active_row_bg": "rgb(48, 48, 70)",
+  "selection_bg": "rgb(49, 50, 68)",
+  "surface0": "rgb(49, 50, 68)",
+  "surface1": "rgb(69, 71, 90)",
+  "surface_dim": "rgb(30, 30, 46)",
+  "overlay0": "rgb(108, 112, 134)",
+  "overlay1": "rgb(127, 132, 156)",
+  "text": "rgb(205, 214, 244)",
+  "subtext0": "rgb(166, 173, 200)",
+  "mauve": "rgb(203, 166, 247)",
+  "green": "rgb(166, 227, 161)",
+  "yellow": "rgb(249, 226, 175)",
+  "red": "rgb(243, 139, 168)",
+  "blue": "rgb(137, 180, 250)",
+  "teal": "rgb(148, 226, 213)",
+  "peach": "rgb(250, 179, 135)"
+};
