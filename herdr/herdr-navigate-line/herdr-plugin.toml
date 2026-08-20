@@ -26,6 +26,13 @@ title = "Line: word forward (alt+f)"
 command = ["sh", "send-keys.sh", "alt+f"]
 
 [[actions]]
+id = "break_pane"
+title = "Pane: break into new tab"
+description = "Move the focused pane into a new tab"
+contexts = ["pane"]
+command = ["sh", "break-pane.sh"]
+
+[[actions]]
 id = "create_workspace"
 title = "Workspace: create from directory prompt"
 command = ["sh", "open-create-workspace.sh"]

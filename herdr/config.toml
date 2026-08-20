@@ -88,3 +88,9 @@ type = "plugin_action"
 command = "navigate_line.create_workspace"
 description = "create workspace from directory prompt"
 
+[[keys.command]]
+key = "prefix+shift+b"
+type = "plugin_action"
+command = "navigate_line.break_pane"
+description = "break pane into new tab"
+

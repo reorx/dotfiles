@@ -6,9 +6,10 @@ pane. It solves the conflict between the Herdr prefix key (for example
 combo to a plugin action, and the action sends the real key to the shell
 with `pane.send_keys`.
 
-It also carries a small utility action, `create_workspace`, which works
-around the fact that a workspace CWD is fixed at creation time and does
-not follow later `cd` commands.
+It also carries two small utility actions: `break_pane`, which moves the
+focused pane into its own tab (tmux `break-pane`), and `create_workspace`,
+which works around the fact that a workspace CWD is fixed at creation time
+and does not follow later `cd` commands.
 
 ## Actions
 
@@ -18,6 +19,20 @@ not follow later `cd` commands.
 | `navigate_line.jump_end`     | `ctrl+e` | Jump to end of line     |
 | `navigate_line.word_back`    | `alt+b`  | Move one word back      |
 | `navigate_line.word_forward` | `alt+f`  | Move one word forward   |
+
+### `navigate_line.break_pane`
+
+Moves the pane the action was invoked from into a new tab and focuses it
+(the running process stays alive). Behavior follows tmux `break-pane`:
+
+- A pane that is already alone in its tab is left untouched, so no
+  single-pane tab is churned into another single-pane tab
+- A zoomed tab is unzoomed before the move
+
+Implemented in `break-pane.sh` with only the `herdr` CLI: it reads
+`herdr pane layout` to count panes and check zoom, then runs
+`herdr pane move <id> --new-tab --focus`. The empty source tab case does
+not need cleanup; Herdr closes a tab when its last pane leaves.
 
 ### `navigate_line.create_workspace`
 
@@ -71,6 +86,12 @@ key = "prefix+shift+n"
 type = "plugin_action"
 command = "navigate_line.create_workspace"
 description = "create workspace from directory prompt"
+
+[[keys.command]]
+key = "prefix+shift+b"
+type = "plugin_action"
+command = "navigate_line.break_pane"
+description = "break pane into new tab"
 ```
 
 Reload config (`prefix+shift+r`) after the edit.
