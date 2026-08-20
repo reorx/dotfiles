@@ -377,7 +377,7 @@ local plugins = {
       local map = function(mode, keys, func, desc)
         vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
       end
-      map('n', '<C-1>', '<cmd>NvimTreeFindFileToggle<CR>', 'Toggle Tree on current file')
+      map('n', '<leader>e', '<cmd>NvimTreeFindFileToggle<CR>', 'Toggle Tree on current file')
     end,
 
   },

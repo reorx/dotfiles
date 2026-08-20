@@ -269,6 +269,14 @@ map <C-p> :tabprevious<cr>
 inoremap <C-U> <C-G>u<C-U>
 inoremap <c-w> <c-g>u<c-w>
 
+" Ctrl+1..9 belong to herdr (terminal multiplexer). Modern terminals send them
+" to nvim as distinct keys (extended keyboard protocol); without a mapping nvim
+" falls back to the bare digit, which moves the cursor. Disable them entirely.
+for s:i in range(1, 9)
+  execute 'noremap <C-' . s:i . '> <Nop>'
+  execute 'inoremap <C-' . s:i . '> <Nop>'
+endfor
+
 
 " ============================================================================
 " Commands

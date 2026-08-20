@@ -24,3 +24,14 @@ command = ["sh", "send-keys.sh", "alt+b"]
 id = "word_forward"
 title = "Line: word forward (alt+f)"
 command = ["sh", "send-keys.sh", "alt+f"]
+
+[[actions]]
+id = "create_workspace"
+title = "Workspace: create from directory prompt"
+command = ["sh", "open-create-workspace.sh"]
+
+[[panes]]
+id = "create_workspace_prompt"
+title = "Create workspace"
+placement = "popup"
+command = ["sh", "create-workspace.sh"]
