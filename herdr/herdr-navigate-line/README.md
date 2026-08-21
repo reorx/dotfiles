@@ -52,6 +52,20 @@ notification and does not move focus.
 Implemented in `next-unread-agent.py`: it parses `herdr agent list`
 JSON, filters on `agent_status`, and calls `herdr agent focus <pane>`.
 
+### `navigate_line.pick_agent`
+
+Opens a popup that lists every agent as `title  [status]` (the focused
+agent is marked with `*`). Type to filter, press enter to focus the
+selected agent; `Esc`/`ctrl+c` cancels. Like `create_workspace`, the
+interactive part lives in a `[[panes]]` popup entrypoint
+(`agent_picker`); the action only opens that popup.
+
+Implementation: `format-agent-lines.py` turns `herdr agent list` JSON
+into tab-separated `pane_id\tlabel` lines; `agent-picker.sh` feeds them
+to `fzf` (`--with-nth 2..` hides the pane id), then focuses the
+selection with `herdr agent focus`. Without `fzf` it falls back to a
+numbered list and a `read` prompt.
+
 ### `navigate_line.create_workspace`
 
 Opens a popup pane that asks for the project directory, then runs
@@ -104,6 +118,12 @@ key = "prefix+u"
 type = "plugin_action"
 command = "navigate_line.next_unread_agent"
 description = "focus next unread/blocked agent"
+
+[[keys.command]]
+key = "ctrl+'"
+type = "plugin_action"
+command = "navigate_line.pick_agent"
+description = "pick agent from filterable list"
 
 [[keys.command]]
 key = "prefix+shift+n"

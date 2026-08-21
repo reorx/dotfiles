@@ -39,9 +39,21 @@ description = "Focus the next agent that is done (finished, unread) or blocked (
 command = ["python3", "next-unread-agent.py"]
 
 [[actions]]
+id = "pick_agent"
+title = "Agent: pick from list"
+description = "Open a popup listing every agent as title + status; filter by typing, focus the selection on enter"
+command = ["sh", "open-agent-picker.sh"]
+
+[[actions]]
 id = "create_workspace"
 title = "Workspace: create from directory prompt"
 command = ["sh", "open-create-workspace.sh"]
+
+[[panes]]
+id = "agent_picker"
+title = "Agents"
+placement = "popup"
+command = ["sh", "agent-picker.sh"]
 
 [[panes]]
 id = "create_workspace_prompt"

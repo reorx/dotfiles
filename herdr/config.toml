@@ -55,8 +55,8 @@ split_vertical =  "prefix+|"
 zoom = "prefix+m"
 
 # agent
-next_agent = ["ctrl+;"]
-previous_agent = ["ctrl+'"]
+next_agent = ["prefix+;"]
+previous_agent = ["prefix+'"]
 
 # worktree
 remove_worktree = "prefix+shift+d"
@@ -90,10 +90,16 @@ command = "navigate_line.create_workspace"
 description = "create workspace from directory prompt"
 
 [[keys.command]]
-key = "prefix+u"
+key = "ctrl+;"
 type = "plugin_action"
 command = "navigate_line.next_unread_agent"
 description = "focus next unread/blocked agent"
+
+[[keys.command]]
+key = "ctrl+'"
+type = "plugin_action"
+command = "navigate_line.pick_agent"
+description = "pick agent from filterable list"
 
 [[keys.command]]
 key = "prefix+/"
