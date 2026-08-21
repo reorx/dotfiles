@@ -34,6 +34,24 @@ Implemented in `break-pane.sh` with only the `herdr` CLI: it reads
 `herdr pane move <id> --new-tab --focus`. The empty source tab case does
 not need cleanup; Herdr closes a tab when its last pane leaves.
 
+### `navigate_line.next_unread_agent`
+
+Focuses the next agent that needs attention:
+
+- `done` — the agent finished and the user has not seen the result yet
+  (Herdr clears `done` to `idle` when the pane is focused)
+- `blocked` — the agent waits for user input (permission prompt or
+  question)
+
+Agents that are `working` or `idle` (already seen) are skipped. When the
+focused pane is itself a candidate, the action picks the next candidate
+in agent-list order and wraps around, so repeated presses cycle through
+all agents that need attention. With no candidate, it shows a
+notification and does not move focus.
+
+Implemented in `next-unread-agent.py`: it parses `herdr agent list`
+JSON, filters on `agent_status`, and calls `herdr agent focus <pane>`.
+
 ### `navigate_line.create_workspace`
 
 Opens a popup pane that asks for the project directory, then runs
@@ -80,6 +98,12 @@ key = "prefix+e"
 type = "plugin_action"
 command = "navigate_line.jump_end"
 description = "send ctrl+e to pane"
+
+[[keys.command]]
+key = "prefix+u"
+type = "plugin_action"
+command = "navigate_line.next_unread_agent"
+description = "focus next unread/blocked agent"
 
 [[keys.command]]
 key = "prefix+shift+n"

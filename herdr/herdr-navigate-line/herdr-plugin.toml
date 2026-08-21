@@ -33,6 +33,12 @@ contexts = ["pane"]
 command = ["sh", "break-pane.sh"]
 
 [[actions]]
+id = "next_unread_agent"
+title = "Agent: focus next unread/blocked"
+description = "Focus the next agent that is done (finished, unread) or blocked (waiting for a reply); working and idle agents are skipped"
+command = ["python3", "next-unread-agent.py"]
+
+[[actions]]
 id = "create_workspace"
 title = "Workspace: create from directory prompt"
 command = ["sh", "open-create-workspace.sh"]
