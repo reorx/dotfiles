@@ -222,6 +222,9 @@ endfunction
 "   - ghostty: keybind = cmd+c=esc:0   (see ghostty/config)
 " Terminal-independent alternative: <leader>y (defined below) yanks to the system
 " clipboard with no terminal cooperation (works over ssh/tmux/any terminal).
+" In terminal nvim, "+y goes through the OSC 52 clipboard provider (see
+" init.lua), so the copy escapes tmux/mosh and lands in the local clipboard;
+" Neovide keeps the default pbcopy provider.
 " source: https://github.com/neovim/neovim/issues/5052#issuecomment-232083842
 vnoremap <M-0> "+y
 
