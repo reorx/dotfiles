@@ -33,6 +33,12 @@ contexts = ["pane"]
 command = ["sh", "break-pane.sh"]
 
 [[actions]]
+id = "new_tab_quick"
+title = "Tab: create with ordinal name"
+description = "Create a tab in the current workspace without a name prompt; the label defaults to the tab ordinal"
+command = ["sh", "new-tab-quick.sh"]
+
+[[actions]]
 id = "next_unread_agent"
 title = "Agent: focus next unread/blocked"
 description = "Focus the next agent that is done (finished, unread) or blocked (waiting for a reply); working and idle agents are skipped"

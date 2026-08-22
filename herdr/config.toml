@@ -103,6 +103,12 @@ command = "navigate_line.pick_agent"
 description = "pick agent from filterable list"
 
 [[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "navigate_line.new_tab_quick"
+description = "create tab named by ordinal"
+
+[[keys.command]]
 key = "prefix+/"
 type = "plugin_action"
 command = "navigate_line.break_pane"

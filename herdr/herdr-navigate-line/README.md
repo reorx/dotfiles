@@ -34,6 +34,14 @@ Implemented in `break-pane.sh` with only the `herdr` CLI: it reads
 `herdr pane move <id> --new-tab --focus`. The empty source tab case does
 not need cleanup; Herdr closes a tab when its last pane leaves.
 
+### `navigate_line.new_tab_quick`
+
+Creates a tab in the current workspace and focuses it, with no name
+prompt. The label defaults to the tab ordinal: existing tab count in the
+workspace + 1. Implemented in `new-tab-quick.sh` with only the `herdr`
+CLI: it counts tabs from `herdr tab list --workspace`, then runs
+`herdr tab create --workspace <id> --label <n> --focus`.
+
 ### `navigate_line.next_unread_agent`
 
 Focuses the next agent that needs attention:
@@ -124,6 +132,12 @@ key = "ctrl+'"
 type = "plugin_action"
 command = "navigate_line.pick_agent"
 description = "pick agent from filterable list"
+
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "navigate_line.new_tab_quick"
+description = "create tab named by ordinal"
 
 [[keys.command]]
 key = "prefix+shift+n"
