@@ -40,7 +40,9 @@ packages:
 
   ## Frontend skills
   - repo: https://github.com/pbakaus/impeccable
-    skills_dir: source
+    # upstream restructured: compiled skill now lives in per-harness dirs
+    # (.claude/skills, .agents/skills, ...); "source" dir no longer exists
+    skills_dir: .claude/skills
     agents:
       includes:
         - claude
