@@ -188,6 +188,18 @@ function tgz-create() {
     fi
 }
 
+function shelf() {
+    open -a Dropover $@
+}
+
+function echo-server() {
+    local port="${1:-8080}"
+    echo "Echo server running on port $port"
+    while true; do echo -e "HTTP/1.1 200 OK\r\n\r\nOK" | nc -l "$port" | tee /dev/stderr; done
+}
+
+# claude code
+
 function ccglm() {
     ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic \
         ANTHROPIC_AUTH_TOKEN=$GLM_API_TOKEN \
@@ -201,6 +213,9 @@ function ccglm() {
 function cl() {
     claude --dangerously-skip-permissions $@
 }
+function clfast() {
+    claude --dangerously-skip-permissions --settings '{"fastMode": true}' $@
+}
 function clc() {
     claude --dangerously-skip-permissions --continue $@
 }
@@ -210,13 +225,4 @@ function clr() {
 function fable() {
     CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1 \
         claude --dangerously-skip-permissions --model fable --effort high $@
-}
-function shelf() {
-    open -a Dropover $@
-}
-
-function echo-server() {
-    local port="${1:-8080}"
-    echo "Echo server running on port $port"
-    while true; do echo -e "HTTP/1.1 200 OK\r\n\r\nOK" | nc -l "$port" | tee /dev/stderr; done
 }
