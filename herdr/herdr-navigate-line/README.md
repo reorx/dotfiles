@@ -37,10 +37,11 @@ not need cleanup; Herdr closes a tab when its last pane leaves.
 ### `navigate_line.new_tab_quick`
 
 Creates a tab in the current workspace and focuses it, with no name
-prompt. The label defaults to the tab ordinal: existing tab count in the
-workspace + 1. Implemented in `new-tab-quick.sh` with only the `herdr`
-CLI: it counts tabs from `herdr tab list --workspace`, then runs
-`herdr tab create --workspace <id> --label <n> --focus`.
+prompt. No label is passed: Herdr numbers unlabeled tabs by position, so
+the ordinal keeps following the tab's position after other tabs are
+inserted or closed (an explicit `--label <n>` would go stale).
+Implemented in `new-tab-quick.sh` as a single
+`herdr tab create --workspace <id> --focus`.
 
 ### `navigate_line.new_tab_adjacent`
 

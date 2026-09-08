@@ -35,7 +35,7 @@ command = ["sh", "break-pane.sh"]
 [[actions]]
 id = "new_tab_quick"
 title = "Tab: create with ordinal name"
-description = "Create a tab in the current workspace without a name prompt; the label defaults to the tab ordinal"
+description = "Create a tab in the current workspace without a name prompt; the label is the auto ordinal that follows the tab position"
 command = ["sh", "new-tab-quick.sh"]
 
 [[actions]]

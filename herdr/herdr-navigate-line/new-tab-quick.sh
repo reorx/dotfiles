@@ -1,6 +1,7 @@
 #!/bin/sh
-# Create a tab in the current workspace without a name prompt. The label
-# defaults to the tab ordinal (existing tab count + 1).
+# Create a tab in the current workspace without a name prompt. No label is
+# passed: Herdr numbers unlabeled tabs by position, so the ordinal keeps
+# following the tab's position after other tabs are inserted or closed.
 set -eu
 
 herdr="${HERDR_BIN_PATH:-herdr}"
@@ -10,9 +11,4 @@ if [ -z "${HERDR_WORKSPACE_ID:-}" ]; then
   exit 1
 fi
 
-# The tab-list JSON has one "tab_id" key per tab in the workspace.
-tabs=$("$herdr" tab list --workspace "$HERDR_WORKSPACE_ID")
-count=$(printf '%s' "$tabs" | grep -o '"tab_id"' | wc -l)
-label=$((count + 1))
-
-exec "$herdr" tab create --workspace "$HERDR_WORKSPACE_ID" --label "$label" --focus
+exec "$herdr" tab create --workspace "$HERDR_WORKSPACE_ID" --focus
