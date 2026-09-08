@@ -42,6 +42,18 @@ workspace + 1. Implemented in `new-tab-quick.sh` with only the `herdr`
 CLI: it counts tabs from `herdr tab list --workspace`, then runs
 `herdr tab create --workspace <id> --label <n> --focus`.
 
+### `navigate_line.new_tab_adjacent`
+
+Creates a tab right after the current one and focuses it, the way a
+browser opens a link in a new tab next to the current one. `herdr tab
+create` always appends at the end and the CLI has no `tab move`, so
+`new-tab-adjacent.py` talks to the socket (`HERDR_SOCKET_PATH`) directly:
+`tab.list` to find the current tab's position, `tab.create` with
+`focus`, then `tab.move` with `insert_index` = current position + 1 (a
+0-based index; skipped when the current tab is already last). No label is
+passed: Herdr numbers unlabeled tabs by position, so the ordinals stay in
+order after the insert.
+
 ### `navigate_line.next_unread_agent`
 
 Focuses the next agent that needs attention:
@@ -138,6 +150,12 @@ key = "prefix+t"
 type = "plugin_action"
 command = "navigate_line.new_tab_quick"
 description = "create tab named by ordinal"
+
+[[keys.command]]
+key = "prefix+shift+t"
+type = "plugin_action"
+command = "navigate_line.new_tab_adjacent"
+description = "create tab next to current"
 
 [[keys.command]]
 key = "prefix+shift+n"

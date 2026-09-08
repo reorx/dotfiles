@@ -39,6 +39,12 @@ description = "Create a tab in the current workspace without a name prompt; the 
 command = ["sh", "new-tab-quick.sh"]
 
 [[actions]]
+id = "new_tab_adjacent"
+title = "Tab: create next to current"
+description = "Create a tab right after the current one (instead of at the end) and focus it; the label is the auto ordinal"
+command = ["python3", "new-tab-adjacent.py"]
+
+[[actions]]
 id = "next_unread_agent"
 title = "Agent: focus next unread/blocked"
 description = "Focus the next agent that is done (finished, unread) or blocked (waiting for a reply); working and idle agents are skipped"

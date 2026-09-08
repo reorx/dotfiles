@@ -109,6 +109,12 @@ command = "navigate_line.new_tab_quick"
 description = "create tab named by ordinal"
 
 [[keys.command]]
+key = "prefix+shift+t"
+type = "plugin_action"
+command = "navigate_line.new_tab_adjacent"
+description = "create tab next to current"
+
+[[keys.command]]
 key = "prefix+/"
 type = "plugin_action"
 command = "navigate_line.break_pane"
