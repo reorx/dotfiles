@@ -42,7 +42,7 @@ __pycache__/
 # Node
 node_modules/
 
-tmp/
+/tmp/
 
 # process-compose port
 .pc_env
