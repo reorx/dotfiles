@@ -384,22 +384,28 @@ local plugins = {
 
   -- Text rendering
   {
+    -- main 分支是完全重写的版本, master 分支已冻结且不兼容 nvim 0.12;
+    -- 编译 parser 需要 tree-sitter CLI (brew install tree-sitter-cli)
     'nvim-treesitter/nvim-treesitter',
-    branch = 'master',
+    branch = 'main',
     lazy = false,
     build = ':TSUpdate',
-    main = 'nvim-treesitter.configs', -- Sets main module to use for opts
-    opts = {
-      ensure_installed = {
+    config = function()
+      require('nvim-treesitter').install({
         'comment', "lua", "vim", "vimdoc", "markdown", "markdown_inline",
         "go", "python", "javascript", 'typescript', 'tsx',
-      },
-      --auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-    },
+      })
+      -- main 分支不再自动开启高亮: 有 parser 的 filetype 都启用 treesitter 高亮
+      vim.api.nvim_create_autocmd('FileType', {
+        group = vim.api.nvim_create_augroup('treesitter_highlight', { clear = true }),
+        callback = function(args)
+          local lang = vim.treesitter.language.get_lang(args.match)
+          if lang and vim.treesitter.language.add(lang) then
+            vim.treesitter.start(args.buf, lang)
+          end
+        end,
+      })
+    end,
   },
   {
     -- NOTE: use either this one or dropbar, depending on your preference for winbar
