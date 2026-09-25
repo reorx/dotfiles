@@ -162,8 +162,9 @@ return {
 
           map("<leader>a", vim.lsp.buf.code_action, 'Code [A]ction')
 
-          map("<leader>[", vim.diagnostic.goto_prev, 'Prev Diagnostic')
-          map("<leader>]", vim.diagnostic.goto_next, 'Next Diagnostic')
+          -- no float needed: virtual_lines shows the diagnostic of the line jumped to
+          map("<leader>[", function() vim.diagnostic.jump({ count = -1 }) end, 'Prev Diagnostic')
+          map("<leader>]", function() vim.diagnostic.jump({ count = 1 }) end, 'Next Diagnostic')
 
           --map("<leader>l", function() vim.diagnostic.setqflist({open = true}) end, '[L]ist Diagnostics')
           map("<leader>l", telescope_builtin.diagnostics, '[L]ist Diagnostics')
