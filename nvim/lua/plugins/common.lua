@@ -402,6 +402,12 @@ local plugins = {
           local lang = vim.treesitter.language.get_lang(args.match)
           if lang and vim.treesitter.language.add(lang) then
             vim.treesitter.start(args.buf, lang)
+            -- treesitter 折叠 (window-local, 同 :setlocal); 没有 folds query 的语言
+            -- (如 vimdoc) 保留 nvimrc 里全局的 foldmethod=indent 兜底
+            if vim.treesitter.query.get(lang, 'folds') then
+              vim.wo[0][0].foldmethod = 'expr'
+              vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            end
           end
         end,
       })
