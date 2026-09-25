@@ -83,26 +83,7 @@ return {
         },
       })
 
-      -- Configure LSP servers
-      local servers = {
-        pyright = {
-          -- see :help lsp-config
-          -- cmd = { ... },
-          -- filetypes = { ... },
-          -- capabilities = {},
-          settings = {
-            python = {
-              analysis = {
-                -- disable auto import so that it won't complete from the whole library
-                autoImportCompletions = false,
-              }
-            }
-          },
-        },
-      }
-      for server_name, config in pairs(servers) do
-        vim.lsp.config(server_name, config)
-      end
+      -- LSP server configs live in nvim/lsp/<name>.lua, see :help lsp-config
 
       -- nvim's default gr* LSP mappings make the `gr` mapping below wait for
       -- timeoutlen, remove the normal mode ones (x mode gra doesn't conflict)
