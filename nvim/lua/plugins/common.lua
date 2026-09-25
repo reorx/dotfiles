@@ -11,7 +11,7 @@ local plugins = {
     config = function()
       require('lualine').setup({
         options = {
-          theme = 'catppuccin',
+          theme = 'auto',
           --component_separators = { left = '', right = ''},
           component_separators = { left = '│', right = '│'},
           --section_separators = { left = '', right = ''},
@@ -19,7 +19,7 @@ local plugins = {
         },
         sections = {
           lualine_a = {'mode'},
-          lualine_b = {"require'lsp-status'.status()", 'diagnostics'},
+          lualine_b = {'lsp_status', 'diagnostics'},
           lualine_c = {'searchcount'},
           lualine_x = {'encoding', 'filetype', 'location' },
           lualine_y = {},
@@ -505,31 +505,29 @@ local plugins = {
         }
       })
 
-      -- NOTE c-/ works for iTerm, c-_ works for tmux in iTerm
-      vim.cmd([[
-        noremap <c-/> :Telescope find_files<cr>
-        noremap <c-_> :Telescope find_files<cr>
-        noremap <c-f> :Telescope current_buffer_fuzzy_find<cr>
-        noremap <c-t> :Telescope<cr>
-      ]])
-
       local builtin = require('telescope.builtin')
       local map = function(mode, keys, func, desc)
         vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
       end
+
+      -- NOTE c-/ works for iTerm, c-_ works for tmux in iTerm
+      map('n', '<C-/>', '<cmd>Telescope find_files<cr>', 'Find files')
+      map('n', '<C-_>', '<cmd>Telescope find_files<cr>', 'Find files')
+      map('n', '<C-f>', '<cmd>Telescope current_buffer_fuzzy_find<cr>', 'Find string in current buffer')
+      map('n', '<C-t>', '<cmd>Telescope<cr>', 'Telescope pickers')
 
       -- Text search
 
       map('n', '<C-\\>', builtin.live_grep, 'Live grep string')
 
       map('n', '<leader>F', builtin.grep_string, '[F]ind string globally')
-      map('v', '<leader>F', function()
+      map('x', '<leader>F', function()
         local text = vim.getVisualSelection()
         builtin.grep_string({ default_text = text })
       end, '[F]ind string')
 
       map('n', '<leader>f', builtin.current_buffer_fuzzy_find, '[F]ind string in current buffer')
-      map('v', '<leader>f', function()
+      map('x', '<leader>f', function()
         local text = vim.getVisualSelection()
         builtin.current_buffer_fuzzy_find({ default_text = text })
       end, '[F]ind string in current buffer')

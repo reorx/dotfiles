@@ -60,9 +60,9 @@ return {
       'neovim/nvim-lspconfig',
     },
 
-    config = function()
+    config = function(_, opts)
       -- Let mason setup lsp
-      require("mason-lspconfig").setup()
+      require("mason-lspconfig").setup(opts)
 
       -- Auto show diagnostic when cursor over a place with problem
       vim.cmd([[ set updatetime=1000 ]]) -- set CursorHold wait time to 1s
@@ -125,6 +125,14 @@ return {
       }
       for server_name, config in pairs(servers) do
         vim.lsp.config(server_name, config)
+      end
+
+      -- nvim's default gr* LSP mappings make the `gr` mapping below wait for
+      -- timeoutlen, remove the normal mode ones (x mode gra doesn't conflict)
+      for _, lhs in ipairs({ 'grr', 'grn', 'gra', 'gri', 'grt', 'grx' }) do
+        if vim.fn.maparg(lhs, 'n') ~= '' then
+          vim.keymap.del('n', lhs)
+        end
       end
 
       vim.api.nvim_create_autocmd('LspAttach', {

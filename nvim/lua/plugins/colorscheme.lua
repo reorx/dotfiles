@@ -28,6 +28,14 @@ local plugins = {
         custom_highlights = function(C)
           -- colors: https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md
           return {
+            -- line number (gray25 on gray13)
+            LineNr = { fg = '#404040', bg = '#212121' },
+
+            -- vim-gitgutter
+            GitGutterAdd = { fg = '#009900' },
+            GitGutterChange = { fg = '#bbbb00' },
+            GitGutterDelete = { fg = '#ff2222' },
+
             -- tabby
             TabLine = { bg = C.mantle },
             TabLineSel = { bg = C.surface0, fg = C.text },

@@ -89,6 +89,7 @@ set laststatus=2 " The value of this option influences when the last window will
 "                    1: only if there are at least two windows
 "                    2: always
 set cursorline " Highlight the screen line of the cursor with CursorLine
+set signcolumn=yes " always show the sign column so gitgutter signs don't shift the text
 set wildmenu " When 'wildmenu' is on, command-line completion operates in an enhanced
 "              mode.  On pressing 'wildchar' (usually <Tab>) to invoke completion,
 "              the possible matches are shown just above the command line, with the
@@ -105,8 +106,10 @@ set completeopt=menuone,longest
 
 " Storage
 " centralize backups, swapfiles and undo history
-set backupdir=~/.cache/nvim/backups
-set directory=~/.cache/nvim/swaps
+" trailing // makes swap/backup file names contain the full path, so files with
+" the same name in different directories don't collide
+set backupdir=~/.cache/nvim/backups//
+set directory=~/.cache/nvim/swaps//
 set undodir=~/.cache/nvim/undos
 set undofile
 
@@ -170,9 +173,6 @@ endfunction
 " Highlight
 " ============================================================================
 
-" Line number
-highlight LineNr term=bold gui=NONE guifg=gray25 guibg=gray13
-
 " Highlight TODO, FIXME, NOTE, etc.
 "autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
 "autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|SECTION\)')
@@ -226,11 +226,11 @@ endfunction
 " init.lua), so the copy escapes tmux/mosh and lands in the local clipboard;
 " Neovide keeps the default pbcopy provider.
 " source: https://github.com/neovim/neovim/issues/5052#issuecomment-232083842
-vnoremap <M-0> "+y
+xnoremap <M-0> "+y
 
 " nvim's default Y is y$ (no line feed)
 " https://www.reddit.com/r/neovim/comments/petq61/neovim_060_y_not_yanking_line_but_to_end_of_line/
-map Y yy
+nnoremap Y yy
 
 " paste without overwritting register
 " https://stackoverflow.com/q/290465/596206
@@ -247,12 +247,12 @@ inoremap <F5> <C-o>:syntax sync fromstart<CR>
 let mapleader = " "
 
 " copy visual selection to the system clipboard (terminal-independent; see <M-0> above)
-vnoremap <leader>y "+y
+xnoremap <leader>y "+y
 
-noremap <leader>ss :call StripWhitespace()<CR>
+nnoremap <leader>ss :call StripWhitespace()<CR>
 
 " Save a file as root (,W)
-noremap <leader>W :w !sudo tee % > /dev/null<CR>
+nnoremap <leader>W :w !sudo tee % > /dev/null<CR>
 
 " easier navigation between split windows
 nnoremap <c-j> <c-w>j
@@ -260,11 +260,14 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
 
-map tn :tabnew<cr>
-map tc :tabclose<cr>
+" clear search highlight (<C-l> is taken by window navigation)
+nnoremap <Esc> <cmd>nohlsearch<CR>
 
-map <C-n> :tabnext<cr>
-map <C-p> :tabprevious<cr>
+nnoremap <leader>tn :tabnew<CR>
+nnoremap <leader>tc :tabclose<CR>
+
+nnoremap <C-n> :tabnext<cr>
+nnoremap <C-p> :tabprevious<cr>
 "nmap <Leader>n :tabn<CR>
 "nmap <Leader>p :tabp<CR>
 
