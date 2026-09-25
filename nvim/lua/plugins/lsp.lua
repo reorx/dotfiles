@@ -64,33 +64,6 @@ return {
       -- Let mason setup lsp
       require("mason-lspconfig").setup(opts)
 
-      -- Auto show diagnostic when cursor over a place with problem
-      vim.cmd([[ set updatetime=1000 ]]) -- set CursorHold wait time to 1s
-      vim.api.nvim_create_autocmd({ "CursorHold" }, {
-        pattern = "*",
-        callback = function()
-          -- Get all floating windows
-          local float_wins = vim.tbl_filter(function(win)
-            return vim.api.nvim_win_get_config(win).relative ~= ""
-          end, vim.api.nvim_list_wins())
-          -- Only open if no floating windows exist
-          if #float_wins == 0 then
-            return
-          end
-          vim.diagnostic.open_float({
-            scope = "line",
-            --focusable = false,
-            --close_events = {
-            --  "CursorMoved",
-            --  "CursorMovedI",
-            --  "BufHidden",
-            --  "InsertCharPre",
-            --  "WinLeave",
-            --},
-          })
-        end
-      })
-
       -- Setup lsp diagnostic
       -- (if set in nvim-lspconfig opts, virtual_text does not work)
       vim.diagnostic.config({
@@ -100,7 +73,11 @@ return {
           source = 'if_many'
         },
         underline = { severity = vim.diagnostic.severity.ERROR },
+        -- the cursor line shows full diagnostics as lines below it,
+        -- other lines keep the short eol text (current_line = false skips the cursor line)
+        virtual_lines = { current_line = true },
         virtual_text = {
+          current_line = false,
           virt_text_pos = 'eol',
           prefix = '←',
         },
