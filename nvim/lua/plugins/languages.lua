@@ -16,10 +16,6 @@ return {
     ft = 'python',
   },
   {
-    'hdima/python-syntax',
-    ft = 'python',
-  },
-  {
     'tmhedberg/SimpylFold',
     ft = 'python',
   },
@@ -48,12 +44,6 @@ return {
   {
     'mattn/emmet-vim',
     ft = 'html',
-  },
-
-  -- JSX
-  {
-    'maxmellon/vim-jsx-pretty',
-    ft = { 'javascript', 'javascriptreact', 'typescriptreact' },
   },
 
   -- Protocol Buffers

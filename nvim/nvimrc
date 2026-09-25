@@ -2,13 +2,6 @@
 " UI
 " ============================================================================
 
-" Should at the top since it will affect bundles.vim (maybe?)
-if $TERM == "xterm-256color"
-    set t_Co=256
-elseif $TERM == "screen-256color"
-    set t_Co=256
-endif
-
 if has("termguicolors")
     set termguicolors
 endif
@@ -22,31 +15,13 @@ set colorcolumn=79
 " ============================================================================
 
 " Encoding
-set encoding=utf-8
-set fileencodings=utf-8,chinese,latin-1
-set fileencoding=utf-8
-set fencs=utf-8,chinese
-
-"syntax on
-filetype on
-
-set history=100
-set nobackup
-set autoread " When a file has been detected to have been changed outside of Vim and
-"              it has not been changed inside of Vim, automatically read it again.
-"              When the file has been deleted this is not done.
-
-set ff=unix
-set backspace=indent,eol,start
+set fileencodings=utf-8,chinese,latin1
 
 " Indent
-set smarttab " a <Tab> in front of a line inserts blanks according to
-"              'shiftwidth'.  'tabstop' or 'softtabstop' is used in other places
 set shiftwidth=4 " Number of spaces to use for each step of (auto)indent.
 set tabstop=4 " Number of spaces that a <Tab> in the file counts for.
 set softtabstop=4  " Number of spaces that a <Tab> counts for while performing editing
 "                    operations, like inserting a <Tab> or using <BS>.
-set autoindent " Copy indent from current line when starting a new line
 set expandtab " In Insert mode: Use the appropriate number of spaces to insert a
 "               <Tab>.  Spaces are used in indents with the '>' and '<' commands and
 "               when 'autoindent' is on.  To insert a real tab when 'expandtab' is
@@ -54,14 +29,8 @@ set expandtab " In Insert mode: Use the appropriate number of spaces to insert a
 "               Set 'tabstop' and 'shiftwidth' to whatever you prefer and use
 "               'expandtab'.  This way you will always insert spaces.  The
 "               formatting will never be messed up when 'tabstop' is changed.
-set smartindent " Do smart autoindenting when starting a new line.  Works for C-like
-"                 programs, but can also be used for other languages.  'cindent' does
-"                 something like this, works better in most cases, but is more strict
-inoremap # X<BS>#
 
 " Search
-set hlsearch
-set incsearch
 set smartcase
 set ignorecase
 set scrolloff=5
@@ -79,23 +48,10 @@ set nofoldenable
 
 " Display
 "set ruler " Show the line and column number of the cursor position, separated by a comma.
-set showcmd " Show (partial) command in the last line of the screen.
-set cmdheight=1 " Number of screen lines to use for the command-line.
 set relativenumber " relative number
 set number " set `number` with `relativenumber` enables hybrid number
-set laststatus=2 " The value of this option influences when the last window will have a
-"                  status line:
-"                    0: never
-"                    1: only if there are at least two windows
-"                    2: always
 set cursorline " Highlight the screen line of the cursor with CursorLine
 set signcolumn=yes " always show the sign column so gitgutter signs don't shift the text
-set wildmenu " When 'wildmenu' is on, command-line completion operates in an enhanced
-"              mode.  On pressing 'wildchar' (usually <Tab>) to invoke completion,
-"              the possible matches are shown just above the command line, with the
-"              first match highlighted (overwriting the status line, if there is
-"              one).  Keys that show the previous/next match, such as <Tab> or
-"              CTRL-P/CTRL-N, cause the highlight to move to the appropriate match.
 "set wildchar=
 "set wildmode=
 
@@ -114,36 +70,42 @@ set undodir=~/.cache/nvim/undos
 set undofile
 
 " File Specials
-"autocmd FileType text setlocal textwidth=80
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
-autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
-autocmd FileType typescriptreact setlocal shiftwidth=2 tabstop=2
-autocmd FileType json setlocal shiftwidth=2 tabstop=2
-autocmd FileType crontab setlocal nowritebackup
-autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 indentexpr=
-autocmd FileType lua setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 indentexpr=
-autocmd FileType scss setlocal shiftwidth=2 tabstop=2 indentexpr=
-autocmd FileType pico8 setlocal noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
+augroup file_specials
+  autocmd!
+  "autocmd FileType text setlocal textwidth=80
+  autocmd FileType javascript setlocal shiftwidth=2 tabstop=2
+  autocmd FileType typescript setlocal shiftwidth=2 tabstop=2
+  autocmd FileType typescriptreact setlocal shiftwidth=2 tabstop=2
+  autocmd FileType json setlocal shiftwidth=2 tabstop=2
+  autocmd FileType crontab setlocal nowritebackup
+  autocmd FileType yaml setlocal shiftwidth=2 tabstop=2 indentexpr=
+  autocmd FileType lua setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+  autocmd FileType html setlocal shiftwidth=2 tabstop=2 indentexpr=
+  autocmd FileType scss setlocal shiftwidth=2 tabstop=2 indentexpr=
+  autocmd FileType pico8 setlocal noexpandtab shiftwidth=2 tabstop=2 softtabstop=2
 
-" show vim help in vertical split
-autocmd FileType help wincmd L
+  " show vim help in vertical split
+  autocmd FileType help wincmd L
 
-"autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
-au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
-au BufRead,BufNewFile *.conf set ft=dosini
-au BufRead,BufNewFile *.pac set ft=javascript
-autocmd BufRead,BufNewFile *gitconfig setlocal noexpandtab
+  "autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+  au BufRead,BufNewFile */nginx*/*.conf set ft=nginx
+  au BufRead,BufNewFile */supervisor/*.conf set ft=dosini
+  au BufRead,BufNewFile *.conf set ft=dosini
+  au BufRead,BufNewFile *.pac set ft=javascript
+  autocmd BufRead,BufNewFile *gitconfig setlocal noexpandtab
+augroup END
 
 
 " When editing a file, always jump to the last cursor position
-autocmd BufReadPost *
-      \ if ! exists("g:leave_my_cursor_position_alone") |
-      \     if line("'\"") > 0 && line ("'\"") <= line("$") |
-      \         exe "normal g'\"" |
-      \     endif |
-      \ endif
+augroup restore_cursor
+  autocmd!
+  autocmd BufReadPost *
+        \ if ! exists("g:leave_my_cursor_position_alone") |
+        \     if line("'\"") > 0 && line ("'\"") <= line("$") |
+        \         exe "normal g'\"" |
+        \     endif |
+        \ endif
+augroup END
 
 " Toggles between hybrid and absolute line numbers automatically
 " https://github.com/jeffkreeftmeijer/vim-numbertoggle
@@ -163,7 +125,10 @@ set shellpipe=&>
 let g:netrw_liststyle = 3
 
 " quickfix list auto height
-au FileType qf call AdjustWindowHeight(3, 10)
+augroup qf_height
+  autocmd!
+  autocmd FileType qf call AdjustWindowHeight(3, 10)
+augroup END
 function! AdjustWindowHeight(minheight, maxheight)
   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
@@ -184,7 +149,7 @@ endfunction
 "highlight DiffText   cterm=bold ctermfg=10 ctermbg=88 gui=none guifg=bg guibg=Red
 
 " tab characters display dot
-set list!
+set list
 set listchars=tab:>-
 "	<- a tab char
 
@@ -239,10 +204,6 @@ xnoremap p pgvy
 " select just pasted text
 nnoremap vy `[v`]
 
-" Fix syntax highlighting
-noremap <F5> <Esc>:syntax sync fromstart<CR>
-inoremap <F5> <C-o>:syntax sync fromstart<CR>
-
 "let mapleader = "\\"
 let mapleader = " "
 
@@ -270,10 +231,6 @@ nnoremap <C-n> :tabnext<cr>
 nnoremap <C-p> :tabprevious<cr>
 "nmap <Leader>n :tabn<CR>
 "nmap <Leader>p :tabp<CR>
-
-" recover from accidental Ctrl-U
-inoremap <C-U> <C-G>u<C-U>
-inoremap <c-w> <c-g>u<c-w>
 
 " Ctrl+1..9 belong to herdr (terminal multiplexer). Modern terminals send them
 " to nvim as distinct keys (extended keyboard protocol); without a mapping nvim
@@ -313,22 +270,6 @@ endfu
 com! -nargs=1 SetTabstop call SetTabstop(<f-args>)
 
 
-" Get visual selected text in vim, the only useful answer on the Internet:
-" https://stackoverflow.com/a/6271254/596206
-function! GetVisualSelection()
-    " Why is this not a built-in Vim script function?!
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
-endfunction
-
-
 " Spell check
 " http://vimdoc.sourceforge.net/htmldoc/spell.html
 " http://vim.wikia.com/wiki/Toggle_spellcheck_with_function_keys
@@ -336,14 +277,6 @@ func! ToggleSpell()
     execute "setlocal spell! spelllang=en_us"
 endfu
 com! ToggleSpell call ToggleSpell()
-
-
-func! Hello(who)
-    if a:who=='world'
-        echo "Hello ".a:who
-    endif
-endfu
-com! -nargs=1 Hello call Hello(<f-args>)
 
 
 " Snippets (deprecated since using UltiSnips)
@@ -354,21 +287,6 @@ com! Noqa call setline('.', getline('.') . '  # NOQA')
 
 
 " Edit configs
-let $MYVIMRC='~/.config/nvim/nvimrc'
-let $MYPLUGS='~/.config/nvim/lua/plugins'
-let $MYLAZY='~/.config/nvim/lua/config/lazy.lua'
-
-func! MyVimrc()
-    execute "edit $MYVIMRC"
-endfu
-com! MyVimrc call MyVimrc()
-
-func! MyPlugs()
-    execute "edit $MYPLUGS"
-endfu
-com! MyPlugs call MyPlugs()
-
-func! MyLazy()
-    execute "edit $MYLAZY"
-endfu
-com! MyLazy call MyLazy()
+com! MyVimrc execute 'edit' fnameescape(stdpath('config') . '/nvimrc')
+com! MyPlugs execute 'edit' fnameescape(stdpath('config') . '/lua/plugins')
+com! MyLazy execute 'edit' fnameescape(stdpath('config') . '/lua/config/lazy.lua')

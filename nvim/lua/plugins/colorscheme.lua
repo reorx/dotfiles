@@ -75,17 +75,10 @@ local plugins = {
             operators = {},
         },
         integrations = {
-          cmp = true,
-          gitsigns = true,
           nvimtree = true,
           telescope = true,
           notify = false,
           mini = false,
-          indent_blankline = {
-            enabled = true,
-            -- scope_color = "base", -- catppuccin color (eg. `lavender`) Default: text
-            colored_indent_levels = false,
-          },
           snacks = {
             enabled = true,
             indent_scope_color = 'overlay2', -- catppuccin color (eg. `lavender`) Default: text
@@ -95,10 +88,7 @@ local plugins = {
         },
       }
 
-      vim.cmd([[
-        let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-        colorscheme catppuccin
-      ]])
+      vim.cmd.colorscheme('catppuccin')
     end,
   },
 

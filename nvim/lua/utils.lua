@@ -1,28 +1,11 @@
-local fn = vim.fn
-
--- inspect something
-function inspect(item)
-  vim.pretty_print(item)
-end
-
 local M = {}
 
-function M.executable(name)
-  if fn.executable(name) > 0 then
-    return true
-  end
-
-  return false
-end
-
-function M.may_create_dir()
-  local fpath = fn.expand('<afile>')
-  local parent_dir = fn.fnamemodify(fpath, ":p:h")
-  local res = fn.isdirectory(parent_dir)
-
-  if res == 0 then
-    fn.mkdir(parent_dir, 'p')
-  end
+-- Text of the current visual selection (charwise, linewise or blockwise), with
+-- the lines joined without newlines. Call it in visual mode; unlike yanking
+-- the selection, it leaves all registers untouched.
+function M.get_visual_selection()
+  local lines = vim.fn.getregion(vim.fn.getpos('v'), vim.fn.getpos('.'), { type = vim.fn.mode() })
+  return table.concat(lines, '')
 end
 
 return M

@@ -522,13 +522,13 @@ local plugins = {
 
       map('n', '<leader>F', builtin.grep_string, '[F]ind string globally')
       map('x', '<leader>F', function()
-        local text = vim.getVisualSelection()
+        local text = require('utils').get_visual_selection()
         builtin.grep_string({ default_text = text })
       end, '[F]ind string')
 
       map('n', '<leader>f', builtin.current_buffer_fuzzy_find, '[F]ind string in current buffer')
       map('x', '<leader>f', function()
-        local text = vim.getVisualSelection()
+        local text = require('utils').get_visual_selection()
         builtin.current_buffer_fuzzy_find({ default_text = text })
       end, '[F]ind string in current buffer')
     end,

@@ -2,14 +2,6 @@ return {
   -- https://cmp.saghen.dev/configuration/general.html
   {
     'saghen/blink.cmp',
-    dependencies = {
-      -- optional: provides snippets for the snippet source
-      'rafamadriz/friendly-snippets',
-      {
-        'onsails/lspkind.nvim',
-        opts = {},
-      },
-    },
 
     -- use a release tag to download pre-built binaries
     version = '1.*',

@@ -1,23 +1,5 @@
 -- Nvim init file --
 
--- Utility functions used by plugins
-function vim.getVisualSelection()
-  local current_clipboard_content = vim.fn.getreg('"')
-
-  vim.cmd('noau normal! "vy"')
-  local text = vim.fn.getreg('v')
-  vim.fn.setreg('v', {})
-
-  vim.fn.setreg('"', current_clipboard_content)
-
-  text = string.gsub(text, "\n", "")
-  if #text > 0 then
-    return text
-  else
-    return ''
-  end
-end
-
 -- 终端下一律用 OSC 52 复制,穿透 tmux/mosh 到本地剪贴板;GUI(Neovide)
 -- 不设 g:clipboard,走默认的 pbcopy。不用 SSH_TTY 判断:tmux 等场景下它不可靠。
 -- paste 本机用 pbpaste 读真实剪贴板;服务器上退回无名寄存器桩函数,
@@ -38,9 +20,7 @@ if not vim.g.neovide then
 end
 
 -- Vim configuration
-vim.cmd[[
-  source ~/.config/nvim/nvimrc
-]]
+vim.cmd.source(vim.fn.stdpath('config') .. '/nvimrc')
 
 -- Load lazy.nvim
 require('config.lazy')
