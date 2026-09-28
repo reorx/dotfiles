@@ -216,8 +216,7 @@ xnoremap <leader>y "+y
 
 nnoremap <leader>ss :call StripWhitespace()<CR>
 
-" Save a file as root (,W)
-nnoremap <leader>W :w !sudo tee % > /dev/null<CR>
+" Save a file as root: <leader>W is defined by vim-suda in lua/plugins/common.lua
 
 " easier navigation between split windows
 nnoremap <c-j> <c-w>j

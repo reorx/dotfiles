@@ -326,6 +326,15 @@ local plugins = {
     end
   },
   { 'tpope/vim-repeat' },
+  {
+    -- write files as root. `:w !sudo tee %` can't work in nvim: shell commands
+    -- run without a controlling tty, so sudo has nowhere to ask for the password
+    'lambdalisue/vim-suda',
+    cmd = { 'SudaRead', 'SudaWrite' },
+    keys = {
+      { '<leader>W', '<cmd>SudaWrite<cr>', desc = 'Write file as root (sudo)' },
+    },
+  },
   { 'wellle/targets.vim' },
   { 'editorconfig/editorconfig-vim' },
   -- https://github.com/MagicDuck/grug-far.nvim
