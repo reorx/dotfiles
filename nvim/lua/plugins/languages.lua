@@ -1,9 +1,5 @@
 return {
-  -- Go
-  {
-    'fatih/vim-go',
-    ft = 'go',
-  },
+  -- Go: no plugin, gopls via mason + nvim/lsp/gopls.lua (organize imports & format on save)
   -- Optional: quicktemplate plugin (uncomment to enable)
   -- {
   --   'codelitt/vim-qtpl',

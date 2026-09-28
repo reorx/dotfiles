@@ -35,7 +35,6 @@
   "vim-better-whitespace": { "branch": "master", "commit": "de99b55a6fe8c96a69f9376f16b1d5d627a56e81" },
   "vim-fugitive": { "branch": "master", "commit": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0" },
   "vim-gitgutter": { "branch": "main", "commit": "90b75207bd9b55d8ac4af15f72b4e935462014d0" },
-  "vim-go": { "branch": "master", "commit": "47694979496d4bf2e90ce75d95f1dec3f41cbefb" },
   "vim-protobuf": { "branch": "master", "commit": "0d0f4e4b4087e0e608066aa2ba295e396d039931" },
   "vim-python-pep8-indent": { "branch": "master", "commit": "60ba5e11a61618c0344e2db190210145083c91f8" },
   "vim-qf": { "branch": "master", "commit": "7cafff6a9e0a1b54364b26a87f1efe749f8fb96b" },
