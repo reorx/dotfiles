@@ -22,7 +22,6 @@ packages:
       - grilling
       - grill-me
       - grill-with-docs
-      - handoff
       - to-spec
   - repo: https://github.com/firecrawl/cli
     skills:
@@ -37,6 +36,9 @@ packages:
     agents:
       excludes:
         - openclaw
+  - repo: https://github.com/AvdLee/SwiftUI-Agent-Skill
+    skills:
+      - swiftui-expert-skill
 
   ## Frontend skills
   - repo: https://github.com/pbakaus/impeccable
@@ -79,8 +81,6 @@ packages:
   - repo: https://github.com/vercel-labs/agent-browser
     skills:
       - agent-browser
-      - dogfood
-      - electron
   - repo: https://github.com/cloudflare/skills
     skills:
       - cloudflare
