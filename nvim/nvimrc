@@ -51,6 +51,9 @@ set foldlevel=99
 set nofoldenable
 
 " Display
+" default border for all floating windows (LSP hover, diagnostic float, plugins
+" that don't set their own border)
+set winborder=rounded
 "set ruler " Show the line and column number of the cursor position, separated by a comma.
 set relativenumber " relative number
 set number " set `number` with `relativenumber` enables hybrid number

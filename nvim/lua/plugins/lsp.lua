@@ -69,7 +69,6 @@ return {
       vim.diagnostic.config({
         severity_sort = true,
         float = {
-          border = 'rounded',
           source = 'if_many'
         },
         underline = { severity = vim.diagnostic.severity.ERROR },
@@ -108,7 +107,7 @@ return {
           -- hover doc
           -- https://neovim.io/doc/user/lsp.html#vim.lsp.buf.hover%28%29
           -- According to :help vim.lsp.buf.hover(), you should be able to jump into the floating window by calling the function twice in a row (or pressing K twice in your case)
-          map("K", function() vim.lsp.buf.hover({ border = "rounded", max_height = 25, max_width = 120 }) end, 'Displays hover info about the symbol.')
+          map("K", function() vim.lsp.buf.hover({ max_height = 25, max_width = 120 }) end, 'Displays hover info about the symbol.')
 
           -- Jump to the definition of the word under your cursor.
           map('gd', telescope_builtin.lsp_definitions, '[G]oto [D]efinition')

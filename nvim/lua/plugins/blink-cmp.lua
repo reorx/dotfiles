@@ -37,6 +37,8 @@ return {
 
       signature = {
         enabled = true,
+        -- keep the borderless CursorLine-filled look instead of 'winborder'
+        window = { border = 'none' },
       },
 
       completion = {
@@ -44,8 +46,9 @@ return {
         documentation = { auto_show = false },
         -- Controls whether the list will automatically select the first item in the list, and whether a "preview" will be inserted on selection.
         list = { selection = { preselect = true, auto_insert = false } },
+        -- keep the borderless CursorLine-filled look instead of 'winborder'
         -- TODO add colorful-menu https://github.com/xzbdmw/colorful-menu.nvim#use-it-in-blinkcmp
-        -- menu = {}
+        menu = { border = 'none' },
       },
 
       -- Default list of enabled providers defined so that you can extend it
