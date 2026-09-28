@@ -46,7 +46,8 @@ set updatetime=1000
 
 " Fold
 set foldmethod=indent
-"set foldlevel=2
+" all folds open when folding gets enabled, so the first zc only closes the fold under cursor
+set foldlevel=99
 set nofoldenable
 
 " Display
