@@ -1,7 +1,6 @@
 agents:
   default:
     - claude
-    - codex
     - standard
     #- openclaw
     #- pi
@@ -15,7 +14,7 @@ packages:
     agents:
       includes:
         - claude
-        - codex
+        - standard
   - repo: https://github.com/reorx/envops
   - repo: https://github.com/mattpocock/skills
     skills:
@@ -48,7 +47,7 @@ packages:
     agents:
       includes:
         - claude
-        - codex
+        - standard
   #- repo: https://github.com/shadcn/improve
   #- repo: https://github.com/ibelick/ui-skills
   #  skills:
@@ -95,7 +94,6 @@ packages:
   #  agents:
   #    includes:
   #      - claude
-  #      - codex
   #- repo: https://github.com/browser-use/browser-use
   #- repo: https://github.com/badlogic/pi-skills
   #- repo: supabase/supabase

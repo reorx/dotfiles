@@ -226,3 +226,9 @@ function fable() {
     CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1 \
         claude --dangerously-skip-permissions --model fable --effort high $@
 }
+function cx() {
+    codex --yolo $@
+}
+function astra() {
+    codex --yolo -m gpt-6-astra -c 'model_reasoning_effort="medium"' $@
+}
