@@ -42,7 +42,7 @@ next_workspace = ["ctrl+.", "prefix+shift+j"]
 previous_workspace = ["ctrl+,", "prefix+shift+k"]
 switch_workspace = "prefix+1..9"
 close_workspace = "prefix+shift+x"
-#workspace_picker = "prefix+o"  # does not work as expected, replaced by navigate_line.pick_workspace
+goto = "prefix+shift+o"
 
 # tab
 next_tab = ["ctrl+right", "prefix+n"]
