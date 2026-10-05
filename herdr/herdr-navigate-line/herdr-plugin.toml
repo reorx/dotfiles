@@ -57,6 +57,12 @@ description = "Open a popup listing every agent as title + status; filter by typ
 command = ["sh", "open-agent-picker.sh"]
 
 [[actions]]
+id = "pick_workspace"
+title = "Workspace: pick from list"
+description = "Open a popup listing every workspace as number + label + agent status; filter by typing, focus the selection on enter"
+command = ["sh", "open-workspace-picker.sh"]
+
+[[actions]]
 id = "create_workspace"
 title = "Workspace: create from directory prompt"
 command = ["sh", "open-create-workspace.sh"]
@@ -66,6 +72,12 @@ id = "agent_picker"
 title = "Agents"
 placement = "popup"
 command = ["sh", "agent-picker.sh"]
+
+[[panes]]
+id = "workspace_picker"
+title = "Workspaces"
+placement = "popup"
+command = ["sh", "workspace-picker.sh"]
 
 [[panes]]
 id = "create_workspace_prompt"

@@ -87,6 +87,23 @@ to `fzf` (`--with-nth 2..` hides the pane id), then focuses the
 selection with `herdr agent focus`. Without `fzf` it falls back to a
 numbered list and a `read` prompt.
 
+### `navigate_line.pick_workspace`
+
+Opens a popup that lists every workspace as `number  label  [status]`
+(the focused workspace is marked with `*`; the agent status is left out
+when the workspace has no agent). Type to filter, press enter to focus
+the selected workspace; `Esc`/`ctrl+c` cancels. Herdr's built-in
+`workspace_picker` key did not work as expected, so this action replaces
+it, built the same way as `pick_agent`: the interactive part lives in
+the `workspace_picker` popup entrypoint.
+
+Implementation: `format-workspace-lines.py` turns `herdr workspace list`
+JSON into tab-separated `workspace_id\tlabel` lines;
+`workspace-picker.sh` feeds them to `fzf` (`--with-nth 2..` hides the
+workspace id), then focuses the selection with
+`herdr workspace focus`. Without `fzf` it falls back to a numbered list
+and a `read` prompt.
+
 ### `navigate_line.create_workspace`
 
 Opens a popup pane that asks for the project directory, then runs
@@ -145,6 +162,12 @@ key = "ctrl+'"
 type = "plugin_action"
 command = "navigate_line.pick_agent"
 description = "pick agent from filterable list"
+
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "navigate_line.pick_workspace"
+description = "pick workspace from filterable list"
 
 [[keys.command]]
 key = "prefix+t"

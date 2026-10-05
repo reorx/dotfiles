@@ -42,6 +42,7 @@ next_workspace = ["ctrl+.", "prefix+shift+j"]
 previous_workspace = ["ctrl+,", "prefix+shift+k"]
 switch_workspace = "prefix+1..9"
 close_workspace = "prefix+shift+x"
+#workspace_picker = "prefix+o"  # does not work as expected, replaced by navigate_line.pick_workspace
 
 # tab
 next_tab = ["ctrl+right", "prefix+n"]
@@ -101,6 +102,12 @@ key = "ctrl+'"
 type = "plugin_action"
 command = "navigate_line.pick_agent"
 description = "pick agent from filterable list"
+
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "navigate_line.pick_workspace"
+description = "pick workspace from filterable list"
 
 [[keys.command]]
 key = "prefix+t"
