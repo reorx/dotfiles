@@ -2,13 +2,6 @@
 
 > 当前 dotfiles 里已知、待后续处理的问题：缺陷、简化实现、未验收项、待建流程。只反映最新状态，解决了就删掉条目，经过记到 `kb/sessions/`。
 
-## nvim：Markdown 渲染时文字位置变化，干扰定位和编辑
-
-- 记录：2026-10-05（用户反馈字符显示位置与实际位置不一致）。
-- 当前 `nvim/lua/plugins/languages.lua` 使用 render-markdown.nvim，仅关闭标题渲染并简化代码块；链接、复选框和表格等仍按默认规则渲染。headless 探查确认插件设置 `conceallevel=3`，插入链接图标和表格填充空格，并隐藏部分原文。光标移入链接行时，链接图标消失；Neovim 自带的 Markdown Treesitter 查询还定义了链接地址、强调标记和代码围栏的 conceal 规则。这些显示变化会干扰源码列位置的判断；尚未验证用户遇到的鼠标定位问题是否全部由此引起。
-- 已验证关闭当前 buffer 的渲染可清空插件 extmarks、恢复 `conceallevel=0`，同时保留 Treesitter 高亮；插件内置 `:RenderMarkdown preview` 可以打开独立只读预览。探查脚本与结果位于本地忽略目录 `tmp/2026-10-05-nvim-markdown/`。
-- 处理方向：优先考虑源码编辑窗口禁用渲染、独立分屏预览；若希望单窗口美化且不改变文字位置，可评估 touchup.nvim。配置方案等待用户选择，尚未修改 Neovim 配置。
-
 ## nvim：`<leader>W`（vim-suda）还没在真实 sudo 下写过 root 文件
 
 - 记录：2026-09-28（`:w !sudo tee %` 改用 vim-suda 时发现）
@@ -22,7 +15,7 @@
 - 风险：以后 lspconfig 如果也设置了这些键，我们的值会被悄悄覆盖，不会有任何报错。表现是 pyright 又开始从整个库补全 import，或者 Go 文件保存时不再格式化。
 - 处理方向：出现上述症状时，把对应文件挪到 `nvim/after/lsp/<name>.lua`。放在 `nvim/lsp/` 是用户指定的位置，这是有意的选择。
 
-## nvim：配置的回归测试没有纳入版本管理
+## nvim：历史配置的回归测试仍未纳入版本管理
 
 - 记录：2026-09-28
 - 这一轮验证 nvim 配置用的 headless 测试脚本都放在 gitignore 的 `tmp/` 下，换机器或清理 `tmp/` 后就没了，下次改配置时也不会自动运行：

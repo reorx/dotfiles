@@ -52,21 +52,20 @@ return {
 
   -- Markdown
   {
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-    ft = { 'markdown' },
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
-    opts = {
-      file_types = { 'markdown' },
-      heading = {
-        enabled = false,
-      },
-      code = {
-        disable_background = true,
-        style = 'normal',
-        border = 'none',
-      },
-    },
+    'noisesfromspace/touchup.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = 'markdown',
+    init = function()
+      -- conceal 是 window-local；切回已有 Markdown buffer 时也要恢复完整源码。
+      vim.api.nvim_create_autocmd({ 'FileType', 'BufWinEnter' }, {
+        group = vim.api.nvim_create_augroup('markdown_source_view', { clear = true }),
+        callback = function()
+          if vim.bo.filetype == 'markdown' then
+            vim.opt_local.conceallevel = 0
+          end
+        end,
+      })
+    end,
+    opts = {},
   }
 }
