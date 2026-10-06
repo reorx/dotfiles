@@ -117,6 +117,11 @@ PYTHON_CONFIGURE_OPTS="--enable-framework" pyenv install 3.9.2
 ### nvim
 
 requires:
+- Neovim 0.12+
+- `tree-sitter-cli` (macOS: `brew install tree-sitter-cli`), a C compiler,
+  `curl`, and `tar` for nvim-treesitter parser installation. The `tree-sitter`
+  library installed with Neovim does not provide the CLI. Without the CLI,
+  every startup retries missing parsers and reports `tree-sitter build` errors.
 - python (a local build python 3)
   - virtualenv for nvim python provider
 
@@ -128,22 +133,17 @@ requires:
     pip install pynvim
     ```
 
-Link:
-- nvim/ -> ./.nvim
-- nvimrc -> ./.nvimrc
-- `cd ~/.config/nvim && ln -s ~/.nvim/init.vim .`
+Link `nvim/` to `~/.config/nvim` with `./implement.sh -s nvim`.
+Plugins are managed by lazy.nvim and pinned in `nvim/lazy-lock.json`.
+On first launch, keep Neovim open until parser installation finishes.
+Use `:TSUpdate` after updating nvim-treesitter and `:checkhealth nvim-treesitter`
+to diagnose local dependencies. Use `:Mason` to manage language servers.
 
-Run:
-```
-:PlugInstall
-:UpdateRemotePlugins
-```
+Regression checks (run from the repository root after parser installation):
 
-Install LSP for certain language
-
-```
-nvim a.py
-:LspInstallServer
+```sh
+nvim --headless -c 'luafile nvim/tests/treesitter.lua'
+nvim --headless -c 'luafile nvim/tests/markdown.lua'
 ```
 
 ### vim
