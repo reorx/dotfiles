@@ -335,6 +335,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun completions
 [ -s "/Users/reorx/.bun/_bun" ] && source "/Users/reorx/.bun/_bun"
 
+# worktrunk
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
 # atuin
 . "$HOME/.atuin/bin/env"
 # use fzf as the frontend of atuin
