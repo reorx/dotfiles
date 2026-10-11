@@ -76,7 +76,7 @@ packages:
   - repo: https://github.com/PsiACE/skills
     skills:
       - friendly-python
-      - piglet
+      #- piglet
   - repo: https://github.com/vercel-labs/agent-browser
     skills:
       - agent-browser
