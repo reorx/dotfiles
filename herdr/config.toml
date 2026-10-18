@@ -55,6 +55,7 @@ rename_tab = "prefix+r"
 # pane
 cycle_pane_next = "shift+right"
 cycle_pane_previous = "shift+left"
+last_pane = "ctrl+["
 split_vertical =  "prefix+|"
 zoom = "prefix+m"
 

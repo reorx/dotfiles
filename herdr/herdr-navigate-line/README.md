@@ -130,14 +130,14 @@ key-combo string (`ctrl+k`, `ctrl+w`, `alt+d`, ...).
 Herdr already provides `keys.last_pane`: focus the previously focused pane
 across workspaces and tabs, and toggle back on the next invocation. It is
 unbound by default, so this plugin does not duplicate it with an action.
-To enable it, add a binding under `[keys]` in Herdr's config, for example:
+The repository config binds it directly under `[keys]`:
 
 ```toml
-last_pane = "prefix+tab"
+last_pane = "ctrl+["
 ```
 
-This example is not enabled in the repository config. Here, pane cycling
-already uses `shift+right` and `shift+left`, leaving `prefix+tab` available.
+Press `ctrl+[` without the prefix to switch back. Pane cycling uses
+`shift+right` and `shift+left`.
 
 ## Install
 

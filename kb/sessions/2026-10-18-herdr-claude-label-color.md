@@ -34,3 +34,7 @@ tags:
 ## 遗留问题
 
 无。
+
+## 后续：绑定 last_pane
+
+用户随后指定使用 `ctrl+[`。在 `herdr/config.toml` 的 `[keys]` 下设置 `last_pane = "ctrl+["`，同步 README 的实际绑定说明。配置校验通过，并成功热重载（无 diagnostics）；未发送实机按键切换用户焦点。
