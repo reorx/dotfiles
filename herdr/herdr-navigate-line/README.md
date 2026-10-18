@@ -125,6 +125,20 @@ To add more keys, add a `[[actions]]` block in `herdr-plugin.toml` with the
 key combo as the last argv element. `send-keys.sh` accepts any Herdr
 key-combo string (`ctrl+k`, `ctrl+w`, `alt+d`, ...).
 
+## Built-in navigation
+
+Herdr already provides `keys.last_pane`: focus the previously focused pane
+across workspaces and tabs, and toggle back on the next invocation. It is
+unbound by default, so this plugin does not duplicate it with an action.
+To enable it, add a binding under `[keys]` in Herdr's config, for example:
+
+```toml
+last_pane = "prefix+tab"
+```
+
+This example is not enabled in the repository config. Here, pane cycling
+already uses `shift+right` and `shift+left`, leaving `prefix+tab` available.
+
 ## Install
 
 Link the plugin directory (works with or without a running Herdr server):

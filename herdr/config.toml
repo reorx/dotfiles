@@ -30,6 +30,8 @@ show_agent_labels_on_pane_borders = true
 sidebar.spaces.rows = [["state_icon", "workspace", "git_status"]]
 #sidebar.agents.rows = [["state_icon", "workspace", "tab"], ["agent"]]
 sidebar.agents.rows = [["state_icon", "workspace", "tab"]]
+# Claude Code labels use the theme's orange (peach); status icons keep their colors.
+sidebar.agents.rows_by_agent.claude = [["state_icon", { token = "workspace", fg = "#fab387" }, { token = "tab", fg = "#fab387" }]]
 accent = "#ec4899"
 
 agent_panel_sort = "spaces"
