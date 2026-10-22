@@ -110,7 +110,7 @@ description = "pick agent from filterable list"
 key = "prefix+o"
 type = "plugin_action"
 command = "navigate_line.pick_workspace"
-description = "pick workspace from filterable list"
+description = "pick workspace or open a ~/Code dir"
 
 [[keys.command]]
 key = "prefix+t"

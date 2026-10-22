@@ -89,20 +89,50 @@ numbered list and a `read` prompt.
 
 ### `navigate_line.pick_workspace`
 
-Opens a popup that lists every workspace as `number  label  [status]`
-(the focused workspace is marked with `*`; the agent status is left out
-when the workspace has no agent). Type to filter, press enter to focus
-the selected workspace; `Esc`/`ctrl+c` cancels. Herdr's built-in
-`workspace_picker` key did not work as expected, so this action replaces
-it, built the same way as `pick_agent`: the interactive part lives in
-the `workspace_picker` popup entrypoint.
+Opens a popup that works as get-or-create for workspaces. The list has
+two parts:
 
-Implementation: `format-workspace-lines.py` turns `herdr workspace list`
-JSON into tab-separated `workspace_id\tlabel` lines;
-`workspace-picker.sh` feeds them to `fzf` (`--with-nth 2..` hides the
-workspace id), then focuses the selection with
-`herdr workspace focus`. Without `fzf` it falls back to a numbered list
-and a `read` prompt.
+- Every workspace first, in number order, as
+  `number  label  [status]  path` with the label in bold cyan. The
+  focused workspace is marked with `*`, the agent status is left out when
+  the workspace has no agent, and the path is shown only when it is not
+  `~/Code/<label>` (for example `dotfiles/herdr` or `~/Documents`)
+- Then every directory under `~/Code` that has no workspace yet, in
+  plain text, the same list `create_workspace` shows
+
+Type to filter, press enter on the selection; `Esc`/`ctrl+c` cancels.
+
+- A workspace row focuses that workspace
+- A directory row creates a workspace with that directory as its CWD
+- Text that matches nothing is used as a directory, with the same rules
+  as `create_workspace` (relative to `~/Code`, or a full path when it
+  starts with `/` or `~`); if a workspace is already opened there, it is
+  focused instead of creating a second one. A path that is not a
+  directory shows an error
+
+With an empty query the workspaces stay on top. While typing, fzf sorts by
+match score and keeps input order on ties (`--tiebreak index`), so a
+workspace still comes before a directory that matches equally well.
+
+A workspace's directory is its git checkout path when
+`herdr workspace list` reports one (`worktree.checkout_path`), otherwise
+the most common `cwd` among its panes (first pane on a tie); the picker's
+own popup pane is left out. A directory counts as having a workspace when
+that directory equals it or lies inside it, so a workspace sitting in
+`~/Code/dotfiles/herdr` covers `~/Code/dotfiles`. Herdr's CLI does not
+expose a workspace's creation CWD, so after every pane in a workspace has
+`cd`-ed elsewhere, the workspace moves to the new directory.
+
+Herdr's built-in `workspace_picker` key did not work as expected, so this
+action replaces it, built the same way as `pick_agent`: the interactive
+part lives in the `workspace_picker` popup entrypoint.
+
+Implementation: `workspace-picker.py` reads `herdr workspace list` and
+`herdr pane list`, builds `ws:<id>` / `dir:<path>` rows, and feeds them to
+`fzf --ansi --print-query` (`--with-nth 2..` hides the target). It then
+runs `herdr workspace focus` or `herdr workspace create --cwd <dir>
+--focus`. Without `fzf` it falls back to a numbered list; the prompt
+accepts a row number or a directory.
 
 ### `navigate_line.create_workspace`
 
@@ -181,7 +211,7 @@ description = "pick agent from filterable list"
 key = "prefix+o"
 type = "plugin_action"
 command = "navigate_line.pick_workspace"
-description = "pick workspace from filterable list"
+description = "pick workspace or open a ~/Code dir"
 
 [[keys.command]]
 key = "prefix+t"
@@ -218,6 +248,13 @@ the command line:
 ```sh
 herdr plugin action invoke navigate_line.jump_start
 herdr plugin log list --plugin navigate_line
+```
+
+Behavior tests for the workspace picker's listing and get-or-create logic
+(stdlib only, runs on the macOS system Python 3.9 too):
+
+```sh
+python3 herdr/herdr-navigate-line/tests/test_workspace_picker.py
 ```
 
 ## Uninstall

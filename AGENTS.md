@@ -2,7 +2,7 @@
 
 本仓库管理本机的终端、编辑器及其他工具配置。
 
-- `herdr/`：Herdr 配置及本地插件；`config.toml` 链接到本机配置，修改后用 `herdr config check` 校验、`herdr server reload-config` 热重载。导航插件和已有内置导航操作见 `herdr/herdr-navigate-line/README.md`。
+- `herdr/`：Herdr 配置及本地插件；`config.toml` 链接到本机配置，修改后用 `herdr config check` 校验、`herdr server reload-config` 热重载。导航插件和已有内置导航操作见 `herdr/herdr-navigate-line/README.md`。修改 workspace picker 后运行 `python3 herdr/herdr-navigate-line/tests/test_workspace_picker.py`。
 - `nvim/`：Neovim 配置，入口是 `init.lua`；本机 `~/.config/nvim` 链接到此目录。插件由 lazy.nvim 管理并通过 `lazy-lock.json` 锁定。
 - Markdown 显示的回归检查：在仓库根目录执行 `nvim --headless -c 'luafile nvim/tests/markdown.lua'`。
 - Tree-sitter 回归检查：parser 安装完成后执行 `nvim --headless -c 'luafile nvim/tests/treesitter.lua'`；macOS 编译 parser 需要单独安装 `brew install tree-sitter-cli`。
