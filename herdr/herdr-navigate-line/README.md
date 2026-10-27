@@ -117,7 +117,12 @@ workspace still comes before a directory that matches equally well.
 A workspace's directory is its git checkout path when
 `herdr workspace list` reports one (`worktree.checkout_path`), otherwise
 the most common `cwd` among its panes (first pane on a tie); the picker's
-own popup pane is left out. A directory counts as having a workspace when
+own popup pane is left out. Panes whose `cwd` is named after the workspace
+label count first: Herdr labels a new workspace after its CWD, so a
+`Documents` workspace stays at `~/Documents` even when most of its tabs
+work in `~/Code/scripts`, and `scripts` is still listed as a directory
+without a workspace. A renamed workspace has no such pane and falls back
+to the most common `cwd`. A directory counts as having a workspace when
 that directory equals it or lies inside it, so a workspace sitting in
 `~/Code/dotfiles/herdr` covers `~/Code/dotfiles`. Herdr's CLI does not
 expose a workspace's creation CWD, so after every pane in a workspace has

@@ -9,8 +9,10 @@ used as a directory: relative to ~/Code, or a full path when it starts
 with / or ~.
 
 A workspace's directory ("root") is its git checkout path when Herdr
-reports one, otherwise the most common cwd among its panes. A directory
-has a workspace when a root equals it or lies inside it.
+reports one, otherwise the most common cwd among its panes, counting
+only the panes whose cwd is named after the workspace label when there
+are any. A directory has a workspace when a root equals it or lies
+inside it.
 
 With fzf: fuzzy filter. Without fzf: numbered list + read.
 """
@@ -57,7 +59,10 @@ def workspace_root(workspace, panes):
     cwds = Counter(p['cwd'] for p in panes if p['workspace_id'] == workspace['workspace_id'] and p.get('cwd'))
     if not cwds:
         return None
-    return cwds.most_common(1)[0][0]
+    # Herdr labels a new workspace after its cwd, so a pane still there marks
+    # the workspace's own directory, however many panes work elsewhere
+    named = Counter({cwd: n for cwd, n in cwds.items() if os.path.basename(cwd.rstrip('/')) == workspace['label']})
+    return (named or cwds).most_common(1)[0][0]
 
 
 def list_dirs(base):

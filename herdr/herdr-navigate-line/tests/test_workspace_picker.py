@@ -76,6 +76,32 @@ class TestWorkspaceRoot(unittest.TestCase):
         panes = [pane('w1', '/code/app/src'), pane('w1', '/code/app/src')]
         self.assertEqual(wp.workspace_root(w, panes), '/code/app')
 
+    def test_worktree_checkout_beats_pane_named_after_label(self):
+        w = ws('w1', 1, 'app', checkout='/code/app')
+        panes = [pane('w1', '/elsewhere/app')]
+        self.assertEqual(wp.workspace_root(w, panes), '/code/app')
+
+    def test_pane_cwd_named_after_label_beats_most_common(self):
+        # A Documents workspace whose later tabs work in ~/Code/scripts
+        w = ws('w1', 1, 'Documents')
+        panes = [
+            pane('w1', '/home/Documents'),
+            pane('w1', '/home/Documents/sub'),
+            pane('w1', '/code/scripts'),
+            pane('w1', '/code/scripts'),
+        ]
+        self.assertEqual(wp.workspace_root(w, panes), '/home/Documents')
+
+    def test_most_common_wins_among_panes_named_after_label(self):
+        w = ws('w1', 1, 'app')
+        panes = [pane('w1', '/old/app'), pane('w1', '/code/app'), pane('w1', '/code/app'), pane('w1', '/code/x')]
+        self.assertEqual(wp.workspace_root(w, panes), '/code/app')
+
+    def test_renamed_workspace_uses_most_common_pane_cwd(self):
+        w = ws('w1', 1, 'renamed')
+        panes = [pane('w1', '/code/a'), pane('w1', '/code/b'), pane('w1', '/code/b')]
+        self.assertEqual(wp.workspace_root(w, panes), '/code/b')
+
     def test_uses_most_common_pane_cwd(self):
         w = ws('w1', 1, 'feishu')
         panes = [
@@ -141,6 +167,12 @@ class TestBuildRows(BaseDirCase):
         rows = self.rows([ws('w1', 1, 'deploy')], [pane('w1', '/somewhere/deploy')])
         self.assertEqual(rows[0].target, 'ws:w1')
         self.assertEqual(len(rows), 6)
+
+    def test_dir_visited_by_another_workspace_is_still_listed(self):
+        # most panes of the Documents workspace sit in beta, but beta has no workspace of its own
+        workspaces = [ws('w1', 1, 'Documents')]
+        panes = [pane('w1', '/home/Documents'), pane('w1', self.r('beta')), pane('w1', self.r('beta'))]
+        self.assertIn(f'dir:{self.d("beta")}', [r.target for r in self.rows(workspaces, panes)])
 
     def test_dir_name_prefix_is_not_a_match(self):
         # alpha-2 is not inside alpha
@@ -212,6 +244,11 @@ class TestResolveTarget(BaseDirCase):
         workspaces = [ws('w1', 1, 'zeta')]
         panes = [pane('w1', self.r('zeta'))]
         self.assertEqual(wp.resolve_target('zeta', workspaces, panes, self.base), ('focus', 'w1'))
+
+    def test_dir_visited_by_another_workspace_gets_its_own_workspace(self):
+        workspaces = [ws('w1', 1, 'Documents')]
+        panes = [pane('w1', '/home/Documents'), pane('w1', self.r('beta')), pane('w1', self.r('beta'))]
+        self.assertEqual(wp.resolve_target('beta', workspaces, panes, self.base), ('create', self.d('beta')))
 
     def test_exact_root_beats_workspace_in_subdir(self):
         workspaces = [ws('w1', 1, 'condenser'), ws('w2', 2, 'condenser')]
