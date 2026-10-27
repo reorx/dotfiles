@@ -9,7 +9,7 @@ herdr="${HERDR_BIN_PATH:-herdr}"
 base="$HOME/Code"
 
 fail() {
-  echo "navigate_line: $1" >&2
+  echo "kit: $1" >&2
   printf 'press enter to close... '
   read -r _ || true
   exit 1

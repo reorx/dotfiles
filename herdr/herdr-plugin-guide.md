@@ -5,7 +5,7 @@
 - Socket API: https://herdr.dev/docs/socket-api/
 - CLI reference: https://herdr.dev/docs/cli-reference/
 
-本目录下的 `herdr-navigate-line/` 是一个已验证可用的最小示例，可直接参考。
+本目录下的 `herdr-kit/` 是一个已验证可用的插件，可直接参考：最小的 action 示例见 `send-keys.sh`，popup pane 交互见 `workspace-picker.py`。
 
 ## 核心概念
 
@@ -38,7 +38,7 @@ command = ["sh", "do-thing.sh", "arg1"]   # argv 数组，不经过 shell，无�
 ```
 
 关键规则：
-- **action id 不能含点号**。全局限定名 = `<plugin_id>.<action_id>`，如 `navigate_line.jump_start`。想要 `foo.bar` 这样的调用名，就把 plugin id 定为 `foo`
+- **action id 不能含点号**。全局限定名 = `<plugin_id>.<action_id>`，如 `kit.jump_start`。想要 `foo.bar` 这样的调用名，就把 plugin id 定为 `foo`
 - `command` 的 cwd 是插件目录，相对路径可用（如 `["sh", "script.sh"]`）
 - 每类 id（action/pane/link_handler）在插件内必须唯一
 - `contexts` 字段在文档示例中出现（如 `contexts = ["workspace"]`），可省略
@@ -115,7 +115,7 @@ manifest 改动后需要重新 link 吗？link 记录的是 manifest 路径，se
 [[keys.command]]
 key = "prefix+a"
 type = "plugin_action"
-command = "navigate_line.jump_start"   # 全局限定 action id
+command = "kit.jump_start"   # 全局限定 action id
 description = "send ctrl+a to pane"
 ```
 
@@ -124,7 +124,7 @@ description = "send ctrl+a to pane"
 ## 已验证案例：prefix key 冲突转发
 
 问题：prefix 设为 `ctrl+a` 时，shell 里的 readline "跳行首"被 herdr 吃掉。
-方案：action 脚本对 `HERDR_PANE_ID` 执行 `pane send-keys ctrl+a`，再把 action 绑到 `prefix+a`（按两次 ctrl+a 透传，同 tmux 惯例）。见 `herdr-navigate-line/`。
+方案：action 脚本对 `HERDR_PANE_ID` 执行 `pane send-keys ctrl+a`，再把 action 绑到 `prefix+a`（按两次 ctrl+a 透传，同 tmux 惯例）。见 `herdr-kit/send-keys.sh`。
 
 ## 发布（可选）
 

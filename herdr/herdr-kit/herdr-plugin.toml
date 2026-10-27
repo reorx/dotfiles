@@ -1,8 +1,8 @@
-id = "navigate_line"
-name = "Navigate Line"
+id = "kit"
+name = "Kit"
 version = "0.1.0"
 min_herdr_version = "0.7.0"
-description = "Send readline cursor-movement keys to the focused pane, so prefix keys like ctrl+a can be forwarded to the shell"
+description = "Personal Herdr toolkit: readline key forwarding, pane/tab helpers, agent navigation, and a workspace get-or-create picker"
 platforms = ["linux", "macos"]
 
 [[actions]]

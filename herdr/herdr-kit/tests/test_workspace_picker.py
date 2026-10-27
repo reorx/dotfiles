@@ -1,6 +1,6 @@
 """Behavior tests for workspace-picker.py (pick_workspace, get-or-create).
 
-Run: python3 herdr/herdr-navigate-line/tests/test_workspace_picker.py
+Run: python3 herdr/herdr-kit/tests/test_workspace_picker.py
 """
 
 import importlib.util

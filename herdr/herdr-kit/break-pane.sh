@@ -7,7 +7,7 @@ set -eu
 herdr="${HERDR_BIN_PATH:-herdr}"
 
 if [ -z "${HERDR_PANE_ID:-}" ]; then
-  echo "navigate_line: no pane in invocation context" >&2
+  echo "kit: no pane in invocation context" >&2
   exit 1
 fi
 
@@ -16,7 +16,7 @@ layout=$("$herdr" pane layout --pane "$HERDR_PANE_ID")
 # The layout JSON has one "pane_id" key per pane in the tab.
 pane_count=$(printf '%s' "$layout" | grep -o '"pane_id"' | wc -l)
 if [ "$pane_count" -le 1 ]; then
-  echo "navigate_line: pane is already alone in its tab" >&2
+  echo "kit: pane is already alone in its tab" >&2
   exit 0
 fi
 

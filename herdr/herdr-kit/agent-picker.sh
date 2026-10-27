@@ -9,7 +9,7 @@ herdr="${HERDR_BIN_PATH:-herdr}"
 lines=$("$herdr" agent list | python3 format-agent-lines.py)
 
 if [ -z "$lines" ]; then
-  echo "navigate_line: no agents" >&2
+  echo "kit: no agents" >&2
   printf 'press enter to close... '
   read -r _ || true
   exit 0
@@ -29,7 +29,7 @@ else
   read -r num
   [ -n "${num:-}" ] || exit 0  # cancelled
   sel=$(printf '%s\n' "$lines" | sed -n "${num}p")
-  [ -n "$sel" ] || { echo "navigate_line: no such agent: $num" >&2; exit 1; }
+  [ -n "$sel" ] || { echo "kit: no such agent: $num" >&2; exit 1; }
 fi
 
 pane=$(printf '%s\n' "$sel" | cut -f1)

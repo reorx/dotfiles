@@ -7,7 +7,7 @@ set -eu
 herdr="${HERDR_BIN_PATH:-herdr}"
 
 if [ -z "${HERDR_WORKSPACE_ID:-}" ]; then
-  echo "navigate_line: no workspace in invocation context" >&2
+  echo "kit: no workspace in invocation context" >&2
   exit 1
 fi
 

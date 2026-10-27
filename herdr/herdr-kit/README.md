@@ -1,26 +1,31 @@
-# herdr-navigate-line
+# herdr-kit
 
-A Herdr plugin that forwards readline cursor-movement keys to the focused
-pane. It solves the conflict between the Herdr prefix key (for example
-`ctrl+a`) and the standard Unix command-line movement keys: bind a prefix
-combo to a plugin action, and the action sends the real key to the shell
-with `pane.send_keys`.
+A personal toolkit plugin for Herdr. It fills gaps in Herdr's built-in
+actions, grouped by what they act on:
 
-It also carries two small utility actions: `break_pane`, which moves the
-focused pane into its own tab (tmux `break-pane`), and `create_workspace`,
-which works around the fact that a workspace CWD is fixed at creation time
-and does not follow later `cd` commands.
+- Line keys: forward readline cursor-movement keys to the focused pane.
+  This solves the conflict between the Herdr prefix key (for example
+  `ctrl+a`) and the standard Unix command-line movement keys: bind a
+  prefix combo to a plugin action, and the action sends the real key to
+  the shell with `pane.send_keys`
+- Pane and tab: `break_pane` (tmux `break-pane`), `new_tab_quick`,
+  `new_tab_adjacent`
+- Agent: `next_unread_agent`, `pick_agent`
+- Workspace: `pick_workspace` (get-or-create picker), `create_workspace`
+
+All actions are qualified with the plugin id `kit`, for example
+`kit.pick_workspace`.
 
 ## Actions
 
-| Action id (qualified)        | Key sent | Effect in readline      |
-| ---------------------------- | -------- | ----------------------- |
-| `navigate_line.jump_start`   | `ctrl+a` | Jump to start of line   |
-| `navigate_line.jump_end`     | `ctrl+e` | Jump to end of line     |
-| `navigate_line.word_back`    | `alt+b`  | Move one word back      |
-| `navigate_line.word_forward` | `alt+f`  | Move one word forward   |
+| Action id (qualified) | Key sent | Effect in readline    |
+| --------------------- | -------- | --------------------- |
+| `kit.jump_start`      | `ctrl+a` | Jump to start of line |
+| `kit.jump_end`        | `ctrl+e` | Jump to end of line   |
+| `kit.word_back`       | `alt+b`  | Move one word back    |
+| `kit.word_forward`    | `alt+f`  | Move one word forward |
 
-### `navigate_line.break_pane`
+### `kit.break_pane`
 
 Moves the pane the action was invoked from into a new tab and focuses it
 (the running process stays alive). Behavior follows tmux `break-pane`:
@@ -34,7 +39,7 @@ Implemented in `break-pane.sh` with only the `herdr` CLI: it reads
 `herdr pane move <id> --new-tab --focus`. The empty source tab case does
 not need cleanup; Herdr closes a tab when its last pane leaves.
 
-### `navigate_line.new_tab_quick`
+### `kit.new_tab_quick`
 
 Creates a tab in the current workspace and focuses it, with no name
 prompt. No label is passed: Herdr numbers unlabeled tabs by position, so
@@ -43,7 +48,7 @@ inserted or closed (an explicit `--label <n>` would go stale).
 Implemented in `new-tab-quick.sh` as a single
 `herdr tab create --workspace <id> --focus`.
 
-### `navigate_line.new_tab_adjacent`
+### `kit.new_tab_adjacent`
 
 Creates a tab right after the current one and focuses it, the way a
 browser opens a link in a new tab next to the current one. `herdr tab
@@ -55,7 +60,7 @@ create` always appends at the end and the CLI has no `tab move`, so
 passed: Herdr numbers unlabeled tabs by position, so the ordinals stay in
 order after the insert.
 
-### `navigate_line.next_unread_agent`
+### `kit.next_unread_agent`
 
 Focuses the next agent that needs attention:
 
@@ -73,7 +78,7 @@ notification and does not move focus.
 Implemented in `next-unread-agent.py`: it parses `herdr agent list`
 JSON, filters on `agent_status`, and calls `herdr agent focus <pane>`.
 
-### `navigate_line.pick_agent`
+### `kit.pick_agent`
 
 Opens a popup that lists every agent as `title  [status]` (the focused
 agent is marked with `*`). Type to filter, press enter to focus the
@@ -87,7 +92,7 @@ to `fzf` (`--with-nth 2..` hides the pane id), then focuses the
 selection with `herdr agent focus`. Without `fzf` it falls back to a
 numbered list and a `read` prompt.
 
-### `navigate_line.pick_workspace`
+### `kit.pick_workspace`
 
 Opens a popup that works as get-or-create for workspaces. The list has
 two parts:
@@ -139,7 +144,7 @@ runs `herdr workspace focus` or `herdr workspace create --cwd <dir>
 --focus`. Without `fzf` it falls back to a numbered list; the prompt
 accepts a row number or a directory.
 
-### `navigate_line.create_workspace`
+### `kit.create_workspace`
 
 Opens a popup pane that asks for the project directory, then runs
 `herdr workspace create --cwd <dir> --focus`. Because actions run without
@@ -179,8 +184,8 @@ Press `ctrl+[` without the prefix to switch back. Pane cycling uses
 Link the plugin directory (works with or without a running Herdr server):
 
 ```sh
-herdr plugin link ~/Code/dotfiles/herdr/herdr-navigate-line
-herdr plugin action list --plugin navigate_line
+herdr plugin link ~/Code/dotfiles/herdr/herdr-kit
+herdr plugin action list --plugin kit
 ```
 
 Then bind keys in Herdr `config.toml`. Because the prefix is `ctrl+a`,
@@ -191,55 +196,55 @@ the same convention as tmux:
 [[keys.command]]
 key = "prefix+a"
 type = "plugin_action"
-command = "navigate_line.jump_start"
+command = "kit.jump_start"
 description = "send ctrl+a to pane"
 
 [[keys.command]]
 key = "prefix+e"
 type = "plugin_action"
-command = "navigate_line.jump_end"
+command = "kit.jump_end"
 description = "send ctrl+e to pane"
 
 [[keys.command]]
 key = "prefix+u"
 type = "plugin_action"
-command = "navigate_line.next_unread_agent"
+command = "kit.next_unread_agent"
 description = "focus next unread/blocked agent"
 
 [[keys.command]]
 key = "ctrl+'"
 type = "plugin_action"
-command = "navigate_line.pick_agent"
+command = "kit.pick_agent"
 description = "pick agent from filterable list"
 
 [[keys.command]]
 key = "prefix+o"
 type = "plugin_action"
-command = "navigate_line.pick_workspace"
+command = "kit.pick_workspace"
 description = "pick workspace or open a ~/Code dir"
 
 [[keys.command]]
 key = "prefix+t"
 type = "plugin_action"
-command = "navigate_line.new_tab_quick"
+command = "kit.new_tab_quick"
 description = "create tab named by ordinal"
 
 [[keys.command]]
 key = "prefix+shift+t"
 type = "plugin_action"
-command = "navigate_line.new_tab_adjacent"
+command = "kit.new_tab_adjacent"
 description = "create tab next to current"
 
 [[keys.command]]
 key = "prefix+shift+n"
 type = "plugin_action"
-command = "navigate_line.create_workspace"
+command = "kit.create_workspace"
 description = "create workspace from directory prompt"
 
 [[keys.command]]
 key = "prefix+shift+b"
 type = "plugin_action"
-command = "navigate_line.break_pane"
+command = "kit.break_pane"
 description = "break pane into new tab"
 ```
 
@@ -251,19 +256,19 @@ Invoke an action directly, or use the keybinding in a pane with text on
 the command line:
 
 ```sh
-herdr plugin action invoke navigate_line.jump_start
-herdr plugin log list --plugin navigate_line
+herdr plugin action invoke kit.jump_start
+herdr plugin log list --plugin kit
 ```
 
 Behavior tests for the workspace picker's listing and get-or-create logic
 (stdlib only, runs on the macOS system Python 3.9 too):
 
 ```sh
-python3 herdr/herdr-navigate-line/tests/test_workspace_picker.py
+python3 herdr/herdr-kit/tests/test_workspace_picker.py
 ```
 
 ## Uninstall
 
 ```sh
-herdr plugin unlink navigate_line
+herdr plugin unlink kit
 ```

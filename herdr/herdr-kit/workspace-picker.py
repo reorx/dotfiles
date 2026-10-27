@@ -220,7 +220,7 @@ def pick_numbered(lines):
 
 
 def fail(message):
-    print(f'navigate_line: {message}', file=sys.stderr)
+    print(f'kit: {message}', file=sys.stderr)
     try:
         input('press enter to close... ')
     except (KeyboardInterrupt, EOFError):

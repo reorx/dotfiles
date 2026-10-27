@@ -85,47 +85,47 @@ height = "90%"
 [[keys.command]]
 key = "prefix+a"
 type = "plugin_action"
-command = "navigate_line.jump_start"
+command = "kit.jump_start"
 description = "send ctrl+a to pane"
 
 [[keys.command]]
 key = "prefix+shift+n"
 type = "plugin_action"
-command = "navigate_line.create_workspace"
+command = "kit.create_workspace"
 description = "create workspace from directory prompt"
 
 [[keys.command]]
 key = "ctrl+;"
 type = "plugin_action"
-command = "navigate_line.next_unread_agent"
+command = "kit.next_unread_agent"
 description = "focus next unread/blocked agent"
 
 [[keys.command]]
 key = "ctrl+'"
 type = "plugin_action"
-command = "navigate_line.pick_agent"
+command = "kit.pick_agent"
 description = "pick agent from filterable list"
 
 [[keys.command]]
 key = "prefix+o"
 type = "plugin_action"
-command = "navigate_line.pick_workspace"
+command = "kit.pick_workspace"
 description = "pick workspace or open a ~/Code dir"
 
 [[keys.command]]
 key = "prefix+t"
 type = "plugin_action"
-command = "navigate_line.new_tab_quick"
+command = "kit.new_tab_quick"
 description = "create tab named by ordinal"
 
 [[keys.command]]
 key = "prefix+shift+t"
 type = "plugin_action"
-command = "navigate_line.new_tab_adjacent"
+command = "kit.new_tab_adjacent"
 description = "create tab next to current"
 
 [[keys.command]]
 key = "prefix+/"
 type = "plugin_action"
-command = "navigate_line.break_pane"
+command = "kit.break_pane"
 description = "break pane into new tab"

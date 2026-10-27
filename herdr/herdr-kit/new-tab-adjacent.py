@@ -17,7 +17,7 @@ def request(sock_path, method, params):
     """Send one request over the Herdr socket and return the parsed reply."""
     conn = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     conn.connect(sock_path)
-    conn.sendall((json.dumps({"id": "navigate_line", "method": method, "params": params}) + "\n").encode())
+    conn.sendall((json.dumps({"id": "kit", "method": method, "params": params}) + "\n").encode())
     buf = b""
     while not buf.endswith(b"\n"):
         chunk = conn.recv(65536)
@@ -36,7 +36,7 @@ def main():
     workspace_id = os.environ.get("HERDR_WORKSPACE_ID")
     current_tab = os.environ.get("HERDR_TAB_ID")
     if not (sock_path and workspace_id and current_tab):
-        print("navigate_line: HERDR_SOCKET_PATH, HERDR_WORKSPACE_ID and HERDR_TAB_ID are required", file=sys.stderr)
+        print("kit: HERDR_SOCKET_PATH, HERDR_WORKSPACE_ID and HERDR_TAB_ID are required", file=sys.stderr)
         return 1
 
     tabs = [t["tab_id"] for t in request(sock_path, "tab.list", {"workspace_id": workspace_id})["tabs"]]
@@ -54,5 +54,5 @@ if __name__ == "__main__":
     try:
         sys.exit(main())
     except (OSError, RuntimeError) as e:
-        print(f"navigate_line: {e}", file=sys.stderr)
+        print(f"kit: {e}", file=sys.stderr)
         sys.exit(1)

@@ -6,7 +6,7 @@ set -eu
 herdr="${HERDR_BIN_PATH:-herdr}"
 
 if [ -z "${HERDR_PANE_ID:-}" ]; then
-  echo "navigate_line: no pane in invocation context" >&2
+  echo "kit: no pane in invocation context" >&2
   exit 1
 fi
 
