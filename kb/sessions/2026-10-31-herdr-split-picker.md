@@ -29,7 +29,8 @@ tags:
 - `python3 herdr/herdr-kit/tests/test_split_picker.py`：19/19 通过。`test_workspace_picker.py` 未受影响。
 - 真实 herdr 端到端测试（`tmp/layout-exp/e2e.py`，没有入库）：在临时 tab 的普通 pane 里运行 picker，用 `pane send-keys` 发送按键，再读取目标 pane 的实际布局。在 126x43 的区域内，1 → 新 pane 在下方，高 11；2 → 在上方，高 11；3 → 在左侧，宽 32；4 → 在右侧，宽 31。四种情况焦点都落在新 pane 上，cwd 都继承了原 pane。Esc 和 q 都不改变布局，退出码为 0。
 - 真实 popup（`tmp/layout-exp/popup-check.py`）：先用 `herdr plugin action invoke kit.pick_split` 打开 popup，检查完再用 socket 的 `popup.close` 关闭。popup 的 pty 是 14 行 × 86 列，容得下 13 × 85 的图。pty 处于 `-icanon -echo` 状态，说明 picker 已经拿到 `KIT_SPLIT_PANE` 并在等单键；拿不到的话会走 fail 分支，停在 `input()`。popup 关闭后，调用方 pane 的布局没变。
-- 本机（Maiev）的插件状态：链接的仍是旧的 `navigate_line`，路径已不存在。10-27 改名之后这台机器没有重新 link，所以 config 里的 `kit.*` 绑定全部失效。本次按当时记录的步骤执行 unlink → link → `config check` → `reload-config`，现在 `plugin list` 里只剩 `kit`，共 12 个 action。
+- 本机（Maiev）的插件状态：链接的仍是旧的 `navigate_line`，路径已不存在。本次按 10-27 记录的步骤执行 unlink → link → reload，现在 `plugin list` 里只剩 `kit`。
+- 用户反馈 `prefix+v` 无效，其他插件快捷键也全部失效。原因是 maiev 设置了 `HERDR_CONFIG_PATH=~/.config/herdr/config.maiev.toml`，herdr 读的是 `override_config.py` 在 8 月生成的那份配置，里面的绑定仍是 `navigate_line.*`，也没有 `prefix+v`。前面跑的 `config check` 和 `reload-config` 针对的都是这份旧文件。unlink `navigate_line` 之后，这些旧绑定就全部失效了。修复方法：执行 `uv run herdr/override_config.py maiev` 重新生成配置，再 `config check`（ok）和 `reload-config`（applied）。新文件里没有 `navigate_line`，有 `kit.pick_split`，maiev 自己的琥珀色 accent 也保留了。
 
 ## 注意事项
 
@@ -39,6 +40,7 @@ tags:
 - macOS 的 `ps -E` 读不到任何进程的环境变量（自己的子进程也读不到），不能用它验证 env 传递。
 - **测试时不要在 shell 启动过程中关闭临时 tab。** 用户的登录 shell 启动时会跑 `pyenv rehash`，被 HUP 打断后会留下 `~/.pyenv/shims/.pyenv-shim` 锁文件。之后每个新 shell 都要卡到锁超时（最长 60 秒），新开的 pane 就一直没有提示符。本次就踩到了：确认没有 rehash 进程在跑之后删掉锁文件，e2e 脚本改为关 tab 前等 `pgrep -f pyenv-rehash` 返回空。
 - 新建 tab 后，如果立刻 `pane run`，命令会被回显但不执行，因为 zsh 还没准备好。应该先跑一条 echo 并等它的输出。
+- 改 herdr 绑定前先 `echo $HERDR_CONFIG_PATH`：它指向生成的 `config.<machine>.toml` 时，`config check`/`reload-config` 都只认那份文件，改 `config.toml` 之后要先跑 `override_config.py`。
 - `screencapture` 截到的是本机桌面，用户的 herdr 客户端在另一台机器上，所以截图拿来验收 popup 没有用。
 
 ## 遗留问题
