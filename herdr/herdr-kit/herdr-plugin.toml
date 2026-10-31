@@ -33,6 +33,13 @@ contexts = ["pane"]
 command = ["sh", "break-pane.sh"]
 
 [[actions]]
+id = "pick_split"
+title = "Pane: split with layout picker"
+description = "Open a popup previewing four 25% splits of the focused pane (bottom, top, left, right); press 1-4 to apply one, no enter"
+contexts = ["pane"]
+command = ["sh", "open-split-picker.sh"]
+
+[[actions]]
 id = "new_tab_quick"
 title = "Tab: create with ordinal name"
 description = "Create a tab in the current workspace without a name prompt; the label is the auto ordinal that follows the tab position"
@@ -84,3 +91,11 @@ id = "create_workspace_prompt"
 title = "Create workspace"
 placement = "popup"
 command = ["sh", "create-workspace.sh"]
+
+[[panes]]
+id = "split_picker"
+title = "New pane"
+placement = "popup"
+width = 89
+height = 16
+command = ["python3", "split-picker.py"]

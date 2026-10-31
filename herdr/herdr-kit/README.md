@@ -8,8 +8,8 @@ actions, grouped by what they act on:
   `ctrl+a`) and the standard Unix command-line movement keys: bind a
   prefix combo to a plugin action, and the action sends the real key to
   the shell with `pane.send_keys`
-- Pane and tab: `break_pane` (tmux `break-pane`), `new_tab_quick`,
-  `new_tab_adjacent`
+- Pane and tab: `break_pane` (tmux `break-pane`), `pick_split`
+  (new-pane layout popup), `new_tab_quick`, `new_tab_adjacent`
 - Agent: `next_unread_agent`, `pick_agent`
 - Workspace: `pick_workspace` (get-or-create picker), `create_workspace`
 
@@ -38,6 +38,46 @@ Implemented in `break-pane.sh` with only the `herdr` CLI: it reads
 `herdr pane layout` to count panes and check zoom, then runs
 `herdr pane move <id> --new-tab --focus`. The empty source tab case does
 not need cleanup; Herdr closes a tab when its last pane leaves.
+
+### `kit.pick_split`
+
+Opens a popup that previews four ways to split the pane the action was
+invoked from. Press one digit to apply it, no enter; `q`, `Esc` or
+`ctrl+c` cancels:
+
+```
+   1 bottom 25%          2 top 25%            3 left 25%          4 right 25%
+ ┌────────────────┐   ┌────────────────┐   ┌────┬───────────┐   ┌───────────┬────┐
+ │                │   │░░░░░░░░░░░░░░░░│   │░░░░│           │   │           │░░░░│
+ │                │   │░░░░░ new ░░░░░░│   │░░░░│           │   │           │░░░░│
+ │    current     │   ├────────────────┤   │░░░░│           │   │           │░░░░│
+ │                │   │                │   │new │  current  │   │  current  │new │
+ ├────────────────┤   │                │   │░░░░│           │   │           │░░░░│
+ │░░░░░░░░░░░░░░░░│   │    current     │   │░░░░│           │   │           │░░░░│
+ │░░░░░ new ░░░░░░│   │                │   │░░░░│           │   │           │░░░░│
+ └────────────────┘   └────────────────┘   └────┴───────────┘   └───────────┴────┘
+```
+
+The new pane takes 25% of the current pane (not of the whole tab), starts
+in the current pane's `cwd`, and gets the focus. A zoomed pane is unzoomed
+first. When the popup is narrower than the previews (85 columns), it shows
+the four choices as a plain list instead.
+
+`herdr pane split` only goes `right` or `down`, and `--ratio` is the share
+of the first (top/left) slot, which keeps the original pane. Bottom and
+right split with ratio `0.75`. Top and left split with ratio `0.25`
+(original pane in the small slot), then `herdr pane swap` the two panes: a
+swap exchanges the panes but keeps the slot sizes, and the focus stays with
+the slot, so the split runs with `--no-focus` and the picker then focuses
+the new pane with `herdr pane focus --direction up|left`.
+
+A popup process gets no `HERDR_PANE_ID`, so the action
+(`open-split-picker.sh`) passes the pane to `split-picker.py` in
+`KIT_SPLIT_PANE`. The picker switches the terminal to cbreak mode with
+`TCSANOW` before drawing; the default `TCSAFLUSH` would drop a digit typed
+while the popup was still opening. The popup size (`width = 89`,
+`height = 16` in the manifest) leaves an inner area of 86x14 for the 85x13
+drawing.
 
 ### `kit.new_tab_quick`
 
@@ -242,6 +282,12 @@ command = "kit.create_workspace"
 description = "create workspace from directory prompt"
 
 [[keys.command]]
+key = "prefix+v"
+type = "plugin_action"
+command = "kit.pick_split"
+description = "split pane with layout picker"
+
+[[keys.command]]
 key = "prefix+shift+b"
 type = "plugin_action"
 command = "kit.break_pane"
@@ -265,6 +311,13 @@ Behavior tests for the workspace picker's listing and get-or-create logic
 
 ```sh
 python3 herdr/herdr-kit/tests/test_workspace_picker.py
+```
+
+Behavior tests for the split picker's keys, previews, and the herdr calls
+behind each layout:
+
+```sh
+python3 herdr/herdr-kit/tests/test_split_picker.py
 ```
 
 ## Uninstall

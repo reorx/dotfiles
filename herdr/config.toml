@@ -125,6 +125,12 @@ command = "kit.new_tab_adjacent"
 description = "create tab next to current"
 
 [[keys.command]]
+key = "prefix+v"
+type = "plugin_action"
+command = "kit.pick_split"
+description = "split pane with layout picker"
+
+[[keys.command]]
 key = "prefix+/"
 type = "plugin_action"
 command = "kit.break_pane"
