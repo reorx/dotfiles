@@ -35,7 +35,7 @@ command = ["sh", "break-pane.sh"]
 [[actions]]
 id = "pick_split"
 title = "Pane: split with layout picker"
-description = "Open a popup previewing four 25% splits of the focused pane (1-4: bottom, top, left, right) plus 50% halves (v: side by side, h: stacked); one key applies it, no enter"
+description = "Open a popup that splits the focused pane in two key presses, no enter: the side of the new pane (1-4: top, right, bottom, left), then its size (1-3: 25%, 50%, 75%, or space for 50%); each step previews its choices"
 contexts = ["pane"]
 command = ["sh", "open-split-picker.sh"]
 
@@ -96,6 +96,6 @@ command = ["sh", "create-workspace.sh"]
 id = "split_picker"
 title = "New pane"
 placement = "popup"
-width = 89
-height = 17
+width = 85
+height = 16
 command = ["python3", "split-picker.py"]

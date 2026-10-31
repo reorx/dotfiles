@@ -41,33 +41,51 @@ not need cleanup; Herdr closes a tab when its last pane leaves.
 
 ### `kit.pick_split`
 
-Opens a popup that previews four ways to split the pane the action was
-invoked from, with a line below for the plain halves. Press one key to
-apply a layout, no enter; `q`, `Esc` or `ctrl+c` cancels:
+Opens a popup that splits the pane the action was invoked from in two key
+presses, no enter. First pick the side of the new pane, clockwise from the
+top:
 
 ```
-   1 bottom 25%          2 top 25%            3 left 25%          4 right 25%
- ┌────────────────┐   ┌────────────────┐   ┌────┬───────────┐   ┌───────────┬────┐
- │                │   │░░░░░░░░░░░░░░░░│   │░░░░│           │   │           │░░░░│
- │                │   │░░░░░ new ░░░░░░│   │░░░░│           │   │           │░░░░│
- │    current     │   ├────────────────┤   │░░░░│           │   │           │░░░░│
- │                │   │                │   │new │  current  │   │  current  │new │
- ├────────────────┤   │                │   │░░░░│           │   │           │░░░░│
- │░░░░░░░░░░░░░░░░│   │    current     │   │░░░░│           │   │           │░░░░│
- │░░░░░ new ░░░░░░│   │                │   │░░░░│           │   │           │░░░░│
- └────────────────┘   └────────────────┘   └────┴───────────┘   └───────────┴────┘
+        1 top              2 right            3 bottom             4 left
+  ┌───────────────┐   ┌───────┬───────┐   ┌───────────────┐   ┌───────┬───────┐
+  │░░░░░░░░░░░░░░░│   │       │░░░░░░░│   │               │   │░░░░░░░│       │
+  │░░░░░ new ░░░░░│   │       │░░░░░░░│   │    current    │   │░░░░░░░│       │
+  │░░░░░░░░░░░░░░░│   │       │░░░░░░░│   │               │   │░░░░░░░│       │
+  ├───────────────┤   │current│░ new ░│   ├───────────────┤   │░ new ░│current│
+  │               │   │       │░░░░░░░│   │░░░░░░░░░░░░░░░│   │░░░░░░░│       │
+  │    current    │   │       │░░░░░░░│   │░░░░░ new ░░░░░│   │░░░░░░░│       │
+  │               │   │       │░░░░░░░│   │░░░░░░░░░░░░░░░│   │░░░░░░░│       │
+  └───────────────┘   └───────┴───────┘   └───────────────┘   └───────┴───────┘
 
- v vertical 50% (side by side)   h horizontal 50% (stacked)
- press 1-4, v or h to split the current pane · q / esc to cancel
+  press 1-4 to pick the side of the new pane · q / esc to cancel
 ```
 
-`1`-`4` give the new pane 25% of the current pane (not of the whole tab).
-`v` and `h` split it in half, named the way Herdr's own `split_vertical`
-and `split_horizontal` are: vertical is side by side (new pane on the
-right), horizontal is stacked (new pane below). The new pane starts in the
-current pane's `cwd` and gets the focus. A zoomed pane is unzoomed first.
-When the popup is narrower than the previews (85 columns), it shows the
-six choices as a plain list instead.
+Then its size: `1` 25%, `2` 50%, `3` 75%, or `space` for 50%. This step
+previews the three sizes on the picked side; `backspace` goes back to the
+first step:
+
+```
+     1 right 25%         2 right 50%         3 right 75%
+  ┌──────────┬────┐   ┌───────┬───────┐   ┌────┬──────────┐
+  │          │░░░░│   │       │░░░░░░░│   │    │░░░░░░░░░░│
+  │          │░░░░│   │       │░░░░░░░│   │    │░░░░░░░░░░│
+  │          │░░░░│   │       │░░░░░░░│   │    │░░░░░░░░░░│
+  │ current  │new │   │current│░ new ░│   │cur │░░ new ░░░│
+  │          │░░░░│   │       │░░░░░░░│   │    │░░░░░░░░░░│
+  │          │░░░░│   │       │░░░░░░░│   │    │░░░░░░░░░░│
+  │          │░░░░│   │       │░░░░░░░│   │    │░░░░░░░░░░│
+  └──────────┴────┘   └───────┴───────┘   └────┴──────────┘
+
+  press 1-3, or space for 50% · backspace to go back · q / esc to cancel
+```
+
+So `1 space` is a top half, `2 space` a side-by-side half (Herdr's
+`split_vertical`), `3 1` a 25% pane at the bottom. `q`, `Esc` or `ctrl+c`
+cancels in either step. The size is the new pane's share of the current
+pane, not of the whole tab. The new pane starts in the current pane's
+`cwd` and gets the focus. A zoomed pane is unzoomed first. When the popup
+is narrower than the previews (81 columns), each step lists its choices as
+plain text instead.
 
 The new pane and the keys are painted in `ui.accent`, read from the
 config Herdr is running with: `HERDR_CONFIG_PATH` when set (plugin
@@ -78,19 +96,21 @@ terminal's magenta.
 
 `herdr pane split` only goes `right` or `down`, and `--ratio` is the share
 of the first (top/left) slot, which keeps the original pane. Bottom and
-right split with ratio `0.75`, `v` and `h` with `0.5`. Top and left split with ratio `0.25`
-(original pane in the small slot), then `herdr pane swap` the two panes: a
-swap exchanges the panes but keeps the slot sizes, and the focus stays with
-the slot, so the split runs with `--no-focus` and the picker then focuses
-the new pane with `herdr pane focus --direction up|left`.
+right split once, with ratio `1 - size` (`0.75` for a 25% pane). Top and
+left split with ratio `size` (original pane in a slot of the new pane's
+size), then `herdr pane swap` the two panes: a swap exchanges the panes
+but keeps the slot sizes, and the focus stays with the slot, so the split
+runs with `--no-focus` and the picker then focuses the new pane with
+`herdr pane focus --direction up|left`.
 
 A popup process gets no `HERDR_PANE_ID`, so the action
 (`open-split-picker.sh`) passes the pane to `split-picker.py` in
 `KIT_SPLIT_PANE`. The picker switches the terminal to cbreak mode with
-`TCSANOW` before drawing; the default `TCSAFLUSH` would drop a digit typed
-while the popup was still opening. The popup size (`width = 89`,
-`height = 17` in the manifest) leaves an inner area of 86x15 for the 85x14
-drawing.
+`TCSANOW` before drawing; the default `TCSAFLUSH` would drop keys typed
+while the popup was still opening (`prefix+v 3 1` typed in one go still
+works). The popup size (`width = 85`, `height = 16` in the manifest)
+leaves an inner area of 82x14 for the 81x13 drawing; the tests check the
+manifest against the drawing.
 
 ### `kit.new_tab_quick`
 

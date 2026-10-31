@@ -20,6 +20,10 @@ _spec.loader.exec_module(sp)
 
 ANSI = re.compile(r'\x1b\[[0-9;]*m')
 
+SIDES = ('top', 'right', 'bottom', 'left')
+SHARES = (0.25, 0.5, 0.75)
+BACKSPACE = b'\x7f'
+
 
 def plain(text):
     return ANSI.sub('', text)
@@ -30,113 +34,176 @@ def inner(box):
     return [line[1:-1] for line in box[1:-1]]
 
 
+def popup_inner_size():
+    """The split_picker popup's inner area (cols, rows) from the manifest: the frame takes 3 columns and 2 rows."""
+    manifest = (HERE.parent / 'herdr-plugin.toml').read_text()
+    block = next(b for b in manifest.split('[[panes]]') if 'id = "split_picker"' in b)
+    width = int(re.search(r'^width = (\d+)', block, re.M).group(1))
+    height = int(re.search(r'^height = (\d+)', block, re.M).group(1))
+    return width - 3, height - 2
+
+
 class TestChoose(unittest.TestCase):
-    def test_digit_keys_pick_a_layout_without_enter(self):
-        for key, name in ((b'1', 'bottom'), (b'2', 'top'), (b'3', 'left'), (b'4', 'right')):
-            self.assertEqual(sp.choose(iter([key])).name, name)
+    def choose(self, *keys):
+        return sp.choose(iter(keys))
 
-    def test_cancel_keys(self):
+    def test_side_then_size_picks_a_layout_without_enter(self):
+        sides = {b'1': 'top', b'2': 'right', b'3': 'bottom', b'4': 'left'}
+        sizes = {b'1': 0.25, b'2': 0.5, b'3': 0.75}
+        for side_key, side in sides.items():
+            for size_key, share in sizes.items():
+                self.assertEqual(self.choose(side_key, size_key), sp.Layout(side, share))
+
+    def test_space_picks_half(self):
+        for side_key, side in ((b'1', 'top'), (b'4', 'left')):
+            self.assertEqual(self.choose(side_key, b' '), sp.Layout(side, 0.5))
+
+    def test_size_keys_do_nothing_before_a_side_is_picked(self):
+        # space is not a side; 1 first picks the side, the second 1 the size
+        self.assertEqual(self.choose(b' ', b'1', b'1'), sp.Layout('top', 0.25))
+
+    def test_cancel_keys_in_either_step(self):
         for key in (b'q', b'\x1b', b'\x03'):
-            self.assertIsNone(sp.choose(iter([key, b'1'])))
+            self.assertIsNone(self.choose(key, b'1', b'1'))
+            self.assertIsNone(self.choose(b'1', key, b'1'))
 
-    def test_v_and_h_pick_the_half_splits(self):
-        self.assertEqual(sp.choose(iter([b'v'])).name, 'vertical')
-        self.assertEqual(sp.choose(iter([b'h'])).name, 'horizontal')
+    def test_backspace_goes_back_to_the_side_step(self):
+        self.assertEqual(self.choose(b'1', BACKSPACE, b'3', b'1'), sp.Layout('bottom', 0.25))
+        self.assertEqual(self.choose(b'2', b'\x08', b'4', b'3'), sp.Layout('left', 0.75))
+
+    def test_backspace_in_the_side_step_is_ignored(self):
+        self.assertEqual(self.choose(BACKSPACE, b'2', b' '), sp.Layout('right', 0.5))
 
     def test_other_keys_are_ignored(self):
-        self.assertEqual(sp.choose(iter([b'x', b'5', b'\r', b'3'])).name, 'left')
+        # 5 is no side; 4 is no size once the side is picked
+        self.assertEqual(self.choose(b'x', b'5', b'\r', b'3', b'4', b'x', b'3'), sp.Layout('bottom', 0.75))
 
     def test_end_of_input_cancels(self):
-        self.assertIsNone(sp.choose(iter([b'x'])))
+        self.assertIsNone(self.choose(b'x'))
+        self.assertIsNone(self.choose(b'1'))
+
+    def test_every_step_change_is_reported(self):
+        steps = []
+        sp.choose(iter([b'x', b'3', b'x', BACKSPACE, b'2', b'1']), steps.append)
+        self.assertEqual(steps, ['bottom', None, 'right'])
+
+
+class TestLayout(unittest.TestCase):
+    def test_split_direction_follows_the_side(self):
+        for side, direction, new_first in (('top', 'down', True), ('bottom', 'down', False),
+                                           ('left', 'right', True), ('right', 'right', False)):
+            layout = sp.Layout(side, 0.25)
+            self.assertEqual((layout.direction, layout.new_first), (direction, new_first))
 
 
 class TestPreview(unittest.TestCase):
-    QUARTERS = ('bottom', 'top', 'left', 'right')
+    def box(self, side, share):
+        return [plain(line) for line in sp.preview(sp.Layout(side, share))]
 
-    def box(self, name):
-        return [plain(line) for line in sp.preview(sp.LAYOUTS[name])]
-
-    def shaded_rows(self, name):
-        return [i for i, row in enumerate(inner(self.box(name))) if sp.SHADE in row]
-
-    def shaded_cols(self, name):
-        rows = inner(self.box(name))
+    def shaded(self, side, share):
+        """Rows (top/bottom) or columns (left/right) shaded as the new pane."""
+        rows = inner(self.box(side, share))
+        if side in ('top', 'bottom'):
+            return [i for i, row in enumerate(rows) if sp.SHADE in row]
         return sorted({i for row in rows for i, ch in enumerate(row) if ch == sp.SHADE})
 
+    def extent(self, side):
+        rows = inner(self.box(side, 0.5))
+        return len(rows) if side in ('top', 'bottom') else len(rows[0])
+
     def test_every_preview_has_the_same_size(self):
-        sizes = {(len(b), len(b[0])) for b in (self.box(n) for n in self.QUARTERS)}
-        self.assertEqual(len(sizes), 1)
-        for name in self.QUARTERS:
-            self.assertEqual({len(line) for line in self.box(name)}, {len(self.box(name)[0])})
+        boxes = [self.box(side, share) for side in SIDES for share in SHARES]
+        self.assertEqual(len({(len(b), len(b[0])) for b in boxes}), 1)
+        for box in boxes:
+            self.assertEqual({len(line) for line in box}, {len(box[0])})
 
-    def test_bottom_shades_the_last_rows(self):
-        rows = self.shaded_rows('bottom')
-        height = len(inner(self.box('bottom')))
-        self.assertEqual(rows, list(range(height - len(rows), height)))
-        self.assertLessEqual(len(rows), height // 3)
+    def test_the_new_pane_is_shaded_on_its_side(self):
+        for share in SHARES:
+            for side in SIDES:
+                cells = self.shaded(side, share)
+                size = self.extent(side)
+                if side in ('top', 'left'):
+                    self.assertEqual(cells, list(range(len(cells))), (side, share))
+                else:
+                    self.assertEqual(cells, list(range(size - len(cells), size)), (side, share))
 
-    def test_top_shades_the_first_rows(self):
-        rows = self.shaded_rows('top')
-        self.assertEqual(rows, list(range(len(rows))))
-        self.assertLessEqual(len(rows), len(inner(self.box('top'))) // 3)
-
-    def test_left_shades_the_first_cols(self):
-        cols = self.shaded_cols('left')
-        self.assertEqual(cols, list(range(len(cols))))
-        self.assertLessEqual(len(cols), len(inner(self.box('left'))[0]) // 3)
-
-    def test_right_shades_the_last_cols(self):
-        cols = self.shaded_cols('right')
-        width = len(inner(self.box('right'))[0])
-        self.assertEqual(cols, list(range(width - len(cols), width)))
-        self.assertLessEqual(len(cols), width // 3)
+    def test_the_shaded_share_follows_the_size(self):
+        for side in SIDES:
+            counts = [len(self.shaded(side, share)) for share in SHARES]
+            self.assertEqual(counts, sorted(set(counts)), side)
+            # with the divider taken out, 25% and 75% mirror each other and 50% is an even split
+            panes = self.extent(side) - 1
+            self.assertEqual(counts[0] + counts[2], panes, side)
+            self.assertEqual(2 * counts[1], panes, side)
 
     def test_divider_joins_the_border(self):
-        for name in ('bottom', 'top'):
-            box = self.box(name)
-            self.assertIn('├', ''.join(l[0] for l in box))
-            self.assertIn('┤', ''.join(l[-1] for l in box))
-        self.assertIn('┬', self.box('left')[0])
-        self.assertIn('┴', self.box('right')[-1])
+        for share in SHARES:
+            for side in ('top', 'bottom'):
+                box = self.box(side, share)
+                self.assertIn('├', ''.join(l[0] for l in box))
+                self.assertIn('┤', ''.join(l[-1] for l in box))
+            for side in ('left', 'right'):
+                box = self.box(side, share)
+                self.assertIn('┬', box[0])
+                self.assertIn('┴', box[-1])
 
-    def test_panes_are_labelled(self):
-        for name in self.QUARTERS:
-            text = '\n'.join(self.box(name))
-            self.assertIn('new', text)
-            self.assertIn('current', text)
+    def test_each_label_stays_inside_its_own_pane(self):
+        for side in SIDES:
+            for share in SHARES:
+                rows = inner(self.box(side, share))
+                new_cells = set(self.shaded(side, share))
+                found = {}
+                for r, row in enumerate(rows):
+                    for label in ('new', 'cur'):
+                        c = row.find(label)
+                        if c >= 0:
+                            span = range(c, c + len(label)) if side in ('left', 'right') else [r]
+                            found[label] = all(i in new_cells for i in span), all(i not in new_cells for i in span)
+                self.assertEqual(found.get('new'), (True, False), (side, share))
+                self.assertEqual(found.get('cur'), (False, True), (side, share))
 
 
 class TestRender(unittest.TestCase):
-    def test_wide_popup_shows_previews_in_key_order(self):
-        lines = [plain(l) for l in sp.render(200)]
-        labels = next(l for l in lines if '1 bottom' in l)
-        positions = [labels.index(t) for t in ('1 bottom 25%', '2 top 25%', '3 left 25%', '4 right 25%')]
-        self.assertEqual(positions, sorted(positions))
-        self.assertTrue(any(l.count('┌') == 4 for l in lines))
+    def lines(self, cols, side=None):
+        return [plain(l) for l in sp.render(cols, side=side)]
 
-    def test_half_splits_are_explained_in_one_line_below_the_previews(self):
-        lines = [plain(l) for l in sp.render(200)]
-        last_box = max(i for i, l in enumerate(lines) if '└' in l)
-        below = [i for i, l in enumerate(lines) if 'v vertical 50%' in l and 'h horizontal 50%' in l]
-        self.assertEqual(len(below), 1)
-        self.assertGreater(below[0], last_box)
-        self.assertIn('side by side', lines[below[0]])
-        self.assertIn('stacked', lines[below[0]])
-        # still only the four 25% previews are drawn
+    def test_side_step_previews_the_four_sides_in_key_order(self):
+        lines = self.lines(200)
+        labels = next(l for l in lines if '1 top' in l)
+        positions = [labels.index(t) for t in ('1 top', '2 right', '3 bottom', '4 left')]
+        self.assertEqual(positions, sorted(positions))
         self.assertEqual(max(l.count('┌') for l in lines), 4)
+        self.assertIn('1-4', lines[-1])
+
+    def test_size_step_previews_three_sizes_of_the_picked_side(self):
+        lines = self.lines(200, 'bottom')
+        labels = next(l for l in lines if '1 bottom 25%' in l)
+        positions = [labels.index(t) for t in ('1 bottom 25%', '2 bottom 50%', '3 bottom 75%')]
+        self.assertEqual(positions, sorted(positions))
+        self.assertEqual(max(l.count('┌') for l in lines), 3)
+        for word in ('space', 'backspace'):
+            self.assertIn(word, lines[-1])
 
     def test_lines_fit_the_popup(self):
-        width = sp.ROW_WIDTH
-        for line in sp.render(width):
-            self.assertLessEqual(len(plain(line)), width)
+        cols, rows = popup_inner_size()
+        self.assertGreaterEqual(cols, sp.ROW_WIDTH)
+        for side in (None,) + SIDES:
+            lines = sp.render(cols, side=side)
+            self.assertTrue(any('┌' in l for l in lines), side)
+            self.assertLessEqual(len(lines), rows, side)
+            for line in lines:
+                self.assertLessEqual(len(plain(line)), sp.ROW_WIDTH, side)
 
     def test_narrow_popup_falls_back_to_a_text_list(self):
-        lines = [plain(l) for l in sp.render(sp.ROW_WIDTH - 1)]
-        for label in ('1 bottom 25%', '2 top 25%', '3 left 25%', '4 right 25%', 'v vertical 50%', 'h horizontal 50%'):
-            self.assertTrue(any(label in l for l in lines))
-        self.assertFalse(any('┌' in l for l in lines))
-        for line in lines:
-            self.assertLess(len(line), sp.ROW_WIDTH)
+        narrow = sp.ROW_WIDTH - 1
+        for side, labels in ((None, ('1 top', '2 right', '3 bottom', '4 left')),
+                             ('left', ('1 left 25%', '2 left 50%', '3 left 75%'))):
+            lines = self.lines(narrow, side)
+            for label in labels:
+                self.assertTrue(any(label in l for l in lines), label)
+            self.assertFalse(any('┌' in l for l in lines))
+            for line in lines:
+                self.assertLess(len(line), sp.ROW_WIDTH)
 
 
 class TestAccent(unittest.TestCase):
@@ -172,7 +239,8 @@ class TestAccent(unittest.TestCase):
     def test_render_paints_with_the_accent(self):
         accent = sp.accent_style('#010203')
         for width in (200, 40):
-            self.assertIn(accent, '\n'.join(sp.render(width, accent)))
+            for side in (None, 'top'):
+                self.assertIn(accent, '\n'.join(sp.render(width, accent, side)))
 
 
 class FakeHerdr:
@@ -197,50 +265,46 @@ class FakeHerdr:
 
 
 class TestApplyLayout(unittest.TestCase):
-    def apply(self, name, zoomed=False):
+    def apply(self, side, share, zoomed=False):
         fake = FakeHerdr(zoomed)
         with mock.patch.object(sp, 'herdr_result', fake):
-            new = sp.apply_layout('herdr', sp.LAYOUTS[name], 'w1:p1')
+            new = sp.apply_layout('herdr', sp.Layout(side, share), 'w1:p1')
         self.assertEqual(new, 'w1:p9')
         return fake.mutations()
 
     def split(self, direction, ratio, focus):
         return ['pane', 'split', 'w1:p1', '--direction', direction, '--ratio', ratio, '--cwd', '/work/proj', focus]
 
-    def test_bottom_splits_down_and_focuses_the_new_pane(self):
-        self.assertEqual(self.apply('bottom'), [self.split('down', '0.75', '--focus')])
+    def swap_and_focus(self, towards):
+        return [
+            ['pane', 'swap', '--source-pane', 'w1:p9', '--target-pane', 'w1:p1'],
+            ['pane', 'focus', '--pane', 'w1:p1', '--direction', towards],
+        ]
 
-    def test_right_splits_right_and_focuses_the_new_pane(self):
-        self.assertEqual(self.apply('right'), [self.split('right', '0.75', '--focus')])
-
-    def test_vertical_splits_side_by_side_in_half(self):
-        self.assertEqual(self.apply('vertical'), [self.split('right', '0.5', '--focus')])
-
-    def test_horizontal_stacks_in_half(self):
-        self.assertEqual(self.apply('horizontal'), [self.split('down', '0.5', '--focus')])
+    def test_bottom_and_right_split_once_and_focus_the_new_pane(self):
+        # the original pane keeps the first slot, so its ratio is what the new pane leaves
+        for side, direction in (('bottom', 'down'), ('right', 'right')):
+            for share, ratio in ((0.25, '0.75'), (0.5, '0.5'), (0.75, '0.25')):
+                self.assertEqual(self.apply(side, share), [self.split(direction, ratio, '--focus')], (side, share))
 
     def test_top_puts_the_new_pane_above_and_focuses_it(self):
-        self.assertEqual(
-            self.apply('top'),
-            [
-                self.split('down', '0.25', '--no-focus'),
-                ['pane', 'swap', '--source-pane', 'w1:p9', '--target-pane', 'w1:p1'],
-                ['pane', 'focus', '--pane', 'w1:p1', '--direction', 'up'],
-            ],
-        )
+        for share, ratio in ((0.25, '0.25'), (0.5, '0.5'), (0.75, '0.75')):
+            self.assertEqual(
+                self.apply('top', share),
+                [self.split('down', ratio, '--no-focus')] + self.swap_and_focus('up'),
+                share,
+            )
 
     def test_left_puts_the_new_pane_on_the_left_and_focuses_it(self):
-        self.assertEqual(
-            self.apply('left'),
-            [
-                self.split('right', '0.25', '--no-focus'),
-                ['pane', 'swap', '--source-pane', 'w1:p9', '--target-pane', 'w1:p1'],
-                ['pane', 'focus', '--pane', 'w1:p1', '--direction', 'left'],
-            ],
-        )
+        for share, ratio in ((0.25, '0.25'), (0.75, '0.75')):
+            self.assertEqual(
+                self.apply('left', share),
+                [self.split('right', ratio, '--no-focus')] + self.swap_and_focus('left'),
+                share,
+            )
 
     def test_zoomed_pane_is_unzoomed_first(self):
-        calls = self.apply('bottom', zoomed=True)
+        calls = self.apply('bottom', 0.25, zoomed=True)
         self.assertEqual(calls[0], ['pane', 'zoom', 'w1:p1', '--off'])
         self.assertEqual(calls[1][:2], ['pane', 'split'])
 

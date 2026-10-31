@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """New-pane layout picker (runs inside a popup).
 
-Draws an ASCII preview of four ways to split the pane the action was
-invoked from and applies the one picked with a single key press, no
-enter: 1 bottom, 2 top, 3 left, 4 right, the new pane taking 25%. A line
-below the previews offers the plain halves: v vertical (side by side) and
-h horizontal (stacked), Herdr's own naming. q, Esc or ctrl+c cancels.
+Two single key presses, no enter, pick where the new pane goes and how
+much of the current pane it takes:
+
+1. the side: 1 top, 2 right, 3 bottom, 4 left (clockwise from the top)
+2. the size: 1 25%, 2 50%, 3 75%, or space for 50%; backspace goes back
+
+Each step draws an ASCII preview of its choices. q, Esc or ctrl+c cancels.
 
 `herdr pane split` only goes right or down, and --ratio is the share of
 the first (top/left) slot. Top and left therefore split with the original
-pane in the 25% slot, then swap the two panes: a swap exchanges the panes
-but keeps the slot sizes.
+pane in a slot of the new pane's size, then swap the two panes: a swap
+exchanges the panes but keeps the slot sizes.
 
 A popup gets no HERDR_PANE_ID, so the opener passes the pane to split in
 KIT_SPLIT_PANE. The new pane is painted in the active config's ui.accent.
@@ -27,53 +29,47 @@ import sys
 import termios
 import tty
 from dataclasses import dataclass
-from typing import Iterator, Optional
+from typing import Callable, Iterator, Optional
 
-QUARTER, HALF = 0.25, 0.5
+QUARTER, HALF, THREE_QUARTERS = 0.25, 0.5, 0.75
 
-# preview box, borders excluded; terminal cells are about twice as tall as wide
-INNER_W, INNER_H = 16, 7
+SIDE_KEYS = {b'1': 'top', b'2': 'right', b'3': 'bottom', b'4': 'left'}
+SIZES = {b'1': QUARTER, b'2': HALF, b'3': THREE_QUARTERS}  # previewed in this order
+SIZE_KEYS = {**SIZES, b' ': HALF}
+CANCEL_KEYS = {b'q', b'\x1b', b'\x03'}
+BACK_KEYS = {b'\x7f', b'\x08'}
+
+# preview box, borders excluded; terminal cells are about twice as tall as wide.
+# The divider takes one cell, the rest (14 wide, 6 high) halves evenly.
+INNER_W, INNER_H = 15, 7
 BOX_W = INNER_W + 2
 MARGIN, GAP = 2, 3
 ROW_WIDTH = 2 * MARGIN + 4 * BOX_W + 3 * GAP
 
 SHADE = '░'
-HINT = 'press 1-4, v or h to split the current pane · q / esc to cancel'
+SIDE_HINT = 'press 1-4 to pick the side of the new pane · q / esc to cancel'
+SIZE_HINT = 'press 1-3, or space for 50% · backspace to go back · q / esc to cancel'
 
 RESET = '\033[0m'
 BOLD = '\033[1m'
 DIM = '\033[2m'
 FALLBACK_ACCENT = '\033[35m'
 
-CANCEL_KEYS = {b'q', b'\x1b', b'\x03'}
-
 
 @dataclass(frozen=True)
 class Layout:
-    key: bytes
-    name: str
-    direction: str  # herdr split direction: "down" or "right"
-    new_first: bool  # the new pane ends up on top / on the left
+    side: str  # where the new pane goes: top, right, bottom or left
     share: float  # the new pane's share of the split pane
-    note: str = ''
 
     @property
-    def title(self):
-        return f'{self.key.decode()} {self.name} {round(self.share * 100)}%'
+    def direction(self):
+        """The herdr split direction: "down" stacks the panes, "right" puts them side by side."""
+        return 'down' if self.side in ('top', 'bottom') else 'right'
 
-
-PREVIEWED = (
-    Layout(b'1', 'bottom', 'down', False, QUARTER),
-    Layout(b'2', 'top', 'down', True, QUARTER),
-    Layout(b'3', 'left', 'right', True, QUARTER),
-    Layout(b'4', 'right', 'right', False, QUARTER),
-)
-HALVES = (
-    Layout(b'v', 'vertical', 'right', False, HALF, 'side by side'),
-    Layout(b'h', 'horizontal', 'down', False, HALF, 'stacked'),
-)
-LAYOUTS = {layout.name: layout for layout in PREVIEWED + HALVES}
-BY_KEY = {layout.key: layout for layout in LAYOUTS.values()}
+    @property
+    def new_first(self):
+        """The new pane ends up in the first (top/left) slot."""
+        return self.side in ('top', 'left')
 
 
 def config_path():
@@ -111,18 +107,31 @@ def accent_style(color):
     return '\033[38;2;{};{};{}m'.format(*rgb)
 
 
-def choose(keys: Iterator[bytes]) -> Optional[Layout]:
-    """Return the layout of the first key that picks one; None when a key cancels or input ends."""
+def choose(keys: Iterator[bytes], on_step: Callable[[Optional[str]], None] = lambda side: None) -> Optional[Layout]:
+    """Read a side key, then a size key, and return the layout; None when a key cancels or input ends.
+
+    on_step gets the picked side when the size step starts, and None when
+    backspace returns to the side step.
+    """
+    side = None
     for key in keys:
         if key in CANCEL_KEYS:
             return None
-        if key in BY_KEY:
-            return BY_KEY[key]
+        if side is None:
+            if key in SIDE_KEYS:
+                side = SIDE_KEYS[key]
+                on_step(side)
+        elif key in BACK_KEYS:
+            side = None
+            on_step(None)
+        elif key in SIZE_KEYS:
+            return Layout(side, SIZE_KEYS[key])
     return None
 
 
-def put_label(cells, row, cols, text, style):
-    """Center text in cols of row; it gets a blank cell on each side so it stands out of the shade."""
+def put_label(cells, row, cols, names, style):
+    """Center the first of names that fits in cols of row; it gets a blank cell on each side so it stands out of the shade."""
+    text = next((name for name in names if len(name) <= len(cols)), names[-1][: len(cols)])
     if len(text) + 2 <= len(cols):
         text = f' {text} '
     else:
@@ -137,7 +146,7 @@ def preview(layout, accent=FALLBACK_ACCENT):
     """One preview box as styled lines, borders included; the new pane is shaded."""
     horizontal = layout.direction == 'down'  # the divider is a horizontal line
     size = INNER_H if horizontal else INNER_W
-    new_size = round((size + 1) * layout.share)
+    new_size = round((size - 1) * layout.share)  # the divider takes one cell
     div = new_size if layout.new_first else size - new_size - 1
     new_span = range(0, div) if layout.new_first else range(div + 1, size)
     cur_span = range(div + 1, size) if layout.new_first else range(0, div)
@@ -156,9 +165,9 @@ def preview(layout, accent=FALLBACK_ACCENT):
         cells.append(row)
 
     all_rows, all_cols = range(INNER_H), range(INNER_W)
-    for span, text, style in ((new_span, 'new', accent), (cur_span, 'current', '')):
+    for span, names, style in ((new_span, ('new',), accent), (cur_span, ('current', 'cur'), '')):
         rows, cols = (span, all_cols) if horizontal else (all_rows, span)
-        put_label(cells, rows[len(rows) // 2], cols, text, style)
+        put_label(cells, rows[len(rows) // 2], cols, names, style)
 
     top, bottom = ['─'] * INNER_W, ['─'] * INNER_W
     if not horizontal:
@@ -172,29 +181,37 @@ def preview(layout, accent=FALLBACK_ACCENT):
     return lines
 
 
-def styled_title(layout, accent, width=0):
-    """The layout title with the key highlighted, centered in width cells (no padding by default)."""
-    text = layout.title
+def choices(side=None):
+    """(key, title, layout) of each choice in a step: the four sides at 50%, or the three sizes of side."""
+    if side is None:
+        return [(key.decode(), name, Layout(name, HALF)) for key, name in SIDE_KEYS.items()]
+    return [(key.decode(), f'{side} {round(share * 100)}%', Layout(side, share)) for key, share in SIZES.items()]
+
+
+def styled_title(key, title, accent, width=0):
+    """`key title` with the key highlighted, centered in width cells (no padding by default)."""
+    text = f'{key} {title}'
     width = max(width, len(text))
     left = (width - len(text)) // 2
-    key, rest = text.split(' ', 1)
-    label = ' ' * left + f'{BOLD}{accent}{key}{RESET} {rest}' + ' ' * (width - len(text) - left)
-    return label + (f' {DIM}({layout.note}){RESET}' if layout.note else '')
+    return ' ' * left + f'{BOLD}{accent}{key}{RESET} {title}' + ' ' * (width - len(text) - left)
 
 
-def render(cols, accent=FALLBACK_ACCENT):
-    """Popup content: the previews in one row and the halves below, or a plain list when the popup is too narrow."""
+def render(cols, accent=FALLBACK_ACCENT, side=None):
+    """Popup content for a step: the side step when side is None, else the size step of side.
+
+    The choices are previewed in one row, or listed as plain text when the popup is too narrow.
+    """
     pad = ' ' * MARGIN
-    hint = f'{pad}{DIM}{HINT}{RESET}'
+    hint = f'{pad}{DIM}{SIDE_HINT if side is None else SIZE_HINT}{RESET}'
+    options = choices(side)
     if cols < ROW_WIDTH:
-        return [''] + [pad + styled_title(layout, accent) for layout in PREVIEWED + HALVES] + ['', hint]
+        return [''] + [pad + styled_title(key, title, accent) for key, title, _ in options] + ['', hint]
 
     sep = ' ' * GAP
-    boxes = [preview(layout, accent) for layout in PREVIEWED]
-    lines = ['', pad + sep.join(styled_title(layout, accent, BOX_W) for layout in PREVIEWED)]
+    boxes = [preview(layout, accent) for _, _, layout in options]
+    lines = ['', pad + sep.join(styled_title(key, title, accent, BOX_W) for key, title, _ in options)]
     lines += [pad + sep.join(box[i] for box in boxes) for i in range(len(boxes[0]))]
-    halves = pad + sep.join(styled_title(layout, accent) for layout in HALVES)
-    return lines + ['', halves, hint]
+    return lines + ['', hint]
 
 
 def herdr_result(herdr, *args):
@@ -223,17 +240,25 @@ def apply_layout(herdr, layout, target):
     return new
 
 
-def pick(lines):
-    """Show lines, then read single key presses (no enter) until one picks or cancels."""
+def show(lines):
+    sys.stdout.write('\033[H\033[2J' + '\n'.join(lines))
+    sys.stdout.flush()
+
+
+def pick(draw):
+    """Draw the side step, then read single key presses (no enter) until a layout is picked or cancelled.
+
+    draw(side) redraws the popup for a step (side None is the side step).
+    """
     fd = sys.stdin.fileno()
     saved = termios.tcgetattr(fd)
-    # TCSANOW keeps a key pressed while the popup was opening; the default
-    # TCSAFLUSH would drop it. Clearing the screen wipes its echo.
+    # TCSANOW keeps keys pressed while the popup was opening; the default
+    # TCSAFLUSH would drop them. Clearing the screen wipes their echo.
     tty.setcbreak(fd, termios.TCSANOW)
     try:
-        sys.stdout.write('\033[H\033[2J\033[?25l' + '\n'.join(lines))
-        sys.stdout.flush()
-        return choose(iter(lambda: os.read(fd, 1), b''))
+        sys.stdout.write('\033[?25l')
+        draw(None)
+        return choose(iter(lambda: os.read(fd, 1), b''), draw)
     except KeyboardInterrupt:
         return None
     finally:
@@ -258,7 +283,8 @@ def main():
         return fail('no pane to split (KIT_SPLIT_PANE is unset)')
 
     accent = accent_style(read_accent())
-    layout = pick(render(shutil.get_terminal_size().columns, accent))
+    cols = shutil.get_terminal_size().columns
+    layout = pick(lambda side: show(render(cols, accent, side)))
     if layout is None:
         return 0
 
