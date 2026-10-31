@@ -42,8 +42,8 @@ not need cleanup; Herdr closes a tab when its last pane leaves.
 ### `kit.pick_split`
 
 Opens a popup that previews four ways to split the pane the action was
-invoked from. Press one digit to apply it, no enter; `q`, `Esc` or
-`ctrl+c` cancels:
+invoked from, with a line below for the plain halves. Press one key to
+apply a layout, no enter; `q`, `Esc` or `ctrl+c` cancels:
 
 ```
    1 bottom 25%          2 top 25%            3 left 25%          4 right 25%
@@ -56,16 +56,29 @@ invoked from. Press one digit to apply it, no enter; `q`, `Esc` or
  │░░░░░░░░░░░░░░░░│   │    current     │   │░░░░│           │   │           │░░░░│
  │░░░░░ new ░░░░░░│   │                │   │░░░░│           │   │           │░░░░│
  └────────────────┘   └────────────────┘   └────┴───────────┘   └───────────┴────┘
+
+ v vertical 50% (side by side)   h horizontal 50% (stacked)
+ press 1-4, v or h to split the current pane · q / esc to cancel
 ```
 
-The new pane takes 25% of the current pane (not of the whole tab), starts
-in the current pane's `cwd`, and gets the focus. A zoomed pane is unzoomed
-first. When the popup is narrower than the previews (85 columns), it shows
-the four choices as a plain list instead.
+`1`-`4` give the new pane 25% of the current pane (not of the whole tab).
+`v` and `h` split it in half, named the way Herdr's own `split_vertical`
+and `split_horizontal` are: vertical is side by side (new pane on the
+right), horizontal is stacked (new pane below). The new pane starts in the
+current pane's `cwd` and gets the focus. A zoomed pane is unzoomed first.
+When the popup is narrower than the previews (85 columns), it shows the
+six choices as a plain list instead.
+
+The new pane and the keys are painted in `ui.accent`, read from the
+config Herdr is running with: `HERDR_CONFIG_PATH` when set (plugin
+processes inherit it from the server, for example `config.maiev.toml`),
+otherwise `~/.config/herdr/config.toml`. Only `#rrggbb` and
+`rgb(r, g, b)` values are understood; anything else falls back to the
+terminal's magenta.
 
 `herdr pane split` only goes `right` or `down`, and `--ratio` is the share
 of the first (top/left) slot, which keeps the original pane. Bottom and
-right split with ratio `0.75`. Top and left split with ratio `0.25`
+right split with ratio `0.75`, `v` and `h` with `0.5`. Top and left split with ratio `0.25`
 (original pane in the small slot), then `herdr pane swap` the two panes: a
 swap exchanges the panes but keeps the slot sizes, and the focus stays with
 the slot, so the split runs with `--no-focus` and the picker then focuses
@@ -76,7 +89,7 @@ A popup process gets no `HERDR_PANE_ID`, so the action
 `KIT_SPLIT_PANE`. The picker switches the terminal to cbreak mode with
 `TCSANOW` before drawing; the default `TCSAFLUSH` would drop a digit typed
 while the popup was still opening. The popup size (`width = 89`,
-`height = 16` in the manifest) leaves an inner area of 86x14 for the 85x13
+`height = 17` in the manifest) leaves an inner area of 86x15 for the 85x14
 drawing.
 
 ### `kit.new_tab_quick`

@@ -3,8 +3,9 @@
 
 Draws an ASCII preview of four ways to split the pane the action was
 invoked from and applies the one picked with a single key press, no
-enter: 1 bottom, 2 top, 3 left, 4 right, the new pane taking 25%.
-q, Esc or ctrl+c cancels.
+enter: 1 bottom, 2 top, 3 left, 4 right, the new pane taking 25%. A line
+below the previews offers the plain halves: v vertical (side by side) and
+h horizontal (stacked), Herdr's own naming. q, Esc or ctrl+c cancels.
 
 `herdr pane split` only goes right or down, and --ratio is the share of
 the first (top/left) slot. Top and left therefore split with the original
@@ -12,13 +13,14 @@ pane in the 25% slot, then swap the two panes: a swap exchanges the panes
 but keeps the slot sizes.
 
 A popup gets no HERDR_PANE_ID, so the opener passes the pane to split in
-KIT_SPLIT_PANE.
+KIT_SPLIT_PANE. The new pane is painted in the active config's ui.accent.
 """
 
 from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -27,7 +29,7 @@ import tty
 from dataclasses import dataclass
 from typing import Iterator, Optional
 
-NEW_SHARE = 0.25
+QUARTER, HALF = 0.25, 0.5
 
 # preview box, borders excluded; terminal cells are about twice as tall as wide
 INNER_W, INNER_H = 16, 7
@@ -36,13 +38,12 @@ MARGIN, GAP = 2, 3
 ROW_WIDTH = 2 * MARGIN + 4 * BOX_W + 3 * GAP
 
 SHADE = '░'
-HINT = 'press 1-4 to split the current pane · q / esc to cancel'
+HINT = 'press 1-4, v or h to split the current pane · q / esc to cancel'
 
 RESET = '\033[0m'
-BORDER_STYLE = '\033[2m'
-NEW_STYLE = '\033[38;2;236;72;153m'  # herdr ui.accent
-KEY_STYLE = '\033[1;38;2;236;72;153m'
-HINT_STYLE = '\033[2m'
+BOLD = '\033[1m'
+DIM = '\033[2m'
+FALLBACK_ACCENT = '\033[35m'
 
 CANCEL_KEYS = {b'q', b'\x1b', b'\x03'}
 
@@ -53,22 +54,61 @@ class Layout:
     name: str
     direction: str  # herdr split direction: "down" or "right"
     new_first: bool  # the new pane ends up on top / on the left
+    share: float  # the new pane's share of the split pane
+    note: str = ''
 
     @property
     def title(self):
-        return f'{self.key.decode()} {self.name} {round(NEW_SHARE * 100)}%'
+        return f'{self.key.decode()} {self.name} {round(self.share * 100)}%'
 
 
-LAYOUTS = {
-    layout.name: layout
-    for layout in (
-        Layout(b'1', 'bottom', 'down', False),
-        Layout(b'2', 'top', 'down', True),
-        Layout(b'3', 'left', 'right', True),
-        Layout(b'4', 'right', 'right', False),
-    )
-}
+PREVIEWED = (
+    Layout(b'1', 'bottom', 'down', False, QUARTER),
+    Layout(b'2', 'top', 'down', True, QUARTER),
+    Layout(b'3', 'left', 'right', True, QUARTER),
+    Layout(b'4', 'right', 'right', False, QUARTER),
+)
+HALVES = (
+    Layout(b'v', 'vertical', 'right', False, HALF, 'side by side'),
+    Layout(b'h', 'horizontal', 'down', False, HALF, 'stacked'),
+)
+LAYOUTS = {layout.name: layout for layout in PREVIEWED + HALVES}
 BY_KEY = {layout.key: layout for layout in LAYOUTS.values()}
+
+
+def config_path():
+    return os.environ.get('HERDR_CONFIG_PATH') or os.path.expanduser('~/.config/herdr/config.toml')
+
+
+def read_accent():
+    """The `accent` value of the [ui] table in the active Herdr config, or None."""
+    path = config_path()
+    if not os.path.isfile(path):
+        return None
+    table = None
+    with open(path) as f:
+        for line in f:
+            line = line.strip()
+            if line.startswith('['):
+                table = line.strip('[]').strip()
+                continue
+            m = re.match(r'accent\s*=\s*"([^"]*)"', line)
+            if m and table == 'ui':
+                return m.group(1)
+    return None
+
+
+def accent_style(color):
+    """ANSI foreground for a Herdr color ("#rrggbb" or "rgb(r, g, b)"); a plain magenta otherwise."""
+    m = re.fullmatch(r'#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})', (color or '').strip())
+    if m:
+        rgb = [int(part, 16) for part in m.groups()]
+    else:
+        m = re.fullmatch(r'rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)', (color or '').strip())
+        if not m:
+            return FALLBACK_ACCENT
+        rgb = [int(part) for part in m.groups()]
+    return '\033[38;2;{};{};{}m'.format(*rgb)
 
 
 def choose(keys: Iterator[bytes]) -> Optional[Layout]:
@@ -93,11 +133,11 @@ def put_label(cells, row, cols, text, style):
         cells[row][start + i] = (ch, style)
 
 
-def preview(layout):
+def preview(layout, accent=FALLBACK_ACCENT):
     """One preview box as styled lines, borders included; the new pane is shaded."""
     horizontal = layout.direction == 'down'  # the divider is a horizontal line
     size = INNER_H if horizontal else INNER_W
-    new_size = round((size + 1) * NEW_SHARE)
+    new_size = round((size + 1) * layout.share)
     div = new_size if layout.new_first else size - new_size - 1
     new_span = range(0, div) if layout.new_first else range(div + 1, size)
     cur_span = range(div + 1, size) if layout.new_first else range(0, div)
@@ -108,51 +148,53 @@ def preview(layout):
         for c in range(INNER_W):
             pos = r if horizontal else c
             if pos == div:
-                row.append(('─' if horizontal else '│', BORDER_STYLE))
+                row.append(('─' if horizontal else '│', DIM))
             elif pos in new_span:
-                row.append((SHADE, NEW_STYLE))
+                row.append((SHADE, accent))
             else:
                 row.append((' ', ''))
         cells.append(row)
 
     all_rows, all_cols = range(INNER_H), range(INNER_W)
-    for span, text, style in ((new_span, 'new', NEW_STYLE), (cur_span, 'current', '')):
+    for span, text, style in ((new_span, 'new', accent), (cur_span, 'current', '')):
         rows, cols = (span, all_cols) if horizontal else (all_rows, span)
         put_label(cells, rows[len(rows) // 2], cols, text, style)
 
     top, bottom = ['─'] * INNER_W, ['─'] * INNER_W
     if not horizontal:
         top[div], bottom[div] = '┬', '┴'
-    lines = [BORDER_STYLE + '┌' + ''.join(top) + '┐' + RESET]
+    lines = [DIM + '┌' + ''.join(top) + '┐' + RESET]
     for r, row in enumerate(cells):
         left, right = ('├', '┤') if horizontal and r == div else ('│', '│')
         body = ''.join(f'{style}{ch}{RESET}' if style else ch for ch, style in row)
-        lines.append(f'{BORDER_STYLE}{left}{RESET}{body}{BORDER_STYLE}{right}{RESET}')
-    lines.append(BORDER_STYLE + '└' + ''.join(bottom) + '┘' + RESET)
+        lines.append(f'{DIM}{left}{RESET}{body}{DIM}{right}{RESET}')
+    lines.append(DIM + '└' + ''.join(bottom) + '┘' + RESET)
     return lines
 
 
-def styled_title(layout, width):
-    """The layout title with the key highlighted, centered in width cells."""
+def styled_title(layout, accent, width=0):
+    """The layout title with the key highlighted, centered in width cells (no padding by default)."""
     text = layout.title
+    width = max(width, len(text))
     left = (width - len(text)) // 2
     key, rest = text.split(' ', 1)
-    return ' ' * left + f'{KEY_STYLE}{key}{RESET} {rest}' + ' ' * (width - len(text) - left)
+    label = ' ' * left + f'{BOLD}{accent}{key}{RESET} {rest}' + ' ' * (width - len(text) - left)
+    return label + (f' {DIM}({layout.note}){RESET}' if layout.note else '')
 
 
-def render(cols):
-    """Popup content: all previews in one row, or a plain list when the popup is too narrow."""
+def render(cols, accent=FALLBACK_ACCENT):
+    """Popup content: the previews in one row and the halves below, or a plain list when the popup is too narrow."""
     pad = ' ' * MARGIN
-    hint = f'{pad}{HINT_STYLE}{HINT}{RESET}'
-    layouts = list(LAYOUTS.values())
+    hint = f'{pad}{DIM}{HINT}{RESET}'
     if cols < ROW_WIDTH:
-        return [''] + [pad + styled_title(layout, len(layout.title)) for layout in layouts] + ['', hint]
+        return [''] + [pad + styled_title(layout, accent) for layout in PREVIEWED + HALVES] + ['', hint]
 
     sep = ' ' * GAP
-    boxes = [preview(layout) for layout in layouts]
-    lines = ['', pad + sep.join(styled_title(layout, BOX_W) for layout in layouts)]
+    boxes = [preview(layout, accent) for layout in PREVIEWED]
+    lines = ['', pad + sep.join(styled_title(layout, accent, BOX_W) for layout in PREVIEWED)]
     lines += [pad + sep.join(box[i] for box in boxes) for i in range(len(boxes[0]))]
-    return lines + ['', hint]
+    halves = pad + sep.join(styled_title(layout, accent) for layout in HALVES)
+    return lines + ['', halves, hint]
 
 
 def herdr_result(herdr, *args):
@@ -167,7 +209,7 @@ def apply_layout(herdr, layout, target):
         herdr_result(herdr, 'pane', 'zoom', target, '--off')
 
     # the original pane keeps the first (top/left) slot of the split
-    ratio = NEW_SHARE if layout.new_first else 1 - NEW_SHARE
+    ratio = layout.share if layout.new_first else 1 - layout.share
     args = ['pane', 'split', target, '--direction', layout.direction, '--ratio', f'{ratio:g}']
     if cwd:
         args += ['--cwd', cwd]
@@ -215,7 +257,8 @@ def main():
     if not target:
         return fail('no pane to split (KIT_SPLIT_PANE is unset)')
 
-    layout = pick(render(shutil.get_terminal_size().columns))
+    accent = accent_style(read_accent())
+    layout = pick(render(shutil.get_terminal_size().columns, accent))
     if layout is None:
         return 0
 
