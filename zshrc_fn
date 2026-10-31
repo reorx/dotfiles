@@ -213,6 +213,9 @@ function ccglm() {
 function cl() {
     claude --dangerously-skip-permissions $@
 }
+function clapi() {
+    ANTHROPIC_API_KEY="$LOCAL_ANTHROPIC_API_KEY" claude --dangerously-skip-permissions $@
+}
 function clfast() {
     claude --dangerously-skip-permissions --settings '{"fastMode": true}' $@
 }
