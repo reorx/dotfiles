@@ -88,11 +88,11 @@ type = "plugin_action"
 command = "kit.jump_start"
 description = "send ctrl+a to pane"
 
-[[keys.command]]
-key = "prefix+shift+n"
-type = "plugin_action"
-command = "kit.create_workspace"
-description = "create workspace from directory prompt"
+#[[keys.command]]
+#key = "prefix+shift+n"
+#type = "plugin_action"
+#command = "kit.create_workspace"
+#description = "create workspace from directory prompt"
 
 [[keys.command]]
 key = "ctrl+;"
