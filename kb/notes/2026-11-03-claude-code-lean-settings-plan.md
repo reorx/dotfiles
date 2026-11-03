@@ -9,7 +9,7 @@ tags:
 
 # Claude Code 瘦身落地方案：settings.json 改动与单次重开的 alias
 
-背景调研见 [2026-11-02-claude-code-harness-slimming](2026-11-02-claude-code-harness-slimming.md)。本文只写落地方案：要改什么、怎么改，以及每一项是怎么验证的。基于 Claude Code 2.1.311。本文写的是待执行的方案，截至写作时 `settings.json` 和 `zshrc_fn` 都还没有改。
+背景调研见 [2026-11-02-claude-code-harness-slimming](2026-11-02-claude-code-harness-slimming.md)。本文只写落地方案：要改什么、怎么改，以及每一项是怎么验证的。基于 Claude Code 2.1.311。本方案已于 2026-11-03 执行，执行后的验证见第 7 节。
 
 ## 需求
 
@@ -213,3 +213,21 @@ headless 抓包中的 skill 从 86 个降到 42 个，算式为 86 − 3 − 14 
 | 合并后的 `{"syncClaudeAiSkills":false,"fastMode":true}` 加上关 Artifact 的环境变量 | 无 | 0 | 0 | 17 | 有 | 合并后的 JSON 有效，请求里 `speed: "fast"` 仍在 |
 
 另外用一个假的 `claude` 可执行文件测了 wrapper 的参数拼接。`cl`、`clfast`、两个前缀单独及叠加使用、`claude mcp list` 都符合预期，父 shell 的环境变量也不受影响。真实二进制执行 `claude --settings '{…}' mcp --help` 和 `plugin --help` 的退出码都是 0，说明子命令前面带 `--settings` 不会报错。
+
+## 7. 执行后的验证（2026-11-03）
+
+执行内容：备份 `~/.claude/settings.json`（备份文件为 `~/.claude/settings.json.bak-20261103`），加入第 2 节的三个键；把第 3 节的代码块加进 `zshrc_fn`。
+
+验证方法：用 `zsh -f -c 'source zshrc_fn; <前缀> claude …'` 调用 wrapper，加载的是真实的 settings，并用 probe 抓取请求。
+
+| 调用方式 | Artifact | anthropic-skills | searchfit | git 快照 | skill 总数 | fast |
+|---|---|---|---|---|---:|---|
+| `claude` | 无 | 0 | 0 | 无 | 42 | 否 |
+| `with-artifact claude` | 有（含 3 个 skill） | 0 | 0 | 无 | 45 | 否 |
+| `with-ai-skills claude` | 无 | 14 | 0 | 无 | 56 | 否 |
+| `with-artifact with-ai-skills claude` | 有 | 14 | 0 | 无 | 59 | 否 |
+| `claude --settings '{"fastMode": true}'`（即 clfast 的写法） | 无 | 0 | 0 | 无 | 42 | 是 |
+
+- 首次启动后，searchfit-seo 已被移到 `~/.claude/plugins/.trash`。
+- `~/.claude/skills/synced` 里的同步 skill 文件仍在，因为它们只是通过 `--settings` 被隐藏，所以 `with-ai-skills` 可以立即打开，不需要重新下载。
+- 尚未在交互式 session 里用 `/context` 检查。

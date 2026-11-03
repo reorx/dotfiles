@@ -210,6 +210,32 @@ function ccglm() {
         claude --dangerously-skip-permissions $@
 }
 
+# Artifact 和 claude.ai 同步 skill 默认关闭，可以单次重新打开。
+# 这两个开关都是“任意一处为关就关”，写进 settings.json 后无法单次覆盖，所以放在 shell 层：
+# Artifact 用环境变量，同步 skill 用 --settings（只作用于这一次运行）。
+# 多个 --settings 只有最后一个生效，所以遇到调用方自带内联 JSON 时用 jq 合并。
+# 详见 kb/notes/2026-11-03-claude-code-lean-settings-plan.md
+export CLAUDE_CODE_DISABLE_ARTIFACT=1
+
+function claude() {
+    local lean='{"syncClaudeAiSkills": false}'
+    [[ -n "$CLAUDE_AI_SKILLS" ]] && lean='{}'
+    local -a args=("$@")
+    local i
+    for (( i = 1; i < $#args; i++ )); do
+        if [[ "${args[i]}" == --settings && "${args[i+1]}" == \{* ]]; then
+            args[i+1]=$(jq -c --argjson lean "$lean" '$lean + .' <<< "${args[i+1]}") || return
+            command claude "${args[@]}"
+            return
+        fi
+    done
+    command claude --settings "$lean" "$@"
+}
+
+# 前缀用法，可以叠加：with-artifact cl、with-ai-skills clfast、with-artifact with-ai-skills cl
+function with-artifact() { (unset CLAUDE_CODE_DISABLE_ARTIFACT; "$@") }
+function with-ai-skills() { (export CLAUDE_AI_SKILLS=1; "$@") }
+
 function cl() {
     claude --dangerously-skip-permissions $@
 }
