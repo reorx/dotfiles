@@ -32,12 +32,12 @@ Artifact 和同步 skill 的开关都是**只要任意一处配置为关，结�
   所以 user settings 里一旦写了关，`--settings '{"enableArtifact": true}'` 就不起作用。
 - **同步 skill**：判断函数 `Lcr("syncClaudeAiSkills")` 会检查 policy、flag、user、local 等所有层，只要有一层为 `false` 就关闭。schema 说明里也写明 “Only false is honored”，设为 `true` 没有任何作用。另外，写在 user settings 里时，已同步的 skill 会在下次启动时被移到 `~/.claude/skills/.trash`，重新开启后需要重新下载。如果改为通过 `--settings` 传入，就只对这一次运行生效，不会移动文件。
 
-因此这两项放在 shell 层处理：
+因此这两项放在 shell 层，由 zsh 函数 `cl` 统一处理。`clc`、`clr`、`clfast` 等都通过 `cl` 调用，直接运行 `claude` 则保持原样：
 
-- **Artifact**：在 zsh 里 `export CLAUDE_CODE_DISABLE_ARTIFACT=1`。需要重新打开时，在子 shell 里 unset 这个变量。
-- **同步 skill**：用一个 zsh 函数 `claude()`，在每次调用时注入 `--settings '{"syncClaudeAiSkills": false}'`。需要重新打开时，设置一个标记变量让函数跳过注入。
+- **Artifact**：`cl` 启动 claude 时带上 `CLAUDE_CODE_DISABLE_ARTIFACT=1`。用 `with-artifact` 前缀时，改为去掉这个变量后再启动。
+- **同步 skill**：`cl` 每次都传 `--settings '{"syncClaudeAiSkills": false}'`。用 `with-ai-skills` 前缀时，这一项不再加入。
 
-**多个 `--settings` 不会合并，只有最后一个生效**（实测见第 6 节）。现有的 `clfast` 已经在传 `--settings '{"fastMode": true}'`，所以 wrapper 遇到调用方自带内联 JSON 时，会用 jq 把两者合并，而不是再追加一个 `--settings`。
+**多个 `--settings` 不会合并，只有最后一个生效**（实测见第 6 节）。现有的 `clfast` 已经在传 `--settings '{"fastMode": true}'`，所以 `cl` 会把调用方传入的所有内联 JSON 取出来，用 jq 合并成一个，最后只传一个 `--settings`。
 
 ## 2. 改动一：`~/.claude/settings.json`
 
@@ -83,53 +83,71 @@ cp "$(readlink ~/.claude/settings.json)" ~/.claude/settings.json.bak-20261103
 
 ## 3. 改动二：`zshrc_fn`（dotfiles 仓库）
 
-加在 `zshrc_fn` 的 `# claude code` 段落里、`function cl()` 之前。现有的 `cl`、`clapi`、`clfast`、`clc`、`clr`、`fable`、`ccglm` 都不用改，它们都调用 `claude`，会自动经过下面这个函数。
+`cl` 本身就是 wrapper。它固定加上 `--dangerously-skip-permissions`，`ccglm`、`clapi`、`clfast`、`clc`、`clr`、`fable` 都改为调用 `cl`。以 `zshrc_fn` 中的代码为准，核心部分如下：
 
 ```zsh
-# Artifact 和 claude.ai 同步 skill 默认关闭，可以单次重新打开。
-# 这两个开关都是“任意一处为关就关”，写进 settings.json 后无法单次覆盖，所以放在 shell 层：
-# Artifact 用环境变量，同步 skill 用 --settings（只作用于这一次运行）。
-# 多个 --settings 只有最后一个生效，所以遇到调用方自带内联 JSON 时用 jq 合并。
-export CLAUDE_CODE_DISABLE_ARTIFACT=1
-
-function claude() {
-    local lean='{"syncClaudeAiSkills": false}'
-    [[ -n "$CLAUDE_AI_SKILLS" ]] && lean='{}'
-    local -a args=("$@")
-    local i
-    for (( i = 1; i < $#args; i++ )); do
-        if [[ "${args[i]}" == --settings && "${args[i+1]}" == \{* ]]; then
-            args[i+1]=$(jq -c --argjson lean "$lean" '$lean + .' <<< "${args[i+1]}") || return
-            command claude "${args[@]}"
-            return
+function cl() {
+    local settings='{"syncClaudeAiSkills": false}'
+    [[ -n "$CLAUDE_AI_SKILLS" ]] && settings='{}'
+    local -a args=(--dangerously-skip-permissions)
+    while (( $# )); do
+        if [[ "$1" == --settings && "$2" == \{* ]]; then
+            settings=$(jq -c --argjson base "$settings" '$base + .' <<< "$2") || return
+            shift 2
+        else
+            args+=("$1")
+            shift
         fi
     done
-    command claude --settings "$lean" "$@"
+    if [[ -n "$DEBUG_CL" ]]; then
+        print -r -- "[cl] artifact: $([[ -n "$CLAUDE_ARTIFACT" ]] && echo on || echo off)" >&2
+        print -r -- "[cl] settings: $settings" >&2
+        print -r -- "[cl] args: ${(q-)args[@]}" >&2
+    fi
+    if [[ -n "$CLAUDE_ARTIFACT" ]]; then
+        env -u CLAUDE_CODE_DISABLE_ARTIFACT claude --settings "$settings" "${args[@]}"
+    else
+        CLAUDE_CODE_DISABLE_ARTIFACT=1 command claude --settings "$settings" "${args[@]}"
+    fi
 }
 
-# 前缀用法，可以叠加：with-artifact cl、with-ai-skills clfast、with-artifact with-ai-skills cl
-function with-artifact() { (unset CLAUDE_CODE_DISABLE_ARTIFACT; "$@") }
+function with-artifact() { (export CLAUDE_ARTIFACT=1; "$@") }
 function with-ai-skills() { (export CLAUDE_AI_SKILLS=1; "$@") }
+
+function clfast() { cl --settings '{"fastMode": true}' $@ }
+function clc() { cl --continue $@ }
+function clr() { cl --resume $@ }
+# ccglm、clapi、fable 同理：先设置各自的环境变量，再调用 cl
 ```
 
-- `jq` 用的是系统自带的 `/usr/bin/jq`。合并规则是 `$lean + .`，键名冲突时以调用方传入的为准。
-- 用户要求的 “alias” 实际做成了前缀函数，因为这样可以和现有的 `cl`、`clfast`、`clr` 等任意组合，不必为每个函数各写一套。
+- 调用方传入的每个内联 JSON 都会按顺序合并进去（`$base + .`，键名冲突时后传入的为准），最终只传一个 `--settings`。JSON 写错时 jq 会报错，`cl` 直接返回，不会启动 claude。
+- `with-artifact` 分支用 `env -u` 去掉 `CLAUDE_CODE_DISABLE_ARTIFACT`。这样即使当前 shell 还留着旧版本 export 的这个变量，Artifact 也能正常打开。
+- `jq` 用的是系统自带的 `/usr/bin/jq`。
+- 用户要求的 “alias” 实际做成了前缀函数，因为这样可以和 `cl`、`clfast`、`clr` 等任意组合，不必为每个函数各写一套。
 
 ### 用法
 
 | 命令 | Artifact | 同步 skill |
 |---|---|---|
-| `cl` / `clfast` / `clr` / `claude …` | 关 | 关 |
-| `with-artifact cl` | **开** | 关 |
+| `cl` / `clc` / `clr` / `clfast` / `clapi` / `fable` / `ccglm` | 关 | 关 |
+| `with-artifact cl`（前缀可加在上面任意命令前） | **开** | 关 |
 | `with-ai-skills cl` | 关 | **开** |
 | `with-artifact with-ai-skills cl` | **开** | **开** |
+| `claude …`（直接运行） | 开 | 开 |
 
-两个前缀都在子 shell 里修改环境，不会影响当前 shell。
+- 两个前缀都在子 shell 里修改环境，不会影响当前 shell。
+- 在任意命令前加 `DEBUG_CL=1`（例如 `DEBUG_CL=1 with-artifact clfast`）会先打印 Artifact 状态、最终的 settings 和其余参数，然后照常启动 claude。示例：
+
+```
+[cl] artifact: on
+[cl] settings: {"syncClaudeAiSkills":false,"fastMode":true}
+[cl] args: --dangerously-skip-permissions
+```
 
 ### 局限
 
-- 只对交互式 zsh 生效，也就是 `.zshrc` 里 source 了 `zshrc_fn` 的情况。从 IDE、桌面 app、launchd 或 `zsh -c` 启动的 claude 不经过这个函数，Artifact 和同步 skill 仍然会加载。需要覆盖这些场景时，可以把 `export CLAUDE_CODE_DISABLE_ARTIFACT=1` 挪到 `~/.zshenv`，但同步 skill 那部分没法这样覆盖。
-- `--settings` 如果传的是文件路径而不是内联 JSON，wrapper 不会合并，仍会在前面插入自己的 `--settings`，结果是调用方的文件生效，同步 skill 不会被关掉。目前的函数里都没有这种用法。
+- 只有通过 `cl` 及其派生命令启动时才精简。直接运行 `claude`，以及从 IDE、桌面 app、launchd 或 `zsh -c` 启动的 claude，都会加载 Artifact 和同步 skill。
+- `--settings` 如果传的是文件路径而不是内联 JSON，`cl` 不会合并，而是原样保留在参数里。这时会出现两个 `--settings`，调用方的文件排在后面，最终生效，同步 skill 就不会被关掉。目前的函数里都没有这种用法。
 
 ## 4. `skillOverrides` 影响的 skill 完整清单
 
@@ -231,3 +249,16 @@ headless 抓包中的 skill 从 86 个降到 42 个，算式为 86 − 3 − 14 
 - 首次启动后，searchfit-seo 已被移到 `~/.claude/plugins/.trash`。
 - `~/.claude/skills/synced` 里的同步 skill 文件仍在，因为它们只是通过 `--settings` 被隐藏，所以 `with-ai-skills` 可以立即打开，不需要重新下载。
 - 尚未在交互式 session 里用 `/context` 检查。
+
+### 7.1 调整：wrapper 从 `claude()` 改为 `cl`，并增加 DEBUG_CL
+
+用户希望不覆盖 `claude` 命令，所以把精简逻辑全部收进 `cl`，其他命令都改为调用 `cl`，同时增加了 `DEBUG_CL=1` 打印功能。改完后的验证：
+
+- **假的 claude 可执行文件**：测了 `cl`、`clc`、`clr`、`clfast`、`clapi`、`fable`、`ccglm`，两个前缀单独和叠加使用，直接运行 `claude`，以及当前 shell 残留旧 export 时用 `with-artifact` 的情况。参数和环境变量都符合预期，`clapi`、`fable`、`ccglm` 写在调用前面的环境变量都能传给 claude。另外测了 `DEBUG_CL` 的输出、多个 `--settings` 的合并，以及 JSON 写错时 `cl` 会直接退出（exit 5）。
+- **真实 claude 抓包**：
+
+| 调用方式 | Artifact | anthropic-skills | searchfit | skill 总数 | fast |
+|---|---|---|---|---:|---|
+| `cl` | 无 | 0 | 0 | 42 | 否 |
+| `with-artifact with-ai-skills clfast` | 有 | 14 | 0 | 59 | 是 |
+| `claude`（直接运行） | 有 | 14 | 0 | 59 | 否 |

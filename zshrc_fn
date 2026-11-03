@@ -200,6 +200,42 @@ function echo-server() {
 
 # claude code
 
+# cl 是统一入口，下面的 clc、clr、clfast 等都通过它调用；直接运行 claude 不受影响。
+# cl 默认关闭 Artifact 和 claude.ai 同步 skill，可以单次重新打开。
+# 这两个开关都是“任意一处为关就关”，写进 settings.json 后无法单次覆盖，所以放在这里：
+# Artifact 用环境变量，同步 skill 用 --settings（只作用于这一次运行）。
+# 多个 --settings 只有最后一个生效，所以调用方自带的内联 JSON 用 jq 合并成一个。
+# DEBUG_CL=1 cl … 会先打印 Artifact 状态、最终的 settings 和其余参数。
+# 详见 kb/notes/2026-11-03-claude-code-lean-settings-plan.md
+function cl() {
+    local settings='{"syncClaudeAiSkills": false}'
+    [[ -n "$CLAUDE_AI_SKILLS" ]] && settings='{}'
+    local -a args=(--dangerously-skip-permissions)
+    while (( $# )); do
+        if [[ "$1" == --settings && "$2" == \{* ]]; then
+            settings=$(jq -c --argjson base "$settings" '$base + .' <<< "$2") || return
+            shift 2
+        else
+            args+=("$1")
+            shift
+        fi
+    done
+    if [[ -n "$DEBUG_CL" ]]; then
+        print -r -- "[cl] artifact: $([[ -n "$CLAUDE_ARTIFACT" ]] && echo on || echo off)" >&2
+        print -r -- "[cl] settings: $settings" >&2
+        print -r -- "[cl] args: ${(q-)args[@]}" >&2
+    fi
+    if [[ -n "$CLAUDE_ARTIFACT" ]]; then
+        env -u CLAUDE_CODE_DISABLE_ARTIFACT claude --settings "$settings" "${args[@]}"
+    else
+        CLAUDE_CODE_DISABLE_ARTIFACT=1 command claude --settings "$settings" "${args[@]}"
+    fi
+}
+
+# 前缀用法，可以叠加：with-artifact cl、with-ai-skills clfast、with-artifact with-ai-skills clr
+function with-artifact() { (export CLAUDE_ARTIFACT=1; "$@") }
+function with-ai-skills() { (export CLAUDE_AI_SKILLS=1; "$@") }
+
 function ccglm() {
     ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic \
         ANTHROPIC_AUTH_TOKEN=$GLM_API_TOKEN \
@@ -207,53 +243,23 @@ function ccglm() {
         ANTHROPIC_DEFAULT_SONNET_MODEL=glm-4.5 \
         ANTHROPIC_DEFAULT_HAIKU_MODEL=glm-4.5-air \
         ANTHROPIC_MODEL=glm-4.5 \
-        claude --dangerously-skip-permissions $@
-}
-
-# Artifact 和 claude.ai 同步 skill 默认关闭，可以单次重新打开。
-# 这两个开关都是“任意一处为关就关”，写进 settings.json 后无法单次覆盖，所以放在 shell 层：
-# Artifact 用环境变量，同步 skill 用 --settings（只作用于这一次运行）。
-# 多个 --settings 只有最后一个生效，所以遇到调用方自带内联 JSON 时用 jq 合并。
-# 详见 kb/notes/2026-11-03-claude-code-lean-settings-plan.md
-export CLAUDE_CODE_DISABLE_ARTIFACT=1
-
-function claude() {
-    local lean='{"syncClaudeAiSkills": false}'
-    [[ -n "$CLAUDE_AI_SKILLS" ]] && lean='{}'
-    local -a args=("$@")
-    local i
-    for (( i = 1; i < $#args; i++ )); do
-        if [[ "${args[i]}" == --settings && "${args[i+1]}" == \{* ]]; then
-            args[i+1]=$(jq -c --argjson lean "$lean" '$lean + .' <<< "${args[i+1]}") || return
-            command claude "${args[@]}"
-            return
-        fi
-    done
-    command claude --settings "$lean" "$@"
-}
-
-# 前缀用法，可以叠加：with-artifact cl、with-ai-skills clfast、with-artifact with-ai-skills cl
-function with-artifact() { (unset CLAUDE_CODE_DISABLE_ARTIFACT; "$@") }
-function with-ai-skills() { (export CLAUDE_AI_SKILLS=1; "$@") }
-
-function cl() {
-    claude --dangerously-skip-permissions $@
+        cl $@
 }
 function clapi() {
-    ANTHROPIC_API_KEY="$LOCAL_ANTHROPIC_API_KEY" claude --dangerously-skip-permissions $@
+    ANTHROPIC_API_KEY="$LOCAL_ANTHROPIC_API_KEY" cl $@
 }
 function clfast() {
-    claude --dangerously-skip-permissions --settings '{"fastMode": true}' $@
+    cl --settings '{"fastMode": true}' $@
 }
 function clc() {
-    claude --dangerously-skip-permissions --continue $@
+    cl --continue $@
 }
 function clr() {
-    claude --dangerously-skip-permissions --resume $@
+    cl --resume $@
 }
 function fable() {
     CLAUDE_CODE_DISABLE_ADVISOR_TOOL=1 \
-        claude --dangerously-skip-permissions --model fable --effort high $@
+        cl --model fable --effort high $@
 }
 function co() {
     codex --yolo $@
