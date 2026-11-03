@@ -217,6 +217,8 @@ headless 抓包中的 skill 从 86 个降到 42 个，算式为 86 − 3 − 14 
 
 ## 6. 验证记录（2026-11-03，2.1.311）
 
+这套方法后来做成了 `~/Code/scripts/cc-probe.py`（命令 `cc-probe`）。复查可以用 `cc-probe --via cl --expect-absent Artifact --expect-absent 'anthropic-skills:*'`，对比两种启动方式可以用 `--save` 加 `cc-probe diff`。
+
 测试方法：在 scratchpad 里写了一个 probe 脚本。它把 `ANTHROPIC_BASE_URL` 指向本地 server，用 `claude -p --no-session-persistence --strict-mcp-config` 发起请求，只记录第一个请求、不调用模型。运行时去掉了 `HERDR_*` 环境变量，避免触发 herdr hook。headless 模式默认不带 Artifact，所以统一设置 `CLAUDE_CODE_ARTIFACT=1`。
 
 | 用例 | Artifact 工具 | artifact skill | anthropic-skills | searchfit | git 快照 | 结论 |

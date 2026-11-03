@@ -45,6 +45,7 @@ tags:
 - 多个 `--settings` 只有最后一个生效。新写的 claude 命令要基于 `cl` 写；如果要传 `--settings`，要用内联 JSON，交给 `cl` 合并。如果传的是文件路径，`cl` 无法合并，同步 skill 就不会被关掉。
 - zsh 里写在函数调用前面的环境变量（例如 `FOO=1 cl`）会在整个函数执行期间生效，也会传给函数内部启动的外部命令。所以 `clapi`、`fable`、`ccglm` 改成调用 `cl` 后，各自的环境变量仍能传到 claude。
 - 把 `syncClaudeAiPlugins` 或 `syncClaudeAiSkills` 写进 user settings 时，同步来的文件会被移到 `.trash`，之后重新开启需要重新下载。通过 `--settings` 关闭则只是隐藏文件。
+- 抓包检查已做成工具 `~/Code/scripts/cc-probe.py`（命令 `cc-probe`，scripts 仓库 `ba5109d`）。它把下面这些技巧都包含进去了，还能统计 token、读取运行状态、做 diff 和断言。
 - 验证 harness 内容时，可以把 `ANTHROPIC_BASE_URL` 指向本地 server，只抓取第一个请求，不调用模型。需要配合：
   - `--strict-mcp-config`：跳过 MCP；
   - 去掉 `HERDR_*` 环境变量：避免触发 herdr hook；
