@@ -194,8 +194,8 @@ macOS 上什么都不用做（见 3.4）。如果同一份 settings 也在 Windo
 
 本机现状（2026-11-02）：
 
-- `searchfit-seo` 是从 claude.ai 同步来的插件（`~/.claude/plugins/synced/…/searchfit-seo`），带 20 多个 skill、3 个 agent 和若干 command，每条都有很长的描述。
-- `anthropic-skills:*` 是从 claude.ai 同步来的 skill（`~/.claude/skills/synced/…`），共 15 个：docx、pdf、pptx、xlsx、deep-research、chrome-browser、computer-use、built-in-browser、skill-creator、morning 等。
+- `searchfit-seo` 是从 claude.ai 同步来的插件（`~/.claude/plugins/synced/…/searchfit-seo`），带 17 个 skill、3 个 agent 和若干 command，每条都有很长的描述。
+- `anthropic-skills:*` 是从 claude.ai 同步来的 skill（`~/.claude/skills/synced/…`），共 14 个：docx、pdf、pptx、xlsx、deep-research、chrome-browser、computer-use、built-in-browser、skill-creator、morning 等。
 - 自己安装的插件有 code-review、code-simplifier、commit-commands、eli5、feature-dev、skill-creator、swift-lsp。
 
 下表中本机的节省量都没有实测，需要的话用 lean.mjs 测。
@@ -237,6 +237,8 @@ macOS 上什么都不用做（见 3.4）。如果同一份 settings 也在 Windo
 - 自己的 skill 里，描述本身就写着“只在用户明确调用时使用”的（例如 `brainstorming`），也可以加进 `skillOverrides`。`grill-me`、`grilling`、`grill-with-docs` 三个功能相近，可以考虑只留一个。
 
 ### 5.5 合并后的配置片段
+
+> 已被 [2026-11-03-claude-code-lean-settings-plan](2026-11-03-claude-code-lean-settings-plan.md) 取代：`enableArtifact` 和 `syncClaudeAiSkills` 只要写进 settings.json，就无法在单次运行中重新打开，所以改到 shell 层处理。
 
 第 6、7 项需要权衡，没有放进去：
 
