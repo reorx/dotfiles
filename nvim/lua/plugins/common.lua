@@ -21,7 +21,7 @@ local plugins = {
           lualine_a = {'mode'},
           lualine_b = {'lsp_status', 'diagnostics'},
           lualine_c = {'searchcount'},
-          lualine_x = {'encoding', 'filetype', 'location' },
+          lualine_x = {'encoding', 'filetype', 'location', '%3p%%' },
           lualine_y = {},
           lualine_z = {}
         },
@@ -29,7 +29,7 @@ local plugins = {
           lualine_a = {'mode'},
           lualine_b = {'diagnostics'},
           lualine_c = {},
-          lualine_x = {'encoding', 'filetype', 'location' },
+          lualine_x = {'encoding', 'filetype', 'location', '%3p%%' },
           lualine_y = {},
           lualine_z = {}
         },
