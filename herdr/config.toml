@@ -131,6 +131,12 @@ command = "kit.pick_split"
 description = "split pane with layout picker"
 
 [[keys.command]]
+key = "prefix+space"
+type = "plugin_action"
+command = "kit.next_layout"
+description = "rotate pane layout (tmux next-layout)"
+
+[[keys.command]]
 key = "prefix+/"
 type = "plugin_action"
 command = "kit.break_pane"

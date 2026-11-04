@@ -40,6 +40,20 @@ contexts = ["pane"]
 command = ["sh", "open-split-picker.sh"]
 
 [[actions]]
+id = "next_layout"
+title = "Pane: next layout"
+description = "Rearrange the tab's panes into the next preset layout, like tmux next-layout: even-horizontal, even-vertical, main-horizontal, main-vertical, tiled; every pane keeps running"
+contexts = ["pane"]
+command = ["python3", "cycle-layout.py", "next"]
+
+[[actions]]
+id = "previous_layout"
+title = "Pane: previous layout"
+description = "Rearrange the tab's panes into the previous preset layout, like tmux previous-layout"
+contexts = ["pane"]
+command = ["python3", "cycle-layout.py", "previous"]
+
+[[actions]]
 id = "new_tab_quick"
 title = "Tab: create with ordinal name"
 description = "Create a tab in the current workspace without a name prompt; the label is the auto ordinal that follows the tab position"

@@ -9,7 +9,8 @@ actions, grouped by what they act on:
   prefix combo to a plugin action, and the action sends the real key to
   the shell with `pane.send_keys`
 - Pane and tab: `break_pane` (tmux `break-pane`), `pick_split`
-  (new-pane layout popup), `new_tab_quick`, `new_tab_adjacent`
+  (new-pane layout popup), `next_layout` / `previous_layout` (tmux
+  `next-layout`), `new_tab_quick`, `new_tab_adjacent`
 - Agent: `next_unread_agent`, `pick_agent`
 - Workspace: `pick_workspace` (get-or-create picker), `create_workspace`
 
@@ -111,6 +112,48 @@ while the popup was still opening (`prefix+v 3 1` typed in one go still
 works). The popup size (`width = 85`, `height = 16` in the manifest)
 leaves an inner area of 82x14 for the 81x13 drawing; the tests check the
 manifest against the drawing.
+
+### `kit.next_layout` and `kit.previous_layout`
+
+Rearranges the panes of the tab the action was invoked from into the next
+(or previous) preset layout, like tmux `next-layout` (`prefix+space`) and
+`previous-layout`. The presets and their order follow tmux:
+
+| Layout            | Panes                                                        |
+| ----------------- | ------------------------------------------------------------ |
+| `even-horizontal` | side by side, equal widths                                   |
+| `even-vertical`   | stacked, equal heights                                       |
+| `main-horizontal` | the first pane on top (50%), the rest side by side below it  |
+| `main-vertical`   | the first pane on the left (50%), the rest stacked beside it |
+| `tiled`           | a grid filled row by row; the last row shares its full width |
+
+- Presets that draw the same picture for the current pane count are listed
+  once, so two panes just toggle between side by side and stacked
+- Panes keep their order (the split tree's leaf order, roughly reading
+  order); the first pane is the main pane. `tiled` picks rows and columns
+  the way tmux does (3 panes: 2 on top, 1 below; 5 panes: 3 rows of 2)
+- The current layout is recognized by its shape, not its ratios: a resized
+  split still counts as its layout, and three columns count as
+  `even-horizontal` however they were split. A layout that matches no
+  preset goes to `even-horizontal` (`previous_layout`: `tiled`)
+- A zoomed tab is unzoomed first, the focused pane keeps the focus, and a
+  tab with one pane is left alone
+
+Herdr has no call that rearranges a tab in place. `layout.apply` replaces
+the whole tab with a new one full of fresh shells (the old panes'
+processes are killed), and `pane.move` within the same tab changes nothing
+(`changed: false`, `reason: same_tab`). So `cycle-layout.py` takes a
+detour over the socket that keeps every process running: all panes but the
+first move into a holding tab labeled `kit-layout`, then come back one by
+one with `pane.move` into the original tab, each split off a pane that is
+already in place (`--target-pane`, `--split right|down`, and `--ratio` as
+the share of the target's first slot). While parked, each pane splits the
+largest pane in the holding tab, because Herdr has no minimum pane size and
+repeated halving would squeeze TUIs down to zero columns. The tab keeps its
+id, pane ids and terminals do not change, and Herdr closes the holding tab
+when its last pane leaves. If a move fails halfway, the remaining panes
+stay in the `kit-layout` tab; bring them back with
+`herdr pane move <pane> --tab <tab> --split right`.
 
 ### `kit.new_tab_quick`
 
@@ -321,6 +364,12 @@ command = "kit.pick_split"
 description = "split pane with layout picker"
 
 [[keys.command]]
+key = "prefix+space"
+type = "plugin_action"
+command = "kit.next_layout"
+description = "rotate pane layout (tmux next-layout)"
+
+[[keys.command]]
 key = "prefix+shift+b"
 type = "plugin_action"
 command = "kit.break_pane"
@@ -351,6 +400,14 @@ behind each layout:
 
 ```sh
 python3 herdr/herdr-kit/tests/test_split_picker.py
+```
+
+Behavior tests for the layout rotation: the presets, which layout comes
+next, and the moves, run against a fake socket that moves panes the way
+Herdr does:
+
+```sh
+python3 herdr/herdr-kit/tests/test_cycle_layout.py
 ```
 
 ## Uninstall
