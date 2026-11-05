@@ -44,19 +44,19 @@ not need cleanup; Herdr closes a tab when its last pane leaves.
 
 Opens a popup that splits the pane the action was invoked from in two key
 presses, no enter. First pick the side using Vim directions: `h` left,
-`j` bottom, `k` top, `l` right. Previews run clockwise from the top:
+`j` bottom, `k` top, `l` right. Previews appear in `h/j/k/l` order:
 
 ```
-        k top              l right            j bottom             h left
-  ┌───────────────┐   ┌───────┬───────┐   ┌───────────────┐   ┌───────┬───────┐
-  │░░░░░░░░░░░░░░░│   │       │░░░░░░░│   │               │   │░░░░░░░│       │
-  │░░░░░ new ░░░░░│   │       │░░░░░░░│   │    current    │   │░░░░░░░│       │
-  │░░░░░░░░░░░░░░░│   │       │░░░░░░░│   │               │   │░░░░░░░│       │
-  ├───────────────┤   │current│░ new ░│   ├───────────────┤   │░ new ░│current│
-  │               │   │       │░░░░░░░│   │░░░░░░░░░░░░░░░│   │░░░░░░░│       │
-  │    current    │   │       │░░░░░░░│   │░░░░░ new ░░░░░│   │░░░░░░░│       │
-  │               │   │       │░░░░░░░│   │░░░░░░░░░░░░░░░│   │░░░░░░░│       │
-  └───────────────┘   └───────┴───────┘   └───────────────┘   └───────┴───────┘
+       h left             j bottom              k top              l right
+  ┌───────┬───────┐   ┌───────────────┐   ┌───────────────┐   ┌───────┬───────┐
+  │░░░░░░░│       │   │               │   │░░░░░░░░░░░░░░░│   │       │░░░░░░░│
+  │░░░░░░░│       │   │    current    │   │░░░░░ new ░░░░░│   │       │░░░░░░░│
+  │░░░░░░░│       │   │               │   │░░░░░░░░░░░░░░░│   │       │░░░░░░░│
+  │░ new ░│current│   ├───────────────┤   ├───────────────┤   │current│░ new ░│
+  │░░░░░░░│       │   │░░░░░░░░░░░░░░░│   │               │   │       │░░░░░░░│
+  │░░░░░░░│       │   │░░░░░ new ░░░░░│   │    current    │   │       │░░░░░░░│
+  │░░░░░░░│       │   │░░░░░░░░░░░░░░░│   │               │   │       │░░░░░░░│
+  └───────┴───────┘   └───────────────┘   └───────────────┘   └───────┴───────┘
 
   press h/j/k/l to pick the side of the new pane · q / esc to cancel
 ```

@@ -33,7 +33,7 @@ from typing import Callable, Iterator, Optional
 
 QUARTER, HALF, THREE_QUARTERS = 0.25, 0.5, 0.75
 
-SIDE_KEYS = {b'k': 'top', b'l': 'right', b'j': 'bottom', b'h': 'left'}  # clockwise from the top
+SIDE_KEYS = {b'h': 'left', b'j': 'bottom', b'k': 'top', b'l': 'right'}  # previewed in this order
 SIZES = {b'1': QUARTER, b'2': HALF, b'3': THREE_QUARTERS}  # previewed in this order
 SIZE_KEYS = {**SIZES, b' ': HALF}
 CANCEL_KEYS = {b'q', b'\x1b', b'\x03'}

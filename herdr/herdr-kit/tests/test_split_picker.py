@@ -171,10 +171,10 @@ class TestRender(unittest.TestCase):
     def lines(self, cols, side=None):
         return [plain(l) for l in sp.render(cols, side=side)]
 
-    def test_side_step_previews_the_four_sides_clockwise_with_vim_keys(self):
+    def test_side_step_previews_the_four_sides_in_hjkl_order(self):
         lines = self.lines(200)
         labels = next(l for l in lines if 'k top' in l)
-        positions = [labels.index(t) for t in ('k top', 'l right', 'j bottom', 'h left')]
+        positions = [labels.index(t) for t in ('h left', 'j bottom', 'k top', 'l right')]
         self.assertEqual(positions, sorted(positions))
         self.assertEqual(max(l.count('┌') for l in lines), 4)
         self.assertIn('h/j/k/l', lines[-1])
@@ -201,12 +201,14 @@ class TestRender(unittest.TestCase):
     def test_narrow_popup_falls_back_to_a_text_list(self):
         narrow = sp.ROW_WIDTH - 1
         for side, labels in (
-            (None, ('k top', 'l right', 'j bottom', 'h left')),
+            (None, ('h left', 'j bottom', 'k top', 'l right')),
             ('left', ('1 left 25%', '2 left 50%', '3 left 75%')),
         ):
             lines = self.lines(narrow, side)
             for label in labels:
                 self.assertTrue(any(label in l for l in lines), label)
+            positions = ['\n'.join(lines).index(label) for label in labels]
+            self.assertEqual(positions, sorted(positions))
             self.assertFalse(any('┌' in l for l in lines))
             for line in lines:
                 self.assertLess(len(line), sp.ROW_WIDTH)
