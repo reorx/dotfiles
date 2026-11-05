@@ -43,11 +43,11 @@ not need cleanup; Herdr closes a tab when its last pane leaves.
 ### `kit.pick_split`
 
 Opens a popup that splits the pane the action was invoked from in two key
-presses, no enter. First pick the side of the new pane, clockwise from the
-top:
+presses, no enter. First pick the side using Vim directions: `h` left,
+`j` bottom, `k` top, `l` right. Previews run clockwise from the top:
 
 ```
-        1 top              2 right            3 bottom             4 left
+        k top              l right            j bottom             h left
   ┌───────────────┐   ┌───────┬───────┐   ┌───────────────┐   ┌───────┬───────┐
   │░░░░░░░░░░░░░░░│   │       │░░░░░░░│   │               │   │░░░░░░░│       │
   │░░░░░ new ░░░░░│   │       │░░░░░░░│   │    current    │   │░░░░░░░│       │
@@ -58,7 +58,7 @@ top:
   │               │   │       │░░░░░░░│   │░░░░░░░░░░░░░░░│   │░░░░░░░│       │
   └───────────────┘   └───────┴───────┘   └───────────────┘   └───────┴───────┘
 
-  press 1-4 to pick the side of the new pane · q / esc to cancel
+  press h/j/k/l to pick the side of the new pane · q / esc to cancel
 ```
 
 Then its size: `1` 25%, `2` 50%, `3` 75%, or `space` for 50%. This step
@@ -80,8 +80,8 @@ first step:
   press 1-3, or space for 50% · backspace to go back · q / esc to cancel
 ```
 
-So `1 space` is a top half, `2 space` a side-by-side half (Herdr's
-`split_vertical`), `3 1` a 25% pane at the bottom. `q`, `Esc` or `ctrl+c`
+So `k space` is a top half, `l space` a side-by-side half (Herdr's
+`split_vertical`), `j 1` a 25% pane at the bottom. `q`, `Esc` or `ctrl+c`
 cancels in either step. The size is the new pane's share of the current
 pane, not of the whole tab. The new pane starts in the current pane's
 `cwd` and gets the focus. A zoomed pane is unzoomed first. When the popup
@@ -108,7 +108,7 @@ A popup process gets no `HERDR_PANE_ID`, so the action
 (`open-split-picker.sh`) passes the pane to `split-picker.py` in
 `KIT_SPLIT_PANE`. The picker switches the terminal to cbreak mode with
 `TCSANOW` before drawing; the default `TCSAFLUSH` would drop keys typed
-while the popup was still opening (`prefix+v 3 1` typed in one go still
+while the popup was still opening (`prefix+v j 1` typed in one go still
 works). The popup size (`width = 85`, `height = 16` in the manifest)
 leaves an inner area of 82x14 for the 81x13 drawing; the tests check the
 manifest against the drawing.

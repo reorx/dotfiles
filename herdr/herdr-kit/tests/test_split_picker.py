@@ -48,50 +48,54 @@ class TestChoose(unittest.TestCase):
         return sp.choose(iter(keys))
 
     def test_side_then_size_picks_a_layout_without_enter(self):
-        sides = {b'1': 'top', b'2': 'right', b'3': 'bottom', b'4': 'left'}
+        sides = {b'h': 'left', b'j': 'bottom', b'k': 'top', b'l': 'right'}
         sizes = {b'1': 0.25, b'2': 0.5, b'3': 0.75}
         for side_key, side in sides.items():
             for size_key, share in sizes.items():
                 self.assertEqual(self.choose(side_key, size_key), sp.Layout(side, share))
 
     def test_space_picks_half(self):
-        for side_key, side in ((b'1', 'top'), (b'4', 'left')):
+        for side_key, side in ((b'k', 'top'), (b'h', 'left')):
             self.assertEqual(self.choose(side_key, b' '), sp.Layout(side, 0.5))
 
     def test_size_keys_do_nothing_before_a_side_is_picked(self):
-        # space is not a side; 1 first picks the side, the second 1 the size
-        self.assertEqual(self.choose(b' ', b'1', b'1'), sp.Layout('top', 0.25))
+        self.assertIsNone(self.choose(b'1', b'2', b'3', b'4', b' '))
+        self.assertEqual(self.choose(b'1', b'2', b'3', b'4', b' ', b'k', b'1'), sp.Layout('top', 0.25))
 
     def test_cancel_keys_in_either_step(self):
         for key in (b'q', b'\x1b', b'\x03'):
-            self.assertIsNone(self.choose(key, b'1', b'1'))
-            self.assertIsNone(self.choose(b'1', key, b'1'))
+            self.assertIsNone(self.choose(key, b'k', b'1'))
+            self.assertIsNone(self.choose(b'k', key, b'1'))
 
     def test_backspace_goes_back_to_the_side_step(self):
-        self.assertEqual(self.choose(b'1', BACKSPACE, b'3', b'1'), sp.Layout('bottom', 0.25))
-        self.assertEqual(self.choose(b'2', b'\x08', b'4', b'3'), sp.Layout('left', 0.75))
+        self.assertEqual(self.choose(b'k', BACKSPACE, b'j', b'1'), sp.Layout('bottom', 0.25))
+        self.assertEqual(self.choose(b'l', b'\x08', b'h', b'3'), sp.Layout('left', 0.75))
 
     def test_backspace_in_the_side_step_is_ignored(self):
-        self.assertEqual(self.choose(BACKSPACE, b'2', b' '), sp.Layout('right', 0.5))
+        self.assertEqual(self.choose(BACKSPACE, b'l', b' '), sp.Layout('right', 0.5))
 
     def test_other_keys_are_ignored(self):
-        # 5 is no side; 4 is no size once the side is picked
-        self.assertEqual(self.choose(b'x', b'5', b'\r', b'3', b'4', b'x', b'3'), sp.Layout('bottom', 0.75))
+        # 5 is no side; 4 and direction keys are no size once the side is picked
+        self.assertEqual(self.choose(b'x', b'5', b'\r', b'j', b'4', b'h', b'x', b'3'), sp.Layout('bottom', 0.75))
 
     def test_end_of_input_cancels(self):
         self.assertIsNone(self.choose(b'x'))
-        self.assertIsNone(self.choose(b'1'))
+        self.assertIsNone(self.choose(b'k'))
 
     def test_every_step_change_is_reported(self):
         steps = []
-        sp.choose(iter([b'x', b'3', b'x', BACKSPACE, b'2', b'1']), steps.append)
+        sp.choose(iter([b'x', b'j', b'x', BACKSPACE, b'l', b'1']), steps.append)
         self.assertEqual(steps, ['bottom', None, 'right'])
 
 
 class TestLayout(unittest.TestCase):
     def test_split_direction_follows_the_side(self):
-        for side, direction, new_first in (('top', 'down', True), ('bottom', 'down', False),
-                                           ('left', 'right', True), ('right', 'right', False)):
+        for side, direction, new_first in (
+            ('top', 'down', True),
+            ('bottom', 'down', False),
+            ('left', 'right', True),
+            ('right', 'right', False),
+        ):
             layout = sp.Layout(side, 0.25)
             self.assertEqual((layout.direction, layout.new_first), (direction, new_first))
 
@@ -167,13 +171,13 @@ class TestRender(unittest.TestCase):
     def lines(self, cols, side=None):
         return [plain(l) for l in sp.render(cols, side=side)]
 
-    def test_side_step_previews_the_four_sides_in_key_order(self):
+    def test_side_step_previews_the_four_sides_clockwise_with_vim_keys(self):
         lines = self.lines(200)
-        labels = next(l for l in lines if '1 top' in l)
-        positions = [labels.index(t) for t in ('1 top', '2 right', '3 bottom', '4 left')]
+        labels = next(l for l in lines if 'k top' in l)
+        positions = [labels.index(t) for t in ('k top', 'l right', 'j bottom', 'h left')]
         self.assertEqual(positions, sorted(positions))
         self.assertEqual(max(l.count('┌') for l in lines), 4)
-        self.assertIn('1-4', lines[-1])
+        self.assertIn('h/j/k/l', lines[-1])
 
     def test_size_step_previews_three_sizes_of_the_picked_side(self):
         lines = self.lines(200, 'bottom')
@@ -196,8 +200,10 @@ class TestRender(unittest.TestCase):
 
     def test_narrow_popup_falls_back_to_a_text_list(self):
         narrow = sp.ROW_WIDTH - 1
-        for side, labels in ((None, ('1 top', '2 right', '3 bottom', '4 left')),
-                             ('left', ('1 left 25%', '2 left 50%', '3 left 75%'))):
+        for side, labels in (
+            (None, ('k top', 'l right', 'j bottom', 'h left')),
+            ('left', ('1 left 25%', '2 left 50%', '3 left 75%')),
+        ):
             lines = self.lines(narrow, side)
             for label in labels:
                 self.assertTrue(any(label in l for l in lines), label)

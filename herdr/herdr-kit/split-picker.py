@@ -4,7 +4,7 @@
 Two single key presses, no enter, pick where the new pane goes and how
 much of the current pane it takes:
 
-1. the side: 1 top, 2 right, 3 bottom, 4 left (clockwise from the top)
+1. the side: h left, j bottom, k top, l right (Vim directions)
 2. the size: 1 25%, 2 50%, 3 75%, or space for 50%; backspace goes back
 
 Each step draws an ASCII preview of its choices. q, Esc or ctrl+c cancels.
@@ -33,7 +33,7 @@ from typing import Callable, Iterator, Optional
 
 QUARTER, HALF, THREE_QUARTERS = 0.25, 0.5, 0.75
 
-SIDE_KEYS = {b'1': 'top', b'2': 'right', b'3': 'bottom', b'4': 'left'}
+SIDE_KEYS = {b'k': 'top', b'l': 'right', b'j': 'bottom', b'h': 'left'}  # clockwise from the top
 SIZES = {b'1': QUARTER, b'2': HALF, b'3': THREE_QUARTERS}  # previewed in this order
 SIZE_KEYS = {**SIZES, b' ': HALF}
 CANCEL_KEYS = {b'q', b'\x1b', b'\x03'}
@@ -47,7 +47,7 @@ MARGIN, GAP = 2, 3
 ROW_WIDTH = 2 * MARGIN + 4 * BOX_W + 3 * GAP
 
 SHADE = '░'
-SIDE_HINT = 'press 1-4 to pick the side of the new pane · q / esc to cancel'
+SIDE_HINT = 'press h/j/k/l to pick the side of the new pane · q / esc to cancel'
 SIZE_HINT = 'press 1-3, or space for 50% · backspace to go back · q / esc to cancel'
 
 RESET = '\033[0m'
