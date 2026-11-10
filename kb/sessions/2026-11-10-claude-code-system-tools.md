@@ -47,8 +47,11 @@ tags:
 
 ## 遗留问题
 
-- `cc-probe` 还不能抓交互模式。目前的 pty 抓包脚本在被 gitignore 的 `tmp/2026-11-10-system-tools/` 下，以后要复查交互模式的工具，可以考虑给 `cc-probe` 加一个 `--interactive`。
 - 在 `cl` 下 `/code-review`（本地）和 ultracode 不可用，需要时直接运行 `claude`，或用 `cl --settings '{"enableWorkflows": true}'`。这是用户确认过的取舍。
+
+## 后续
+
+- 同一天在 herdr 新 tab 里派 agent 给 `cc-probe` 加了 `--interactive`（scripts 仓库 `6f8a46c`，总结在 `~/Code/scripts/kb/sessions/2026-11-10-cc-probe-interactive.md`）。用它复测：交互模式下 `cl` 的首个请求约 21.9k，直接运行 `claude` 是 43,729。
 
 ## 相关文档
 

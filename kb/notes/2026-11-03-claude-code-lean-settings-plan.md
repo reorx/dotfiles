@@ -338,7 +338,7 @@ cc-probe --via cl --settings '{"enableWorkflows": true}' --expect-present Workfl
 cc-probe --via 'with-artifact cl' --expect-present Artifact --expect-absent ScheduleWakeup
 ```
 
-交互模式的抓包方法：在 pty 里启动 `cl`，`ANTHROPIC_BASE_URL` 指向本地假 API，输入一句话后取第一个带 `system` 的请求，再逐项计数。要注意，假 API 回 400 的话，Claude Code 重试 3 次后会关掉 tool search，把全部 29 个工具完整重发一遍（约 34k）。所以只能取第一个请求，不能取最大的那个。脚本在被 gitignore 的 `tmp/2026-11-10-system-tools/interactive_capture.py` 里。
+交互模式的抓包方法：在 pty 里启动 `cl`，`ANTHROPIC_BASE_URL` 指向本地假 API，输入一句话后取第一个带 `system` 的请求，再逐项计数。要注意，假 API 回 400 的话，Claude Code 重试 3 次后会关掉 tool search，把全部 29 个工具完整重发一遍（约 34k）。所以只能取第一个请求，不能取最大的那个。这个方法后来做成了 `cc-probe --interactive`（scripts 仓库 `6f8a46c`），`--count exact` 下工具各项加上 `tool-preamble`（286）正好是 7,083。
 
 ## 9. 我的最终配置（截至 2026-11-10，Claude Code 2.1.321）
 
@@ -346,10 +346,12 @@ cc-probe --via 'with-artifact cl' --expect-present Artifact --expect-absent Sche
 
 ### 9.1 效果
 
-| 启动方式 | `-p` 抓包，整个首个请求 | 交互模式，工具定义 |
-|---|---:|---:|
-| `claude`（直接运行） | 41,893 | 未测，约 13.9k + Artifact 13.5k |
-| `cl` | 19,856 | 7,083 |
+| 启动方式 | `-p` 抓包，整个首个请求 | 交互模式，整个首个请求 | 交互模式，工具定义 |
+|---|---:|---:|---:|
+| `claude`（直接运行） | 41,893 | 43,729 | 约 25.5k（估算，其中 Artifact 13.5k） |
+| `cl` | 19,856 | 约 21.9k | 7,083 |
+
+交互模式的数字用 `cc-probe --interactive` 测得。同一个 `/context` 显示的合计会更低，原因见 8.1 节。
 
 ### 9.2 `~/.claude/settings.json`：所有机器共用，`claude` 和 `cl` 都生效
 
@@ -401,3 +403,5 @@ cc-probe --via 'with-artifact cl' --expect-present Artifact --expect-absent Sche
     --expect-absent Workflow --expect-absent ScheduleWakeup \
     --expect-absent ReportFindings --expect-absent ListAgents
   ```
+
+  交互模式加 `--interactive`，可以再检查 `--expect-absent SendFeedback --expect-present AskUserQuestion`。
