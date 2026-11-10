@@ -204,13 +204,19 @@ function echo-server() {
 # cl 默认关闭 Artifact 和 claude.ai 同步 skill，可以单次重新打开。
 # 这两个开关都是“任意一处为关就关”，写进 settings.json 后无法单次覆盖，所以放在这里：
 # Artifact 用环境变量，同步 skill 用 --settings（只作用于这一次运行）。
-# 多个 --settings 只有最后一个生效，所以调用方自带的内联 JSON 用 jq 合并成一个。
+# 另外去掉几个用不到的工具定义：Workflow（enableWorkflows），ReportFindings、ListAgents、
+# ScheduleWakeup（--disallowedTools）。只有 ScheduleWakeup 能用 with-loop 单次重开。
+# 多个 --settings 只有最后一个生效，所以调用方自带的内联 JSON 用 jq 合并成一个；
+# 多个 --disallowedTools 会累加，调用方可以照常再传。
 # DEBUG_CL=1 cl … 会先打印 Artifact 状态、最终的 settings 和其余参数。
 # 详见 kb/notes/2026-11-03-claude-code-lean-settings-plan.md
 function cl() {
-    local settings='{"syncClaudeAiSkills": false}'
-    [[ -n "$CLAUDE_AI_SKILLS" ]] && settings='{}'
-    local -a args=(--dangerously-skip-permissions)
+    local settings='{"enableWorkflows": false, "syncClaudeAiSkills": false}'
+    [[ -n "$CLAUDE_AI_SKILLS" ]] && settings='{"enableWorkflows": false}'
+    local -a disallowed=(ReportFindings ListAgents)
+    [[ -z "$CLAUDE_LOOP" ]] && disallowed+=(ScheduleWakeup)
+    # --disallowedTools 会吞掉后面不带 - 的参数，所以后面紧跟一个 flag
+    local -a args=(--disallowedTools "${(j:,:)disallowed}" --dangerously-skip-permissions)
     while (( $# )); do
         if [[ "$1" == --settings && "$2" == \{* ]]; then
             settings=$(jq -c --argjson base "$settings" '$base + .' <<< "$2") || return
@@ -235,6 +241,7 @@ function cl() {
 # 前缀用法，可以叠加：with-artifact cl、with-ai-skills clfast、with-artifact with-ai-skills clr
 function with-artifact() { (export CLAUDE_ARTIFACT=1; "$@") }
 function with-ai-skills() { (export CLAUDE_AI_SKILLS=1; "$@") }
+function with-loop() { (export CLAUDE_LOOP=1; "$@") }
 
 function ccglm() {
     ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic \

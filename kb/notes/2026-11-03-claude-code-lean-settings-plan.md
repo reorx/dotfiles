@@ -9,7 +9,7 @@ tags:
 
 # Claude Code 瘦身落地方案：settings.json 改动与单次重开的 alias
 
-背景调研见 [2026-11-02-claude-code-harness-slimming](2026-11-02-claude-code-harness-slimming.md)。本文只写落地方案：要改什么、怎么改，以及每一项是怎么验证的。基于 Claude Code 2.1.311。本方案已于 2026-11-03 执行，执行后的验证见第 7 节。
+背景调研见 [2026-11-02-claude-code-harness-slimming](2026-11-02-claude-code-harness-slimming.md)。本文只写落地方案：要改什么、怎么改，以及每一项是怎么验证的。第 1–7 节基于 Claude Code 2.1.311，于 2026-11-03 执行，执行后的验证见第 7 节。第 8 节是 2026-11-10 基于 2.1.321 追加的工具定义（`/context` 里的 System tools）精简。
 
 ## 需求
 
@@ -87,9 +87,12 @@ cp "$(readlink ~/.claude/settings.json)" ~/.claude/settings.json.bak-20261103
 
 ```zsh
 function cl() {
-    local settings='{"syncClaudeAiSkills": false}'
-    [[ -n "$CLAUDE_AI_SKILLS" ]] && settings='{}'
-    local -a args=(--dangerously-skip-permissions)
+    local settings='{"enableWorkflows": false, "syncClaudeAiSkills": false}'
+    [[ -n "$CLAUDE_AI_SKILLS" ]] && settings='{"enableWorkflows": false}'
+    local -a disallowed=(ReportFindings ListAgents)
+    [[ -z "$CLAUDE_LOOP" ]] && disallowed+=(ScheduleWakeup)
+    # --disallowedTools 会吞掉后面不带 - 的参数，所以后面紧跟一个 flag
+    local -a args=(--disallowedTools "${(j:,:)disallowed}" --dangerously-skip-permissions)
     while (( $# )); do
         if [[ "$1" == --settings && "$2" == \{* ]]; then
             settings=$(jq -c --argjson base "$settings" '$base + .' <<< "$2") || return
@@ -113,6 +116,7 @@ function cl() {
 
 function with-artifact() { (export CLAUDE_ARTIFACT=1; "$@") }
 function with-ai-skills() { (export CLAUDE_AI_SKILLS=1; "$@") }
+function with-loop() { (export CLAUDE_LOOP=1; "$@") }
 
 function clfast() { cl --settings '{"fastMode": true}' $@ }
 function clc() { cl --continue $@ }
@@ -135,13 +139,15 @@ function clr() { cl --resume $@ }
 | `with-artifact with-ai-skills cl` | **开** | **开** |
 | `claude …`（直接运行） | 开 | 开 |
 
-- 两个前缀都在子 shell 里修改环境，不会影响当前 shell。
+`cl` 还会去掉 5 个用不到的工具（第 8 节），其中只有 ScheduleWakeup 能用 `with-loop cl` 单次重开。
+
+- 前缀都在子 shell 里修改环境，不会影响当前 shell。
 - 在任意命令前加 `DEBUG_CL=1`（例如 `DEBUG_CL=1 with-artifact clfast`）会先打印 Artifact 状态、最终的 settings 和其余参数，然后照常启动 claude。示例：
 
 ```
 [cl] artifact: on
-[cl] settings: {"syncClaudeAiSkills":false,"fastMode":true}
-[cl] args: --dangerously-skip-permissions
+[cl] settings: {"enableWorkflows":false,"syncClaudeAiSkills":false,"fastMode":true}
+[cl] args: --disallowedTools ReportFindings,ListAgents,ScheduleWakeup --dangerously-skip-permissions
 ```
 
 ### 局限
@@ -264,3 +270,72 @@ headless 抓包中的 skill 从 86 个降到 42 个，算式为 86 − 3 − 14 
 | `cl` | 无 | 0 | 0 | 42 | 否 |
 | `with-artifact with-ai-skills clfast` | 有 | 14 | 0 | 59 | 是 |
 | `claude`（直接运行） | 有 | 14 | 0 | 59 | 否 |
+
+## 8. System tools 的构成与精简（2026-11-10，2.1.321）
+
+起因：交互 session 里 `/context` 的 System tools 一项看起来占得很多。
+
+### 8.1 `/context` 的 System tools 是怎么算的
+
+2.1.321 源码的算法：把所有非 deferred 的内置工具，加上本 session 里已经通过 ToolSearch 加载过的 deferred 工具，用 `count_tokens` 计一次数，再减掉 Skills 那一行（源码为 `System tools = 工具总数 − skill 列表`）。这样算有三个偏差：
+
+- **System tools 偏低**：skill 列表现在放在一条 system 消息里，不在 Skill 工具的描述里，减法多减了一次。数字对得上：交互模式实测工具定义共 13,939，减去 Skills 5.1k，约 8.7k，正是 `/context` 显示的数。推测是早期版本把 skill 列表写在 Skill 工具描述里时留下的逻辑，没有直接证据。
+- **内置 agent 列表没算**：约 1.5k，Custom agents 只算自定义的 3 个（241）。所以 `/context` 合计显示 20.6k，实际首个请求约 28k（估算）。
+- **System tools (deferred) 并不发送**：显示的 20.3k 是“全部加载时的大小”，请求里只带名字（约 170 tokens）。某个 deferred 工具被加载后，完整定义会算进 System tools，并一直留到 session 结束。较大的几个：DesignSync 3,794、Monitor 2,989、SendMessage 1,991、EnterPlanMode 1,612、RemoteTrigger 1,571、CronCreate 1,564、EnterWorktree 1,396。
+
+### 8.2 构成（交互模式 `cl`，精简前）
+
+逐项去掉后用 `count_tokens` 计数：
+
+| 工具 | tokens | 用途 |
+|---|---:|---|
+| Workflow | 1,979 | 多 agent 编排，只在用户明确要求时使用 |
+| SendFeedback | 1,956 | 起草给 Anthropic 的产品反馈 |
+| AskUserQuestion | 1,766 | 向用户提问 |
+| ScheduleWakeup | 1,695 | 只给不带间隔的 `/loop` 用 |
+| Agent | 1,590 | 子 agent |
+| Bash / Read / Skill / ToolSearch / Edit / Write | 3,348 | 核心工具 |
+| ReportFindings | 821 | 把 code review 结果交给宿主 UI 渲染 |
+| ListAgents | 405 | 列出可以 SendMessage 的其他 session |
+| 占位工具 + 工具使用的固定前言 | ~380 | |
+
+AskUserQuestion 和 SendFeedback 只在交互模式出现，`cc-probe`（`-p` 模式）抓不到。
+
+### 8.3 去掉的 5 个工具
+
+| 工具 | 省 | 关法 | 依据和代价 |
+|---|---:|---|---|
+| SendFeedback | 1,956 | `settings.json` 的 `"feedbackDrafts": "off"`，即 `/config` 里的 “Claude-drafted feedback”（可选 notify / quiet / off） | 不需要单次重开，所以写进 settings.json，直接运行 `claude` 也会生效 |
+| Workflow | 1,979 | `cl` 的 `--settings` 默认带 `"enableWorkflows": false` | 同时隐藏 workflow-authoring skill。`cl` 下 `/code-review`（本地）和 ultracode 都不能用；需要时直接运行 `claude`，或 `cl --settings '{"enableWorkflows": true}'` |
+| ScheduleWakeup | 1,695 | `cl` 默认 `--disallowedTools` | 只影响不带间隔的 `/loop`，`/loop 5m` 用的是 CronCreate。`with-loop cl` 单次重开 |
+| ReportFindings | 821 | 同上 | 源码里只有桌面版、网页版（或设置了 `CLAUDE_CODE_REPORT_FINDINGS`）才让 code review 用它，终端里永远不会被调用 |
+| ListAgents | 405 | 同上 | 只用于给其他 session 发消息 |
+
+不保留重开前缀是用户的决定（只要 `with-loop`）。AskUserQuestion、Agent 和核心工具不动。
+
+为什么不用 `settings.json` 的 `permissions.deny`：deny 规则在各层配置之间是叠加的，写进去以后无法单次重开，和 Artifact 是同一个问题；放在 `cl` 里还能让直接运行的 `claude` 保持完整。
+
+`--disallowedTools` 的两个行为（实测）：
+
+- 传多次会累加，所以 `cl` 加上自己的列表后，调用方还能照常再传，不需要像 `--settings` 那样合并。
+- 它是可变参数，会把后面不带 `-` 的参数都当成工具名吞掉，所以 `cl` 把它放在 `--dangerously-skip-permissions` 前面。
+
+### 8.4 验证
+
+| 场景 | 精简前 | 精简后 |
+|---|---:|---:|
+| 交互模式 `cl` 的工具定义 | 13,939 | 7,083 |
+| `cc-probe --via cl` 的整个请求（`-p` 模式，没有 SendFeedback） | 24,834 | 19,856 |
+
+按预期写的检查（全部通过）：
+
+```sh
+cc-probe --via cl --expect-absent ScheduleWakeup --expect-absent ReportFindings \
+  --expect-absent ListAgents --expect-absent Workflow --expect-present Bash
+cc-probe --via 'with-loop cl' --expect-present ScheduleWakeup --expect-absent Workflow
+cc-probe --via 'cl --disallowedTools NotebookEdit' --expect-absent NotebookEdit --expect-absent ReportFindings
+cc-probe --via cl --settings '{"enableWorkflows": true}' --expect-present Workflow
+cc-probe --via 'with-artifact cl' --expect-present Artifact --expect-absent ScheduleWakeup
+```
+
+交互模式的抓包方法：在 pty 里启动 `cl`，`ANTHROPIC_BASE_URL` 指向本地假 API，输入一句话后取第一个带 `system` 的请求，再逐项计数。要注意，假 API 回 400 的话，Claude Code 重试 3 次后会关掉 tool search，把全部 29 个工具完整重发一遍（约 34k）。所以只能取第一个请求，不能取最大的那个。脚本在被 gitignore 的 `tmp/2026-11-10-system-tools/interactive_capture.py` 里。
