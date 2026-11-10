@@ -339,3 +339,65 @@ cc-probe --via 'with-artifact cl' --expect-present Artifact --expect-absent Sche
 ```
 
 交互模式的抓包方法：在 pty 里启动 `cl`，`ANTHROPIC_BASE_URL` 指向本地假 API，输入一句话后取第一个带 `system` 的请求，再逐项计数。要注意，假 API 回 400 的话，Claude Code 重试 3 次后会关掉 tool search，把全部 29 个工具完整重发一遍（约 34k）。所以只能取第一个请求，不能取最大的那个。脚本在被 gitignore 的 `tmp/2026-11-10-system-tools/interactive_capture.py` 里。
+
+## 9. 我的最终配置（截至 2026-11-10，Claude Code 2.1.321）
+
+本节按实际文件整理：`~/.claude/settings.json` 和 `zshrc_fn`。“来源”一列里，“之前就有”指 11-03 改动前就已存在；“你自己改的”指 11-03 之后由你手动修改，对比备份 `~/.claude/settings.json.bak-20261103` 得出。
+
+### 9.1 效果
+
+| 启动方式 | `-p` 抓包，整个首个请求 | 交互模式，工具定义 |
+|---|---:|---:|
+| `claude`（直接运行） | 41,893 | 未测，约 13.9k + Artifact 13.5k |
+| `cl` | 19,856 | 7,083 |
+
+### 9.2 `~/.claude/settings.json`：所有机器共用，`claude` 和 `cl` 都生效
+
+| 配置 | 作用 | 来源 |
+|---|---|---|
+| `promptSuggestionEnabled: false` | 关闭输入框里的 prompt 建议，属于请求之外的开销 | 之前就有 |
+| `disableClaudeAiConnectors: true` | 关闭 Claude Docs 等 claude.ai connector | 之前就有 |
+| `syncClaudeAiPlugins: false` | 去掉 claude.ai 同步的 searchfit-seo 插件（17 个 skill、3 个 agent），文件已移到 `~/.claude/plugins/.trash` | 11-03 |
+| `includeGitInstructions: false` | 去掉 Bash 工具里的 commit/PR 步骤、署名提醒和 git status 快照。副作用：commit 不再自动加 `Co-Authored-By` | 11-03 |
+| `skillOverrides` 共 13 项，都是 `user-invocable-only` | 内置的 code-review、simplify、security-review、init、fewer-permission-prompts、loop、schedule、keybindings-help、run、plugin-authoring（11-03）；eli5:eli5、humanizer、swiftui-expert-skill（你自己加的）。这些 skill 不再发描述，手动输入 `/name` 照常可用 | 11-03 / 你自己改的 |
+| `feedbackDrafts: "off"` | 去掉 SendFeedback 工具（交互模式 1,956） | 11-10 |
+| `enabledPlugins` 去掉 code-review、code-simplifier、commit-commands | 这三个插件的 skill、command、agent 不再加载 | 你自己改的 |
+| `modelSettings.claude-opus-5-5.autoCompactWindow: 400000` | Opus 的自动压缩窗口设为 400k。只改什么时候压缩，不减少每次请求的大小 | 你自己改的 |
+
+`settings.json` 里**没有**、也**不能**有 `enableArtifact`、`syncClaudeAiSkills`、`CLAUDE_CODE_DISABLE_ARTIFACT` 和 `permissions.deny` 工具规则：这些开关是“任意一处为关就关”，或者是跨层叠加的，写进去以后就无法单次重开（第 1 节、第 8.3 节）。
+
+### 9.3 `cl`：只对 `cl` 及其派生命令生效
+
+派生命令有 `clc`、`clr`、`clfast`、`clapi`、`fable`、`ccglm`、`sonnet`。
+
+| 默认去掉 | 省（tokens） | 方式 | 单次重开 |
+|---|---:|---|---|
+| Artifact 工具和 3 个 artifact skill | 约 13.5k | 环境变量 `CLAUDE_CODE_DISABLE_ARTIFACT=1` | `with-artifact` |
+| claude.ai 同步 skill（14 个 `anthropic-skills:*`） | 约 0.9k | `--settings` 中的 `syncClaudeAiSkills: false` | `with-ai-skills` |
+| Workflow 工具和 workflow-authoring skill | 1,979 + skill 描述 | `--settings` 中的 `enableWorkflows: false` | 不设前缀。需要时直接运行 `claude`，或用 `cl --settings '{"enableWorkflows": true}'` |
+| ScheduleWakeup | 1,695 | `--disallowedTools` | `with-loop` |
+| ReportFindings、ListAgents | 821 + 405 | `--disallowedTools` | 不设前缀 |
+
+另外，`cl` 固定加 `--dangerously-skip-permissions`。`DEBUG_CL=1` 会打印最终参数。前缀可以叠加使用，比如 `with-artifact with-loop clr`。
+
+### 9.4 有意保留或没有采用的
+
+- **工具**：AskUserQuestion、Agent，以及 Bash、Read、Edit、Write、Skill、ToolSearch 这些核心工具都保留。
+- **内置 skill**：dataviz、claude-api、update-config、workflow-authoring 保留自动触发（第 4.2 节）。在 `cl` 下，workflow-authoring 会随 Workflow 一起隐藏。
+- **没有采用的设置**：
+  - `CLAUDE_CODE_DISABLE_EXPLORE_PLAN_AGENTS=1`：Explore 和 Plan 两个内置 subagent 仍在；
+  - `awaySummaryEnabled: false`：离开终端后仍会自动生成 recap；
+  - `deniedMcpServers`：Claude Docs connector 已经被 `disableClaudeAiConnectors` 关掉，不需要再设。
+- **无需处理**：当前版本的请求里已经没有 Grep 和 Glob；PowerShell 在 macOS 上默认就没有。
+
+### 9.5 使用和复查时要注意
+
+- 直接运行 `claude`，以及从 IDE、桌面 app 启动的 claude，都不经过 `cl`，只有 9.2 节的配置生效。
+- `cl` session 里启动的子进程会继承 `CLAUDE_CODE_DISABLE_ARTIFACT=1`。在这样的 session 里用 `cc-probe` 测“直接运行 `claude`”时，要加 `--unset CLAUDE_CODE_DISABLE_ARTIFACT`，否则 Artifact 不会出现。本次实测：不加时是 28,504，加了是 41,893。
+- Claude Code 升级后复查：
+
+  ```sh
+  cc-probe --via cl --expect-absent Artifact --expect-absent 'anthropic-skills:*' \
+    --expect-absent Workflow --expect-absent ScheduleWakeup \
+    --expect-absent ReportFindings --expect-absent ListAgents
+  ```
