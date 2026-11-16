@@ -375,6 +375,12 @@ local plugins = {
         git = {
           enable = false,
         },
+        actions = {
+          open_file = {
+            -- 打开文件后隐藏目录树,需要时用 <leader>e 再呼出
+            quit_on_open = true,
+          },
+        },
 
         --on_attach = function(bufnr)
         --  local map = function(mode, keys, func, desc)
@@ -386,6 +392,7 @@ local plugins = {
       local map = function(mode, keys, func, desc)
         vim.keymap.set(mode, keys, func, { noremap = true, silent = true, desc = '🔭 ' .. desc })
       end
+      -- e = explorer;<leader>f 是当前 buffer 搜索,<leader>t 是标签页前缀,都已占用
       map('n', '<leader>e', '<cmd>NvimTreeFindFileToggle<CR>', 'Toggle Tree on current file')
     end,
 
